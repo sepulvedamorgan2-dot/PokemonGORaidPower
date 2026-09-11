@@ -1,0 +1,36 @@
+//0.0 Import/Use this
+@use "Sass:color";
+//
+
+
+
+//1.0  unlike css and most things, variables for bootstrap that are defined ABOVE
+// the import statement take priority!
+@import "../../styles/scss/variable";
+
+//1.0
+
+
+
+//2.0 Import Bootstrap
+@import "../../node_modules/bootstrap/scss/bootstrap";
+//2.0
+
+//3.0 custom override
+//just for a classes, takes power over above primary since its more specific
+// $primary-ov: yellow;
+
+
+
+// .main-call-to-action{
+//     background-color: $primary-ov;
+//     font-size: $font-size-sm;
+// }
+//3.0
+//test
+//TO ACTIVATE SCRIP
+//add "sass": "sass scss/app.scss css/app.css --style=compressed --watch" to package.json scrips{}
+// right click folder your working in and click "open integrated terminal"
+// "npm run sass" in console
+
+

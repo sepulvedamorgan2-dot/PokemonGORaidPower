@@ -1,0 +1,29 @@
+*{
+    padding: 0;
+    margin: 0; 
+}
+
+.w-small{
+ width: 10%;
+ min-width: 40px;
+ max-width: 60px;
+}
+
+.fs-tiny{
+    font-size: 13px;
+    font-weight: 580;
+}
+
+
+.resize-none{
+    resize: none;
+}
+.horz-card-img{
+        height: 80px;
+    }
+
+@media (max-width: 767px){
+    .horz-card-img{
+        height: 70px;
+    }
+}

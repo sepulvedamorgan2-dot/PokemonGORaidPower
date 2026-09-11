@@ -1,0 +1,19 @@
+$primary : #446443;
+$secondary: #5a6c77;
+// 
+// 1. Define your base opacity
+$focus-ring-opacity: .8;
+
+// 2. Wrap your RGB color in rgba() and pass the opacity variable
+$focus-ring-color: rgba(68, 100, 67, $focus-ring-opacity);
+$focus-ring-width: 0.12rem;
+$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "success":    green,
+  "info":       #005ea2,
+  "warning":    yellow,
+  "danger":     red,
+  "light":      white,
+  "dark":       black
+) 
