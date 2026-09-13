@@ -18,14 +18,114 @@
         </div>
     </nav>
 
+    <!-- Type Selector -->
+    <div class="container-fluid d-sm-none">
+        <div class="row mt-2">
+            <label>Pokemon Type
+                <select class="form-select" id="mobileTypeSelector">
+                    <option value="normal">Normal</option>
+                    <option value="fire">Fire</option>
+                    <option value="water">Water</option>
+                    <option value="electric">Electric</option>
+                    <option value="grass">Grass</option>
+                    <option value="ice">Ice</option>
+                    <option value="fighting">Fighting</option>
+                    <option value="poison">Poison</option>
+                    <option value="ground">Ground</option>
+                    <option value="flying">Flying</option>
+                    <option value="psychic">Psychic</option>
+                    <option value="bug">Bug</option>
+                    <option value="rock">Rock</option>
+                    <option value="ghost">Ghost</option>
+                    <option value="dragon">Dragon</option>
+                    <option value="dark">Dark</option>
+                    <option value="steel">Steel</option>
+                </select>
+            </label>
+        </div>
 
+    </div>
+    <!-- Type selectore ENd -->
+    <!-- Card Holder -->
     <div class="container-fluid container-md">
-        <div class="row ">
+
+
+        <div class="row g-3 mt-sm-2 mt-1 typecardholder">
             <!-- Card -->
-            <div class="col-12 col-sm-6 col-lg-4 mt-3">
+            <div class="col-12 col-sm-6 col-lg-4 mt-3 typecard" data-pokeType="normal">
                 <div class="card">
                     <div class="card-header text-center fs-4">
-                        Rock
+                        Normal
+                    </div>
+                    <!-- imgs -->
+                    <div class="card-body border-bottom  p-2  p-sm-2 p-md-2">
+                        <div class="row g-2 g-sm-2 g-md-2 ">
+                            <div class="col-4 text-center   ">
+                                <img class="img-fluid border rounded w-100"
+                                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
+                                    alt="pokemonImg">
+
+                            </div>
+                            <div class="col-4 text-center ">
+                                <img class=" img-fluid border rounded w-100"
+                                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
+                                    alt="pokemonImg">
+
+                            </div>
+                            <div class="col-4 text-center ">
+                                <img class="img-fluid border rounded w-100"
+                                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
+                                    alt="pokemonImg">
+                            </div>
+                            <div class="col-4 text-center   ">
+                                <img class="img-fluid border rounded w-100"
+                                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/432.png"
+                                    alt="pokemonImg">
+
+                            </div>
+                            <div class="col-4 text-center ">
+                                <img class=" img-fluid border rounded w-100"
+                                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/222.png"
+                                    alt="pokemonImg">
+
+                            </div>
+                            <div class="col-4 text-center ">
+                                <img class="img-fluid border rounded w-100"
+                                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/12.png"
+                                    alt="pokemonImg">
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <div class="card-body pt-2 pb-3 ">
+                        <div class="text-center">
+                            <p class="text-uppercase fw-bold text-secondary fs-6 mt-2 mb-1">Raid Power</p>
+                            <p class="fw-bolder fs-3 text-dark mb-0">1857</p>
+                        </div>
+                        <!-- <div class="text-center align-items-baseline ">
+                            <span class="text-uppercase fw-bold text-secondary fs-6 me-1">RP</span>
+                            <span class="fw-bolder fs-3 text-dark me-4">12,450</span>
+                        </div> -->
+                        <div class="text-center">
+                            <button class="mt-3 mb-0 btn btn-primary w-75" data-bs-toggle="offcanvas"
+                                data-bs-target="#editTeamOffCanvas">Edit Team</button>
+                            <!-- editTeamOffCanvas -->
+                            <!-- PokemonDetailsOffCanvas -->
+                        </div>
+                    </div>
+                </div>
+                <!-- img end -->
+
+            </div>
+            <!-- Card end -->
+
+            <!-- Card -->
+            <div class="col-12 col-sm-6 col-lg-4 mt-3 typecard" data-pokeType="electric">
+                <div class="card">
+                    <div class="card-header text-center fs-4">
+                        Electric
                     </div>
                     <!-- imgs -->
                     <div class="card-body border-bottom  p-2  p-sm-2 p-md-2">
@@ -89,15 +189,15 @@
                 <!-- img end -->
 
             </div>
-
+            <!-- Card end -->
 
         </div>
-        <!-- Card end -->
+
 
 
 
     </div>
-
+    <!-- Card Holder ENd -->
     <!-- Offcanvas Start -->
     <div class="offcanvas offcanvas-end " tabindex="-1" id="editTeamOffCanvas">
         <div class="offcanvas-header bg-primary text-center text-white">
@@ -128,7 +228,8 @@
                     </div>
                     <div class="col-3">
                         <div class="d-flex justify-content-center align-items-center h-100">
-                            <i type="button" class="bi bi-arrow-repeat me-2  fs-4 text-black "></i>
+                            <i type="button" data-bs-toggle="offcanvas" data-bs-target="#swapPokemonOffCanvas"
+                                class="bi bi-arrow-repeat me-2  fs-4 text-black "></i>
                             <i type="button" data-bs-toggle="modal" data-bs-target="#confirmDelete"
                                 class="bi bi-trash-fill fs-5 text-danger "></i>
                         </div>
@@ -215,7 +316,97 @@
 
     </div>
     <!-- Offcanvas End -->
+    <!-- Swap Pokemon OffCanvas Start -->
+    <div class="offcanvas offcanvas-end " tabindex="-1" id="swapPokemonOffCanvas">
+        <div class="offcanvas-header bg-primary text-center text-white">
+            <h5 class="offcanvas-title" id="swapTeamOffCanvasLabel">Swap Pokemon</h5>
+            <button type="button" class="btn-close" data-bs-toggle="offcanvas" data-bs-target="#editTeamOffCanvas"
+                aria-label="back"></button>
+        </div>
+        <!-- horz card -->
+        <div class="">
+            <div class="border-bottom rounded-0 w-100">
+                <div class="row g-0">
+                    
+                    <div class="col-3">
+                        <img class="img-fluid horz-card-img "
+                            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/414.png"
+                            alt="pokemonImg">
+                    </div>
+                    <div class="col-5 mt-2">
+                        <div class="mt-2 p-1 ms-1">
+                            <p class="fs-5 mb-0">Bidoof</p>
 
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="mt-3 p-1">
+                            <button class="btn btn-primary w-100 searchedPokemonBtn" data-bs-toggle="offcanvas"
+                                data-bs-target="#editTeamOffCanvas">Swap In</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- horz card end -->
+         <!-- horz card -->
+        <div class="">
+            <div class="border-bottom rounded-0 w-100">
+                <div class="row g-0">
+                    
+                    <div class="col-3">
+                        <img class="img-fluid horz-card-img "
+                            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/414.png"
+                            alt="pokemonImg">
+                    </div>
+                    <div class="col-5 mt-2">
+                        <div class="mt-2 p-1 ms-1">
+                            <p class="fs-5 mb-0">Bidoof</p>
+
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="mt-3 p-1">
+                            <button class="btn btn-primary w-100 searchedPokemonBtn" data-bs-toggle="offcanvas"
+                                data-bs-target="#editTeamOffCanvas">Swap In</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- horz card end -->
+         <!-- horz card -->
+        <div class="">
+            <div class="border-bottom rounded-0 w-100">
+                <div class="row g-0">
+                    
+                    <div class="col-3">
+                        <img class="img-fluid horz-card-img "
+                            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/414.png"
+                            alt="pokemonImg">
+                    </div>
+                    <div class="col-5 mt-2">
+                        <div class="mt-2 p-1 ms-1">
+                            <p class="fs-5 mb-0">Bidoof</p>
+
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="mt-3 p-1">
+                            <button class="btn btn-primary w-100 searchedPokemonBtn" data-bs-toggle="offcanvas"
+                                data-bs-target="#editTeamOffCanvas">Swap In</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- horz card end -->
+
+    </div>
+    <!-- Offcanvas End -->
     <!-- Add Pokemon Offcanvas   -->
     <div class="offcanvas offcanvas-end " tabindex="-1" id="addPokemonOffcanvas">
         <div class="offcanvas-header bg-primary text-center text-white">
@@ -335,7 +526,8 @@
 
                 </div>
                 <div class="modal-footer p-2">
-                    <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal"
+                        data-bs-toggle="offcanvas">Close</button>
                 </div>
             </div>
         </div>
@@ -374,9 +566,11 @@
     </div>
     <!-- modal end -->
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="typeSelector.js"></script>
+    <script src="pokemonList.js"></script>
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="pokemonList.js"></script>
+
 
 </html>
