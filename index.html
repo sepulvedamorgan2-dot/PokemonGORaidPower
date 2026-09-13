@@ -22,50 +22,54 @@
     <div class="container-fluid container-md">
         <div class="row ">
             <!-- Card -->
-            <div class="col-12 col-md-6 col-lg-4 mt-3">
+            <div class="col-12 col-sm-6 col-lg-4 mt-3">
                 <div class="card">
                     <div class="card-header text-center fs-4">
                         Rock
                     </div>
                     <!-- imgs -->
-                    <div class="row g-2  pb-lg-3 p-lg-2 p-2 pb-3 m-0 border-bottom">
-                        <div class="col-4 text-center  px-md-0 ">
-                            <img class="img-fluid border rounded w-100"
-                                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
-                                alt="pokemonImg">
+                    <div class="card-body border-bottom  p-2  p-sm-2 p-md-2">
+                        <div class="row g-2 g-sm-2 g-md-2 ">
+                            <div class="col-4 text-center   ">
+                                <img class="img-fluid border rounded w-100"
+                                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
+                                    alt="pokemonImg">
+
+                            </div>
+                            <div class="col-4 text-center ">
+                                <img class=" img-fluid border rounded w-100"
+                                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
+                                    alt="pokemonImg">
+
+                            </div>
+                            <div class="col-4 text-center ">
+                                <img class="img-fluid border rounded w-100"
+                                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
+                                    alt="pokemonImg">
+                            </div>
+                            <div class="col-4 text-center   ">
+                                <img class="img-fluid border rounded w-100"
+                                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
+                                    alt="pokemonImg">
+
+                            </div>
+                            <div class="col-4 text-center ">
+                                <img class=" img-fluid border rounded w-100"
+                                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
+                                    alt="pokemonImg">
+
+                            </div>
+                            <div class="col-4 text-center ">
+                                <img class="img-fluid border rounded w-100"
+                                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
+                                    alt="pokemonImg">
+                            </div>
+
+
 
                         </div>
-                        <div class="col-4 text-center px-md-0">
-                            <img class=" img-fluid border rounded w-100"
-                                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
-                                alt="pokemonImg">
-
-                        </div>
-                        <div class="col-4 text-center px-md-0">
-                            <img class="img-fluid border rounded w-100"
-                                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
-                                alt="pokemonImg">
-                        </div>
-                        <div class="col-4 mt-lg-3 text-center  px-md-0 ">
-                            <img class="img-fluid border rounded w-100"
-                                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
-                                alt="pokemonImg">
-                        </div>
-                        <div class="col-4 mt-lg-3 text-center px-md-0">
-                            <img class=" img-fluid border rounded w-100"
-                                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
-                                alt="pokemonImg">
-                        </div>
-                        <div class="col-4 mt-lg-3 text-center px-md-0
-                        0">
-                            <img class="img-fluid border rounded w-100"
-                                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
-                                alt="pokemonImg">
-                        </div>
-
-
                     </div>
-                    <div class="card-body pt-2 ">
+                    <div class="card-body pt-2 pb-3 ">
                         <div class="text-center">
                             <p class="text-uppercase fw-bold text-secondary fs-6 mt-2 mb-1">Raid Power</p>
                             <p class="fw-bolder fs-3 text-dark mb-0">1857</p>
@@ -339,38 +343,29 @@
     <!-- modal end -->
     <!-- confirm delete pokemon modal -->
     <div class="modal fade" tabindex="-1" id="confirmDelete">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-dialog modal-dialog-centered  modal-sm">
             <div class="modal-content">
-                <div class="modal-header p-3">
-                    <h1 class="modal-title fs-5 text-center mx-auto" id="pokemonAddedSuccessTitle">Pokemon Added</h1>
-                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
-                </div>
+
                 <div class="modal-body">
-                    <!-- img -->
-                    <div class="row justify-content-center">
-                        <div class="col-10">
-                            <img class="img-fluid w-100 border rounded"
-                                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/351.png"
-                                alt="">
-                        </div>
-                    </div>
-                    <!-- RP text -->
-                    <div class="text-center">
-                        <p class="text-uppercase fw-bold text-secondary fs-6 mt-2 mb-1">Raid Power</p>
-                        <p class="fw-bolder fs-3 text-dark mb-0">318</p>
+
+                    <div class="text-center py-2">
+
+                        <p class="fw-bolder fs-3 text-dark mb-0">Are you sure you want to delete this pokemon?</p>
                     </div>
 
                 </div>
                 <div class="p-2">
 
-                    <div class="row g-2">
+                    <div class="row g-1 g-md-2 p-1">
+                        <div class="col12 col-6-md">
+                            <button type="button" class="btn btn-danger w-100 text-white"
+                                data-bs-dismiss="modal">Yes</button>
+                        </div>
                         <div class="col-12 col-6-md">
                             <button type="button" class="btn btn-outline-secondary w-100"
-                                data-bs-dismiss="modal">Cancel</button>
+                                data-bs-dismiss="modal">No</button>
                         </div>
-                        <div class="col12 col-6-md">
-                            <button type="button" class="btn btn-danger w-100 text-white" data-bs-dismiss="modal">Delete</button>
-                        </div>
+
 
                     </div>
                 </div>
