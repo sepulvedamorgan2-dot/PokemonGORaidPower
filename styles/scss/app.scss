@@ -1,13 +1,13 @@
 //0.0 Import/Use this
 @use "Sass:color";
-//
-
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&display=swap');
 
 
 //1.0  unlike css and most things, variables for bootstrap that are defined ABOVE
 // the import statement take priority!
 @import "../../styles/scss/variable";
-
+$border-radius: 1rem;
+$font-family-sans-serif: 'Maven Pro', sans-serif;
 //1.0
 
 
@@ -19,9 +19,16 @@
 //3.0 custom override
 //just for a classes, takes power over above primary since its more specific
 // $primary-ov: yellow;
+.col-4 {
+  img {
+    border-color: #EAE4F1 !important;
+    padding: .25rem;
+  }   
+}
 
-
-
+button.btn, label.btn {
+    border-radius: .6rem;
+}
 // .main-call-to-action{
 //     background-color: $primary-ov;
 //     font-size: $font-size-sm;

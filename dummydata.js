@@ -8,8 +8,8 @@ for (const type of types) {
     typeCard.dataset.poketype = `${type}`;
     typeCard.innerHTML += `
                 <div class="card">
-                    <div class="card-header text-center fs-4">
-                        ${type.charAt(0).toUpperCase() + type.slice(1)} Type
+                    <div class="card-header text-center text-capitalize fs-4">
+                        ${type} Type
                     </div>
                     <!-- imgs -->
                     <div class="card-body border-bottom  p-2  p-sm-2 p-md-2">
