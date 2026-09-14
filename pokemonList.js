@@ -31,21 +31,21 @@ pokemonSelect.addEventListener('keydown', (event) => {
         }
         if (pokemon.includes(selectedPokemon.toLowerCase()) && pokemon.includes("-mega") === false) {
             pokemonList.innerHTML += `<div class="border-bottom rounded-0 w-100" aria-label="${pokemon}">
-                    <div class="row g-0">
-                        <div class="col-2">
-                            <img class="img-fluid horz-card-img " style="max-height: 60px; max-width: 60px;"
+                    <div class="row g-0 align-items-center">
+                        <div class="col-3">
+                            <img class="img-fluid horz-card-img " 
                                 src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonNameList.indexOf(pokemon) + 1}.png"
                                 alt="pokemonImg">
                         </div>
-                        <div class="col-7">
-                            <div class="mt-2 p-1 ms-1">
-                                <p class="fs-5 mb-0">${pokemon}</p>
+                        <div class="col-6">
+                            <div class="ms-0 ms-sm-0">
+                                <p class="fs-5 mb-0 text-capitalize">${pokemon}</p>
 
                             </div>
                         </div>
                         <div class="col-3">
-                            <div class="mt-2 p-1">
-                                <button class="btn btn-primary w-100 searchedPokemonBtn" data-bs-toggle="offcanvas" data-bs-target="#addPokemonDetailsOffCanvas" data-bsname="${pokemon}">Select</button>
+                            <div class="p-1">
+                                <button class="btn btn-sm btn-primary w-100 searchedPokemonBtn" data-bs-toggle="offcanvas" data-bs-target="#addPokemonDetailsOffCanvas" data-bsname="${pokemon}">Select</button>
                             </div>
                         </div>
 
