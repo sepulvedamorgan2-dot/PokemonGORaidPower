@@ -8,11 +8,12 @@ for (const type of types) {
     typeCard.dataset.poketype = `${type}`;
     typeCard.innerHTML += `
                 <div class="card">
-                    <div class="card-header text-center text-capitalize fs-4">
-                        ${type} Type
-                    </div>
+                    
                     <!-- imgs -->
                     <div class="card-body border-bottom  p-2  p-sm-2 p-md-2">
+                    <h4 class="card-title text-capitalize text-center py-2"> ${type} Type</h4>
+                        
+                    
                         <div class="row g-2 g-sm-2 g-md-2 ">
                             <div class="col-4 text-center   ">
                                 <img class="img-fluid border rounded w-100"
@@ -56,14 +57,11 @@ for (const type of types) {
                     <div class="card-body pt-2 pb-3 ">
                         <div class="text-center">
                             <p class="text-uppercase fw-bold text-secondary fs-6 mt-2 mb-1">Raid Power</p>
-                            <p class="fw-bolder fs-3 text-dark mb-0">1857</p>
+                            <p class="fw-bolder fs-3 text-dark mb-0">${Math.floor(Math.random() * 2000) + 1}</p>
                         </div>
-                        <!-- <div class="text-center align-items-baseline ">
-                            <span class="text-uppercase fw-bold text-secondary fs-6 me-1">RP</span>
-                            <span class="fw-bolder fs-3 text-dark me-4">12,450</span>
-                        </div> -->
+                       
                         <div class="text-center">
-                            <button class="mt-3 mb-0 btn btn-primary w-75" data-bs-toggle="offcanvas"
+                            <button class="mt-3 mb-0 btn btn-primary w-50" data-bs-toggle="offcanvas"
                                 data-bs-target="#editTeamOffCanvas">Edit Team</button>
                             <!-- editTeamOffCanvas -->
                             <!-- PokemonDetailsOffCanvas -->

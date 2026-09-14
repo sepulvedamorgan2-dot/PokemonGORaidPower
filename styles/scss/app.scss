@@ -8,7 +8,9 @@
 @import "../../styles/scss/variable";
 $border-radius: 1rem;
 $font-family-sans-serif: 'Maven Pro', sans-serif;
+// $headings-font-famiy fhuihbeubfeijfbefjeefu
 //1.0
+
 
 
 
@@ -25,8 +27,15 @@ $font-family-sans-serif: 'Maven Pro', sans-serif;
     padding: .25rem;
   }   
 }
+.card{
+  .card-header{
+    font-weight: 450;
+  }
+}
 
-button.btn, label.btn {
+
+
+button.btn, label.btn, select.form-select {
     border-radius: .6rem;
 }
 // .main-call-to-action{
