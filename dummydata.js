@@ -10,7 +10,7 @@ for (const type of types) {
                 <div class="card  ">
                     
                     <!-- imgs -->
-                    <div class="card-body     p-2  p-sm-2 p-md-2">
+                    <div class="card-body p-2  p-sm-2 p-md-2">
                     
                         <div class="row p-2 py-0 mb-1">
                             <div class="col-10 ps-2 ps-sm-2">
