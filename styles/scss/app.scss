@@ -2,21 +2,22 @@
 @use "Sass:color";
 @import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&display=swap');
 
-
 //1.0  unlike css and most things, variables for bootstrap that are defined ABOVE
 // the import statement take priority!
 @import "../../styles/scss/variable";
+
 $border-radius: 1rem;
 $font-family-sans-serif: 'Maven Pro', sans-serif;
+$btn-close-color: white;
 // $headings-font-famiy fhuihbeubfeijfbefjeefu
 //1.0
-
-
 
 
 //2.0 Import Bootstrap
 @import "../../node_modules/bootstrap/scss/bootstrap";
 //2.0
+
+
 
 //3.0 custom override
 //just for a classes, takes power over above primary since its more specific
@@ -25,19 +26,20 @@ $font-family-sans-serif: 'Maven Pro', sans-serif;
   img {
     border-color: #EAE4F1 !important;
     padding: .25rem;
-  }   
+  }
 }
-.card{
-  .card-header{
+
+.card {
+  .card-header {
     font-weight: 450;
   }
 }
 
 
-
 button.btn, label.btn, select.form-select {
-    border-radius: .6rem;
+  border-radius: .6rem;
 }
+
 // .main-call-to-action{
 //     background-color: $primary-ov;
 //     font-size: $font-size-sm;
