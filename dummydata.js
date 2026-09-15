@@ -7,24 +7,32 @@ for (const type of types) {
     typeCard.classList.add('col-12', 'col-sm-6', 'col-lg-4', 'mt-3', 'typecard');
     typeCard.dataset.poketype = `${type}`;
     typeCard.innerHTML += `
-                <div class="card">
+                <div class="card  ">
                     
                     <!-- imgs -->
                     <div class="card-body     p-2  p-sm-2 p-md-2">
                     
                         <div class="row p-2 py-0 mb-1">
-                            <div class="col-8 ps-2 ps-sm-2">
+                            <div class="col-10 ps-2 ps-sm-2">
+                                  <div class="ms-0 ms-sm-1">
                                 <h4 class="fs-2 fw-bold pt-2 mb-0 text-capitalize text-start pb-0"> ${type}</h4>
-                                <span class="fw-semibold fs-5 text-dark mb-0">${Math.floor(Math.random() * 2000) + 1}</span>
-                                <span class="text-uppercase fw-bold text-secondary fs-6 mt-2 mb-1">RP</span>
+                         
+                                </div>
                             </div>
-                           
-                            <div class="col-4 d-flex justify-content-end">
+                          
+                            <div class="col-2 d-flex justify-content-end">
                             
-                                    <div class="p-sm-2 me-sm-1 mt-sm-1 p-2">
-                                    <i class="bi bi-pencil fs-3 " type="button" data-bs-toggle="offcanvas" data-bs-target="#editTeamOffCanvas"></i>
+                                    <div class="p-sm-2 me-sm-1 mt-sm-1 p-2 pb-0 pb-sm-0">
+                                    <i class="bi bi-pencil fs-5 " type="button" data-bs-toggle="offcanvas" data-bs-target="#editTeamOffCanvas"></i>
                                     </div>
                             </div>
+                            <div class="col-12 ps-2 pe-0">
+                            <div class="ms-sm-1">
+                            <span class="fw-semibold fs-5 text-dark mb-0">${Math.floor(Math.random() * 2000) + 1}</span>
+                                <span class="text-uppercase fw-bold text-tertiary fs-6 mt-2 mb-1">RP</span>
+                                <span class="fw-semibold fs-5 text-dark mb-0 ms-2">${Math.floor(Math.random() * 4) + 1}</span>
+                                <span class="text-uppercase fw-bold text-secondary fs-tiny   mt-2 mb-1">Players per 5* Raid</span>
+</div>  </div>
                         </div>
                        
                     

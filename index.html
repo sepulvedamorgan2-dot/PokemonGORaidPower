@@ -12,14 +12,31 @@
 </head>
 
 <body class="bg-light">
-<nav class="navbar  bg-primary">
+<nav class="navbar navbar-expand-sm bg-primary">
     <div class="container-fluid container-md ">
-        <a class="navbar-brand ms-1 text-white" href="#">Raid Power</a>
+        <a class="navbar-brand text-white" href="#">
+            <img src="media/images/demologo.png" alt="Logo" class="img-fluid " style="height: 40px;">
+            Raid Power
+        </a>
+<!--        <i class="bi bi-three-dots text-white fs-4 d-sm-none  px-2 py-1" type="button" data-bs-toggle="collapse"-->
+<!--           data-bs-target="#navbarCollapse" aria-controls="#offCanvasNav" aria-expanded="false"-->
+<!--           aria-label="Toggle navigation">-->
+<!--        </i>-->
+<!--        <div class="navbar-collapse collapse" id="navbarCollapse">-->
+<!--            <div class="navbar-nav ms-auto d-none d-sm-flex ">-->
+<!--                <a class="nav-link text-white" href="#">Home</a>-->
+<!--                <a class="nav-link text-white" href="#">About</a>-->
+<!--                <a class="nav-link text-white" href="#">Contact</a>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </nav>
 
+
+
+
 <!-- Type Selector -->
-<div class="container-fluid  d-sm-none">
+<div class="container-fluid  d-sm-none ">
     <div class="row mt-2">
 
         <label class="slimm">Pokemon Type
@@ -67,17 +84,17 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
 
-    <div class="">
+    <div class="" id="editTeamCollapse">
         <!-- Pokemon horitzonal card -->
         <div class="border-bottom rounded-0 w-100">
 
             <div class="row g-0">
-                <div class="col-3">
-                    <img class="img-fluid horz-card-img"
+                <div class="col-3 col-md-2">
+                    <img class="img-fluid"
                          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
                          alt="pokemonImg">
                 </div>
-                <div class="col-6">
+                <div class="col-7 col-md-8">
                     <div class="p-1 ms-1">
                         <p class="fs-5 mb-0">Ditto</p>
                         <div class="d-flex mt-0">
@@ -88,12 +105,32 @@
 
                     </div>
                 </div>
-                <div class="col-3">
-                    <div class="d-flex justify-content-center align-items-center h-100">
-                        <i type="button" data-bs-toggle="offcanvas" data-bs-target="#swapPokemonOffCanvas"
-                           class="bi bi-arrow-repeat me-2  fs-4 text-black "></i>
-                        <i type="button" data-bs-toggle="modal" data-bs-target="#confirmDelete"
-                           class="bi bi-trash-fill fs-5 text-danger "></i>
+                <div class="col-2">
+                    <div class="d-flex justify-content-end me-4 align-items-center h-100">
+                        <i type="button" data-bs-toggle="collapse" data-bs-target="#collapseEX1"
+                           class="bi bi-pencil"></i>
+                    </div>
+                </div>
+                <div class="collapse" id="collapseEX1" data-bs-parent="#editTeamCollapse">
+                    <div class="card border-0 card-body py-2 pt-0">
+                        <div class="row g-1">
+                            <div class="col-12 col-sm-4">
+                                <button type="button" data-bs-toggle="offcanvas" data-bs-target="#swapPokemonOffCanvas"
+                                        class="btn btn-primary w-100">Swap
+                                </button>
+                            </div>
+
+                            <div class="col-12 col-sm-4">
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#confirmMega"
+                                        class="btn btn-secondary w-100">Mega
+                                </button>
+                            </div>
+                            <div class="col-12 col-sm-4">
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#confirmDelete"
+                                        class="btn btn-danger w-100 text-white">Delete
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -105,43 +142,12 @@
         <div class="border-bottom rounded-0 w-100">
 
             <div class="row g-0">
-                <div class="col-3">
-                    <img class="img-fluid horz-card-img"
-                         src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"
-                         alt="pokemonImg">
-                </div>
-                <div class="col-6">
-                    <div class="p-1 ms-1">
-                        <p class="fs-5 mb-0">Ditto</p>
-                        <div class="d-flex mt-0">
-                            <p class="me-2 fs-6 mb-0">CP: xxxx</p>
-                            <p class="fs-6 mb-0">RP: xxx</p>
-
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="d-flex justify-content-center align-items-center h-100">
-                        <i class="bi bi-arrow-repeat me-2  fs-4 text-black "></i>
-                        <i class="bi bi-trash-fill fs-5 text-danger "></i>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-        <!-- Pokemon horitzonal card -->
-        <!-- Pokemon horitzonal card -->
-        <div class="border-bottom rounded-0 w-100">
-
-            <div class="row g-0">
-                <div class="col-3">
-                    <img class="img-fluid horz-card-img"
+                <div class="col-3 col-md-2">
+                    <img class="img-fluid"
                          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
                          alt="pokemonImg">
                 </div>
-                <div class="col-6">
+                <div class="col-7 col-md-8">
                     <div class="p-1 ms-1">
                         <p class="fs-5 mb-0">Ditto</p>
                         <div class="d-flex mt-0">
@@ -152,10 +158,32 @@
 
                     </div>
                 </div>
-                <div class="col-3">
-                    <div class="d-flex justify-content-center align-items-center h-100">
-                        <i class="bi bi-arrow-repeat me-2  fs-4 text-black "></i>
-                        <i class="bi bi-trash-fill fs-5 text-danger "></i>
+                <div class="col-2">
+                    <div class="d-flex justify-content-end me-4 align-items-center h-100">
+                        <i type="button" data-bs-toggle="collapse" data-bs-target="#collapseEX2"
+                           class="bi bi-pencil"></i>
+                    </div>
+                </div>
+                <div class="collapse" id="collapseEX2" data-bs-parent="#editTeamCollapse">
+                    <div class="card border-0 card-body py-2 pt-0">
+                        <div class="row g-1">
+                            <div class="col-12 col-sm-4">
+                                <button type="button" data-bs-toggle="offcanvas" data-bs-target="#swapPokemonOffCanvas"
+                                        class="btn btn-primary w-100">Swap
+                                </button>
+                            </div>
+
+                            <div class="col-12 col-sm-4">
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#confirmDelete"
+                                        class="btn btn-secondary w-100">Mega
+                                </button>
+                            </div>
+                            <div class="col-12 col-sm-4">
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#confirmDelete"
+                                        class="btn btn-danger w-100 text-white">Delete
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -163,7 +191,60 @@
 
         </div>
         <!-- Pokemon horitzonal card -->
-        <!-- Add new Pokemon horitzonal card -->
+        <!-- Pokemon horitzonal card -->
+        <div class="border-bottom rounded-0 w-100">
+
+            <div class="row g-0">
+                <div class="col-3 col-md-2">
+                    <img class="img-fluid"
+                         src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
+                         alt="pokemonImg">
+                </div>
+                <div class="col-7 col-md-8">
+                    <div class="p-1 ms-1">
+                        <p class="fs-5 mb-0">Ditto</p>
+                        <div class="d-flex mt-0">
+                            <p class="me-2 fs-6 mb-0">CP: xxxx</p>
+                            <p class="fs-6 mb-0">RP: xxx</p>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="d-flex justify-content-end me-4 align-items-center h-100">
+                        <i type="button" data-bs-toggle="collapse" data-bs-target="#collapseEX3"
+                           class="bi bi-pencil"></i>
+                    </div>
+                </div>
+                <div class="collapse" id="collapseEX3" data-bs-parent="#editTeamCollapse">
+                    <div class="card border-0 card-body py-2 pt-0">
+                        <div class="row g-1">
+                            <div class="col-12 col-sm-4">
+                                <button type="button" data-bs-toggle="offcanvas" data-bs-target="#swapPokemonOffCanvas"
+                                        class="btn btn-primary w-100">Swap
+                                </button>
+                            </div>
+
+                            <div class="col-12 col-sm-4">
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#confirmDelete"
+                                        class="btn btn-secondary w-100">Mega
+                                </button>
+                            </div>
+                            <div class="col-12 col-sm-4">
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#confirmDelete"
+                                        class="btn btn-danger w-100 text-white">Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- Pokemon horitzonal card -->
+
         <div class="p-2">
             <button data-bs-toggle="offcanvas" data-bs-target="#addPokemonOffcanvas"
                     class="btn btn-primary w-100 fs-4 w-100">
@@ -188,7 +269,7 @@
         <div class="border-bottom rounded-0 w-100">
             <div class="row g-0 align-items-center">
 
-                <div class="col-3">
+                <div class="col-3 col-md-2">
                     <img class="img-fluid horz-card-img "
                          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/414.png"
                          alt="pokemonImg">
@@ -219,7 +300,8 @@
 <div class="offcanvas offcanvas-end " tabindex="-1" id="addPokemonOffcanvas">
     <div class="offcanvas-header bg-primary text-center text-white">
 
-        <i type="button" class="bi bi-arrow-return-left text-white fs-5" data-bs-toggle="offcanvas" data-bs-target="#editTeamOffCanvas"></i>
+        <i type="button" class="bi bi-arrow-return-left text-white fs-5" data-bs-toggle="offcanvas"
+           data-bs-target="#editTeamOffCanvas"></i>
         <button type="button" class="btn-close" data-bs-toggle="offcanvas"
                 aria-label="back"></button>
     </div>
@@ -239,16 +321,17 @@
 </div>
 <!-- add pokemon offcanvas end -->
 <!-- added pokemon details offcanvas -->
-<div class="offcanvas offcanvas-end d-flex flex-column" tabindex="-1" id="addPokemonDetailsOffCanvas">
+<div class="offcanvas offcanvas-end d-flex flex-column bg-light  " tabindex="-1" id="addPokemonDetailsOffCanvas">
     <div class="offcanvas-header bg-primary text-center text-white">
-        <i type="button" class="bi bi-arrow-return-left text-white fs-5" data-bs-toggle="offcanvas" data-bs-target="#addPokemonOffcanvas"></i>
+        <i type="button" class="bi bi-arrow-return-left text-white fs-5" data-bs-toggle="offcanvas"
+           data-bs-target="#addPokemonOffcanvas"></i>
         <button type="button" class="btn-close" data-bs-toggle="offcanvas"
                 aria-label="back"></button>
     </div>
     <div class="flex-grow-1 d-flex flex-column">
         <div class="px-4">
             <div class="px-5 pt-3">
-                <img src="" class="img-fluid details-img w-100 border rounded" alt="">
+                <img src="" class="bg-white img-fluid details-img w-100 border border-dark-subtle rounded" alt="">
             </div>
         </div>
         <div class="text-center">
@@ -269,7 +352,7 @@
                 </div>
                 <div class="col-6">
                     <input type="radio" class="btn-check" id="tierThreeCP" name="btnradio" autocomplete="off">
-                    <label class="btn btn-outline-primary w-100" for="tierThreeCP">2500-3500CP</label>
+                    <label class="btn btn-outline-primary w-100" for="tierThreeCP">2500+</label>
 
                 </div>
                 <div class="col-6">
@@ -284,7 +367,7 @@
                 <div class="">
                     <label class="form-check-label">
 
-                        <input type="checkbox" id="isShadow" class="form-check-input">
+                        <input type="checkbox" id="isShadow" class="border-dark-subtle form-check-input">
                         Shadow
                     </label>
 
@@ -292,7 +375,7 @@
                 <div class="">
                     <label class="form-check-label">
 
-                        <input type="checkbox" id="isMega" class="form-check-input">
+                        <input type="checkbox" id="isMega" class="border-dark-subtle form-check-input">
                         Mega Evolved
                     </label>
                 </div>
@@ -330,13 +413,13 @@
                 </div>
                 <!-- RP text -->
                 <div class="text-center">
-                    <p class="text-uppercase fw-bold text-secondary fs-6 mt-2 mb-1">Raid Power</p>
+                    <p class="text-uppercase fw-bold text-tertiary fs-6 mt-2 mb-1">Raid Power</p>
                     <p class="fw-bolder fs-3 text-dark mb-0">318</p>
                 </div>
 
             </div>
             <div class="modal-footer p-2">
-                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal"
+                <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal"
                         data-bs-toggle="offcanvas">Close
                 </button>
             </div>
@@ -362,6 +445,40 @@
                 <div class="row g-1 g-md-2 p-1">
                     <div class="col12 col-6-md">
                         <button type="button" class="btn btn-danger w-100 text-white"
+                                data-bs-dismiss="modal">Yes
+                        </button>
+                    </div>
+                    <div class="col-12 col-6-md">
+                        <button type="button" class="btn btn-outline-secondary w-100"
+                                data-bs-dismiss="modal">No
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal end -->
+<!-- confirm Mega Evolve pokemon modal -->
+<div class="modal fade" tabindex="-1" id="confirmMega">
+    <div class="modal-dialog modal-dialog-centered  modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-body p-2">
+
+                <div class="text-center py-2">
+
+                    <p class="fw-bolder fs-3 text-dark mb-0">Are you sure you want to Mega Evolve this pokemon?</p>
+                </div>
+
+            </div>
+            <div class="p-2">
+
+                <div class="row g-1 g-md-2 p-1">
+                    <div class="col12 col-6-md">
+                        <button type="button" class="btn btn-success w-100 text-white"
                                 data-bs-dismiss="modal">Yes
                         </button>
                     </div>
