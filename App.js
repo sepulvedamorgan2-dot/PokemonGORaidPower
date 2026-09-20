@@ -29,7 +29,7 @@ const app = createApp({
                 Id: 1,
                 name: "bidoof",
                 pokemonID: 399,
-                cp: 1000,
+                cp: 2000,
                 isShadow: false,
                 canMegaEvolve: false,
                 fastMoveType: "normal",
