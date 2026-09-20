@@ -2,6 +2,7 @@ $primary : #3B2951;
 $secondary: #5a6c77;
 $card-cap-bg: #EAE4F1;
 $light: #e6deed;
+$lighter: #F5F2F8;
 
 // e
 // 1. Define your base opacity
@@ -9,6 +10,7 @@ $light: #e6deed;
 $theme-colors: (
   "primary":    $primary,
   "secondary":  $secondary,
+  "lighter":    $lighter,
   "success":    green,
   "info":       #005ea2,
   "warning":    yellow,

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/styles/css/app.css">
     <link rel="stylesheet" href="/styles/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-
+    <link rel="stylesheet" href="/styles/css/typecolor.css">
 </head>
 
 <body class="bg-light">
@@ -36,8 +36,9 @@
 <!-- Search Bar -->
 <div class="container-fluid container-sm px-2">
     <div class="row g-1 mt-2 justify-content-end">
-        <div class="col-12 col-sm-3 col-lg-2">
-            <div class="btn btn-primary w-100" type="button" id="filterButton">
+        <div class="col-12 col-sm-3 ">
+            <div class="btn btn-primary w-100 py-sm-2" type="button" id="filterButton" data-bs-toggle="offcanvas"
+                 data-bs-target="#addPokemonOffcanvas">
 
                 <i class=" d-md-block">Add Pokemon</i>
             </div>
@@ -50,7 +51,7 @@
     <div class="row g-1 mb-2">
 
         <div class="col-10 ">
-                <input type="text" class="form-control" id="searchBar" placeholder="Ex: Charizard">
+            <input type="text" class="form-control" id="searchBar" placeholder="Ex: Charizard">
         </div>
         <div class="col-2">
             <div class="btn btn-outline-secondary w-100" type="button" id="filterButton">
@@ -58,8 +59,6 @@
                 <i class="d-none d-md-block">Filter</i>
             </div>
         </div>
-
-
 
 
     </div>
@@ -71,7 +70,7 @@
 
 <div class="container p-0 p-sm-2">
 
-    <div class="row bg-secondary g-0 d-none d-sm-flex">
+    <div class="row bg-light g-0 d-none d-sm-flex">
         <div class="col-auto">
             <div class="horz-card-img"></div>
         </div>
@@ -113,7 +112,7 @@
 
 
     <!-- Pokemon horitzonal card -->
-    <div class="row bg-tertiary border-bottom border-dark g-0 py-0">
+    <div class="row bg-lighter  g-0 py-0">
         <div class="col-auto">
             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
                  alt="PokemonName" class="img-fluid horz-card-img">
@@ -152,20 +151,107 @@
 
         </div>
 
-        <!--        <div class="col-1 px-5 align-items-center d-sm-flex d-none">-->
-        <!--            <span class="badge p-2 text-bg-secondary">Type</span>-->
-        <!--        </div>-->
-        <!--        <div class="col-2 px-5 align-items-center d-sm-flex d-none">-->
-        <!--            <span class="badge p-2 me-2 text-bg-secondary">Type</span>-->
-        <!--            <span class="badge p-2 text-bg-secondary">Type</span>-->
-
-
-        <!--        </div>-->
-        <!--        <p class="me-2 fs-tinyer mb-0">CP: xxxx</p>-->
-        <!--        <p class="fs-tinyer mb-0">RP: xxx</p>-->
 
         <div class="col-auto ms-auto  align-items-center d-flex">
-            <i type="button" data-bs-toggle="collapse" data-bs-target="#horitzonalCardCollapse1"
+            <i type="button" data-bs-toggle="offcanvas" data-bs-target="#pokemonDetailsOffCanvas"
+               class="bi bi-three-dots me-4 fs-4"></i>
+        </div>
+
+
+    </div>
+    <!--  card end  -->
+    <!-- Pokemon horitzonal card -->
+    <div class="row bg-white   g-0 py-0">
+        <div class="col-auto">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
+                 alt="PokemonName" class="img-fluid horz-card-img">
+        </div>
+        <div class="col-6 col-sm-3 col-lg-2 d-flex  align-items-center">
+            <p class="fs-5 mb-1 ms-1">Crabominable</p>
+
+        </div>
+        <div class="col-auto d-none d-sm-flex">
+            <div class="spacer"></div>
+        </div>
+        <div class=" col-auto d-none d-sm-flex  align-items-center">
+            <p class="fs-6 mb-0 ms-1 power-width">3000</p>
+
+        </div>
+        <div class="col-auto d-none d-sm-flex">
+            <div class="spacer"></div>
+        </div>
+        <div class=" col-auto d-none d-sm-flex  align-items-center">
+            <p class="fs-6 mb-0 ms-1 power-width">232</p>
+
+        </div>
+        <div class="col-auto">
+            <div class="spacer"></div>
+        </div>
+        <div class=" col-auto d-none d-lg-flex movewidth align-items-center ">
+            <span class="badge p-2 text-bg-secondary ms-2">Type</span>
+
+        </div>
+        <div class="col-auto">
+            <div class="spacer"></div>
+        </div>
+        <div class=" col-auto d-none d-lg-flex movewidth align-items-center ms-2">
+            <span class="badge p-2 text-bg-secondary">Fighting</span>
+            <span class="badge p-2 ms-2 text-bg-secondary">Fighting</span>
+
+        </div>
+
+
+        <div class="col-auto ms-auto  align-items-center d-flex">
+            <i type="button" data-bs-toggle="offcanvas" data-bs-target="#pokemonDetailsOffCanvas"
+               class="bi bi-three-dots me-4 fs-4"></i>
+        </div>
+
+
+    </div>
+    <!--  card end  -->
+    <!-- Pokemon horitzonal card -->
+    <div class="row bg-lighter  g-0 py-0">
+        <div class="col-auto">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
+                 alt="PokemonName" class="img-fluid horz-card-img">
+        </div>
+        <div class="col-6 col-sm-3 col-lg-2 d-flex  align-items-center">
+            <p class="fs-5 mb-1 ms-1">Crabominable</p>
+
+        </div>
+        <div class="col-auto d-none d-sm-flex">
+            <div class="spacer"></div>
+        </div>
+        <div class=" col-auto d-none d-sm-flex  align-items-center">
+            <p class="fs-6 mb-0 ms-1 power-width">3000</p>
+
+        </div>
+        <div class="col-auto d-none d-sm-flex">
+            <div class="spacer"></div>
+        </div>
+        <div class=" col-auto d-none d-sm-flex  align-items-center">
+            <p class="fs-6 mb-0 ms-1 power-width">232</p>
+
+        </div>
+        <div class="col-auto">
+            <div class="spacer"></div>
+        </div>
+        <div class=" col-auto d-none d-lg-flex movewidth align-items-center ">
+            <span class="badge p-2 text-bg-secondary ms-2">Type</span>
+
+        </div>
+        <div class="col-auto">
+            <div class="spacer"></div>
+        </div>
+        <div class=" col-auto d-none d-lg-flex movewidth align-items-center ms-2">
+            <span class="badge p-2 text-bg-secondary">Fighting</span>
+            <span class="badge p-2 ms-2 text-bg-secondary">Fighting</span>
+
+        </div>
+
+
+        <div class="col-auto ms-auto  align-items-center d-flex">
+            <i type="button" data-bs-toggle="offcanvas" data-bs-target="#pokemonDetailsOffCanvas"
                class="bi bi-three-dots me-4 fs-4"></i>
         </div>
 
@@ -174,186 +260,97 @@
     <!--  card end  -->
 
 
-
 </div>
 
 
-<!-- Pokemon horitzonal card -->
-<!-- Card End -->
-<!-- Offcanvas Start -->
-<div class="offcanvas offcanvas-end " tabindex="-1" id="editTeamOffCanvas">
-    <div class="offcanvas-header bg-primary text-center text-white">
-        <h5 class="offcanvas-title" id="editTeamOffCanvasLabel">Edit Team</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
+<!--View Details Offcanvas-->
 
-    <div class="" id="editTeamCollapse">
-        <!-- Pokemon horitzonal card -->
-        <div class="border-bottom rounded-0 w-100">
-
-            <div class="row g-0">
-                <div class="col-3 col-md-2">
-                    <img class="img-fluid"
-                         src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
-                         alt="pokemonImg">
-                </div>
-                <div class="col-7 col-md-8">
-                    <div class="p-1 ms-1">
-                        <p class="fs-5 mb-0">Ditto</p>
-                        <div class="d-flex mt-0">
-                            <p class="me-2 fs-6 mb-0">CP: xxxx</p>
-                            <p class="fs-6 mb-0">RP: xxx</p>
-
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="d-flex justify-content-end me-4 align-items-center h-100">
-                        <i type="button" data-bs-toggle="collapse" data-bs-target="#collapseEX1"
-                           class="bi bi-pencil"></i>
-                    </div>
-                </div>
-
-                <div class="collapse" id="collapseEX1" data-bs-parent="#editTeamCollapse">
-                    <div class="card border-0 card-body py-2 pt-0">
-                        <div class="row g-1">
-                            <div class="col-12 col-sm-4">
-                                <button type="button" data-bs-toggle="offcanvas" data-bs-target="#swapPokemonOffCanvas"
-                                        class="btn btn-primary w-100">Swap
-                                </button>
-                            </div>
-
-                            <div class="col-12 col-sm-4">
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#confirmMega"
-                                        class="btn btn-secondary w-100">Mega
-                                </button>
-                            </div>
-                            <div class="col-12 col-sm-4">
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#confirmDelete"
-                                        class="btn btn-danger w-100 text-white">Remove
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Pokemon horitzonal card -->
-
-
-        <div class="p-2">
-            <button data-bs-toggle="offcanvas" data-bs-target="#swapPokemonOffCanvas"
-                    class="btn btn-primary w-100 fs-4 w-100">
-                Add Pokemon
-            </button>
-        </div>
-        <!-- Pokemon horitzonal card -->
-    </div>
-
-
-</div>
-<!-- Offcanvas End -->
-<!-- Swap Pokemon OffCanvas Start -->
-<div class="offcanvas offcanvas-end " tabindex="-1" id="swapPokemonOffCanvas">
-    <div class="offcanvas-header bg-primary text-center text-white">
-        <i type="button" class="bi bi-arrow-left text-white fs-5" data-bs-toggle="offcanvas"
-           data-bs-target="#editTeamOffCanvas"></i>
-        <button type="button" class="btn-close" data-bs-toggle="offcanvas" data-bs-target="#editTeamOffCanvas"
-                aria-label="back"></button>
-    </div>
-
-
-    <div class="">
-        <div class="p-3 border-bottom">
-            <label class="form-label w-100">Search Pokemon
-                <input class="form-control " placeholder="'Enter' to Search" id="pokemonSelect">
-
-            </label>
-        </div>
-        <div id="renderList">
-
-        </div>
-    </div>
-
-    <!-- horz card -->
-    <div class="">
-        <div class="border-bottom rounded-0 w-100">
-            <div class="row g-0 align-items-center">
-
-                <div class="col-3 col-md-2">
-                    <img class="img-fluid horz-card-img "
-                         src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/414.png"
-                         alt="pokemonImg">
-                </div>
-                <div class="col-5 col-md-6 ">
-                    <div class="p-1">
-                        <p class="fs-5 fs-sm-5 mb-0">Bidoof</p>
-
-                    </div>
-                </div>
-                <div class="col-4 py-2">
-                    <div class=" p-1">
-                        <button class="btn btn-primary btn-sm px-0 w-100 py-sm-2 searchedPokemonBtn"
-                                data-bs-toggle="offcanvas" data-bs-target="#editTeamOffCanvas">Select
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- horz card end -->
-
-
-</div>
-<!-- Offcanvas End -->
-<!-- Add Pokemon Offcanvas   -->
-<div class="offcanvas offcanvas-end " tabindex="-1" id="addPokemonOffcanvas">
+<div class="offcanvas offcanvas-end " tabindex="-1" id="pokemonDetailsOffCanvas"
+     style="overflow-y: auto; max-height: 100%;">
     <div class="offcanvas-header bg-primary text-center text-white">
 
-        <i type="button" class="bi bi-arrow-left text-white fs-5" data-bs-toggle="offcanvas"
-           data-bs-target="#editTeamOffCanvas"></i>
-        <button type="button" class="btn-close" data-bs-toggle="offcanvas"
-                aria-label="back"></button>
-    </div>
-    <div class="">
-        <div class="p-3 border-bottom">
-            <label class="form-label w-100">Search Pokemon
-                <input class="form-control " placeholder="'Enter' to Search" id="pokemonSelect">
-
-            </label>
-        </div>
-        <div id="renderList">
-
-        </div>
-    </div>
-
-
-</div>
-<!-- add pokemon offcanvas end -->
-<!-- added pokemon details offcanvas -->
-<div class="offcanvas offcanvas-end d-flex flex-column bg-light  " tabindex="-1" id="addPokemonDetailsOffCanvas">
-    <div class="offcanvas-header bg-primary text-center text-white">
-        <i type="button" class="bi bi-arrow-left text-white fs-5" data-bs-toggle="offcanvas"
-           data-bs-target="#addPokemonOffcanvas"></i>
+        <h5 class="offcanvas-title">Pokemon Details</h5>
         <button type="button" class="btn-close" data-bs-toggle="offcanvas"
                 aria-label="back"></button>
     </div>
     <div class="flex-grow-1 d-flex flex-column">
-        <div class="px-4">
+        <div class="px-5">
             <div class="px-5 pt-3">
-                <img src="" class="bg-white img-fluid details-img w-100 border border-dark-subtle rounded" alt="">
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/232.png"
+                     class="bg-white img-fluid details-img w-100 border border-dark-subtle rounded" alt="">
             </div>
         </div>
         <div class="text-center">
-            <p class="fs-4 fw-medium mt-2 details-name text-capitalize"></p>
+            <p class="fs-3 fw-medium mt-2 mb-2 details-view-name text-capitalize">Pokemon Name</p>
+            <span class="fs-5 text-dark mb-0">1927</span>
+            <span class="text-uppercase fw-bold text-tertiary fs-6 mt-2 mb-1">RP</span>
+            <span class=" fs-5 text-dark mb-0 ms-2">1928</span>
+            <span class="text-uppercase fw-bold text-secondary fs-tiny   mt-2 mb-1">CP</span>
         </div>
-        <form class="container-fluid d-flex flex-column flex-grow-1">
+        <div>
+            <div class="px-3">
+                <div class="mt-4">
+                    <h5>Details</h5>
+                </div>
+                <div class="">
+                    <span class="badge p-2 px-3 fs-6  typeghost">Shadow</span>
+                    <span class="badge p-2 px-3 fs-6  typefire">Can Mega</span>
+                </div>
+
+
+                <div class="mt-3">
+                    <h5>Fast Move Type</h5>
+                </div>
+                <div class="">
+                    <span class="badge p-2 px-3 fs-6  text-bg-secondary">Fighting</span>
+                </div>
+
+
+                <div class="mt-3">
+                    <h5>Charged Move Type</h5>
+                </div>
+                <div class="">
+                    <span class="badge p-2 px-3 fs-6  typefighting">Fighting</span>
+                    <span class="badge p-2 px-3 fs-6  typefighting">Fighting</span>
+                </div>
+            </div>
+            <!-- Edit button -->
+            <div class="p-3">
+                <button type="button"
+                        class="btn btn-primary mb-2 py-2 fs-4 w-100" data-bs-toggle="offcanvas"
+                        data-bs-target="#editPokemonOffCanvas">Edit Pokemon
+                </button>
+            </div>
+        </div>
+        <!-- end -->
+    </div>
+
+
+</div>
+
+<!--VDOC End-->
+<!-- edit pokemon offcanvas -->
+<div class="offcanvas offcanvas-end d-flex flex-column bg-light  " tabindex="-1" id="editPokemonOffCanvas"
+     style="overflow-y: auto; max-height: 100%;">
+    <div class="offcanvas-header bg-primary text-center text-white">
+        <p class="offcanvas-title">Edit Pokemon</p>
+        <button type="button" class="btn-close" data-bs-toggle="offcanvas"
+                aria-label="back"></button>
+    </div>
+    <div class="flex-grow-1 d-flex flex-column">
+        <div class="px-5">
+            <div class="px-5 pt-3">
+                <img src="" class="bg-white img-fluid add-details-img w-100 border border-dark-subtle rounded" alt="">
+            </div>
+        </div>
+        <div class="text-center">
+            <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize"></p>
+        </div>
+        <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation">
             <!-- cp button div -->
             <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
                 <div class="col-6">
-                    <input type="radio" class="btn-check " id="tierOneCP" name="btnradio" autocomplete="off">
+                    <input type="radio" class="btn-check " id="tierOneCP" name="btnradio" autocomplete="off" required>
                     <label class="btn btn-outline-primary w-100 " for="tierOneCP">0-1500CP</label>
 
                 </div>
@@ -373,9 +370,121 @@
 
                 </div>
             </div>
+            <div class=" mt-2">
+                <button class="btn btn-primary w-100 rounded-0" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseEX1" aria-expanded="false" aria-controls="collapseEX1">
+                    Edit Move Types (optional)
+                </button>
+            </div>
+
+
+            <div class="collapse" id="collapseEX1" data-bs-parent="#editTeamCollapse">
+                <div class="card border-0 card-body py-2 pt-0 rounded-0">
+                    <!-- Fast type div -->
+                    <div class="row g-2 btn-group mt-2" role="group" aria-label="Pokemon Creature Power Buttons">
+
+
+                        <div class="col-12">
+                            <!--                    <input type="radio" class="btn-check " id="tierOneCP" name="btnradio" autocomplete="off">-->
+                            <!--                    <label class="btn btn-outline-primary w-100 " for="tierOneCP">0-1500CP</label>-->
+                            <label class="form-label w-100">
+                                Fast Move
+                                <select class="form-select" id="fastMoveSelect">
+                                    <option selected value="null">None Selected</option>
+                                    <option value="normal">Normal</option>
+                                    <option value="fighting">Fighting</option>
+                                    <option value="flying">Flying</option>
+                                    <option value="poison">Poison</option>
+                                    <option value="ground">Ground</option>
+                                    <option value="rock">Rock</option>
+                                    <option value="bug">Bug</option>
+                                    <option value="ghost">Ghost</option>
+                                    <option value="steel">Steel</option>
+                                    <option value="fire">Fire</option>
+                                    <option value="water">Water</option>
+                                    <option value="grass">Grass</option>
+                                    <option value="electric">Electric</option>
+                                    <option value="psychic">Psychic</option>
+                                    <option value="ice">Ice</option>
+                                    <option value="dragon">Dragon</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="fairy">Fairy</option>
+                                </select>
+                            </label>
+                        </div>
+
+
+                    </div>
+                    <!-- end -->
+                    <!-- Charged type div -->
+                    <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
+
+
+                        <div class="col-12 col-sm-6">
+
+                            <label class="form-label w-100">
+                                Charged Move 1
+                                <select class="form-select" id="chargedMoveSelect">
+
+                                    <option selected value="null">None Selected</option>
+                                    <option value="normal">Normal</option>
+                                    <option value="fighting">Fighting</option>
+                                    <option value="flying">Flying</option>
+                                    <option value="poison">Poison</option>
+                                    <option value="ground">Ground</option>
+                                    <option value="rock">Rock</option>
+                                    <option value="bug">Bug</option>
+                                    <option value="ghost">Ghost</option>
+                                    <option value="steel">Steel</option>
+                                    <option value="fire">Fire</option>
+                                    <option value="water">Water</option>
+                                    <option value="grass">Grass</option>
+                                    <option value="electric">Electric</option>
+                                    <option value="psychic">Psychic</option>
+                                    <option value="ice">Ice</option>
+                                    <option value="dragon">Dragon</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="fairy">Fairy</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="col-12 col-sm-6">
+
+                            <label class="form-label w-100">
+                                Charged Move 2
+                                <select class="form-select" id="chargedMoveSelect">
+                                    <option selected value="null">None Selected</option>
+                                    <option value="normal">Normal</option>
+                                    <option value="fighting">Fighting</option>
+                                    <option value="flying">Flying</option>
+                                    <option value="poison">Poison</option>
+                                    <option value="ground">Ground</option>
+                                    <option value="rock">Rock</option>
+                                    <option value="bug">Bug</option>
+                                    <option value="ghost">Ghost</option>
+                                    <option value="steel">Steel</option>
+                                    <option value="fire">Fire</option>
+                                    <option value="water">Water</option>
+                                    <option value="grass">Grass</option>
+                                    <option value="electric">Electric</option>
+                                    <option value="psychic">Psychic</option>
+                                    <option value="ice">Ice</option>
+                                    <option value="dragon">Dragon</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="fairy">Fairy</option>
+                                </select>
+                            </label>
+                        </div>
+
+
+                    </div>
+                    <!-- end -->
+                </div>
+            </div>
+
             <!-- end -->
             <!-- toggle options -->
-            <div class="row g-2 m-2">
+            <div class="row g-2 my-2">
                 <div class="">
                     <label class="form-check-label">
 
@@ -388,15 +497,254 @@
                     <label class="form-check-label">
 
                         <input type="checkbox" id="isMega" class="border-dark-subtle form-check-input">
-                        Mega Evolved
+                        Can Mega Evolve
                     </label>
                 </div>
             </div>
             <!-- end -->
+            <!--            Quantity-->
+            <div class="row g-2 mb-2">
+                <div>
+                    <label class="form-label w-100">
+                        Quantity
+                        <input type="number" class="form-control " id="quantityInput" min="1" max="6" value="1"
+                               required>
+                    </label>
+                </div>
+            </div>
+            <!--            quantity-->
+
+
             <!-- submit button -->
             <div class="row g-2 mt-auto">
                 <div class="col-12">
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#pokemonAddedSuccess" href="#"
+                    <!--                    data-bs-toggle="modal" data-bs-target="#pokemonAddedSuccess"-->
+                    <button type="submit"
+                            class="btn btn-primary mb-2 py-2 fs-4 w-100">Add Pokemon
+                    </button>
+                </div>
+            </div>
+            <!-- end -->
+        </form>
+    </div>
+</div>
+<!-- added pokemon details offcanvas end -->
+
+<!-- Add Pokemon Offcanvas   -->
+<div class="offcanvas offcanvas-end " tabindex="-1" id="addPokemonOffcanvas">
+    <div class="offcanvas-header bg-primary text-center text-white">
+
+        <h5 class="offcanvas-title">Add Pokemon</h5>
+        <button type="button" class="btn-close" data-bs-toggle="offcanvas"
+                aria-label="back"></button>
+    </div>
+    <div class="">
+        <div class="p-3 border-bottom">
+            <label class="form-label w-100">Search Pokemon
+                <input class="form-control " placeholder="'Enter' to Search" id="pokemonSelect">
+
+            </label>
+        </div>
+        <div id="renderList">
+
+        </div>
+    </div>
+
+
+</div>
+<!-- add pokemon offcanvas end -->
+<!-- added pokemon details offcanvas -->
+<div class="offcanvas offcanvas-end d-flex flex-column bg-light  " tabindex="-1" id="addPokemonDetailsOffCanvas"
+     style="overflow-y: auto; max-height: 100%;">
+    <div class="offcanvas-header bg-primary text-center text-white">
+        <i type="button" class="bi bi-arrow-left text-white fs-5" data-bs-toggle="offcanvas"
+           data-bs-target="#addPokemonOffcanvas"></i>
+        <button type="button" class="btn-close" data-bs-toggle="offcanvas"
+                aria-label="back"></button>
+    </div>
+    <div class="flex-grow-1 d-flex flex-column">
+        <div class="px-5">
+            <div class="px-5 pt-3">
+                <img src="" class="bg-white img-fluid add-details-img w-100 border border-dark-subtle rounded" alt="">
+            </div>
+        </div>
+        <div class="text-center">
+            <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize"></p>
+        </div>
+        <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation">
+            <!-- cp button div -->
+            <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
+                <div class="col-6">
+                    <input type="radio" class="btn-check " id="tierOneCP" name="btnradio" autocomplete="off" required>
+                    <label class="btn btn-outline-primary w-100 " for="tierOneCP">0-1500CP</label>
+
+                </div>
+                <div class="col-6">
+                    <input type="radio" class="btn-check" id="tierTwoCP" name="btnradio" autocomplete="off">
+                    <label class="btn btn-outline-primary w-100" for="tierTwoCP">2500+CP</label>
+
+                </div>
+                <div class="col-6">
+                    <input type="radio" class="btn-check" id="tierThreeCP" name="btnradio" autocomplete="off">
+                    <label class="btn btn-outline-primary w-100" for="tierThreeCP">2500+</label>
+
+                </div>
+                <div class="col-6">
+                    <input type="radio" class="btn-check" id="tierFourCP" name="btnradio" autocomplete="off">
+                    <label class="btn btn-outline-primary w-100" for="tierFourCP">3500+CP</label>
+
+                </div>
+            </div>
+            <div class=" mt-2">
+                <button class="btn btn-primary w-100 rounded-0" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseEX1" aria-expanded="false" aria-controls="collapseEX1">
+                    Edit Move Types (optional)
+                </button>
+            </div>
+
+
+            <div class="collapse" id="collapseEX1" data-bs-parent="#editTeamCollapse">
+                <div class="card border-0 card-body py-2 pt-0 rounded-0">
+                    <!-- Fast type div -->
+                    <div class="row g-2 btn-group mt-2" role="group" aria-label="Pokemon Creature Power Buttons">
+
+
+                        <div class="col-12">
+                            <!--                    <input type="radio" class="btn-check " id="tierOneCP" name="btnradio" autocomplete="off">-->
+                            <!--                    <label class="btn btn-outline-primary w-100 " for="tierOneCP">0-1500CP</label>-->
+                            <label class="form-label w-100">
+                                Fast Move
+                                <select class="form-select" id="fastMoveSelect">
+                                    <option selected value="null">None Selected</option>
+                                    <option value="normal">Normal</option>
+                                    <option value="fighting">Fighting</option>
+                                    <option value="flying">Flying</option>
+                                    <option value="poison">Poison</option>
+                                    <option value="ground">Ground</option>
+                                    <option value="rock">Rock</option>
+                                    <option value="bug">Bug</option>
+                                    <option value="ghost">Ghost</option>
+                                    <option value="steel">Steel</option>
+                                    <option value="fire">Fire</option>
+                                    <option value="water">Water</option>
+                                    <option value="grass">Grass</option>
+                                    <option value="electric">Electric</option>
+                                    <option value="psychic">Psychic</option>
+                                    <option value="ice">Ice</option>
+                                    <option value="dragon">Dragon</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="fairy">Fairy</option>
+                                </select>
+                            </label>
+                        </div>
+
+
+                    </div>
+                    <!-- end -->
+                    <!-- Charged type div -->
+                    <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
+
+
+                        <div class="col-12 col-sm-6">
+
+                            <label class="form-label w-100">
+                                Charged Move 1
+                                <select class="form-select" id="chargedMoveSelect">
+
+                                    <option selected value="null">None Selected</option>
+                                    <option value="normal">Normal</option>
+                                    <option value="fighting">Fighting</option>
+                                    <option value="flying">Flying</option>
+                                    <option value="poison">Poison</option>
+                                    <option value="ground">Ground</option>
+                                    <option value="rock">Rock</option>
+                                    <option value="bug">Bug</option>
+                                    <option value="ghost">Ghost</option>
+                                    <option value="steel">Steel</option>
+                                    <option value="fire">Fire</option>
+                                    <option value="water">Water</option>
+                                    <option value="grass">Grass</option>
+                                    <option value="electric">Electric</option>
+                                    <option value="psychic">Psychic</option>
+                                    <option value="ice">Ice</option>
+                                    <option value="dragon">Dragon</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="fairy">Fairy</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="col-12 col-sm-6">
+
+                            <label class="form-label w-100">
+                                Charged Move 2
+                                <select class="form-select" id="chargedMoveSelect">
+                                    <option selected value="null">None Selected</option>
+                                    <option value="normal">Normal</option>
+                                    <option value="fighting">Fighting</option>
+                                    <option value="flying">Flying</option>
+                                    <option value="poison">Poison</option>
+                                    <option value="ground">Ground</option>
+                                    <option value="rock">Rock</option>
+                                    <option value="bug">Bug</option>
+                                    <option value="ghost">Ghost</option>
+                                    <option value="steel">Steel</option>
+                                    <option value="fire">Fire</option>
+                                    <option value="water">Water</option>
+                                    <option value="grass">Grass</option>
+                                    <option value="electric">Electric</option>
+                                    <option value="psychic">Psychic</option>
+                                    <option value="ice">Ice</option>
+                                    <option value="dragon">Dragon</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="fairy">Fairy</option>
+                                </select>
+                            </label>
+                        </div>
+
+
+                    </div>
+                    <!-- end -->
+                </div>
+            </div>
+
+            <!-- end -->
+            <!-- toggle options -->
+            <div class="row g-2 my-2">
+                <div class="">
+                    <label class="form-check-label">
+
+                        <input type="checkbox" id="isShadow" class="border-dark-subtle form-check-input">
+                        Shadow
+                    </label>
+
+                </div>
+                <div class="">
+                    <label class="form-check-label">
+
+                        <input type="checkbox" id="isMega" class="border-dark-subtle form-check-input">
+                        Can Mega Evolve
+                    </label>
+                </div>
+            </div>
+            <!-- end -->
+            <!--            Quantity-->
+            <div class="row g-2 mb-2">
+                <div>
+                    <label class="form-label w-100">
+                        Quantity
+                        <input type="number" class="form-control " id="quantityInput" min="1" max="6" value="1"
+                               required>
+                    </label>
+                </div>
+            </div>
+            <!--            quantity-->
+
+
+            <!-- submit button -->
+            <div class="row g-2 mt-auto">
+                <div class="col-12">
+                    <!--                    data-bs-toggle="modal" data-bs-target="#pokemonAddedSuccess"-->
+                    <button type="submit"
                             class="btn btn-primary mb-2 py-2 fs-4 w-100">Add Pokemon
                     </button>
                 </div>
@@ -474,45 +822,12 @@
 </div>
 <!-- modal end -->
 <!-- confirm Mega Evolve pokemon modal -->
-<div class="modal fade" tabindex="-1" id="confirmMega">
-    <div class="modal-dialog modal-dialog-centered  modal-sm">
-        <div class="modal-content">
 
-            <div class="modal-body p-2">
-
-                <div class="text-center py-2">
-
-                    <p class="fw-bolder fs-3 text-dark mb-0">Are you sure you want to Mega Evolve this pokemon?</p>
-                </div>
-
-            </div>
-            <div class="p-2">
-
-                <div class="row g-1 g-md-2 p-1">
-                    <div class="col12 col-6-md">
-                        <button type="button" class="btn btn-success w-100 text-white"
-                                data-bs-dismiss="modal">Yes
-                        </button>
-                    </div>
-                    <div class="col-12 col-6-md">
-                        <button type="button" class="btn btn-outline-secondary w-100"
-                                data-bs-dismiss="modal">No
-                        </button>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- modal end -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="dummydata.js"></script>
-<script src="typeSelector.js"></script>
-<script src="pokemonList.js"></script>
 
+
+<script src="pokemonList.js"></script>
 
 </body>
 

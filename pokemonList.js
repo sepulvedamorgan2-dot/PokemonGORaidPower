@@ -69,8 +69,8 @@ pokemonSelect.addEventListener('keydown', (event) => {
             
             const selectedPokemon = (event.target.dataset.bsname);
             console.log(selectedPokemon);
-            document.querySelector('.details-img').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonNameList.indexOf(selectedPokemon) + 1}.png`;
-            document.querySelector('.details-name').textContent = selectedPokemon;
+            document.querySelector('.add-details-img').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonNameList.indexOf(selectedPokemon) + 1}.png`;
+            document.querySelector('.details-add-name').textContent = selectedPokemon;
         })
 
 }

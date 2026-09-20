@@ -37,6 +37,15 @@
     width: 120px;
 }
 
+.typegrass{
+    background-color: #78C850;
+    border-color: #78C850;
+}
+
+
+
+
+
 
 @media (max-width: 767px){
     .horz-card-img{

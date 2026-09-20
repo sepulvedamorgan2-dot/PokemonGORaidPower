@@ -1,0 +1,89 @@
+.typenormal {
+    background-color: #A8A878;
+    border-color: #A8A878;
+}
+
+.typefire {
+    background-color: #F08030;
+    border-color: #F08030;
+}
+
+.typewater {
+    background-color: #6890F0;
+    border-color: #6890F0;
+}
+
+.typegrass {
+    background-color: #78C850;
+    border-color: #78C850;
+}
+
+.typeelectric {
+    background-color: #F8D030;
+    border-color: #F8D030;
+}
+
+.typeice {
+    background-color: #98D8D8;
+    border-color: #98D8D8;
+}
+
+.typefighting {
+    background-color: #C03028;
+    border-color: #C03028;
+}
+
+.typepoison {
+    background-color: #A040A0;
+    border-color: #A040A0;
+}
+
+.typeground {
+    background-color: #E0C068;
+    border-color: #E0C068;
+}
+
+.typeflying {
+    background-color: #A890F0;
+    border-color: #A890F0;
+}
+
+.typepsychic {
+    background-color: #F85888;
+    border-color: #F85888;
+}
+
+.typebug {
+    background-color: #A8B820;
+    border-color: #A8B820;
+}
+
+.typerock {
+    background-color: #B8A038;
+    border-color: #B8A038;
+}
+
+.typeghost {
+    background-color: #705898;
+    border-color: #705898;
+}
+
+span.typedragon {
+    background-color: #7038F8;
+    border-color: #7038F8;
+}
+
+.typedark {
+    background-color: #705848;
+    border-color: #705848;
+}
+
+.typesteel {
+    background-color: #B8B8D0;
+    border-color: #B8B8D0;
+}
+
+.typefairy {
+    background-color: #EE99AC;
+    border-color: #EE99AC;
+}
