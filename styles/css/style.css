@@ -9,24 +9,38 @@
  max-width: 60px;
 }
 
-
+.spacer{
+    width: 25px;
+}
 
 .fs-tiny{
     font-size: 13px;
     font-weight: 580;
 }
 
+.fs-tinyer{
+    font-size: 13px;
+
+}
 
 .resize-none{
     resize: none;
 }
 .horz-card-img{
-        height: 80px;
+        width: 80px;
     }
+.power-width{
+    width: 80px;
+}
+
+.movewidth{
+    width: 120px;
+}
+
 
 @media (max-width: 767px){
     .horz-card-img{
-        height: 70px;
+        width: 70px;
     }
 }
 

@@ -39,7 +39,7 @@ for (const type of types) {
                         <div class="row g-2 g-sm-2 g-md-2 p-sm-1 ">
                             <div class="col-4 text-center   ">
                                 <img class="img-fluid border rounded w-100"
-                                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${Math.floor(Math.random() * 1000) + 1}.png"
+                                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${Math.floor(Math.random() * 1000) + 1}.png"
                                     alt="pokemonImg">
 
                             </div>

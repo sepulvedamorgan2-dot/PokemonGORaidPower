@@ -1,10 +1,10 @@
 const mobileTypeSelector = document.getElementById('mobileTypeSelector');
-const typeCardHolder = document.querySelector('.typecardholder');
+
 const typeCards = document.querySelectorAll('.typecard')
 
 mobileTypeSelector.value = 'normal';
 
-mobileTypeSelector.addEventListener('change', (e) => {
+mobileTypeSelector.addEventListener('change', () => {
     mobileTypeSelectorUpdater()
 })
 
@@ -26,7 +26,8 @@ function mobileTypeSelectorUpdater() {
 mobileTypeSelectorUpdater()
 
 
-window.addEventListener('resize', (e) => {
+
+window.addEventListener('resize', () => {
     windowWidth()
 })
 
