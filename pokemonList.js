@@ -1,7 +1,7 @@
 let pokemonNameList;
 
 const pokemonSelect = document.getElementById('pokemonSelect');
-const pokemonList = document.getElementById('renderList');
+const pokemonListAPI = document.getElementById('renderList');
 fetch("https://pokeapi.co/api/v2/pokemon?limit=1331")
     .then((response) => response.json())
     .then((data) => {
@@ -24,13 +24,13 @@ pokemonSelect.addEventListener('keydown', (event) => {
         return;
     }
     const selectedPokemon = event.target.value;
-    pokemonList.innerHTML = '';
+    pokemonListAPI.innerHTML = '';
     for (const pokemon of pokemonNameList) {
-        if (pokemonList.childElementCount >= 5) {
+        if (pokemonListAPI.childElementCount >= 5) {
             continue;
         }
         if (pokemon.includes(selectedPokemon.toLowerCase()) && pokemon.includes("-mega") === false) {
-            pokemonList.innerHTML += `<div class="border-bottom rounded-0 w-100" aria-label="${pokemon}">
+            pokemonListAPI.innerHTML += `<div class="border-bottom rounded-0 w-100" aria-label="${pokemon}">
                     <div class="row g-0 align-items-center">
                         <div class="col-3">
                             <img class="img-fluid horz-card-img " 
@@ -55,8 +55,8 @@ pokemonSelect.addEventListener('keydown', (event) => {
        
     }
      console.log('eee')
-    if (pokemonList.childElementCount === 0) {
-        pokemonList.innerHTML = `<div class="p-2">
+    if (pokemonListAPI.childElementCount === 0) {
+        pokemonListAPI.innerHTML = `<div class="p-2">
                 <button 
                     class="btn border w-100 fs-4">
                     No Pokemon Found </button>
@@ -64,20 +64,19 @@ pokemonSelect.addEventListener('keydown', (event) => {
     }
     
     for (const button of document.querySelectorAll('.searchedPokemonBtn')) {
-        
+
         button.addEventListener('click', (event) => {
-            
+
             const selectedPokemon = (event.target.dataset.bsname);
             console.log(selectedPokemon);
             document.querySelector('.add-details-img').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonNameList.indexOf(selectedPokemon) + 1}.png`;
             document.querySelector('.details-add-name').textContent = selectedPokemon;
         })
 
-}
+    }
 
 
 
+});
 
-})
-    ;
 
