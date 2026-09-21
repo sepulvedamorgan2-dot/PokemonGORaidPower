@@ -3,10 +3,11 @@ import {createApp} from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 const app = createApp({
     data: function () {
         return {
+            qty: 1,
             pokemon: {
                 Id: 1,
                 name: "",
-                pokemonID: 1,
+                pokemonId: 1,
                 cp: 1000,
                 isShadow: false,
                 canMegaEvolve: false,
@@ -34,35 +35,31 @@ const app = createApp({
                 return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID}.png`;
             }
 
-        }, getSpriteLinkAPI(name) {
-
-            let spriteID = this.pokemonListAPI.indexOf(name);
-            console.log(spriteID);
-            return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${spriteID + 1}.png`;
-        }, getAPIId(name) {
-
-            let spriteID = this.pokemonListAPI.indexOf(name);
-
-            return `${spriteID}`
         },
         getClass(type, otherclasses) {
             return ` type${type} ${otherclasses}`;
-        }, offCanvasPokemonID(clickedPokemon) {
+        }, getClickedObject(clickedPokemonId) {
 
-            this.activeItem = clickedPokemon;
-            console.log(this.activeItem);
+            this.activeItem = this.pokemonList[clickedPokemonId];
+            if (!this.activeItem) {
+                console.log("BAD" + clickedPokemonId.pokemonId);
+                this.activeItem = {...clickedPokemonId};
+                console.log(this.activeItem);
+            }
         }, test() {
             console.log(this.pokemonListAPI[0]);
         }, searchAllPokemons(query) {
             console.log(query);
             let resultObjects = [];
-            for (let pokemon of this.pokemonListAPI) {
+            for (let pokemonQueried of this.pokemonListAPI) {
                 if (resultObjects.length >= 5) {
                     break;
                 }
-                if (pokemon.includes(query.toLowerCase()) && pokemon.includes("-mega") === false) {
-
-                    resultObjects.push(pokemon);
+                if (pokemonQueried.includes(query.toLowerCase()) && pokemonQueried.includes("-mega") === false) {
+                    let pokemonObject = {};
+                    pokemonObject.name = pokemonQueried;
+                    pokemonObject.pokemonId = this.pokemonListAPI.indexOf(pokemonQueried) + 1;
+                    resultObjects.push(pokemonObject);
                 }
             }
 
@@ -87,15 +84,18 @@ const app = createApp({
                 });
         }, addPokemon(activeItem) {
 
-            this.pokemon.name = activeItem.toLowerCase()
-            this.pokemon.pokemonId = Number(this.getAPIId(activeItem)) + 1
-            this.pokemon.Id = this.pokemonList.length
+            this.pokemon.name = activeItem.name.toLowerCase()
+            this.pokemon.pokemonId = activeItem.pokemonId
 
-            this.pokemonList.push({...this.pokemon});
+            for(let i = 0; i < this.qty; i++){
+                this.pokemon.Id = this.pokemonList.length
+                this.pokemonList.push({...this.pokemon});
+            }
             activeItem = this.pokemon
             console.log(activeItem)
         },  clearLocalStorage() {
                 localStorage.removeItem('pokemonList');
+                this.pokemonList = [];
         }, oddOrEven(id){
             console.log(id);
             if(id % 2 == 0){

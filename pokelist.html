@@ -119,12 +119,12 @@
 
 
         <!-- Pokemon horitzonal card -->
-        <div v-for="pokemon in pokemonList" key="pokemon.id">
+        <div v-for="pokemon in pokemonList" :key="pokemon.id">
             <div :class="{'bg-light': oddOrEven(pokemon.Id),
             'bg-lighter': oddOrEven(pokemon.Id) === false,
             'row g-0 py-0': true}">
                 <div class="col-auto">
-                    <img :src="getSpriteLink(pokemon.pokemonID)"
+                    <img :src="getSpriteLink(pokemon.pokemonId)"
                          alt="Pokemon" class="img-fluid horz-card-img">
                 </div>
                 <div class="col-6 col-sm-3 col-lg-2 d-flex  align-items-center">
@@ -169,7 +169,7 @@
 
                 <div class="col-auto ms-auto  align-items-center d-flex">
                     <i type="button" data-bs-toggle="offcanvas" data-bs-target="#pokemonDetailsOffCanvas"
-                       v-on:click="offCanvasPokemonID(pokemon)"
+                       v-on:click="getClickedObject(pokemon.Id)"
                        class="bi bi-three-dots me-4 fs-4"></i>
                 </div>
 
@@ -244,7 +244,7 @@
         <div class="flex-grow-1 d-flex flex-column">
             <div class="px-5">
                 <div class="px-5 pt-3">
-                    <img :src="getSpriteLink(activeItem.pokemonID)"
+                    <img :src="getSpriteLink(activeItem.pokemonId)"
                          class="bg-white img-fluid details-img w-100 border border-dark-subtle rounded" alt="">
                 </div>
             </div>
@@ -321,7 +321,7 @@
         <div class="flex-grow-1 d-flex flex-column">
             <div class="px-5">
                 <div class="px-5 pt-3">
-                    <img :src="getSpriteLink(activeItem.pokemonID)"
+                    <img :src="getSpriteLink(activeItem.pokemonId)"
                          class="bg-white img-fluid add-details-img w-100 border border-dark-subtle rounded"
                          alt="">
                 </div>
@@ -501,22 +501,22 @@
 
                 </label>
             </div>
-            <div v-for="pokemon in searchResults">
+            <div v-for="pokemonResult in searchResults">
                 <div class="border-bottom rounded-0 w-100" aria-label="${pokemon}">
                     <div class="row g-0 align-items-center">
                         <div class="col-3">
-                            <img class="img-fluid horz-card-img " :src="getSpriteLinkAPI(pokemon)" alt="pokemonImg">
+                            <img class="img-fluid horz-card-img " :src="getSpriteLink(pokemonResult.pokemonId)" alt="pokemonImg">
                         </div>
                         <div class="col-6">
                             <div class="ms-0 ms-sm-0">
-                                <p class="fs-5 mb-0 text-capitalize">{{pokemon}}</p>
+                                <p class="fs-5 mb-0 text-capitalize">{{pokemonResult.name}}</p>
 
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="p-1">
                                 <button class="btn btn-sm btn-primary w-100 searchedPokemonBtn" data-bs-toggle="offcanvas" data-bs-target="#addPokemonDetailsOffcanvas"
-                                        v-on:click="offCanvasPokemonID(pokemon)" >Select</button>
+                                        v-on:click="getClickedObject(pokemonResult)">Select</button>
                             </div>
                         </div>
 
@@ -541,15 +541,15 @@
         <div class="flex-grow-1 d-flex flex-column">
             <div class="px-5">
                 <div class="px-5 pt-3">
-                    <img :src="getSpriteLinkAPI(activeItem)"
+                    <img :src="getSpriteLink(activeItem.pokemonId)"
                          class="bg-white img-fluid add-details-img w-100 border border-dark-subtle rounded"
                          alt="">
                 </div>
             </div>
             <div class="text-center">
-                <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize">{{ activeItem }}</p>
+                <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize">{{ activeItem.name }}</p>
             </div>
-            <form @submit.prevent="addPokemon(activeItem)" class="container-fluid d-flex flex-column flex-grow-1 needs-validation" >
+            <form @submit.prevent="addPokemon(activeItem, qty)" class="container-fluid d-flex flex-column flex-grow-1 needs-validation" >
                 <!-- cp button div -->
 
                 <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
@@ -690,6 +690,11 @@
                             <input type="checkbox" id="isMega" v-model="pokemon.canMegaEvolve"
                                    class="border-dark-subtle form-check-input">
                             Can Mega Evolve
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="number" v-model.number="qty" class="form-control" placeholder="Quantity">
                         </label>
                     </div>
                 </div>
