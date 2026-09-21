@@ -34,40 +34,41 @@
 
 
 <!-- Search Bar -->
-<div class="container-fluid container-sm px-2">
-    <div class="row g-1 mt-2 justify-content-end">
-        <div class="col-12 col-sm-3 ">
-            <div class="btn btn-primary w-100 py-sm-2" type="button" data-bs-toggle="offcanvas"
-                 data-bs-target="#addPokemonOffcanvas">
-
-                <i class=" d-md-block">Add Pokemon</i>
-            </div>
-        </div>
-    </div>
-
-    <p class="form-label w-100 mt-2 mb-1 fs-5">
-        Search Your Pokemon
-    </p>
-    <div class="row g-1 mb-2">
-
-        <div class="col-10 ">
-            <input type="text" class="form-control" id="searchBar" placeholder="Ex: Charizard">
-        </div>
-        <div class="col-2">
-            <div class="btn btn-outline-secondary w-100" type="button" id="filterButton">
-                <i class="bi bi-filter d-md-none"></i>
-                <i class="d-none d-md-block">Filter</i>
-            </div>
-        </div>
-
-
-    </div>
-
-
-</div>
-<!-- Search Bar End -->
-<!-- horz card container  -->
 <div id="app">
+    <div class="container-fluid container-sm px-2">
+        <div class="row g-1 mt-2 justify-content-end">
+            <div class="col-12 col-sm-3 ">
+                <div class="btn btn-primary w-100 py-sm-2" type="button" data-bs-toggle="offcanvas"
+                     data-bs-target="#addPokemonOffcanvas">
+
+                    <i class=" d-md-block">Add Pokemon</i>
+                </div>
+            </div>
+        </div>
+
+        <p class="form-label w-100 mt-2 mb-1 fs-5">
+            Search Your Pokemon
+        </p>
+        <div class="row g-1 mb-2">
+
+            <div class="col-10 ">
+                <input type="text" class="form-control" id="searchBar" placeholder="Ex: Charizard">
+            </div>
+            <div class="col-2">
+                <div class="btn btn-outline-secondary w-100"  v-on:click="test()" type="button" id="filterButton">
+                    <i class="bi bi-filter d-md-none"></i>
+                    <i class="d-none d-md-block">Filter</i>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <!-- Search Bar End -->
+    <!-- horz card container  -->
+
     <div class="container p-0 p-sm-2">
 
         <div class="row bg-light g-0 d-none d-sm-flex">
@@ -244,9 +245,9 @@
             <div class="text-center">
                 <p class="fs-3 fw-medium mt-2 mb-2 details-view-name text-capitalize">{{activeItem.name}}</p>
                 <span class="fs-5 text-dark mb-0">{{activeItem.cp}}</span>
-                <span class="text-uppercase fw-bold text-tertiary fs-6 mt-2 mb-1">RP</span>
+                <span class="text-uppercase fw-bold text-tertiary fs-6 mt-2 mb-1 ms-1">RP</span>
                 <span class=" fs-5 text-dark mb-0 ms-2">{{activeItem.cp}}</span>
-                <span class="text-uppercase fw-bold text-secondary fs-tiny   mt-2 mb-1">CP</span>
+                <span class="text-uppercase fw-bold text-secondary fs-tiny   mt-2 mb-1 ms-1">CP</span>
             </div>
             <div>
                 <div class="px-3">
@@ -320,7 +321,7 @@
                 </div>
             </div>
             <div class="text-center">
-                <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize"></p>
+                <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize">{{ activeItem.name }}</p>
             </div>
             <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation">
                 <!-- cp button div -->
@@ -357,7 +358,7 @@
                 </div>
 
                 <div class="collapse" id="collapseEX1" data-bs-parent="#editTeamCollapse">
-                    <div class="card border-0 card-body py-2 pt-0 rounded-0">
+                    <div class="card bg-light border-0 card-body py-2 pt-0 rounded-0">
                         <!-- Fast type div -->
                         <div class="row g-2 btn-group mt-2" role="group" aria-label="Pokemon Creature Power Buttons">
                             <div class="col-12">
@@ -466,7 +467,7 @@
                     </div>
                 </div>
 
-                <!-- submit button -->
+                <!-- done button -->
                 <div class="row g-2 mt-auto">
                     <div class="col-12">
                         <button type="button" data-bs-toggle="offcanvas" data-bs-target="#pokemonDetailsOffCanvas"
@@ -490,12 +491,31 @@
         <div class="">
             <div class="p-3 border-bottom">
                 <label class="form-label w-100">Search Pokemon
-                    <input class="form-control " placeholder="'Enter' to Search" id="pokemonSelect">
+                    <input class="form-control " placeholder="'Enter' to Search" id="pokemonSelect" v-on:input="searchAllPokemons($event.target.value)">
 
                 </label>
             </div>
-            <div id="renderList">
+            <div v-for="pokemon in searchResults">
+                <div class="border-bottom rounded-0 w-100" aria-label="${pokemon}">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-3">
+                            <img class="img-fluid horz-card-img " :src="getSpriteLinkAPI(pokemon)" alt="pokemonImg">
+                        </div>
+                        <div class="col-6">
+                            <div class="ms-0 ms-sm-0">
+                                <p class="fs-5 mb-0 text-capitalize">{{pokemon}}</p>
 
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="p-1">
+                                <button class="btn btn-sm btn-primary w-100 searchedPokemonBtn" data-bs-toggle="offcanvas" data-bs-target="#addPokemonDetailsOffcanvas"
+                                        v-on:click="offCanvasPokemonID(pokemon)" >Select</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -503,70 +523,70 @@
     </div>
     <!-- add pokemon offcanvas end -->
     <!-- added pokemon details offcanvas -->
-    <div class="offcanvas offcanvas-end d-flex flex-column bg-light  " tabindex="-1" id="addPokemonDetailsOffCanvas"
+    <div class="offcanvas offcanvas-end d-flex flex-column bg-light  " tabindex="-1" id="addPokemonDetailsOffcanvas"
          style="overflow-y: auto; max-height: 100%;">
         <div class="offcanvas-header bg-primary text-center text-white">
-            <i type="button" class="bi bi-arrow-left text-white fs-5" data-bs-toggle="offcanvas"
-               data-bs-target="#addPokemonOffcanvas"></i>
+            <i type="button" class="bi bi-arrow-left text-white fs-5 me-3" data-bs-toggle="offcanvas"
+               data-bs-target="#pokemonDetailsOffCanvas"></i>
+            <p class="offcanvas-title">Pokemon Details</p>
             <button type="button" class="btn-close" data-bs-toggle="offcanvas"
                     aria-label="back"></button>
         </div>
         <div class="flex-grow-1 d-flex flex-column">
             <div class="px-5">
                 <div class="px-5 pt-3">
-                    <img src="" class="bg-white img-fluid add-details-img w-100 border border-dark-subtle rounded"
+                    <img :src="getSpriteLinkAPI(activeItem)"
+                         class="bg-white img-fluid add-details-img w-100 border border-dark-subtle rounded"
                          alt="">
                 </div>
             </div>
             <div class="text-center">
-                <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize"></p>
+                <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize">{{ activeItem }}</p>
             </div>
-            <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation">
+            <form @submit.prevent="addPokemon(activeItem)" class="container-fluid d-flex flex-column flex-grow-1 needs-validation" >
                 <!-- cp button div -->
+
                 <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
                     <div class="col-6">
-                        <input type="radio" class="btn-check " id="tierOneCP" name="btnradio" autocomplete="off"
-                               required>
-                        <label class="btn btn-outline-primary w-100 " for="tierOneCP">0-1500CP</label>
-
+                        <input id="tierOneCPAdd"
+                                   :value="1200" type="radio" class="btn-check" name="btnradioAdd" required v-model="pokemon.cp">
+                        <label class="btn btn-outline-primary w-100" for="tierOneCPAdd">0-1500CP</label>
                     </div>
                     <div class="col-6">
-                        <input type="radio" class="btn-check" id="tierTwoCP" name="btnradio" autocomplete="off">
-                        <label class="btn btn-outline-primary w-100" for="tierTwoCP">2500+CP</label>
-
+                        <input id="tierTwoCPAdd"
+                               :value="2300" type="radio" class="btn-check"
+                               name="btnradioAdd" v-model="pokemon.cp">
+                        <label class="btn btn-outline-primary w-100" for="tierTwoCPAdd">1500+CP</label>
                     </div>
                     <div class="col-6">
-                        <input type="radio" class="btn-check" id="tierThreeCP" name="btnradio" autocomplete="off">
-                        <label class="btn btn-outline-primary w-100" for="tierThreeCP">2500+</label>
-
+                        <input id="tierThreeCPAdd"
+                                :value="3400" type="radio" class="btn-check"
+                               name="btnradioAdd" v-model="pokemon.cp">
+                        <label class="btn btn-outline-primary w-100" for="tierThreeCPAdd">2500+CP</label>
                     </div>
                     <div class="col-6">
-                        <input type="radio" class="btn-check" id="tierFourCP" name="btnradio" autocomplete="off">
-                        <label class="btn btn-outline-primary w-100" for="tierFourCP">3500+CP</label>
-
+                        <input id="tierFourCPAdd"
+                               :value="3700" type="radio" class="btn-check" name="btnradioAdd" v-model="pokemon.cp">
+                        <label class="btn btn-outline-primary w-100" for="tierFourCPAdd">3500+CP</label>
                     </div>
                 </div>
-                <div class=" mt-2">
+
+                <div class="mt-2">
                     <button class="btn btn-primary w-100 rounded-0" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseEX1" aria-expanded="false" aria-controls="collapseEX1">
+                            data-bs-target="#collapseAdd" aria-expanded="false" aria-controls="collapseAdd">
                         Edit Move Types (optional)
                     </button>
                 </div>
 
-
-                <div class="collapse" id="collapseEX1" data-bs-parent="#editTeamCollapse">
-                    <div class="card border-0 card-body py-2 pt-0 rounded-0">
+                <div class="collapse" id="collapseAdd" data-bs-parent="#editTeamCollapse">
+                    <div class="card bg-light border-0 card-body py-2 pt-0 rounded-0">
                         <!-- Fast type div -->
                         <div class="row g-2 btn-group mt-2" role="group" aria-label="Pokemon Creature Power Buttons">
-
-
                             <div class="col-12">
-                                <!--                    <input type="radio" class="btn-check " id="tierOneCP" name="btnradio" autocomplete="off">-->
-                                <!--                    <label class="btn btn-outline-primary w-100 " for="tierOneCP">0-1500CP</label>-->
                                 <label class="form-label w-100">
                                     Fast Move
-                                    <select class="form-select" id="fastMoveSelect">
-                                        <option selected value="null">None Selected</option>
+                                    <select class="form-select" v-model="pokemon.fastMoveType">
+                                        <option value="">None Selected</option>
                                         <option value="normal">Normal</option>
                                         <option value="fighting">Fighting</option>
                                         <option value="flying">Flying</option>
@@ -588,21 +608,16 @@
                                     </select>
                                 </label>
                             </div>
-
-
                         </div>
-                        <!-- end -->
+
                         <!-- Charged type div -->
                         <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
-
-
                             <div class="col-12 col-sm-6">
-
                                 <label class="form-label w-100">
                                     Charged Move 1
-                                    <select class="form-select" id="chargedMoveSelect">
-
-                                        <option selected value="null">None Selected</option>
+                                    <select class="form-select" id="chargedMoveSelect1"
+                                            v-model="pokemon.chargedMoveType1">
+                                        <option value="">None Selected</option>
                                         <option value="normal">Normal</option>
                                         <option value="fighting">Fighting</option>
                                         <option value="flying">Flying</option>
@@ -625,11 +640,11 @@
                                 </label>
                             </div>
                             <div class="col-12 col-sm-6">
-
                                 <label class="form-label w-100">
                                     Charged Move 2
-                                    <select class="form-select" id="chargedMoveSelect">
-                                        <option selected value="null">None Selected</option>
+                                    <select class="form-select" id="chargedMoveSelect2"
+                                            v-model="pokemon.chargedMoveType2">
+                                        <option value="">None Selected</option>
                                         <option value="normal">Normal</option>
                                         <option value="fighting">Fighting</option>
                                         <option value="flying">Flying</option>
@@ -651,56 +666,36 @@
                                     </select>
                                 </label>
                             </div>
-
-
                         </div>
-                        <!-- end -->
                     </div>
                 </div>
 
-                <!-- end -->
                 <!-- toggle options -->
                 <div class="row g-2 my-2">
-                    <div class="">
+                    <div>
                         <label class="form-check-label">
-
-                            <input type="checkbox" id="isShadow" class="border-dark-subtle form-check-input">
+                            <input type="checkbox" id="isShadow" v-model="pokemon.isShadow"
+                                   class="border-dark-subtle form-check-input">
                             Shadow
                         </label>
-
                     </div>
-                    <div class="">
+                    <div>
                         <label class="form-check-label">
-
-                            <input type="checkbox" id="isMega" class="border-dark-subtle form-check-input">
+                            <input type="checkbox" id="isMega" v-model="pokemon.canMegaEvolve"
+                                   class="border-dark-subtle form-check-input">
                             Can Mega Evolve
                         </label>
                     </div>
                 </div>
-                <!-- end -->
-                <!--            Quantity-->
-                <div class="row g-2 mb-2">
-                    <div>
-                        <label class="form-label w-100">
-                            Quantity
-                            <input type="number" class="form-control " id="quantityInput" min="1" max="6" value="1"
-                                   required>
-                        </label>
-                    </div>
-                </div>
-                <!--            quantity-->
-
 
                 <!-- submit button -->
                 <div class="row g-2 mt-auto">
                     <div class="col-12">
-                        <!--                    data-bs-toggle="modal" data-bs-target="#pokemonAddedSuccess"-->
                         <button type="submit"
                                 class="btn btn-primary mb-2 py-2 fs-4 w-100">Add Pokemon
                         </button>
                     </div>
                 </div>
-                <!-- end -->
             </form>
         </div>
     </div>

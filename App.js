@@ -16,7 +16,7 @@ const app = createApp({
 
             },
             pokemonList: [{
-                Id: 0,
+                id: 0,
                 name: "pikachu",
                 pokemonID: 25,
                 cp: 1000,
@@ -26,7 +26,7 @@ const app = createApp({
                 chargedMoveType1: "electric",
                 chargedMoveType2: "fighting",
             }, {
-                Id: 1,
+                id: 2,
                 name: "bidoof",
                 pokemonID: 399,
                 cp: 2000,
@@ -36,6 +36,9 @@ const app = createApp({
                 chargedMoveType1: "normal",
                 chargedMoveType2: "normal"
             }], activeItem: {},
+            pokemonListAPI: [],
+            searchResults: [],
+
 
         }
     },
@@ -45,25 +48,97 @@ const app = createApp({
         },
         getSpriteLink(pokemonID) {
             console.log(pokemonID);
-            return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID}.png`;
-        }, getClass(type, otherclasses) {
+            if (typeof pokemonID === "number") {
+                return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID}.png`;
+            }
+
+        }, getSpriteLinkAPI(name) {
+
+            let spriteID = this.pokemonListAPI.indexOf(name);
+            console.log(spriteID);
+            return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${spriteID + 1}.png`;
+        }, getAPIId(name) {
+
+            let spriteID = this.pokemonListAPI.indexOf(name);
+
+            return `${spriteID}`
+        },
+        getClass(type, otherclasses) {
             return ` type${type} ${otherclasses}`;
         }, offCanvasPokemonID(clickedPokemon) {
 
-           this.activeItem = clickedPokemon;
-            console.log();
+            this.activeItem = clickedPokemon;
+            console.log(this.activeItem);
+        }, test() {
+            console.log(this.pokemonListAPI[0]);
+        }, searchAllPokemons(query) {
+            console.log(query);
+            let resultObjects = [];
+            for (let pokemon of this.pokemonListAPI) {
+                if (resultObjects.length >= 5) {
+                    break;
+                }
+                if (pokemon.includes(query.toLowerCase()) && pokemon.includes("-mega") === false) {
+
+                    resultObjects.push(pokemon);
+                }
+            }
+
+            this.searchResults = resultObjects;
+            console.log(this.searchResults);
+
+        }, async fetchPokemonList() {
+            fetch("https://pokeapi.co/api/v2/pokemon?limit=1331")
+                .then((response) => response.json())
+                .then((data) => {
+                    pokemonNameList = [];
+                    console.log(data);
+                    for (const pokemon of data.results) {
+                        this.pokemonListAPI.push(pokemon.name);
+
+                    }
+
+                })
+                .catch((error) => {
+
+                    console.error(error);
+                });
+        }, addPokemon(activeItem) {
+
+            this.pokemon.name = activeItem.toLowerCase()
+            this.pokemon.pokemonID = Number(this.getAPIId(activeItem)) + 1
+            this.pokemon.id = Number(this.getAPIId(activeItem)) + 1
+
+            this.pokemonList.push(this.pokemon);
+            activeItem = this.pokemon
+            console.log(activeItem)
         }
     },
-    computed: {
-
-    },
+    computed: {},
 
     mounted: function () {
+        this.fetchPokemonList();
+        console.log(localStorage.getItem('pokemonList'))
+        if(localStorage.getItem('pokemonList')){
+            this.pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
+        } else{
+            this.pokemonList = []
+        }
 
-    },
+    }, deep: true,
 
     watch: {
+        pokemonList : {
+            handler: function () {
+                if(this.pokemonList){
+                    localStorage.setItem('pokemonList', JSON.stringify(this.pokemonList))
+                } else{
+                    this.pokemonList = []
+                }
 
+            }, deep: true
+
+        }
 
     },
 

@@ -33,7 +33,7 @@ pokemonSelect.addEventListener('keydown', (event) => {
             pokemonListAPI.innerHTML += `<div class="border-bottom rounded-0 w-100" aria-label="${pokemon}">
                     <div class="row g-0 align-items-center">
                         <div class="col-3">
-                            <img class="img-fluid horz-card-img " 
+                            <img class="img-fluid horz-card-img "
                                 src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonNameList.indexOf(pokemon) + 1}.png"
                                 alt="pokemonImg">
                         </div>
@@ -52,17 +52,17 @@ pokemonSelect.addEventListener('keydown', (event) => {
                     </div>
                 </div>`;
         }
-       
+
     }
      console.log('eee')
     if (pokemonListAPI.childElementCount === 0) {
         pokemonListAPI.innerHTML = `<div class="p-2">
-                <button 
+                <button
                     class="btn border w-100 fs-4">
                     No Pokemon Found </button>
             </div>`
     }
-    
+
     for (const button of document.querySelectorAll('.searchedPokemonBtn')) {
 
         button.addEventListener('click', (event) => {
