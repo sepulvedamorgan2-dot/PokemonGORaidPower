@@ -4,7 +4,7 @@ const app = createApp({
     data: function () {
         return {
             pokemon: {
-                id: 1,
+                Id: 1,
                 name: "",
                 pokemonID: 1,
                 cp: 1000,
@@ -15,33 +15,15 @@ const app = createApp({
                 chargedMoveType2: "",
 
             },
-            pokemonList: [{
-                id: 0,
-                name: "pikachu",
-                pokemonID: 25,
-                cp: 1000,
-                isShadow: false,
-                canMegaEvolve: false,
-                fastMoveType: "electric",
-                chargedMoveType1: "electric",
-                chargedMoveType2: "fighting",
-            }, {
-                id: 2,
-                name: "bidoof",
-                pokemonID: 399,
-                cp: 2000,
-                isShadow: false,
-                canMegaEvolve: false,
-                fastMoveType: "normal",
-                chargedMoveType1: "normal",
-                chargedMoveType2: "normal"
-            }], activeItem: {},
+            pokemonList: [],
+            activeItem: {},
             pokemonListAPI: [],
             searchResults: [],
 
 
         }
     },
+    
     methods: {
         pokemonFullList() {
             return this.pokemonList;
@@ -106,13 +88,22 @@ const app = createApp({
         }, addPokemon(activeItem) {
 
             this.pokemon.name = activeItem.toLowerCase()
-            this.pokemon.pokemonID = Number(this.getAPIId(activeItem)) + 1
-            this.pokemon.id = Number(this.getAPIId(activeItem)) + 1
+            this.pokemon.pokemonId = Number(this.getAPIId(activeItem)) + 1
+            this.pokemon.Id = this.pokemonList.length
 
-            this.pokemonList.push(this.pokemon);
+            this.pokemonList.push({...this.pokemon});
             activeItem = this.pokemon
             console.log(activeItem)
-        }
+        },  clearLocalStorage() {
+                localStorage.removeItem('pokemonList');
+        }, oddOrEven(id){
+            console.log(id);
+            if(id % 2 == 0){
+                return true;
+            } else{
+                return false;
+            }
+        },
     },
     computed: {},
 

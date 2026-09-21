@@ -37,6 +37,12 @@
 <div id="app">
     <div class="container-fluid container-sm px-2">
         <div class="row g-1 mt-2 justify-content-end">
+            <div class="col-12 col-sm-2 me-auto ">
+                <div class="btn btn-outline-primary  w-100 py-sm-2" type="button" v-on:click="clearLocalStorage()">
+
+                    <i class=" d-md-block">Clear All</i>
+                </div>
+            </div>
             <div class="col-12 col-sm-3 ">
                 <div class="btn btn-primary w-100 py-sm-2" type="button" data-bs-toggle="offcanvas"
                      data-bs-target="#addPokemonOffcanvas">
@@ -71,7 +77,7 @@
 
     <div class="container p-0 p-sm-2">
 
-        <div class="row bg-light g-0 d-none d-sm-flex">
+        <div class="row bg-lighter g-0 d-none d-sm-flex">
             <div class="col-auto">
                 <div class="horz-card-img"></div>
             </div>
@@ -113,9 +119,9 @@
 
 
         <!-- Pokemon horitzonal card -->
-        <div v-for="pokemon in pokemonFullList()">
-            <div :class="{'bg-lighter': pokemon.Id % 2 === 0,
-            'bg-light': pokemon.Id % 2 === 1,
+        <div v-for="pokemon in pokemonList" key="pokemon.id">
+            <div :class="{'bg-light': oddOrEven(pokemon.Id),
+            'bg-lighter': oddOrEven(pokemon.Id) === false,
             'row g-0 py-0': true}">
                 <div class="col-auto">
                     <img :src="getSpriteLink(pokemon.pokemonID)"
@@ -156,7 +162,7 @@
                     <span :class="getClass(pokemon.chargedMoveType1, `badge p-2 text-capitalize`)">{{pokemon.chargedMoveType1}}</span>
                     <span v-if="!pokemon.chargedMoveType1" :class="`bg-secondary badge p-2 text-capitalize`">Move 1 Not Added</span>
                     <span :class="getClass(pokemon.chargedMoveType2, `badge p-2 ms-2 text-capitalize`)">{{pokemon.chargedMoveType2}}</span>
-                    <span v-if="!pokemon.chargedMoveType2" :class="`bg-secondary badge p-2 text-capitalize`">Move 2 Not Added</span>
+                    <span v-if="!pokemon.chargedMoveType2" :class="`bg-secondary ms-2 badge p-2 text-capitalize`">Move 2 Not Added</span>
 
                 </div>
 
