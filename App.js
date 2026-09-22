@@ -3,7 +3,9 @@ import {createApp} from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 const app = createApp({
     data: function () {
         return {
+            searchForPokemon: '',
             qty: 1,
+
             pokemon: {
                 Id: 1,
                 name: "",
@@ -26,11 +28,22 @@ const app = createApp({
     },
     
     methods: {
-        pokemonFullList() {
-            return this.pokemonList;
+        pokemonSearch() {
+            let matches = [];
+            if (this.searchForPokemon === ''){
+                return this.pokemonList;
+            } else{
+                for (let eachPokemon of this.pokemonList){
+                    if (eachPokemon.name.includes(this.searchForPokemon.toLowerCase())){
+                        matches.push(eachPokemon);
+                    }
+                }
+                return matches;
+            }
+
         },
         getSpriteLink(pokemonID) {
-            console.log(pokemonID);
+
             if (typeof pokemonID === "number") {
                 return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID}.png`;
             }
@@ -53,6 +66,7 @@ const app = createApp({
             let resultObjects = [];
             for (let pokemonQueried of this.pokemonListAPI) {
                 if (resultObjects.length >= 5) {
+                    console.log("pokemonQueried: ", resultObjects.length);
                     break;
                 }
                 if (pokemonQueried.includes(query.toLowerCase()) && pokemonQueried.includes("-mega") === false) {
@@ -70,7 +84,7 @@ const app = createApp({
             fetch("https://pokeapi.co/api/v2/pokemon?limit=1331")
                 .then((response) => response.json())
                 .then((data) => {
-                    pokemonNameList = [];
+
                     console.log(data);
                     for (const pokemon of data.results) {
                         this.pokemonListAPI.push(pokemon.name);
@@ -88,29 +102,44 @@ const app = createApp({
             this.pokemon.pokemonId = activeItem.pokemonId
 
             for(let i = 0; i < this.qty; i++){
-                this.pokemon.Id = this.pokemonList.length
+                this.pokemon.Id = this.getNextPokemonId()
                 this.pokemonList.push({...this.pokemon});
+                this.activeItem = this.pokemon
             }
-            activeItem = this.pokemon
+
+            $('#pokemonAddedSuccess').modal('show')
             console.log(activeItem)
         },  clearLocalStorage() {
                 localStorage.removeItem('pokemonList');
                 this.pokemonList = [];
-        }, oddOrEven(id){
-            console.log(id);
-            if(id % 2 == 0){
-                return true;
-            } else{
-                return false;
+        }, oddOrEven(otherClasses, poke){
+
+            if (this.pokemonList.indexOf(poke) % 2 === 0) {
+                return otherClasses;
+            } else {
+
+                return otherClasses + ' bg-lighter';
             }
         },
+        deletePokemon(){
+            $('#addPokemonDetailsOffcanvas').offcanvas('hide')
+            this.pokemonList.splice(this.pokemonList.indexOf(this.activeItem), 1);
+        }, getNextPokemonId(){
+            try {
+                return this.pokemonList.at(-1).Id + 1;
+            } catch (error) {
+                return 0;
+            }
+
+        }
     },
     computed: {},
 
     mounted: function () {
         this.fetchPokemonList();
-        console.log(localStorage.getItem('pokemonList'))
+
         if(localStorage.getItem('pokemonList')){
+
             this.pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
         } else{
             this.pokemonList = []
@@ -121,6 +150,7 @@ const app = createApp({
     watch: {
         pokemonList : {
             handler: function () {
+
                 if(this.pokemonList){
                     localStorage.setItem('pokemonList', JSON.stringify(this.pokemonList))
                 } else{
