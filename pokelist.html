@@ -29,7 +29,7 @@
                 <div class="navbar-nav ms-auto d-none d-sm-flex ">
                     <a class="nav-link text-white" href="index.html">Raid Teams</a>
                     <a class="nav-link text-white active" href="pokelist.html">Poke-List</a>
-<!--                    This option is temporary, this list wont be able to be cleared without confirmation from in the profile page-->
+                    <!--                    This option is temporary, this list wont be able to be cleared without confirmation from in the profile page-->
                     <a class="nav-link text-white" href="#" v-on:click="clearLocalStorage()">Clear PokeList</a>
                 </div>
             </div>
@@ -45,13 +45,15 @@
         <div class="row g-1 mb-2">
 
             <div class="col-10 col-sm-7 ">
-<!--                the label is just for accessability-->
+                <!--                the label is just for accessability-->
                 <label aria-label="SearchPokemon" class="w-100">
-                <input type="text" class="form-control" id="searchBar" placeholder="Ex: Charizard" v-model="searchForPokemon">
+                    <input type="text" class="form-control" id="searchBar" placeholder="Ex: Charizard"
+                           v-model="searchForPokemon">
                 </label>
             </div>
             <div class="col-2">
-                <div class="btn btn-outline-secondary w-100" v-on:click="test()" type="button" id="filterButton">
+                <div class="btn btn-outline-secondary w-100" v-on:click="test()" type="button" id="filterButton"
+                     data-bs-toggle="offcanvas" data-bs-target="#filterPokemonOffCanvas">
                     <i class="bi bi-filter d-md-none"></i>
                     <i class="d-none d-md-block">Filter</i>
                 </div>
@@ -88,7 +90,7 @@
 
             <div class=" col ms-auto d-flex d-sm-none align-items-center ">
                 <p class="fs-6 mb-1 ms-1">Moves</p>
-                </div>
+            </div>
             <div class="col-auto d-none d-sm-block">
                 <div class="spacer"></div>
             </div>
@@ -329,6 +331,161 @@
     </div>
 
     <!--VDOC End-->
+
+    <!-- Filter pokemon offcanvas -->
+    <div class="offcanvas offcanvas-end d-flex flex-column bg-light  " tabindex="-1" id="filterPokemonOffCanvas"
+         style="overflow-y: auto; max-height: 100%;">
+        <div class="offcanvas-header bg-primary text-center text-white">
+
+
+            <button type="button" class="btn-close" data-bs-toggle="offcanvas"
+                    aria-label="back"></button>
+        </div>
+        <div class="flex-grow-1 d-flex flex-column">
+
+            <div class=" ps-3">
+                <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize">Filter Pokemon</p>
+            </div>
+            <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation">
+                <!-- cp button div -->
+                <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Filter Buttons">
+                    <div class="col-6">
+                        <input id="tierOneCPFilter" checked v-model.number="filterCP"
+                               :value=0 type="radio" class="btn-check" name="btnradioFilter" required>
+                        <label class="btn btn-outline-primary w-100" for="tierOneCPFilter">0+CP</label>
+                    </div>
+                    <div class="col-6">
+                        <input id="tierTwoCPFilter"
+                               v-model.number="filterCP" :value=1500 type="radio" class="btn-check"
+                               name="btnradioFilter">
+                        <label class="btn btn-outline-primary w-100" for="tierTwoCPFilter">1500+CP</label>
+                    </div>
+                    <div class="col-6">
+                        <input id="tierThreeCPFilter"
+                               v-model.number="filterCP" :value=2500 type="radio" class="btn-check"
+                               name="btnradioFilter">
+                        <label class="btn btn-outline-primary w-100" for="tierThreeCPFilter">2500+CP</label>
+                    </div>
+                    <div class="col-6">
+                        <input id="tierFourCPFilter"
+                               v-model.number="filterCP" :value=3500 type="radio" class="btn-check"
+                               name="btnradioFilter">
+                        <label class="btn btn-outline-primary w-100" for="tierFourCPFilter">3500+CP</label>
+                    </div>
+                </div>
+
+
+                <!-- Fast type div -->
+                <div class="row g-2 btn-group mt-3" role="group" aria-label="Pokemon Creature Power Buttons">
+                    <div class="col-12 ">
+                        <label class="form-label w-100">
+                            Fast Move Type
+                            <select class="form-select" id="fastMoveFilter"
+                                    v-model="filterFast">
+                                <option value="">None Selected</option>
+                                <option value="normal">Normal</option>
+                                <option value="fighting">Fighting</option>
+                                <option value="flying">Flying</option>
+                                <option value="poison">Poison</option>
+                                <option value="ground">Ground</option>
+                                <option value="rock">Rock</option>
+                                <option value="bug">Bug</option>
+                                <option value="ghost">Ghost</option>
+                                <option value="steel">Steel</option>
+                                <option value="fire">Fire</option>
+                                <option value="water">Water</option>
+                                <option value="grass">Grass</option>
+                                <option value="electric">Electric</option>
+                                <option value="psychic">Psychic</option>
+                                <option value="ice">Ice</option>
+                                <option value="dragon">Dragon</option>
+                                <option value="dark">Dark</option>
+                                <option value="fairy">Fairy</option>
+                            </select>
+                        </label>
+                    </div>
+                    <!--                            move types end-->
+                    <!--is shadow/canMega-->
+
+
+                </div>
+                <!-- Charged type div -->
+                <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
+                    <div class="col-12 ">
+                        <label class="form-label w-100">
+                            Charged Move Type
+                            <select class="form-select" id="chargedMoveFilter"
+                                    v-model="filterCharged">
+                                <option value="">None Selected</option>
+                                <option value="normal">Normal</option>
+                                <option value="fighting">Fighting</option>
+                                <option value="flying">Flying</option>
+                                <option value="poison">Poison</option>
+                                <option value="ground">Ground</option>
+                                <option value="rock">Rock</option>
+                                <option value="bug">Bug</option>
+                                <option value="ghost">Ghost</option>
+                                <option value="steel">Steel</option>
+                                <option value="fire">Fire</option>
+                                <option value="water">Water</option>
+                                <option value="grass">Grass</option>
+                                <option value="electric">Electric</option>
+                                <option value="psychic">Psychic</option>
+                                <option value="ice">Ice</option>
+                                <option value="dragon">Dragon</option>
+                                <option value="dark">Dark</option>
+                                <option value="fairy">Fairy</option>
+                            </select>
+                        </label>
+                    </div>
+                    <!--                            move types end-->
+                    <!--is shadow/canMega-->
+                    <div class="col-6">
+                        <label class="form-label w-100">
+                            Shadow
+                            <select class="form-select" v-model="filterShadow">
+                                <option selected value="">All</option>
+                                <option value=true>Shadow</option>
+                                <option value=false>Normal</option>
+
+                            </select>
+                        </label>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label w-100">
+                            Can Mega
+                            <select class="form-select" v-model="filterMega">
+                                <option selected value="">All</option>
+                                <option value=true>Can Mega</option>
+                                <option value=false>Cant Mega</option>
+
+                            </select>
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="row g-2 btn-group mt-2" role="group" aria-label="Pokemon Creature Power Buttons">
+
+                </div>
+
+
+                <!-- toggle options -->
+
+
+                <!-- done button -->
+                <div class="row g-2 mt-auto">
+                    <div class="col-12">
+                        <button type="button" data-bs-toggle="offcanvas"
+                                class="btn btn-primary mb-2 py-2 fs-4 w-100">Done
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- added pokemon details offcanvas end -->
+
     <!-- edit pokemon offcanvas -->
     <div class="offcanvas offcanvas-end d-flex flex-column bg-light  " tabindex="-1" id="editPokemonOffCanvas"
          style="overflow-y: auto; max-height: 100%;">
@@ -581,25 +738,25 @@
                 <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
                     <div class="col-6">
                         <input id="tierOneCPAdd"
-                               :value="1200" type="radio" class="btn-check" name="btnradioAdd" required
+                               :value=1200 type="radio" class="btn-check" name="btnradioAdd" required
                                v-model="pokemon.cp">
                         <label class="btn btn-outline-primary w-100" for="tierOneCPAdd">0-1500CP</label>
                     </div>
                     <div class="col-6">
                         <input id="tierTwoCPAdd"
-                               :value="2300" type="radio" class="btn-check"
+                               :value=2300 type="radio" class="btn-check"
                                name="btnradioAdd" v-model="pokemon.cp">
                         <label class="btn btn-outline-primary w-100" for="tierTwoCPAdd">1500+CP</label>
                     </div>
                     <div class="col-6">
                         <input id="tierThreeCPAdd"
-                               :value="3400" type="radio" class="btn-check"
+                               :value=3400 type="radio" class="btn-check"
                                name="btnradioAdd" v-model="pokemon.cp">
                         <label class="btn btn-outline-primary w-100" for="tierThreeCPAdd">2500+CP</label>
                     </div>
                     <div class="col-6">
                         <input id="tierFourCPAdd"
-                               :value="3700" type="radio" class="btn-check" name="btnradioAdd" v-model="pokemon.cp">
+                               :value=4200 type="radio" class="btn-check" name="btnradioAdd" v-model="pokemon.cp">
                         <label class="btn btn-outline-primary w-100" for="tierFourCPAdd">3500+CP</label>
                     </div>
                 </div>
@@ -722,7 +879,8 @@
                     <div>
                         <label class="form-label w-25   ">
                             Quantity
-                            <input required type="number" v-model.number="qty" min="1" max="10" class="form-control" placeholder="Quantity">
+                            <input required type="number" v-model.number="qty" min="1" max="10" class="form-control"
+                                   placeholder="Quantity">
                         </label>
                     </div>
                 </div>
@@ -740,11 +898,12 @@
     </div>
     <!-- added pokemon details offcanvas end -->
     <!-- success added pokemon modal -->
-    <div class="modal fade" tabindex="-1" id="pokemonAddedSuccess" v-if="activeItem" >
+    <div class="modal fade" tabindex="-1" id="pokemonAddedSuccess" v-if="activeItem">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-header p-3">
-                    <h1 class="modal-title fs-5 text-center mx-auto" id="pokemonAddedSuccessTitle">Added {{qty}} {{activeItem.name}}</h1>
+                    <h1 class="modal-title fs-5 text-center mx-auto" id="pokemonAddedSuccessTitle">Added {{qty}}
+                        {{activeItem.name}}</h1>
                     <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                 </div>
                 <div class="modal-body">

@@ -4,6 +4,12 @@ const app = createApp({
     data: function () {
         return {
             searchForPokemon: '',
+            filterFast: '',
+            filterCharged: '',
+            filterCP: 0,
+            filterShadow: '',
+            filterMega: '',
+            matches: [],
             qty: 1,
 
             pokemon: {
@@ -26,25 +32,36 @@ const app = createApp({
 
         }
     },
-    
+
     methods: {
         pokemonSearch() {
             // TODO:
             // Create offcanvas for filters
             // create data for each filter
             // add filter logic to below function
-            let matches = [];
-            if (this.searchForPokemon === ''){
-                return this.pokemonList;
-            } else{
-                for (let eachPokemon of this.pokemonList){
-                    if (eachPokemon.name.includes(this.searchForPokemon.toLowerCase())){
-                        matches.push(eachPokemon);
-                    }
-                }
-                return matches;
-            }
+            this.matches = [];
 
+            for (let eachPokemon of this.pokemonList) {
+                // filter name
+                if (
+                    eachPokemon.name.toLowerCase().includes(this.searchForPokemon.toLowerCase()) &&
+                    (this.filterFast === '' || eachPokemon.fastMoveType === this.filterFast) &&
+                    (this.filterCharged === '' || eachPokemon.chargedMoveType1 === this.filterCharged || eachPokemon.chargedMoveType2 === this.filterCharged) &&
+                    (this.filterShadow === '' || Boolean(eachPokemon.isShadow) === (this.filterShadow === true || this.filterShadow === 'true')) &&
+                    (this.filterMega === '' || Boolean(eachPokemon.canMegaEvolve) === (this.filterMega === true || this.filterMega === 'true')) &&
+                    (this.filterCP <= eachPokemon.cp)
+
+                ) {
+
+                        console.log(typeof(eachPokemon.cp));
+                        console.log(typeof(this.filterCP))
+                        this.matches.push(eachPokemon);
+
+
+                }
+
+            }
+            return this.matches;
         },
         getSpriteLink(pokemonID) {
 
@@ -52,10 +69,13 @@ const app = createApp({
                 return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID}.png`;
             }
 
-        },
+        }
+        ,
         getClass(type, otherclasses) {
             return ` type${type} ${otherclasses}`;
-        }, getClickedObject(clickedPokemonId) {
+        }
+        ,
+        getClickedObject(clickedPokemonId) {
 
             this.activeItem = this.pokemonList[clickedPokemonId];
             if (!this.activeItem) {
@@ -63,9 +83,13 @@ const app = createApp({
                 this.activeItem = {...clickedPokemonId};
                 console.log(this.activeItem);
             }
-        }, test() {
+        }
+        ,
+        test() {
             console.log(this.pokemonListAPI[0]);
-        }, searchAllPokemons(query) {
+        }
+        ,
+        searchAllPokemons(query) {
             console.log(query);
             let resultObjects = [];
             for (let pokemonQueried of this.pokemonListAPI) {
@@ -84,7 +108,9 @@ const app = createApp({
             this.searchResults = resultObjects;
             console.log(this.searchResults);
 
-        }, async fetchPokemonList() {
+        }
+        ,
+        async fetchPokemonList() {
             fetch("https://pokeapi.co/api/v2/pokemon?limit=1331")
                 .then((response) => response.json())
                 .then((data) => {
@@ -100,12 +126,14 @@ const app = createApp({
 
                     console.error(error);
                 });
-        }, addPokemon(activeItem) {
+        }
+        ,
+        addPokemon(activeItem) {
 
             this.pokemon.name = activeItem.name.toLowerCase()
             this.pokemon.pokemonId = activeItem.pokemonId
 
-            for(let i = 0; i < this.qty; i++){
+            for (let i = 0; i < this.qty; i++) {
                 this.pokemon.Id = this.getNextPokemonId()
                 this.pokemonList.push({...this.pokemon});
                 this.activeItem = this.pokemon
@@ -113,10 +141,14 @@ const app = createApp({
 
             $('#pokemonAddedSuccess').modal('show')
             console.log(activeItem)
-        },  clearLocalStorage() {
-                localStorage.removeItem('pokemonList');
-                this.pokemonList = [];
-        }, oddOrEven(otherClasses, poke){
+        }
+        ,
+        clearLocalStorage() {
+            localStorage.removeItem('pokemonList');
+            this.pokemonList = [];
+        }
+        ,
+        oddOrEven(otherClasses, poke) {
 
             if (this.pokemonList.indexOf(poke) % 2 === 0) {
                 return otherClasses;
@@ -124,11 +156,14 @@ const app = createApp({
 
                 return otherClasses + ' bg-lighter';
             }
-        },
-        deletePokemon(){
+        }
+        ,
+        deletePokemon() {
             $('#addPokemonDetailsOffcanvas').offcanvas('hide')
             this.pokemonList.splice(this.pokemonList.indexOf(this.activeItem), 1);
-        }, getNextPokemonId(){
+        }
+        ,
+        getNextPokemonId() {
             try {
                 return this.pokemonList.at(-1).Id + 1;
             } catch (error) {
@@ -142,22 +177,22 @@ const app = createApp({
     mounted: function () {
         this.fetchPokemonList();
 
-        if(localStorage.getItem('pokemonList')){
+        if (localStorage.getItem('pokemonList')) {
 
             this.pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
-        } else{
+        } else {
             this.pokemonList = []
         }
 
     }, deep: true,
 
     watch: {
-        pokemonList : {
+        pokemonList: {
             handler: function () {
 
-                if(this.pokemonList){
+                if (this.pokemonList) {
                     localStorage.setItem('pokemonList', JSON.stringify(this.pokemonList))
-                } else{
+                } else {
                     this.pokemonList = []
                 }
 
