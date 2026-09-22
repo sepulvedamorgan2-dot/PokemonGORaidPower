@@ -29,6 +29,10 @@ const app = createApp({
     
     methods: {
         pokemonSearch() {
+            // TODO:
+            // Create offcanvas for filters
+            // create data for each filter
+            // add filter logic to below function
             let matches = [];
             if (this.searchForPokemon === ''){
                 return this.pokemonList;

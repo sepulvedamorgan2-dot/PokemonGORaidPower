@@ -12,58 +12,55 @@
 </head>
 
 <body class="bg-light">
-<nav class="navbar navbar-expand-sm bg-primary">
-    <div class="container-fluid container-md ">
-        <a class="navbar-brand text-white" href="#">
-            <img src="media/images/demologo.png" alt="Logo" class="img-fluid " style="height: 40px;">
-            Raid Power
-        </a>
-        <i class="bi bi-three-dots text-white fs-4 d-sm-none  px-2 py-1" type="button" data-bs-toggle="collapse"
-           data-bs-target="#navbarCollapse" aria-controls="#offCanvasNav" aria-expanded="false"
-           aria-label="Toggle navigation">
-        </i>
-        <div class="navbar-collapse collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto d-none d-sm-flex ">
-                <a class="nav-link text-white" href="index.html">Raid Teams</a>
-                <a class="nav-link text-white active" href="pokelist.html">Poke-List</a>
-                <a class="nav-link text-white" href="#">Contact</a>
-            </div>
-        </div>
-    </div>
-</nav>
-
 
 <!-- Search Bar -->
 <div id="app">
-    <div class="container-fluid container-sm px-2">
-        <div class="row g-1 mt-2 justify-content-end">
-            <div class="col-12 col-sm-2 me-auto ">
-                <div class="btn btn-outline-primary  w-100 py-sm-2" type="button" v-on:click="clearLocalStorage()">
-
-                    <i class=" d-md-block">Clear All</i>
-                </div>
-            </div>
-            <div class="col-12 col-sm-3 ">
-                <div class="btn btn-primary w-100 py-sm-2" type="button" data-bs-toggle="offcanvas"
-                     data-bs-target="#addPokemonOffcanvas">
-
-                    <i class=" d-md-block">Add Pokemon</i>
+    <nav class="navbar navbar-expand-sm bg-primary">
+        <div class="container-fluid container-md ">
+            <a class="navbar-brand text-white" href="#">
+                <img src="media/images/demologo.png" alt="Logo" class="img-fluid " style="height: 40px;">
+                Raid Power
+            </a>
+            <i class="bi bi-three-dots text-white fs-4 d-sm-none  px-2 py-1" type="button" data-bs-toggle="collapse"
+               data-bs-target="#navbarCollapse" aria-controls="#offCanvasNav" aria-expanded="false"
+               aria-label="Toggle navigation">
+            </i>
+            <div class="navbar-collapse collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto d-none d-sm-flex ">
+                    <a class="nav-link text-white" href="index.html">Raid Teams</a>
+                    <a class="nav-link text-white active" href="pokelist.html">Poke-List</a>
+<!--                    This option is temporary, this list wont be able to be cleared without confirmation from in the profile page-->
+                    <a class="nav-link text-white" href="#" v-on:click="clearLocalStorage()">Clear PokeList</a>
                 </div>
             </div>
         </div>
+    </nav>
 
-        <p class="form-label w-100 mt-2 mb-1 fs-5">
+    <div class="container-fluid container-sm px-2">
+
+
+        <p class="form-label w-100 mt-2 mb-1 ms-1 fs-6">
             Search Your Pokemon
         </p>
         <div class="row g-1 mb-2">
 
-            <div class="col-10 ">
+            <div class="col-10 col-sm-7 ">
+<!--                the label is just for accessability-->
+                <label aria-label="SearchPokemon" class="w-100">
                 <input type="text" class="form-control" id="searchBar" placeholder="Ex: Charizard" v-model="searchForPokemon">
+                </label>
             </div>
             <div class="col-2">
                 <div class="btn btn-outline-secondary w-100" v-on:click="test()" type="button" id="filterButton">
                     <i class="bi bi-filter d-md-none"></i>
                     <i class="d-none d-md-block">Filter</i>
+                </div>
+            </div>
+            <div class="col-12 col-sm-3 ">
+                <div class="btn btn-primary w-100 " type="button" data-bs-toggle="offcanvas"
+                     data-bs-target="#addPokemonOffcanvas">
+
+                    <i class=" d-md-block">Add Pokemon</i>
                 </div>
             </div>
 
@@ -77,40 +74,51 @@
 
     <div class="container p-0 p-sm-2">
 
-        <div class="row bg-lighter g-0 d-none d-sm-flex">
-            <div class="col-auto">
+        <div class="row bg-lighter g-0 ">
+            <div class="col-auto col-sm-auto d-none d-sm-block">
                 <div class="horz-card-img"></div>
             </div>
 
-            <div class="col-6 col-sm-3 col-lg-2  d-flex align-items-center">
+            <div class="col-4 col-sm-3 col-lg-2  d-flex align-items-center">
                 <p class="fs-6 mb-1 ms-1">Pokemon</p>
             </div>
-            <div class="col-auto">
+            <div class="col-auto col-sm-auto d-sm-none d-block">
+                <div class="horz-card-img"></div>
+            </div>
+
+            <div class=" col ms-auto d-flex d-sm-none align-items-center ">
+                <p class="fs-6 mb-1 ms-1">Moves</p>
+                </div>
+            <div class="col-auto d-none d-sm-block">
                 <div class="spacer"></div>
             </div>
-            <div class=" col-auto d-flex align-items-center">
+            <div class=" col-auto d-flex align-items-center d-none d-sm-blockd-none d-sm-block">
                 <p class="fs-6 mb-1 ms-1 power-width ">CP</p>
 
             </div>
-            <div class="col-auto">
+            <div class="col-auto d-none d-sm-block">
                 <div class="spacer"></div>
             </div>
-            <div class=" col-auto d-flex align-items-center ">
+            <div class=" col-auto d-flex align-items-center d-none d-sm-block">
                 <p class="fs-6 mb-1 ms-1 power-width ">RP</p>
 
             </div>
-            <div class="col-auto">
+            <div class="col-auto d-none d-md-block">
                 <div class="spacer"></div>
             </div>
             <div class=" col-auto d-none d-lg-flex align-items-center ">
                 <p class="fs-6 mb-1 ms-1 movewidth ">Fast Attack</p>
 
             </div>
-            <div class="col-auto">
+            <div class="col-auto d-none d-md-block">
                 <div class="spacer"></div>
             </div>
             <div class=" col-auto d-none d-lg-flex align-items-center ">
                 <p class="fs-6 mb-1 ms-1 movewidth ">Charged Attack</p>
+
+            </div>
+            <div class="ms-auto col-2 d-flex me-0 text-center text-sm-end ">
+                <p class="fs-6 mb-1  ms-sm-auto me-2">Details</p>
 
             </div>
 
@@ -125,10 +133,18 @@
                     <img :src="getSpriteLink(pokemon.pokemonId)"
                          alt="Pokemon" class="img-fluid horz-card-img">
                 </div>
-                <div class="col-6 col-sm-3 col-lg-2 d-flex  align-items-center">
+                <div class="col-4 col-sm-3 col-lg-2 d-flex  align-items-center">
                     <p class="fs-5 mb-1 ms-1 text-capitalize">{{pokemon.name}}</p>
 
                 </div>
+                <div class=" col ms-auto d-flex d-sm-none align-items-center ">
+                    <i v-if="pokemon.fastMoveType"
+                       :class="getClass(pokemon.fastMoveType, `rounded  p-1 fs-tinyer bi bi-lightning-charge`)"></i>
+                    <i v-if="pokemon.chargedMoveType1"
+                       :class="getClass(pokemon.chargedMoveType1, `rounded ms-1 fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
+                    <i v-if="pokemon.chargedMoveType2"
+                       :class="getClass(pokemon.chargedMoveType2, `rounded ms-1  fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
+                </div>
                 <div class="col-auto d-none d-sm-flex">
                     <div class="spacer"></div>
                 </div>
@@ -143,7 +159,7 @@
                     <p class="fs-6 mb-0 ms-1 power-width">{{pokemon.cp}}</p>
 
                 </div>
-                <div class="col-auto">
+                <div class="col-auto d-none d-sm-flex">
                     <div class="spacer"></div>
                 </div>
                 <div class=" col-auto d-none d-lg-flex movewidth align-items-center ">
@@ -153,7 +169,7 @@
                           :class="`bg-secondary badge p-2 text-capitalize`">Not Added</span>
 
                 </div>
-                <div class="col-auto">
+                <div class="col-auto d-none d-sm-flex">
                     <div class="spacer"></div>
                 </div>
                 <div class=" col-auto d-none d-lg-flex movewidth align-items-center ms-2">
@@ -272,7 +288,7 @@
                     </div>
                     <div class="">
                         <span v-if="activeItem.fastMoveType"
-                              :class="getClass(activeItem.fastMoveType, `badge p-2 px-3 fs-6`)">Fighting</span>
+                              :class="getClass(activeItem.fastMoveType, `badge p-2 px-3 fs-6 text-capitalize`)">{{activeItem.fastMoveType}}</span>
                         <span v-if="!activeItem.fastMoveType" :class="`bg-secondary badge p-2 text-capitalize`">Not Added</span>
                     </div>
 
@@ -283,11 +299,11 @@
                     <div class="">
 
                         <span v-if="activeItem.chargedMoveType1"
-                              :class="getClass(activeItem.chargedMoveType1, `badge p-2 px-3 fs-6`)">Fighting</span>
+                              :class="getClass(activeItem.chargedMoveType1, `badge p-2 px-3 fs-6 text-capitalize`)">{{activeItem.chargedMoveType1}}</span>
                         <span v-if="!activeItem.chargedMoveType1" :class="`bg-secondary badge p-2 text-capitalize`">Not Added</span>
 
                         <span v-if="activeItem.chargedMoveType2"
-                              :class="getClass(activeItem.chargedMoveType2, `badge p-2 px-3 fs-6 ms-2`)">Fighting</span>
+                              :class="getClass(activeItem.chargedMoveType2, `badge p-2 px-3 fs-6 ms-2 text-capitalize`)">{{activeItem.chargedMoveType2}}</span>
                         <span v-if="!activeItem.chargedMoveType2" :class="`bg-secondary badge p-2 text-capitalize`">Not Added</span>
                     </div>
                 </div>
@@ -405,7 +421,7 @@
                             <div class="col-12 col-sm-6">
                                 <label class="form-label w-100">
                                     Charged Move 1
-                                    <select class="form-select" id="chargedMoveSelect1"
+                                    <select class="form-select" id="chargedMoveSelect1edit"
                                             v-model="activeItem.chargedMoveType1">
                                         <option value="">None Selected</option>
                                         <option value="normal">Normal</option>
@@ -432,7 +448,7 @@
                             <div class="col-12 col-sm-6">
                                 <label class="form-label w-100">
                                     Charged Move 2
-                                    <select class="form-select" id="chargedMoveSelect2"
+                                    <select class="form-select" id="chargedMoveSelect2edit"
                                             v-model="activeItem.chargedMoveType2">
                                         <option value="">None Selected</option>
                                         <option value="normal">Normal</option>
@@ -464,14 +480,14 @@
                 <div class="row g-2 my-2">
                     <div>
                         <label class="form-check-label">
-                            <input type="checkbox" id="isShadow" v-model="activeItem.isShadow"
+                            <input type="checkbox" id="isShadowedit" v-model="activeItem.isShadow"
                                    class="border-dark-subtle form-check-input">
                             Shadow
                         </label>
                     </div>
                     <div>
                         <label class="form-check-label">
-                            <input type="checkbox" id="isMega" v-model="activeItem.canMegaEvolve"
+                            <input type="checkbox" id="isMegaedit" v-model="activeItem.canMegaEvolve"
                                    class="border-dark-subtle form-check-input">
                             Can Mega Evolve
                         </label>
