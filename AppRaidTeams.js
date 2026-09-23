@@ -39,7 +39,7 @@ const app = createApp({
                     type: "fire",
                     activeMegaId: 3,
                     activeTeam: [
-                        0,1,2,3,
+                        0, 1, 2, 3,
                     ],
                     backupPokemon: []
 
@@ -49,7 +49,7 @@ const app = createApp({
                     type: "water",
                     activeMegaId: 2,
                     activeTeam: [
-                        0,1,2,3,4
+                        0, 1, 2, 3, 4
                     ],
                     backupPokemon: []
 
@@ -67,46 +67,60 @@ const app = createApp({
 
     methods: {
 
+        addPokemonToTeam(pokemonObject) {
+            if (this.activeClickedTeam.activeTeam.length < 6) {
+                this.activeClickedTeam.activeTeam.push(pokemonObject.Id);
+            } else {
+                this.activeClickedTeam.backupPokemon.push(pokemonObject.Id);
+            }
 
-        teamCP(teamCPMeasure){
+        },
+        teamCP(teamCPMeasure) {
             let counter = 0;
-            console.log(teamCPMeasure.activeMegaId);
-            for(const pokeInTeam of teamCPMeasure.activeTeam){
-                if (teamCPMeasure.activeMegaId === pokeInTeam){
+
+            for (const pokeInTeam of teamCPMeasure.activeTeam) {
+                if (teamCPMeasure.activeMegaId === pokeInTeam) {
                     counter += this.returnFullPokemon(pokeInTeam).cp * 1.33;
                 }
                 counter += this.returnFullPokemon(pokeInTeam).cp;
             }
             return counter;
-        }, teamForRaid(teamForRaidMeasure){
+        }, teamForRaid(teamForRaidMeasure) {
             let counter = 0;
-            for(const pokeInTeam of teamForRaidMeasure.activeTeam){
+
+
+            for (const pokeInTeam of teamForRaidMeasure.activeTeam) {
+
+
                 counter += this.returnFullPokemon(pokeInTeam).cp;
             }
 
-            return parseInt(45000/counter);
+            if (!counter) {
+                return 0;
+            }
+
+            return parseInt(45000 / counter);
         }, removeFromList(pokemonToRemove) {
             this.activeClickedTeam.activeTeam.splice(this.activeClickedTeam.activeTeam.indexOf(pokemonToRemove), 1);
 
-        }, megaClickedPokemon(pokemonToMega){
-            console.log(pokemonToMega.Id)
+        }, megaClickedPokemon(pokemonToMega) {
+
             this.activeClickedTeam.activeMegaId = pokemonToMega.Id;
 
-            console.log(this.pokemonTeamList[0].activeMegaId)
         },
         getSpriteLink(pokemonID) {
 
             if (typeof pokemonID === "number") {
                 return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID}.png`;
-            } else{
+            } else {
 
                 return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID.pokemonId}.png`;
             }
 
         }
-        , updateCPIfMega(pokemonObject){
-            console.log(pokemonObject);
-            if(this.activeClickedTeam.activeMegaId === pokemonObject.Id){
+        , updateCPIfMega(pokemonObject) {
+
+            if (this.activeClickedTeam.activeMegaId === pokemonObject.Id) {
                 return pokemonObject.cp * 1.33;
             }
             return pokemonObject.cp;
@@ -117,11 +131,11 @@ const app = createApp({
         getClickedTeam(clickedPokemonTeam) {
 
             this.activeClickedTeam = clickedPokemonTeam;
-            console.log( this.activeClickedTeam)
+            console.log(this.activeClickedTeam)
         }
         ,
         getClickedObject(clickedPokemon) {
-            console.log( clickedPokemon.Id);
+            console.log(clickedPokemon.Id);
             this.activeItem = clickedPokemon;
             console.log(this.activeItem)
 
@@ -212,83 +226,142 @@ const app = createApp({
                 return 0;
             }
 
-        }
-    },
-    computed: {
+        }, pokemonListBySearch() {
+            const listToRender = [];
+            for (const eachPokemon of this.pokemonList) {
 
-    },
+                if (listToRender.length > 10) {
+                    break;
+                }
+                let usedIds = []
 
-    mounted: function () {
-
-        this.fetchPokemonList();
-        if (localStorage.getItem('pokemonList')) {
-
-            this.pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
-        } else {
-            this.pokemonList = []
-        }
-        //
-        // if (localStorage.getItem('pokemonTeamList')) {
-        //
-        //     this.pokemonTeamList = JSON.parse(localStorage.getItem('pokemonTeamList'));
-        //
-        // } else {
-        //     this.pokemonTeamList = [];
-        //     for (const type of this.types) {
-        //         console.log(type);
-        //         this.pokemonTeamList.push({
-        //             id: this.pokemonTeamList.length,
-        //             type: type,
-        //             activeTeam: [],
-        //             backupPokemon: []
-        //         });
-        //
-        //     }
-        //
-        // }
-
-        // for (let pokeTeam of this.pokemonTeamList){
-        //     let newActiveTeam = []
-        //     let newBackupPokemon = []
-        //     for (let pokemon of pokeTeam.activeTeam){
-        //         console.log(pokemon);
-        //         if (this.pokemonList.find(p => p.Id === Number(pokemon)) === undefined){
-        //             continue
-        //         }
-        //         newActiveTeam.push(this.pokemonList.find(p => p.Id === pokemon));
-        //     }
-        //     pokeTeam.activeTeam = newActiveTeam;
-        //     for (let pokemon of pokeTeam.backupPokemon){
-        //         console.log(pokemon);
-        //         if (this.pokemonList.find(p => p.Id === Number(pokemon)) === undefined){
-        //             console.log("bad")
-        //             continue;
-        //         }
-        //         newBackupPokemon.push(this.pokemonList.find(p => p.Id === pokemon));
-        //     }
-        //     pokeTeam.backupPokemon = newBackupPokemon;
-        // }
-
-
-
-    }, deep: true,
-
-    watch: {
-        pokemonTeamList: {
-            handler: function () {
-
-                if (this.pokemonTeamList) {
-                    localStorage.setItem('pokemonTeamList', JSON.stringify(this.pokemonTeamList))
-                } else {
-                    this.pokemonTeamList = []
+                try {
+                    for(const pokemon of this.activeClickedTeam.activeTeam){
+                        usedIds.push(pokemon);
+                    }
+                    for(const pokemon of this.activeClickedTeam.backupPokemon){
+                        usedIds.push(pokemon);
+                    }
+                } catch {
+                    console.log("no clicked Team")
                 }
 
-            }, deep: true
+                try {
+                    console.log(usedIds);
+                    if (eachPokemon.name.toLowerCase().includes(this.searchForPokemon.toLowerCase()) && !usedIds.includes(eachPokemon.Id) ) {
+                        listToRender.push(eachPokemon);
+                    }
+                } catch
+                    (error)
+                    {
 
-        }
+                    }
+                }
+                return listToRender;
 
-    },
+
+            }
+        },
+        computed: {},
+
+        mounted: function () {
+
+            this.fetchPokemonList();
+            if (localStorage.getItem('pokemonList')) {
+
+                this.pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
+            } else {
+                this.pokemonList = [{
+                    Id: 1,
+                    name: "bidoof",
+                    pokemonId: 399,
+                    cp: 2800,
+                    isShadow: false,
+                    canMegaEvolve: false,
+                    fastMoveType: "electric",
+                    chargedMoveType1: "normal",
+                    chargedMoveType2: "normal",
 
 
-});
+                },{
+                    Id: 2,
+                    name: "bulbasaur",
+                    pokemonId: 1,
+                    cp: 4000,
+                    isShadow: true,
+                    canMegaEvolve: false,
+                    fastMoveType: "grass",
+                    chargedMoveType1: "grass",
+                    chargedMoveType2: "poison",
+
+
+                },{
+                    Id: 3,
+                    name: "bulbasaur",
+                    pokemonId: 1,
+                    cp: 3000,
+                    isShadow: true,
+                    canMegaEvolve: false,
+                    fastMoveType: "electric",
+                    chargedMoveType1: "grass",
+                    chargedMoveType2: "poison",
+
+
+                },{
+                    Id: 4,
+                    name: "bulbasaur",
+                    pokemonId: 1,
+                    cp: 4000,
+                    isShadow: true,
+                    canMegaEvolve: false,
+                    fastMoveType: "steel",
+                    chargedMoveType1: "grass",
+                    chargedMoveType2: "poison",
+
+
+                }]
+                localStorage.setItem('pokemonList', JSON.stringify(this.pokemonList))
+            }
+
+            if (localStorage.getItem('pokemonTeamList')) {
+
+                this.pokemonTeamList = JSON.parse(localStorage.getItem('pokemonTeamList'));
+
+            } else {
+                this.pokemonTeamList = [];
+                for (const type of this.types) {
+                    console.log(type);
+                    this.pokemonTeamList.push({
+                        id: this.pokemonTeamList.length,
+                        type: type,
+                        activeTeam: [1,2],
+                        backupPokemon: []
+                    });
+
+                }
+                localStorage.setItem('pokemonTeamList', JSON.stringify(this.pokemonTeamList))
+
+            }
+
+
+        }, deep: true,
+
+        watch: {
+            pokemonTeamList: {
+                handler: function () {
+
+                    if (this.pokemonTeamList) {
+                        localStorage.setItem('pokemonTeamList', JSON.stringify(this.pokemonTeamList))
+                    } else {
+                        this.pokemonTeamList = []
+                    }
+
+                }, deep: true
+
+            }
+
+        },
+
+
+    });
 export default app;

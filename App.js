@@ -170,7 +170,8 @@ const app = createApp({
                 return 0;
             }
 
-        }
+        },
+
     },
     computed: {},
 

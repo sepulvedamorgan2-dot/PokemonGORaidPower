@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/styles/css/typecolor.css">
 </head>
 
+
 <body class="bg-light">
 <div id="app2">
     <nav class="navbar navbar-expand-sm bg-primary">
@@ -71,7 +72,7 @@
 
         <div class="row g-3 mt-sm-2 mt-1 typecardholder" >
             <div  class="col-12 col-sm-6 col-xl-4 mt-3 typecard" v-for="pokemonTeam in pokemonTeamList" :key="pokemonTeam.id">
-                <div class="card" ">
+                <div class="card">
 
                     <!-- imgs -->
                     <div class="card-body p-2  p-sm-2 p-md-2">
@@ -140,7 +141,9 @@
         <div class="" id="editTeamCollapse">
             <!-- Pokemon horitzonal card -->
             <div class="border-bottom  rounded-0 w-100">
-
+                <div class=" ps-3">
+                    <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize">Active Team</p>
+                </div>
                 <div class="row g-0 border-bottom" v-for="activePokemon in activeClickedTeam.activeTeam" :key="activePokemon.Id">
                     <div class="col-3 col-md-2" >
                         <img class="img-fluid"
@@ -181,7 +184,64 @@
 
 
                                 <div class="col-12 col-sm-6 " v-if="returnFullPokemon(activePokemon).canMegaEvolve">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#confirmMega"
+                                    <button type="button"
+                                            class="btn btn-secondary w-100" v-on:click="megaClickedPokemon(returnFullPokemon(activePokemon))">Mega
+                                    </button>
+                                </div>
+                                <div :class="{'col-12' : !returnFullPokemon(activePokemon).canMegaEvolve,
+                                                'col-12 col-sm-6' : returnFullPokemon(activePokemon).canMegaEvolve}">
+                                    <button type="button"
+                                            class="btn btn-danger w-100 text-white" v-on:click="removeFromList(returnFullPokemon(activePokemon))">Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" ps-3">
+                    <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize">Backup Team</p>
+                </div>
+                <div class="row g-0 border-bottom" v-for="activePokemon in activeClickedTeam.backupPokemon" :key="activePokemon.Id">
+                    <div class="col-3 col-md-2" >
+                        <img class="img-fluid"
+                             :src="getSpriteLink(returnFullPokemon(activePokemon))"
+                             alt="pokemonImg">
+                    </div>
+                    <div class="col-6 col-md-7">
+                        <div class="p-1 ms-1">
+                            <p class="fs-5 mb-0 text-capitalize">{{returnFullPokemon(activePokemon).name}}
+                            </p>
+
+                            <div class="d-flex mt-0">
+                                <p class="me-2 fs-6 mb-0">RP:{{updateCPIfMega(returnFullPokemon(activePokemon))}}</p>
+                                <p class="fs-6 mb-0">CP:{{updateCPIfMega(returnFullPokemon(activePokemon))}}</p>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="d-flex justify-content-end me-4 align-items-center h-100">
+                            <i v-if="returnFullPokemon(activePokemon).fastMoveType"
+                               :class="getClass(activePokemon.fastMoveType, `rounded mb-1 p-1  fs-tinyer bi bi-lightning-charge`)"></i>
+                            <i v-if="returnFullPokemon(activePokemon).chargedMoveType1"
+                               :class="getClass(returnFullPokemon(activePokemon).chargedMoveType1, `rounded mb-1 ms-1 fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
+                            <i v-if="returnFullPokemon(activePokemon).chargedMoveType2"
+                               :class="getClass(returnFullPokemon(activePokemon).chargedMoveType2, `rounded mb-1 ms-1   fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
+                            <i type="button" data-bs-toggle="collapse" :data-bs-target=" `#collapse${returnFullPokemon(activePokemon).Id}`"
+                               class="bi bi-pencil ms-2 ms-sm-4"></i>
+                        </div>
+                    </div>
+
+                    <div class="collapse" :id=" `collapse${returnFullPokemon(activePokemon).Id}`" data-bs-parent="#editTeamCollapse">
+                        <div class="card border-0 card-body py-2 pt-0">
+                            <div class="row g-1">
+
+
+
+                                <div class="col-12 col-sm-6 " v-if="returnFullPokemon(activePokemon).canMegaEvolve">
+                                    <button type="button"
                                             class="btn btn-secondary w-100" v-on:click="megaClickedPokemon(returnFullPokemon(activePokemon))">Mega
                                     </button>
                                 </div>
@@ -229,41 +289,47 @@
         <div class="">
             <div class="p-3 border-bottom">
                 <label class="form-label w-100">Search Pokemon
-                    <input class="form-control " placeholder="'Enter' to Search" id="pokemonSelect">
+                    <input class="form-control " placeholder="'Enter' to Search" id="pokemonSearchFilter" v-model="searchForPokemon">
 
                 </label>
             </div>
-            <div id="renderList">
 
-            </div>
         </div>
 
         <!-- horz card -->
-        <div class="">
-            <div class="border-bottom rounded-0 w-100">
-                <div class="row g-0 align-items-center">
+        <div class="row g-0 border-bottom" v-for="queriedPokemon in pokemonListBySearch()" :key="queriedPokemon.Id">
+            <div class="col-3 col-md-2" >
+                <img class="img-fluid"
+                     :src="getSpriteLink(queriedPokemon)"
+                     alt="pokemonImg">
+            </div>
+            <div class="col-6 col-md-7">
+                <div class="p-1 ms-1">
+                    <p class="fs-5 mb-0 text-capitalize">{{queriedPokemon.name}}   </p>
 
-                    <div class="col-3 col-md-2">
-                        <img class="img-fluid horz-card-img "
-                             src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/414.png"
-                             alt="pokemonImg">
-                    </div>
-                    <div class="col-5 col-md-6 ">
-                        <div class="p-1">
-                            <p class="fs-5 fs-sm-5 mb-0">Bidoof</p>
+                    <div class="d-flex mt-0">
+                        <p class="me-2 fs-6 mb-0">RP:{{queriedPokemon.cp}}</p>
+                        <p class="fs-6 mb-0">CP:{{queriedPokemon.cp}}</p>
 
-                        </div>
-                    </div>
-                    <div class="col-4 py-2">
-                        <div class=" p-1">
-                            <button class="btn btn-primary btn-sm px-0 w-100 py-sm-2 searchedPokemonBtn"
-                                    data-bs-toggle="offcanvas" data-bs-target="#editTeamOffCanvas">Select
-                            </button>
-                        </div>
                     </div>
 
                 </div>
             </div>
+
+            <div class="col-3">
+                <div class="d-flex justify-content-end me-4 align-items-center h-100">
+                    <i v-if="queriedPokemon.fastMoveType"
+                       :class="getClass(queriedPokemon.fastMoveType, `rounded mb-1 p-1  fs-tinyer bi bi-lightning-charge`)"></i>
+                    <i v-if="queriedPokemon.chargedMoveType1"
+                       :class="getClass(queriedPokemon.chargedMoveType1, `rounded mb-1 ms-1 fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
+                    <i v-if="queriedPokemon.chargedMoveType2"
+                       :class="getClass(queriedPokemon.chargedMoveType2, `rounded mb-1 ms-1   fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
+                    <i type="button" data-bs-toggle="offcanvas" :data-bs-target=" `#editTeamOffCanvas`"
+                       class="bi bi-plus ms-2 fs-5 ms-sm-4" v-on:click="addPokemonToTeam(queriedPokemon)" ></i>
+                </div>
+            </div>
+
+
         </div>
         <!-- horz card end -->
 
