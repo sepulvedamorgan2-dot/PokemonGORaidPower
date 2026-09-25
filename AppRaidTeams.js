@@ -66,7 +66,8 @@ const app = createApp({
     },
 
     methods: {
-
+        // TODO:
+        // Check if pokemon in pokemonTeamList still exists, if not remove it
         addPokemonToTeam(pokemonObject) {
             if (this.activeClickedTeam.activeTeam.length < 6) {
                 this.activeClickedTeam.activeTeam.push(pokemonObject.Id);
@@ -100,8 +101,11 @@ const app = createApp({
             }
 
             return parseInt(45000 / counter);
-        }, removeFromList(pokemonToRemove) {
-            this.activeClickedTeam.activeTeam.splice(this.activeClickedTeam.activeTeam.indexOf(pokemonToRemove), 1);
+        }, removeFromListActive(pokemonToRemove) {
+            this.activeClickedTeam.activeTeam.splice(this.activeClickedTeam.activeTeam.indexOf(pokemonToRemove.Id) , 1);
+
+        }, removeFromListBackup(pokemonToRemove) {
+            this.activeClickedTeam.backupPokemon.splice(this.activeClickedTeam.backupPokemon.indexOf(pokemonToRemove.Id) , 1);
 
         }, megaClickedPokemon(pokemonToMega) {
 
@@ -142,9 +146,19 @@ const app = createApp({
         }
         ,
         returnFullPokemon(pokemonIdOnly) {
+            const pokemonFullObject = {...this.pokemonList.find(p => p.Id === pokemonIdOnly)}
 
+           // if(Object.keys(pokemonFullObject).length === 0){
+           //     console.log(pokemonFullObject)
+           //     console.log("No matching Pokémon found for ID: " + pokemonIdOnly);
+           //     // Remove the Pokémon from the active team
+           //     for(const pokemonTeam of this.pokemonTeamList){
+           //
+           //         console.log(pokemonTeam.activeTeam.splice(pokemonTeam.activeTeam.indexOf(pokemonIdOnly), 1)[0]);
+           //     }
+           // }
 
-            return ({...this.pokemonList.find(p => p.Id === pokemonIdOnly)});
+            return pokemonFullObject;
 
         }
         ,
@@ -243,11 +257,11 @@ const app = createApp({
                         usedIds.push(pokemon);
                     }
                 } catch {
-                    console.log("no clicked Team")
+                    // console.log("no clicked Team")
                 }
 
                 try {
-                    console.log(usedIds);
+                    // console.log(usedIds);
                     if (eachPokemon.name.toLowerCase().includes(this.searchForPokemon.toLowerCase()) && !usedIds.includes(eachPokemon.Id) ) {
                         listToRender.push(eachPokemon);
                     }
@@ -326,6 +340,16 @@ const app = createApp({
             if (localStorage.getItem('pokemonTeamList')) {
 
                 this.pokemonTeamList = JSON.parse(localStorage.getItem('pokemonTeamList'));
+                // Notes because i googled if there was a better way than looping through 3 arrays to find what does/doesnt exist and this is new-ish to me
+                // All set items must be unique
+                // .map returns a new array with only the id's that gets turned into a set
+
+                const pokemonListIds = new Set(this.pokemonList.map(p => p.Id));
+
+                for(const team of this.pokemonTeamList){
+                    // filter loops throguh all id's and if pokemonListIds.has returns false, that id is removed from the list
+                    team.activeTeam = team.activeTeam.filter(id => pokemonListIds.has(id));
+                }
 
             } else {
                 this.pokemonTeamList = [];
@@ -339,6 +363,11 @@ const app = createApp({
                     });
 
                 }
+
+
+
+
+
                 localStorage.setItem('pokemonTeamList', JSON.stringify(this.pokemonTeamList))
 
             }

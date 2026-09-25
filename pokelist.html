@@ -129,7 +129,7 @@
 
 
         <!-- Pokemon horitzonal card -->
-        <div v-for="pokemon in pokemonSearch()" :key="pokemon.id">
+        <div v-for="pokemon in pokemonSearch()" :key="pokemon.Id">
             <div :class="oddOrEven('row g-0 py-0', pokemon)">
                 <div class="col-auto">
                     <img :src="getSpriteLink(pokemon.pokemonId)"

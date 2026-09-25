@@ -77,7 +77,7 @@ const app = createApp({
         ,
         getClickedObject(clickedPokemonId) {
 
-            this.activeItem = this.pokemonList[clickedPokemonId];
+            this.activeItem = this.pokemonList.find(p => p.Id === clickedPokemonId);
             if (!this.activeItem) {
                 console.log("BAD" + clickedPokemonId.pokemonId);
                 this.activeItem = {...clickedPokemonId};

@@ -133,7 +133,7 @@
     </div>
     <!-- Card End -->
     <!-- Offcanvas Start -->
-    <div class="offcanvas offcanvas-end " tabindex="-1" id="editTeamOffCanvas">
+    <div class="offcanvas offcanvas-end " tabindex="-1" id="editTeamOffCanvas" style="overflow-y: auto;">
         <div class="offcanvas-header bg-primary text-center text-white">
             <h5 class="offcanvas-title" id="editTeamOffCanvasLabel">Edit Team</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -192,7 +192,7 @@
                                 <div :class="{'col-12' : !returnFullPokemon(activePokemon).canMegaEvolve,
                                                 'col-12 col-sm-6' : returnFullPokemon(activePokemon).canMegaEvolve}">
                                     <button type="button"
-                                            class="btn btn-danger w-100 text-white" v-on:click="removeFromList(returnFullPokemon(activePokemon))">Remove
+                                            class="btn btn-danger w-100 text-white" v-on:click="removeFromListActive(returnFullPokemon(activePokemon))" data-bs-toggle="collapse" :data-bs-target=" `#collapse${returnFullPokemon(activePokemon).Id}`">Remove
                                     </button>
                                 </div>
                             </div>
@@ -241,15 +241,11 @@
 
 
 
-                                <div class="col-12 col-sm-6 " v-if="returnFullPokemon(activePokemon).canMegaEvolve">
+
+                                <div class="col-12">
                                     <button type="button"
-                                            class="btn btn-secondary w-100" v-on:click="megaClickedPokemon(returnFullPokemon(activePokemon))">Mega
-                                    </button>
-                                </div>
-                                <div :class="{'col-12' : !returnFullPokemon(activePokemon).canMegaEvolve,
-                                                'col-12 col-sm-6' : returnFullPokemon(activePokemon).canMegaEvolve}">
-                                    <button type="button"
-                                            class="btn btn-danger w-100 text-white" v-on:click="removeFromList(returnFullPokemon(activePokemon))">Remove
+                                            class="btn btn-danger w-100 text-white" v-on:click="removeFromListBackup(returnFullPokemon(activePokemon))" data-bs-toggle="collapse" :data-bs-target=" `#collapse${returnFullPokemon(activePokemon).Id}`">
+                                        Remove
                                     </button>
                                 </div>
                             </div>
@@ -325,8 +321,9 @@
                        :class="getClass(queriedPokemon.chargedMoveType1, `rounded mb-1 ms-1 fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
                     <i v-if="queriedPokemon.chargedMoveType2"
                        :class="getClass(queriedPokemon.chargedMoveType2, `rounded mb-1 ms-1   fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
-                    <i type="button" data-bs-toggle="offcanvas" :data-bs-target=" `#editTeamOffCanvas`"
+                    <i type="button"
                        class="bi bi-plus ms-2 fs-5 ms-sm-4" v-on:click="addPokemonToTeam(queriedPokemon)" ></i>
+<!--                    data-bs-toggle="offcanvas" :data-bs-target=" `#editTeamOffCanvas`"-->
                 </div>
             </div>
 
