@@ -1,15 +1,30 @@
 import {createApp} from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
-
+import PokelistContainer from './components/PokelistContainer.js';
+import OffCanvasContainer from './components/OffcanvasContainer.js';
+import DetailsOffCanvas from './components/DetailsOffCanvas.js';
+import AddEditOffCanvas from "./components/AddEditOffCanvas.js";
+import NavbarMain from "./components/NavbarMain.js";
+import FilterOffCanvas from "./components/FilterOffCanvas.js";
+import SearchBarContainer from "./components/SearchBarContainer.js";
 const app = createApp({
+
+    components: {
+        PokelistContainer,
+        OffCanvasContainer,
+        DetailsOffCanvas,
+        AddEditOffCanvas,
+        NavbarMain,
+        FilterOffCanvas,
+        SearchBarContainer,
+
+    },
+
     data: function () {
+
         return {
-            searchForPokemon: '',
-            filterFast: '',
-            filterCharged: '',
-            filterCP: 0,
-            filterShadow: '',
-            filterMega: '',
+
             matches: [],
+            searchForPokemon: '',
             qty: 1,
 
             pokemon: {
@@ -34,35 +49,12 @@ const app = createApp({
     },
 
     methods: {
-        pokemonSearch() {
-            // TODO:
-            // Create offcanvas for filters
-            // create data for each filter
-            // add filter logic to below function
-            this.matches = [];
 
-            for (let eachPokemon of this.pokemonList) {
-                // filter name
-                if (
-                    eachPokemon.name.toLowerCase().includes(this.searchForPokemon.toLowerCase()) &&
-                    (this.filterFast === '' || eachPokemon.fastMoveType === this.filterFast) &&
-                    (this.filterCharged === '' || eachPokemon.chargedMoveType1 === this.filterCharged || eachPokemon.chargedMoveType2 === this.filterCharged) &&
-                    (this.filterShadow === '' || Boolean(eachPokemon.isShadow) === (this.filterShadow === true || this.filterShadow === 'true')) &&
-                    (this.filterMega === '' || Boolean(eachPokemon.canMegaEvolve) === (this.filterMega === true || this.filterMega === 'true')) &&
-                    (this.filterCP <= eachPokemon.cp)
+        updateMatches(newList){
 
-                ) {
-
-                        console.log(typeof(eachPokemon.cp));
-                        console.log(typeof(this.filterCP))
-                        this.matches.push(eachPokemon);
-
-
-                }
-
-            }
-            return this.matches;
+            this.matches = newList;
         },
+
         getSpriteLink(pokemonID) {
 
             if (typeof pokemonID === "number") {
@@ -71,13 +63,10 @@ const app = createApp({
 
         }
         ,
-        getClass(type, otherclasses) {
-            return ` type${type} ${otherclasses}`;
-        }
-        ,
+
         getClickedObject(clickedPokemonId) {
 
-            this.activeItem = this.pokemonList.find(p => p.Id === clickedPokemonId);
+            this.activeItem = this.pokemonList.find(p => p.Id === clickedPokemonId.Id);
             if (!this.activeItem) {
                 console.log("BAD" + clickedPokemonId.pokemonId);
                 this.activeItem = {...clickedPokemonId};
@@ -85,10 +74,7 @@ const app = createApp({
             }
         }
         ,
-        test() {
-            console.log(this.pokemonListAPI[0]);
-        }
-        ,
+
         searchAllPokemons(query) {
             console.log(query);
             let resultObjects = [];
@@ -130,36 +116,24 @@ const app = createApp({
         ,
         addPokemon(activeItem) {
 
-            this.pokemon.name = activeItem.name.toLowerCase()
-            this.pokemon.pokemonId = activeItem.pokemonId
+
+            this.pokemon = activeItem;
 
             for (let i = 0; i < this.qty; i++) {
                 this.pokemon.Id = this.getNextPokemonId()
                 this.pokemonList.push({...this.pokemon});
                 this.activeItem = this.pokemon
             }
-
+            this.matches = this.pokemonList
             $('#pokemonAddedSuccess').modal('show')
-            console.log(activeItem)
-        }
-        ,
-        clearLocalStorage() {
-            localStorage.removeItem('pokemonList');
-            this.pokemonList = [];
-        }
-        ,
-        oddOrEven(otherClasses, poke) {
 
-            if (this.pokemonList.indexOf(poke) % 2 === 0) {
-                return otherClasses;
-            } else {
-
-                return otherClasses + ' bg-lighter';
-            }
         }
         ,
+
+
         deletePokemon() {
             $('#addPokemonDetailsOffcanvas').offcanvas('hide')
+            console.log(this.activeItem);
             this.pokemonList.splice(this.pokemonList.indexOf(this.activeItem), 1);
         }
         ,
@@ -170,7 +144,9 @@ const app = createApp({
                 return 0;
             }
 
-        },
+        }, updateQty(newQuantity){
+            this.qty = newQuantity;
+        }
 
     },
     computed: {},
@@ -184,6 +160,8 @@ const app = createApp({
         } else {
             this.pokemonList = []
         }
+        this.matches = {...this.pokemonList};
+
 
     }, deep: true,
 
@@ -197,12 +175,14 @@ const app = createApp({
                     this.pokemonList = []
                 }
 
+                
+
             }, deep: true
 
         }
 
-    },
 
+    }
 
 });
 export default app;

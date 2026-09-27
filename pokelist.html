@@ -13,672 +13,66 @@
 
 <body class="bg-light">
 
-<!-- Search Bar -->
+
 <div id="app">
-    <nav class="navbar navbar-expand-sm bg-primary">
-        <div class="container-fluid container-md ">
-            <a class="navbar-brand text-white" href="#">
-                <img src="media/images/demologo.png" alt="Logo" class="img-fluid " style="height: 40px;">
-                Raid Power
-            </a>
-            <i class="bi bi-three-dots text-white fs-4 d-sm-none  px-2 py-1" type="button" data-bs-toggle="collapse"
-               data-bs-target="#navbarCollapse" aria-controls="#offCanvasNav" aria-expanded="false"
-               aria-label="Toggle navigation">
-            </i>
-            <div class="navbar-collapse collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto d-none d-sm-flex ">
-                    <a class="nav-link text-white" href="index.html">Raid Teams</a>
-                    <a class="nav-link text-white active" href="pokelist.html">Poke-List</a>
-                    <!--                    This option is temporary, this list wont be able to be cleared without confirmation from in the profile page-->
-                    <a class="nav-link text-white" href="#" v-on:click="clearLocalStorage()">Clear PokeList</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <!--    Navbar-->
+    <navbar-main page-title="Raid Power"></navbar-main>
+    <!--    Navbar End-->
 
-    <div class="container-fluid container-sm px-2">
+    <!--    Search Bar Div-->
+    <search-bar-container class="mt-3"
+                          title="Search Pokemon"
+                          have-extra-button="true"
+                          place-holder="Ex: Charizard"
+                          have-filter=true
+                          @search-query="searchForPokemon = $event"
+                          filter-toggle="offcanvas"
+                          filter-toggle-id="#filterPokemonOffCanvas"
+    >
+        <!--        add pokemon Button-->
+        <div class="btn btn-primary w-100 " type="button" data-bs-toggle="offcanvas"
+             data-bs-target="#addPokemonOffcanvas">
 
-
-        <p class="form-label w-100 mt-2 mb-1 ms-1 fs-6">
-            Search Your Pokemon
-        </p>
-        <div class="row g-2 mb-2">
-
-            <div class="col-10 col-sm-7 ">
-                <!--                the label is just for accessability-->
-                <label aria-label="SearchPokemon" class="w-100">
-                    <input type="text" class="form-control" id="searchBar" placeholder="Ex: Charizard"
-                           v-model="searchForPokemon">
-                </label>
-            </div>
-            <div class="col-2">
-                <div class="btn btn-outline-secondary w-100" v-on:click="test()" type="button" id="filterButton"
-                     data-bs-toggle="offcanvas" data-bs-target="#filterPokemonOffCanvas">
-                    <i class="bi bi-filter d-md-none"></i>
-                    <i class="d-none d-md-block">Filter</i>
-                </div>
-            </div>
-            <div class="col-12 col-sm-3 ">
-                <div class="btn btn-primary w-100 " type="button" data-bs-toggle="offcanvas"
-                     data-bs-target="#addPokemonOffcanvas">
-
-                    <i class=" d-md-block">Add Pokemon</i>
-                </div>
-            </div>
-
-
+            <i class=" d-md-block">Add Pokemon</i>
         </div>
 
-
-    </div>
+    </search-bar-container>
     <!-- Search Bar End -->
-    <!-- horz card container  -->
 
-    <div class="container p-0 p-sm-2">
+    <!--    Pokemon List-->
+    <pokelist-container :searched-and-filtered-array="matches" :full-pokemon-list="pokemonList"
+                        @clicked-pokemon="getClickedObject"></pokelist-container>
+    <!--pokemon List end-->
 
-        <div class="row bg-lighter g-0 ">
-            <div class="col-auto col-sm-auto d-none d-sm-block">
-                <div class="horz-card-img"></div>
-            </div>
-
-            <div class="col-4 col-sm-3 col-lg-2  d-flex align-items-center">
-                <p class="fs-6 mb-1 ms-1">Pokemon</p>
-            </div>
-            <div class="col-auto col-sm-auto d-sm-none d-block">
-                <div class="horz-card-img"></div>
-            </div>
-
-            <div class=" col ms-auto d-flex d-sm-none align-items-center ">
-                <p class="fs-6 mb-1 ms-1">Moves</p>
-            </div>
-            <div class="col-auto d-none d-sm-block">
-                <div class="spacer"></div>
-            </div>
-            <div class=" col-auto d-flex align-items-center d-none d-sm-blockd-none d-sm-block">
-                <p class="fs-6 mb-1 ms-1 power-width ">CP</p>
-
-            </div>
-            <div class="col-auto d-none d-sm-block">
-                <div class="spacer"></div>
-            </div>
-            <div class=" col-auto d-flex align-items-center d-none d-sm-block">
-                <p class="fs-6 mb-1 ms-1 power-width ">RP</p>
-
-            </div>
-            <div class="col-auto d-none d-md-block">
-                <div class="spacer"></div>
-            </div>
-            <div class=" col-auto d-none d-lg-flex align-items-center ">
-                <p class="fs-6 mb-1 ms-1 movewidth ">Fast Attack</p>
-
-            </div>
-            <div class="col-auto d-none d-md-block">
-                <div class="spacer"></div>
-            </div>
-            <div class=" col-auto d-none d-lg-flex align-items-center ">
-                <p class="fs-6 mb-1 ms-1 movewidth ">Charged Attack</p>
-
-            </div>
-            <div class="ms-auto col-2 d-flex me-0 text-center text-sm-end ">
-                <p class="fs-6 mb-1  ms-sm-auto me-2">Details</p>
-
-            </div>
-
-
-        </div>
-
-
-        <!-- Pokemon horitzonal card -->
-        <div v-for="pokemon in pokemonSearch()" :key="pokemon.Id">
-            <div :class="oddOrEven('row g-0 py-0', pokemon)">
-                <div class="col-auto">
-                    <img :src="getSpriteLink(pokemon.pokemonId)"
-                         alt="Pokemon" class="img-fluid horz-card-img">
-                </div>
-                <div class="col-4 col-sm-3 col-lg-2 d-flex  align-items-center">
-                    <p class="fs-5 mb-1 ms-1 text-capitalize">{{pokemon.name}}</p>
-
-                </div>
-                <div class=" col ms-auto d-flex d-sm-none align-items-center ">
-                    <i v-if="pokemon.fastMoveType"
-                       :class="getClass(pokemon.fastMoveType, `rounded  p-1 fs-tinyer bi bi-lightning-charge`)"></i>
-                    <i v-if="pokemon.chargedMoveType1"
-                       :class="getClass(pokemon.chargedMoveType1, `rounded ms-1 fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
-                    <i v-if="pokemon.chargedMoveType2"
-                       :class="getClass(pokemon.chargedMoveType2, `rounded ms-1  fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
-                </div>
-                <div class="col-auto d-none d-sm-flex">
-                    <div class="spacer"></div>
-                </div>
-                <div class=" col-auto d-none d-sm-flex  align-items-center">
-                    <p class="fs-6 mb-0 ms-1 power-width">{{pokemon.cp}}</p>
-
-                </div>
-                <div class="col-auto d-none d-sm-flex">
-                    <div class="spacer"></div>
-                </div>
-                <div class=" col-auto d-none d-sm-flex  align-items-center">
-                    <p class="fs-6 mb-0 ms-1 power-width">{{pokemon.cp}}</p>
-
-                </div>
-                <div class="col-auto d-none d-sm-flex">
-                    <div class="spacer"></div>
-                </div>
-                <div class=" col-auto d-none d-lg-flex movewidth align-items-center ">
-                    <span v-if="pokemon.fastMoveType"
-                          :class="getClass(pokemon.fastMoveType, `badge p-2 text-capitalize`)">{{pokemon.fastMoveType}}</span>
-                    <span v-if="!pokemon.fastMoveType"
-                          :class="`bg-secondary badge p-2 text-capitalize`">Not Added</span>
-
-                </div>
-                <div class="col-auto d-none d-sm-flex">
-                    <div class="spacer"></div>
-                </div>
-                <div class=" col-auto d-none d-lg-flex movewidth align-items-center ms-2">
-                    <span :class="getClass(pokemon.chargedMoveType1, `badge p-2 text-capitalize`)">{{pokemon.chargedMoveType1}}</span>
-                    <span v-if="!pokemon.chargedMoveType1" :class="`bg-secondary badge p-2 text-capitalize`">Move 1 Not Added</span>
-                    <span :class="getClass(pokemon.chargedMoveType2, `badge p-2 ms-2 text-capitalize`)">{{pokemon.chargedMoveType2}}</span>
-                    <span v-if="!pokemon.chargedMoveType2" :class="`bg-secondary ms-2 badge p-2 text-capitalize`">Move 2 Not Added</span>
-
-                </div>
-
-
-                <div class="col-auto ms-auto  align-items-center d-flex">
-                    <i type="button" data-bs-toggle="offcanvas" data-bs-target="#pokemonDetailsOffCanvas"
-                       v-on:click="getClickedObject(pokemon.Id)"
-                       class="bi bi-three-dots me-4 fs-4"></i>
-                </div>
-
-            </div>
-        </div>
-        <!--  card end  -->
-
-        <!--    &lt;!&ndash; Pokemon horitzonal card &ndash;&gt;-->
-        <!--    <div class="row bg-lighter  g-0 py-0">-->
-        <!--        <div class="col-auto">-->
-        <!--            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"-->
-        <!--                 alt="PokemonName" class="img-fluid horz-card-img">-->
-        <!--        </div>-->
-        <!--        <div class="col-6 col-sm-3 col-lg-2 d-flex  align-items-center">-->
-        <!--            <p class="fs-5 mb-1 ms-1">Crabominable</p>-->
-
-        <!--        </div>-->
-        <!--        <div class="col-auto d-none d-sm-flex">-->
-        <!--            <div class="spacer"></div>-->
-        <!--        </div>-->
-        <!--        <div class=" col-auto d-none d-sm-flex  align-items-center">-->
-        <!--            <p class="fs-6 mb-0 ms-1 power-width">3000</p>-->
-
-        <!--        </div>-->
-        <!--        <div class="col-auto d-none d-sm-flex">-->
-        <!--            <div class="spacer"></div>-->
-        <!--        </div>-->
-        <!--        <div class=" col-auto d-none d-sm-flex  align-items-center">-->
-        <!--            <p class="fs-6 mb-0 ms-1 power-width">232</p>-->
-
-        <!--        </div>-->
-        <!--        <div class="col-auto">-->
-        <!--            <div class="spacer"></div>-->
-        <!--        </div>-->
-        <!--        <div class=" col-auto d-none d-lg-flex movewidth align-items-center ">-->
-        <!--            <span class="badge p-2 text-bg-secondary ms-2">Type</span>-->
-
-        <!--        </div>-->
-        <!--        <div class="col-auto">-->
-        <!--            <div class="spacer"></div>-->
-        <!--        </div>-->
-        <!--        <div class=" col-auto d-none d-lg-flex movewidth align-items-center ms-2">-->
-        <!--            <span class="badge p-2 text-bg-secondary">Fighting</span>-->
-        <!--            <span class="badge p-2 ms-2 text-bg-secondary">Fighting</span>-->
-
-        <!--        </div>-->
-
-
-        <!--        <div class="col-auto ms-auto  align-items-center d-flex">-->
-        <!--            <i type="button" data-bs-toggle="offcanvas" data-bs-target="#pokemonDetailsOffCanvas"-->
-        <!--               class="bi bi-three-dots me-4 fs-4"></i>-->
-        <!--        </div>-->
-
-
-        <!--    </div>-->
-        <!--    &lt;!&ndash;  card end  &ndash;&gt;-->
-
-
-    </div>
-
-
-    <!--View Details Offcanvas-->
-
-    <div class="offcanvas offcanvas-end " tabindex="-1" id="pokemonDetailsOffCanvas" v-if="activeItem"
-         style="overflow-y: auto; max-height: 100%;">
-        <div class="offcanvas-header bg-primary text-center text-white">
-
-            <h5 class="offcanvas-title">Pokemon Details</h5>
-            <button type="button" class="btn-close" data-bs-toggle="offcanvas"
-                    aria-label="close off canvas"></button>
-        </div>
-        <div class="flex-grow-1 d-flex flex-column">
-            <div class="px-5">
-                <div class="px-5 pt-3">
-                    <img :src="getSpriteLink(activeItem.pokemonId)"
-                         class="bg-white img-fluid details-img w-100 border border-dark-subtle rounded" alt="">
-                </div>
-            </div>
-            <div class="text-center">
-                <p class="fs-3 fw-medium mt-2 mb-2 details-view-name text-capitalize">{{activeItem.name}}</p>
-                <span class="fs-5 text-dark mb-0">{{activeItem.cp}}</span>
-                <span class="text-uppercase fw-bold text-tertiary fs-6 mt-2 mb-1 ms-1">RP</span>
-                <span class=" fs-5 text-dark mb-0 ms-2">{{activeItem.cp}}</span>
-                <span class="text-uppercase fw-bold text-secondary fs-tiny   mt-2 mb-1 ms-1">CP</span>
-            </div>
-            <div>
-                <div class="px-3">
-                    <div class="mt-4">
-                        <h5>Details</h5>
-                    </div>
-                    <div class="">
-                        <span v-if="activeItem.isShadow" class="badge p-2 px-3 fs-6  typeghost">Shadow</span>
-                        <span v-if="activeItem.canMegaEvolve" class="badge p-2 px-3 fs-6 ms-2 typefire">Can Mega</span>
-                        <span v-if="!activeItem.canMegaEvolve && !activeItem.isShadow"
-                              class="badge p-2 px-3 fs-6  typefire">Cannot Mega/Isnt Shadow</span>
-
-                    </div>
-
-
-                    <div class="mt-3">
-                        <h5>Fast Move Type</h5>
-                    </div>
-                    <div class="">
-                        <span v-if="activeItem.fastMoveType"
-                              :class="getClass(activeItem.fastMoveType, `badge p-2 px-3 fs-6 text-capitalize`)">{{activeItem.fastMoveType}}</span>
-                        <span v-if="!activeItem.fastMoveType" :class="`bg-secondary badge p-2 text-capitalize`">Not Added</span>
-                    </div>
-
-
-                    <div class="mt-3">
-                        <h5>Charged Move Type</h5>
-                    </div>
-                    <div class="">
-
-                        <span v-if="activeItem.chargedMoveType1"
-                              :class="getClass(activeItem.chargedMoveType1, `badge p-2 px-3 fs-6 text-capitalize`)">{{activeItem.chargedMoveType1}}</span>
-                        <span v-if="!activeItem.chargedMoveType1" :class="`bg-secondary badge p-2 text-capitalize`">Not Added</span>
-
-                        <span v-if="activeItem.chargedMoveType2"
-                              :class="getClass(activeItem.chargedMoveType2, `badge p-2 px-3 fs-6 ms-2 text-capitalize`)">{{activeItem.chargedMoveType2}}</span>
-                        <span v-if="!activeItem.chargedMoveType2" :class="`bg-secondary badge p-2 text-capitalize`">Not Added</span>
-                    </div>
-                </div>
-                <!-- Edit button -->
-                <div class="px-3 pt-5">
-                    <button type="button"
-                            class="btn btn-primary mb-2 py-2 fs-4 w-100" data-bs-toggle="offcanvas"
-                            data-bs-target="#editPokemonOffCanvas">Edit Pokemon
-                    </button>
-                </div>
-                <!--                delete button-->
-                <div class="px-3">
-                    <button type="button"
-                            class="btn btn-danger mb-2 py-2 fs-4 text-white w-100" data-bs-toggle="modal"
-                            data-bs-target="#confirmDelete">Delete Pokemon
-                    </button>
-                </div>
-            </div>
-            <!-- end -->
-        </div>
-
-
-    </div>
-
-    <!--VDOC End-->
+    <!--View Pokemon Details Offcanvas-->
+    <off-canvas-container id="pokemonDetailsOffCanvas" title="Pokemon Details">
+        <details-off-canvas :active-item="activeItem"></details-off-canvas>
+    </off-canvas-container>
+    <!--    View pokemon Details end-->
 
     <!-- Filter pokemon offcanvas -->
-    <div class="offcanvas offcanvas-end d-flex flex-column bg-light  " tabindex="-1" id="filterPokemonOffCanvas"
-         style="overflow-y: auto; max-height: 100%;">
-        <div class="offcanvas-header bg-primary text-center text-white">
+    <off-canvas-container id="filterPokemonOffCanvas" title="Filter Pokemon">
+        <filter-off-canvas :each-pokemon="pokemonList" :search-for-pokemon="searchForPokemon"
+                           @matched-pokemon="updateMatches"></filter-off-canvas>
+    </off-canvas-container>
 
 
-            <button type="button" class="btn-close" data-bs-toggle="offcanvas"
-                    aria-label="back"></button>
-        </div>
-        <div class="flex-grow-1 d-flex flex-column">
-
-            <div class=" ps-3">
-                <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize">Filter Pokemon</p>
-            </div>
-            <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation">
-                <!-- cp button div -->
-                <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Filter Buttons">
-                    <div class="col-6">
-                        <input id="tierOneCPFilter" checked v-model.number="filterCP"
-                               :value=0 type="radio" class="btn-check" name="btnradioFilter" required>
-                        <label class="btn btn-outline-primary w-100" for="tierOneCPFilter">0+CP</label>
-                    </div>
-                    <div class="col-6">
-                        <input id="tierTwoCPFilter"
-                               v-model.number="filterCP" :value=1500 type="radio" class="btn-check"
-                               name="btnradioFilter">
-                        <label class="btn btn-outline-primary w-100" for="tierTwoCPFilter">1500+CP</label>
-                    </div>
-                    <div class="col-6">
-                        <input id="tierThreeCPFilter"
-                               v-model.number="filterCP" :value=2500 type="radio" class="btn-check"
-                               name="btnradioFilter">
-                        <label class="btn btn-outline-primary w-100" for="tierThreeCPFilter">2500+CP</label>
-                    </div>
-                    <div class="col-6">
-                        <input id="tierFourCPFilter"
-                               v-model.number="filterCP" :value=3500 type="radio" class="btn-check"
-                               name="btnradioFilter">
-                        <label class="btn btn-outline-primary w-100" for="tierFourCPFilter">3500+CP</label>
-                    </div>
-                </div>
-
-
-                <!-- Fast type div -->
-                <div class="row g-2 btn-group mt-3" role="group" aria-label="Pokemon Creature Power Buttons">
-                    <div class="col-12 ">
-                        <label class="form-label w-100">
-                            Fast Move Type
-                            <select class="form-select" id="fastMoveFilter"
-                                    v-model="filterFast">
-                                <option value="">None Selected</option>
-                                <option value="normal">Normal</option>
-                                <option value="fighting">Fighting</option>
-                                <option value="flying">Flying</option>
-                                <option value="poison">Poison</option>
-                                <option value="ground">Ground</option>
-                                <option value="rock">Rock</option>
-                                <option value="bug">Bug</option>
-                                <option value="ghost">Ghost</option>
-                                <option value="steel">Steel</option>
-                                <option value="fire">Fire</option>
-                                <option value="water">Water</option>
-                                <option value="grass">Grass</option>
-                                <option value="electric">Electric</option>
-                                <option value="psychic">Psychic</option>
-                                <option value="ice">Ice</option>
-                                <option value="dragon">Dragon</option>
-                                <option value="dark">Dark</option>
-                                <option value="fairy">Fairy</option>
-                            </select>
-                        </label>
-                    </div>
-                    <!--                            move types end-->
-                    <!--is shadow/canMega-->
-
-
-                </div>
-                <!-- Charged type div -->
-                <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
-                    <div class="col-12 ">
-                        <label class="form-label w-100">
-                            Charged Move Type
-                            <select class="form-select" id="chargedMoveFilter"
-                                    v-model="filterCharged">
-                                <option value="">None Selected</option>
-                                <option value="normal">Normal</option>
-                                <option value="fighting">Fighting</option>
-                                <option value="flying">Flying</option>
-                                <option value="poison">Poison</option>
-                                <option value="ground">Ground</option>
-                                <option value="rock">Rock</option>
-                                <option value="bug">Bug</option>
-                                <option value="ghost">Ghost</option>
-                                <option value="steel">Steel</option>
-                                <option value="fire">Fire</option>
-                                <option value="water">Water</option>
-                                <option value="grass">Grass</option>
-                                <option value="electric">Electric</option>
-                                <option value="psychic">Psychic</option>
-                                <option value="ice">Ice</option>
-                                <option value="dragon">Dragon</option>
-                                <option value="dark">Dark</option>
-                                <option value="fairy">Fairy</option>
-                            </select>
-                        </label>
-                    </div>
-                    <!--                            move types end-->
-                    <!--is shadow/canMega-->
-                    <div class="col-6">
-                        <label class="form-label w-100">
-                            Shadow
-                            <select class="form-select" v-model="filterShadow">
-                                <option selected value="">All</option>
-                                <option value=true>Shadow</option>
-                                <option value=false>Normal</option>
-
-                            </select>
-                        </label>
-                    </div>
-                    <div class="col-6">
-                        <label class="form-label w-100">
-                            Can Mega
-                            <select class="form-select" v-model="filterMega">
-                                <option selected value="">All</option>
-                                <option value=true>Can Mega</option>
-                                <option value=false>Cant Mega</option>
-
-                            </select>
-                        </label>
-                    </div>
-
-                </div>
-
-                <div class="row g-2 btn-group mt-2" role="group" aria-label="Pokemon Creature Power Buttons">
-
-                </div>
-
-
-                <!-- toggle options -->
-
-
-                <!-- done button -->
-                <div class="row g-2 mt-auto">
-                    <div class="col-12">
-                        <button type="button" data-bs-toggle="offcanvas"
-                                class="btn btn-primary mb-2 py-2 fs-4 w-100">Done
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
     <!-- added pokemon details offcanvas end -->
 
     <!-- edit pokemon offcanvas -->
-    <div class="offcanvas offcanvas-end d-flex flex-column bg-light  " tabindex="-1" id="editPokemonOffCanvas"
-         style="overflow-y: auto; max-height: 100%;">
-        <div class="offcanvas-header bg-primary text-center text-white">
-            <i type="button" class="bi bi-arrow-left text-white fs-5 me-3" data-bs-toggle="offcanvas"
-               data-bs-target="#pokemonDetailsOffCanvas"></i>
-            <p class="offcanvas-title">Edit Pokemon</p>
-            <button type="button" class="btn-close" data-bs-toggle="offcanvas"
-                    aria-label="back"></button>
-        </div>
-        <div class="flex-grow-1 d-flex flex-column">
-            <div class="px-5">
-                <div class="px-5 pt-3">
-                    <img :src="getSpriteLink(activeItem.pokemonId)"
-                         class="bg-white img-fluid add-details-img w-100 border border-dark-subtle rounded"
-                         alt="">
-                </div>
-            </div>
-            <div class="text-center">
-                <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize">{{ activeItem.name }}</p>
-            </div>
-            <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation">
-                <!-- cp button div -->
-                <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
-                    <div class="col-6">
-                        <input id="tierOneCP" :checked="activeItem.cp < 1500" v-model.number="activeItem.cp"
-                               :value="1200" type="radio" class="btn-check" name="btnradio2" required>
-                        <label class="btn btn-outline-primary w-100" for="tierOneCP">0-1500CP</label>
-                    </div>
-                    <div class="col-6">
-                        <input id="tierTwoCP" :checked="activeItem.cp >= 1500 && activeItem.cp < 2500"
-                               v-model.number="activeItem.cp" :value="2300" type="radio" class="btn-check"
-                               name="btnradio2">
-                        <label class="btn btn-outline-primary w-100" for="tierTwoCP">1500+CP</label>
-                    </div>
-                    <div class="col-6">
-                        <input id="tierThreeCP" :checked="activeItem.cp >= 2500 && activeItem.cp < 3500"
-                               v-model.number="activeItem.cp" :value="3400" type="radio" class="btn-check"
-                               name="btnradio2">
-                        <label class="btn btn-outline-primary w-100" for="tierThreeCP">2500+CP</label>
-                    </div>
-                    <div class="col-6">
-                        <input id="tierFourCP" :checked="activeItem.cp >= 3500" v-model.number="activeItem.cp"
-                               :value="3700" type="radio" class="btn-check" name="btnradio2">
-                        <label class="btn btn-outline-primary w-100" for="tierFourCP">3500+CP</label>
-                    </div>
-                </div>
-
-                <div class="mt-2">
-                    <button class="btn btn-primary w-100 rounded-0" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseEX1" aria-expanded="false" aria-controls="collapseEX1">
-                        Edit Move Types (optional)
-                    </button>
-                </div>
-
-                <div class="collapse" id="collapseEX1" data-bs-parent="#editTeamCollapse">
-                    <div class="card bg-light border-0 card-body py-2 pt-0 rounded-0">
-                        <!-- Fast type div -->
-                        <div class="row g-2 btn-group mt-2" role="group" aria-label="Pokemon Creature Power Buttons">
-                            <div class="col-12">
-                                <label class="form-label w-100">
-                                    Fast Move
-                                    <select class="form-select" v-model="activeItem.fastMoveType">
-                                        <option value="">None Selected</option>
-                                        <option value="normal">Normal</option>
-                                        <option value="fighting">Fighting</option>
-                                        <option value="flying">Flying</option>
-                                        <option value="poison">Poison</option>
-                                        <option value="ground">Ground</option>
-                                        <option value="rock">Rock</option>
-                                        <option value="bug">Bug</option>
-                                        <option value="ghost">Ghost</option>
-                                        <option value="steel">Steel</option>
-                                        <option value="fire">Fire</option>
-                                        <option value="water">Water</option>
-                                        <option value="grass">Grass</option>
-                                        <option value="electric">Electric</option>
-                                        <option value="psychic">Psychic</option>
-                                        <option value="ice">Ice</option>
-                                        <option value="dragon">Dragon</option>
-                                        <option value="dark">Dark</option>
-                                        <option value="fairy">Fairy</option>
-                                    </select>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Charged type div -->
-                        <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
-                            <div class="col-12 col-sm-6">
-                                <label class="form-label w-100">
-                                    Charged Move 1
-                                    <select class="form-select" id="chargedMoveSelect1edit"
-                                            v-model="activeItem.chargedMoveType1">
-                                        <option value="">None Selected</option>
-                                        <option value="normal">Normal</option>
-                                        <option value="fighting">Fighting</option>
-                                        <option value="flying">Flying</option>
-                                        <option value="poison">Poison</option>
-                                        <option value="ground">Ground</option>
-                                        <option value="rock">Rock</option>
-                                        <option value="bug">Bug</option>
-                                        <option value="ghost">Ghost</option>
-                                        <option value="steel">Steel</option>
-                                        <option value="fire">Fire</option>
-                                        <option value="water">Water</option>
-                                        <option value="grass">Grass</option>
-                                        <option value="electric">Electric</option>
-                                        <option value="psychic">Psychic</option>
-                                        <option value="ice">Ice</option>
-                                        <option value="dragon">Dragon</option>
-                                        <option value="dark">Dark</option>
-                                        <option value="fairy">Fairy</option>
-                                    </select>
-                                </label>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <label class="form-label w-100">
-                                    Charged Move 2
-                                    <select class="form-select" id="chargedMoveSelect2edit"
-                                            v-model="activeItem.chargedMoveType2">
-                                        <option value="">None Selected</option>
-                                        <option value="normal">Normal</option>
-                                        <option value="fighting">Fighting</option>
-                                        <option value="flying">Flying</option>
-                                        <option value="poison">Poison</option>
-                                        <option value="ground">Ground</option>
-                                        <option value="rock">Rock</option>
-                                        <option value="bug">Bug</option>
-                                        <option value="ghost">Ghost</option>
-                                        <option value="steel">Steel</option>
-                                        <option value="fire">Fire</option>
-                                        <option value="water">Water</option>
-                                        <option value="grass">Grass</option>
-                                        <option value="electric">Electric</option>
-                                        <option value="psychic">Psychic</option>
-                                        <option value="ice">Ice</option>
-                                        <option value="dragon">Dragon</option>
-                                        <option value="dark">Dark</option>
-                                        <option value="fairy">Fairy</option>
-                                    </select>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- toggle options -->
-                <div class="row g-2 my-2">
-                    <div>
-                        <label class="form-check-label">
-                            <input type="checkbox" id="isShadowedit" v-model="activeItem.isShadow"
-                                   class="border-dark-subtle form-check-input">
-                            Shadow
-                        </label>
-                    </div>
-                    <div>
-                        <label class="form-check-label">
-                            <input type="checkbox" id="isMegaedit" v-model="activeItem.canMegaEvolve"
-                                   class="border-dark-subtle form-check-input">
-                            Can Mega Evolve
-                        </label>
-                    </div>
-                </div>
-
-                <!-- done button -->
-                <div class="row g-2 mt-auto">
-                    <div class="col-12">
-                        <button type="button" data-bs-toggle="offcanvas" data-bs-target="#pokemonDetailsOffCanvas"
-                                class="btn btn-primary mb-2 py-2 fs-4 w-100">Done
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+    <off-canvas-container id="editPokemonOffCanvas" title="Edit Pokemon" back-arrow-id="#pokemonDetailsOffCanvas">
+        <add-edit-off-canvas :active-item="activeItem" @add-pokemon="addPokemon"></add-edit-off-canvas>
+    </off-canvas-container>
     <!-- added pokemon details offcanvas end -->
 
     <!-- Add Pokemon Offcanvas   -->
-    <div class="offcanvas offcanvas-end " tabindex="-1" id="addPokemonOffcanvas">
-        <div class="offcanvas-header bg-primary text-center text-white">
+    <off-canvas-container id="addPokemonOffcanvas" title="Add Pokemon">
 
-            <h5 class="offcanvas-title">Add Pokemon</h5>
-            <button type="button" class="btn-close" data-bs-toggle="offcanvas"
-                    aria-label="back"></button>
-        </div>
+
         <div class="">
-            <div class="p-3 border-bottom">
-                <label class="form-label w-100">Search Pokemon
-                    <input class="form-control " placeholder="'Enter' to Search" id="pokemonSelect"
-                           v-on:input="searchAllPokemons($event.target.value)">
+            <div class="p-2 mt-2 border-bottom">
+                <search-bar-container @search-query="searchAllPokemons" title="Search Pokemon"></search-bar-container>
 
-                </label>
             </div>
             <div v-for="pokemonResult in searchResults">
                 <div class="border-bottom rounded-0 w-100" aria-label="${pokemon}">
@@ -689,7 +83,7 @@
                         </div>
                         <div class="col-6">
                             <div class="ms-0 ms-sm-0">
-                                <p class="fs-5 mb-0 text-capitalize">{{pokemonResult.name}}</p>
+                                <p class="fs-5 mb-0 text-capitalize">{{ pokemonResult.name }}</p>
 
                             </div>
                         </div>
@@ -706,204 +100,20 @@
                 </div>
             </div>
         </div>
-
-
-    </div>
+    </off-canvas-container>
     <!-- add pokemon offcanvas end -->
-    <!-- added pokemon details offcanvas -->
-    <div class="offcanvas offcanvas-end d-flex flex-column bg-light  " tabindex="-1" id="addPokemonDetailsOffcanvas"
-         style="overflow-y: auto; max-height: 100%;">
-        <div class="offcanvas-header bg-primary text-center text-white">
-            <i type="button" class="bi bi-arrow-left text-white fs-5 me-3" data-bs-toggle="offcanvas"
-               data-bs-target="#addPokemonOffcanvas"></i>
-            <p class="offcanvas-title">Pokemon Details</p>
-            <button type="button" class="btn-close" data-bs-toggle="offcanvas"
-                    aria-label="back"></button>
-        </div>
-        <div class="flex-grow-1 d-flex flex-column">
-            <div class="px-5">
-                <div class="px-5 pt-3">
-                    <img :src="getSpriteLink(activeItem.pokemonId)"
-                         class="bg-white img-fluid add-details-img w-100 border border-dark-subtle rounded"
-                         alt="">
-                </div>
-            </div>
-            <div class="text-center">
-                <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize">{{ activeItem.name }}</p>
-            </div>
-            <form @submit.prevent="addPokemon(activeItem, qty)"
-                  class="container-fluid d-flex flex-column flex-grow-1 needs-validation">
-                <!-- cp button div -->
-
-                <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
-                    <div class="col-6">
-                        <input id="tierOneCPAdd"
-                               :value=1200 type="radio" class="btn-check" name="btnradioAdd" required
-                               v-model="pokemon.cp">
-                        <label class="btn btn-outline-primary w-100" for="tierOneCPAdd">0-1500CP</label>
-                    </div>
-                    <div class="col-6">
-                        <input id="tierTwoCPAdd"
-                               :value=2300 type="radio" class="btn-check"
-                               name="btnradioAdd" v-model="pokemon.cp">
-                        <label class="btn btn-outline-primary w-100" for="tierTwoCPAdd">1500+CP</label>
-                    </div>
-                    <div class="col-6">
-                        <input id="tierThreeCPAdd"
-                               :value=3400 type="radio" class="btn-check"
-                               name="btnradioAdd" v-model="pokemon.cp">
-                        <label class="btn btn-outline-primary w-100" for="tierThreeCPAdd">2500+CP</label>
-                    </div>
-                    <div class="col-6">
-                        <input id="tierFourCPAdd"
-                               :value=4200 type="radio" class="btn-check" name="btnradioAdd" v-model="pokemon.cp">
-                        <label class="btn btn-outline-primary w-100" for="tierFourCPAdd">3500+CP</label>
-                    </div>
-                </div>
-
-                <div class="mt-2">
-                    <button class="btn btn-primary w-100 rounded-0" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseAdd" aria-expanded="false" aria-controls="collapseAdd">
-                        Edit Move Types (optional)
-                    </button>
-                </div>
-
-                <div class="collapse show" id="collapseAdd" data-bs-parent="#editTeamCollapse">
-                    <div class="card bg-light border-0 card-body py-2 pt-0 rounded-0">
-                        <!-- Fast type div -->
-                        <div class="row g-2 btn-group mt-2" role="group" aria-label="Pokemon Creature Power Buttons">
-                            <div class="col-12">
-                                <label class="form-label w-100">
-                                    Fast Move
-                                    <select class="form-select" v-model="pokemon.fastMoveType">
-                                        <option value="">None Selected</option>
-                                        <option value="normal">Normal</option>
-                                        <option value="fighting">Fighting</option>
-                                        <option value="flying">Flying</option>
-                                        <option value="poison">Poison</option>
-                                        <option value="ground">Ground</option>
-                                        <option value="rock">Rock</option>
-                                        <option value="bug">Bug</option>
-                                        <option value="ghost">Ghost</option>
-                                        <option value="steel">Steel</option>
-                                        <option value="fire">Fire</option>
-                                        <option value="water">Water</option>
-                                        <option value="grass">Grass</option>
-                                        <option value="electric">Electric</option>
-                                        <option value="psychic">Psychic</option>
-                                        <option value="ice">Ice</option>
-                                        <option value="dragon">Dragon</option>
-                                        <option value="dark">Dark</option>
-                                        <option value="fairy">Fairy</option>
-                                    </select>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Charged type div -->
-                        <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
-                            <div class="col-12 col-sm-6">
-                                <label class="form-label w-100">
-                                    Charged Move 1
-                                    <select class="form-select" id="chargedMoveSelect1"
-                                            v-model="pokemon.chargedMoveType1">
-                                        <option value="">None Selected</option>
-                                        <option value="normal">Normal</option>
-                                        <option value="fighting">Fighting</option>
-                                        <option value="flying">Flying</option>
-                                        <option value="poison">Poison</option>
-                                        <option value="ground">Ground</option>
-                                        <option value="rock">Rock</option>
-                                        <option value="bug">Bug</option>
-                                        <option value="ghost">Ghost</option>
-                                        <option value="steel">Steel</option>
-                                        <option value="fire">Fire</option>
-                                        <option value="water">Water</option>
-                                        <option value="grass">Grass</option>
-                                        <option value="electric">Electric</option>
-                                        <option value="psychic">Psychic</option>
-                                        <option value="ice">Ice</option>
-                                        <option value="dragon">Dragon</option>
-                                        <option value="dark">Dark</option>
-                                        <option value="fairy">Fairy</option>
-                                    </select>
-                                </label>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <label class="form-label w-100">
-                                    Charged Move 2
-                                    <select class="form-select" id="chargedMoveSelect2"
-                                            v-model="pokemon.chargedMoveType2">
-                                        <option value="">None Selected</option>
-                                        <option value="normal">Normal</option>
-                                        <option value="fighting">Fighting</option>
-                                        <option value="flying">Flying</option>
-                                        <option value="poison">Poison</option>
-                                        <option value="ground">Ground</option>
-                                        <option value="rock">Rock</option>
-                                        <option value="bug">Bug</option>
-                                        <option value="ghost">Ghost</option>
-                                        <option value="steel">Steel</option>
-                                        <option value="fire">Fire</option>
-                                        <option value="water">Water</option>
-                                        <option value="grass">Grass</option>
-                                        <option value="electric">Electric</option>
-                                        <option value="psychic">Psychic</option>
-                                        <option value="ice">Ice</option>
-                                        <option value="dragon">Dragon</option>
-                                        <option value="dark">Dark</option>
-                                        <option value="fairy">Fairy</option>
-                                    </select>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- toggle options -->
-                <div class="row g-2 my-2">
-                    <div>
-                        <label class="form-check-label">
-                            <input type="checkbox" id="isShadow" v-model="pokemon.isShadow"
-                                   class="border-dark-subtle form-check-input">
-                            Shadow
-                        </label>
-                    </div>
-                    <div>
-                        <label class="form-check-label">
-                            <input type="checkbox" id="isMega" v-model="pokemon.canMegaEvolve"
-                                   class="border-dark-subtle form-check-input">
-                            Can Mega Evolve
-                        </label>
-                    </div>
-                    <div>
-                        <label class="form-label w-25   ">
-                            Quantity
-                            <input required type="number" v-model.number="qty" min="1" max="10" class="form-control"
-                                   placeholder="Quantity">
-                        </label>
-                    </div>
-                </div>
-
-                <!-- submit button -->
-                <div class="row g-2 mt-auto">
-                    <div class="col-12">
-                        <button type="submit"
-                                class="btn btn-primary mb-2 py-2 fs-4 w-100">Add Pokemon
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+    <off-canvas-container id="addPokemonDetailsOffcanvas" title="Add Pokemon" back-arrow-id="#addPokemonOffcanvas">
+        <add-edit-off-canvas :active-item="activeItem" :is-new=true @add-pokemon="addPokemon"
+                             @quantity="updateQty"></add-edit-off-canvas>
+    </off-canvas-container>
     <!-- added pokemon details offcanvas end -->
     <!-- success added pokemon modal -->
     <div class="modal fade" tabindex="-1" id="pokemonAddedSuccess" v-if="activeItem">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-header p-3">
-                    <h1 class="modal-title fs-5 text-center mx-auto" id="pokemonAddedSuccessTitle">Added {{qty}}
-                        {{activeItem.name}}</h1>
+                    <h1 class="modal-title fs-5 text-center mx-auto" id="pokemonAddedSuccessTitle">Added {{ qty }}
+                        {{ activeItem.name }}</h1>
                     <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                 </div>
                 <div class="modal-body">
@@ -918,7 +128,7 @@
                     <!-- RP text -->
                     <div class="text-center">
                         <p class="text-uppercase fw-bold text-tertiary fs-6 mt-2 mb-1">Raid Power</p>
-                        <p class="fw-bolder fs-3 text-dark mb-0">{{activeItem.cp}}</p>
+                        <p class="fw-bolder fs-3 text-dark mb-0">{{ activeItem.cp }}</p>
                     </div>
 
                 </div>
