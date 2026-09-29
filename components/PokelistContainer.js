@@ -30,8 +30,8 @@ const PokelistContainer = {
     computed: {},
 
     template: `
+      
       <div class="container p-0 p-sm-2">
-
         <div class="row bg-lighter g-0 ">
           <div class="col-auto col-sm-auto d-none d-sm-block">
             <div class="horz-card-img"></div>

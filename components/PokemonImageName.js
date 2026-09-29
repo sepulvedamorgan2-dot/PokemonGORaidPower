@@ -31,8 +31,8 @@ const PokemonImageName = {
 
     template: `
       <div>
-        <div class="row justify-content-center pt-3 pb-2">
-          <div class="col-7">
+        <div class="d-flex justify-content-center pt-3 pb-2">
+          <div class="" style="width: 50%">
             <img :src="getSpriteLink(activeItem.pokemonId)"
                  class="bg-white img-fluid details-img w-100 border border-dark-subtle rounded" :alt="activeItem.name">
           </div>

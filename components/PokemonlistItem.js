@@ -1,10 +1,12 @@
+import DetailsOffCanvas from "./DetailsOffCanvas.js";
 
 const PokemonlistItem = {
+    components: {
+        DetailsOffCanvas,
+    },
+    data: function () {
 
-    data: function(){
-        return {
-
-        }
+        return {}
 
     },
 
@@ -18,22 +20,21 @@ const PokemonlistItem = {
         getClass(type, otherclasses) {
             return ` type${type} ${otherclasses}`;
         }
-        ,getSpriteLink(pokemonID) {
+        , getSpriteLink(pokemonID) {
 
             if (typeof pokemonID === "number") {
                 return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID}.png`;
             }
 
-        }
-        ,
+        },
     },
 
-    computed: {
-
-    },
+    computed: {},
 
     template: `
       <div>
+
+
         <div :class="oddOrEven">
           <div class="col-auto">
             <img :src="getSpriteLink(pokemon.pokemonId)"
@@ -90,15 +91,11 @@ const PokemonlistItem = {
           </div>
 
 
-          <div class="col-auto ms-auto  align-items-center d-flex">
-            <i type="button" data-bs-toggle="offcanvas" data-bs-target="#pokemonDetailsOffCanvas"
-               v-on:click="$emit('clickedPokemon', pokemon)"
-               class="bi bi-three-dots me-4 fs-4"></i>
-          </div>
+          <details-off-canvas :active-item="pokemon" ></details-off-canvas>
 
         </div>
       </div>
-      
+
 
     `,
 

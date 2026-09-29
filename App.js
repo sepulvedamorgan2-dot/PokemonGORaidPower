@@ -6,6 +6,7 @@ import AddEditOffCanvas from "./components/AddEditOffCanvas.js";
 import NavbarMain from "./components/NavbarMain.js";
 import FilterOffCanvas from "./components/FilterOffCanvas.js";
 import SearchBarContainer from "./components/SearchBarContainer.js";
+import HorizontalCardContainer from "./components/HorizontalCardContainer.js";
 const app = createApp({
 
     components: {
@@ -16,6 +17,7 @@ const app = createApp({
         NavbarMain,
         FilterOffCanvas,
         SearchBarContainer,
+        HorizontalCardContainer,
 
     },
 
@@ -65,7 +67,7 @@ const app = createApp({
         ,
 
         getClickedObject(clickedPokemonId) {
-
+            console.log(clickedPokemonId);
             this.activeItem = this.pokemonList.find(p => p.Id === clickedPokemonId.Id);
             if (!this.activeItem) {
                 console.log("BAD" + clickedPokemonId.pokemonId);
@@ -125,6 +127,7 @@ const app = createApp({
                 this.activeItem = this.pokemon
             }
             this.matches = this.pokemonList
+            // BAD
             $('#pokemonAddedSuccess').modal('show')
 
         }

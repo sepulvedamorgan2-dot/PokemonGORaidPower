@@ -30,8 +30,7 @@
                           filter-toggle-id="#filterPokemonOffCanvas"
     >
         <!--        add pokemon Button-->
-        <div class="btn btn-primary w-100 " type="button" data-bs-toggle="offcanvas"
-             data-bs-target="#addPokemonOffcanvas">
+        <div class="btn btn-primary w-100 " type="button" v-on:click="$refs.addPokemonOffCanvas.openOffCanvas()">
 
             <i class=" d-md-block">Add Pokemon</i>
         </div>
@@ -41,13 +40,12 @@
 
     <!--    Pokemon List-->
     <pokelist-container :searched-and-filtered-array="matches" :full-pokemon-list="pokemonList"
-                        @clicked-pokemon="getClickedObject"></pokelist-container>
+                        ref="pokelistContainer"></pokelist-container>
     <!--pokemon List end-->
 
     <!--View Pokemon Details Offcanvas-->
-    <off-canvas-container id="pokemonDetailsOffCanvas" title="Pokemon Details">
-        <details-off-canvas :active-item="activeItem"></details-off-canvas>
-    </off-canvas-container>
+
+
     <!--    View pokemon Details end-->
 
     <!-- Filter pokemon offcanvas -->
@@ -66,39 +64,18 @@
     <!-- added pokemon details offcanvas end -->
 
     <!-- Add Pokemon Offcanvas   -->
-    <off-canvas-container id="addPokemonOffcanvas" title="Add Pokemon">
+    <off-canvas-container ref="addPokemonOffCanvas" title="Add Pokemon">
 
 
         <div class="">
             <div class="p-2 mt-2 border-bottom">
                 <search-bar-container @search-query="searchAllPokemons" title="Search Pokemon"></search-bar-container>
 
-            </div>
-            <div v-for="pokemonResult in searchResults">
-                <div class="border-bottom rounded-0 w-100" aria-label="${pokemon}">
-                    <div class="row g-0 align-items-center">
-                        <div class="col-3">
-                            <img class="img-fluid horz-card-img " :src="getSpriteLink(pokemonResult.pokemonId)"
-                                 alt="pokemonImg">
-                        </div>
-                        <div class="col-6">
-                            <div class="ms-0 ms-sm-0">
-                                <p class="fs-5 mb-0 text-capitalize">{{ pokemonResult.name }}</p>
+                <horizontal-card-container :array-to-display="searchResults" @clicked-pokemon="getClickedObject">
 
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="p-1">
-                                <button class="btn btn-sm btn-primary w-100 searchedPokemonBtn"
-                                        data-bs-toggle="offcanvas" data-bs-target="#addPokemonDetailsOffcanvas"
-                                        v-on:click="getClickedObject(pokemonResult)">Select
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                </horizontal-card-container>
             </div>
+
         </div>
     </off-canvas-container>
     <!-- add pokemon offcanvas end -->

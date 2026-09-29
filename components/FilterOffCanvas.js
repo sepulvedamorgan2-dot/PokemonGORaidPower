@@ -67,7 +67,7 @@ const AddOrEditOffCanvas = {
 
     template: `
 
-      <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation pt-3"  v-on:change="pokemonSearch()" >
+      <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation pt-3"  v-on:change="pokemonSearch()"  >
         <!-- cp button div -->
         <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Filter Buttons ">
           <div class="col-6">
