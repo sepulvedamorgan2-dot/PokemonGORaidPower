@@ -1,9 +1,9 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
-
+import AddEditOffCanvas from "./AddEditOffCanvas.js";
 const OffCanvasHorizontalCard = {
     components: {
-
+        AddEditOffCanvas: AddEditOffCanvas,
     },
 
     data: function () {
@@ -25,12 +25,19 @@ const OffCanvasHorizontalCard = {
             }
 
         }
-        ,
+        ,emitClickedObject(pokemonToEmit) {
+            console.log("please")
+            console.log(pokemonToEmit);
+            // this.$emit('clickedObject', pokemonToEmit);
+            this.$emit('clickedObject', pokemonToEmit)
+        },
     },
 
     computed: {},
 
     template: `
+      
+      
       <div class="row g-0 align-items-center">
         <div class="col-3">
           <img class="img-fluid horz-card-img " :src="getSpriteLink(pokemonToRender.pokemonId)"
@@ -43,12 +50,7 @@ const OffCanvasHorizontalCard = {
           </div>
         </div>
         <div class="col-3">
-          <div class="p-1">
-            <button class="btn btn-sm btn-primary w-100 searchedPokemonBtn"
-                    data-bs-toggle="offcanvas" data-bs-target="#addPokemonDetailsOffcanvas"
-                    v-on:click="$emit('clickedPokemon', pokemonToRender.pokemonId)">Select
-            </button>
-          </div>
+          <add-edit-off-canvas :active-item="pokemonToRender" is-new=true @add-pokemon="emitClickedObject"></add-edit-off-canvas>
         </div>
 
       </div>

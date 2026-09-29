@@ -7,6 +7,7 @@ import NavbarMain from "./components/NavbarMain.js";
 import FilterOffCanvas from "./components/FilterOffCanvas.js";
 import SearchBarContainer from "./components/SearchBarContainer.js";
 import HorizontalCardContainer from "./components/HorizontalCardContainer.js";
+import AddPokemonOffCanvas from "./components/AddPokemonOffCanvas.js";
 const app = createApp({
 
     components: {
@@ -18,6 +19,7 @@ const app = createApp({
         FilterOffCanvas,
         SearchBarContainer,
         HorizontalCardContainer,
+        AddPokemonOffCanvas
 
     },
 
@@ -178,7 +180,7 @@ const app = createApp({
                     this.pokemonList = []
                 }
 
-                
+
 
             }, deep: true
 

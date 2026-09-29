@@ -1,7 +1,9 @@
 import DetailsOffCanvas from "./DetailsOffCanvas.js";
+import AddEditOffCanvas from "./AddEditOffCanvas.js";
 
 const PokemonlistItem = {
     components: {
+        AddEditOffCanvas,
         DetailsOffCanvas,
     },
     data: function () {
@@ -27,14 +29,16 @@ const PokemonlistItem = {
             }
 
         },
+        openOffCanvas() {
+            this.bsOffCanvas.show();
+        }
     },
 
     computed: {},
 
     template: `
       <div>
-
-
+        
         <div :class="oddOrEven">
           <div class="col-auto">
             <img :src="getSpriteLink(pokemon.pokemonId)"
@@ -91,7 +95,7 @@ const PokemonlistItem = {
           </div>
 
 
-          <details-off-canvas :active-item="pokemon" ></details-off-canvas>
+          <details-off-canvas  :active-item="pokemon" ></details-off-canvas>
 
         </div>
       </div>

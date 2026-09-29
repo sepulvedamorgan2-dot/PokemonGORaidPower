@@ -2,10 +2,12 @@
 // import xxx from './PokemonlistItem.js';
 import PokemonImageName from "./PokemonImageName.js";
 import OffCanvasContainer from "./OffCanvasContainer.js";
+import AddEditOffCanvas from "./AddEditOffCanvas.js";
 const DetailsOffCanvas = {
     components: {
         PokemonImageName,
-        OffCanvasContainer
+        OffCanvasContainer,
+        AddEditOffCanvas
     },
 
     data: function () {
@@ -22,11 +24,18 @@ const DetailsOffCanvas = {
     methods: {
         getClass(type, otherclasses) {
             return ` type${type} ${otherclasses}`;
-        },
-        openOffCanvas() {
-            this.$refs.offcanvas.show();
+        }, openOffCanvas(OpenPrevious) {
+
+            try{
+                this.lastOffCanvas.hide()
+            } catch(e) {
+
+            }
+            this.bsOffCanvas.show();
+            this.lastOffCanvas = this.bsOffCanvas;
+
         }
-        ,
+
 
     },
 
@@ -35,8 +44,8 @@ const DetailsOffCanvas = {
     template: `
       <div class="col-auto ms-auto  align-items-center d-flex">
         <div >
-          <i type="button" data-bs-toggle="offcanvas" data-bs-target="#pokemonDetailsOffCanvas"
-             ref="pokemonDetailsOffCanvas" v-on:click="$refs.pokemonDetailsOffCanvas.openOffCanvas()"
+          <i type="button"  data-bs-target="#pokemonDetailsOffCanvas"
+              v-on:click="$refs.pokemonDetailsOffCanvas.openOffCanvas()"
              class="bi bi-three-dots me-4 fs-4"></i>
 
         </div>
@@ -94,12 +103,7 @@ const DetailsOffCanvas = {
                   </div>
                 </div>
                 <!-- Edit button -->
-                <div class="px-3 pt-4">
-                  <button type="button"
-                          class="btn btn-primary mb-2 py-2 fs-4 w-100" data-bs-toggle="offcanvas"
-                          data-bs-target="#editPokemonOffCanvas">Edit Pokemon
-                  </button>
-                </div>
+                <add-edit-off-canvas @previous-off-canvas="$refs.pokemonDetailsOffCanvas.openOffCanvas()" :active-item="activeItem"  @add-pokemon="addPokemon"></add-edit-off-canvas>
                 <!--                delete button-->
                 <div class="px-3">
                   <button type="button"

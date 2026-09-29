@@ -30,10 +30,7 @@
                           filter-toggle-id="#filterPokemonOffCanvas"
     >
         <!--        add pokemon Button-->
-        <div class="btn btn-primary w-100 " type="button" v-on:click="$refs.addPokemonOffCanvas.openOffCanvas()">
-
-            <i class=" d-md-block">Add Pokemon</i>
-        </div>
+        <add-pokemon-off-canvas @clicked-object="searchAllPokemons" :search-results="searchResults"> </add-pokemon-off-canvas>
 
     </search-bar-container>
     <!-- Search Bar End -->
@@ -64,20 +61,7 @@
     <!-- added pokemon details offcanvas end -->
 
     <!-- Add Pokemon Offcanvas   -->
-    <off-canvas-container ref="addPokemonOffCanvas" title="Add Pokemon">
 
-
-        <div class="">
-            <div class="p-2 mt-2 border-bottom">
-                <search-bar-container @search-query="searchAllPokemons" title="Search Pokemon"></search-bar-container>
-
-                <horizontal-card-container :array-to-display="searchResults" @clicked-pokemon="getClickedObject">
-
-                </horizontal-card-container>
-            </div>
-
-        </div>
-    </off-canvas-container>
     <!-- add pokemon offcanvas end -->
     <off-canvas-container id="addPokemonDetailsOffcanvas" title="Add Pokemon" back-arrow-id="#addPokemonOffcanvas">
         <add-edit-off-canvas :active-item="activeItem" :is-new=true @add-pokemon="addPokemon"

@@ -1,6 +1,6 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
-
+let counter = 1
 const OffCanvasContainer = {
     components: {
 
@@ -9,6 +9,8 @@ const OffCanvasContainer = {
     data: function () {
         return {
             bsOffCanvas: null,
+            id: "off-canvas-" + counter++,
+            lastOffCanvas: null,
         }
     },
 
@@ -25,8 +27,16 @@ const OffCanvasContainer = {
             console.log('hideOffCanvas')
             this.bsOffCanvas.hide();
         },
-        openOffCanvas() {
+        openOffCanvas(OpenPrevious) {
+
+            try{
+                this.lastOffCanvas.hide()
+            } catch(e) {
+
+            }
             this.bsOffCanvas.show();
+            this.lastOffCanvas = this.bsOffCanvas;
+
         }
 
     }, mounted() {
@@ -36,7 +46,7 @@ const OffCanvasContainer = {
     computed: {},
 
     template: `
-      <div ref="offCanvas" class="offcanvas offcanvas-end "  tabindex="-1"  style="overflow-y: scroll; height: 100%">
+      <div ref="offCanvas" class="offcanvas offcanvas-end " :aria-labelledby="this.id" tabindex="-1"  style="overflow-y: scroll; height: 100%">
         <div class="offcanvas-header bg-primary text-center text-white">
           <i v-if="backArrowId" type="button" class="bi bi-arrow-left text-white fs-5 me-3" data-bs-toggle="offcanvas"
              :data-bs-target="backArrowId"></i>

@@ -19,7 +19,9 @@ const HorizontalCardContainer = {
     methods: {
         emitClickedObject(pokemonToEmit) {
             console.log("please")
-            this.$emit('clicked-object', pokemonToEmit);
+            console.log(pokemonToEmit);
+            // this.$emit('clickedObject', pokemonToEmit);
+            this.$emit('clickedObject', pokemonToEmit)
         },
     }
     , watch: {
@@ -29,16 +31,17 @@ const HorizontalCardContainer = {
                 this.arrayToDisplay2 = this.arrayToDisplay;
             },
             deep: true
-        }
+        },
     },
 
     computed: {},
 
     template: `
-        <div  v-for="pokemon in arrayToDisplay" :key="pokemon.pokemonId">
-          <off-canvas-horizontal-card @clickedPokemon="$emit('clickedPokemon', pokemon)" :pokemon-to-render="pokemon">
-          </off-canvas-horizontal-card>
-        </div>
+
+      <off-canvas-horizontal-card v-for="pokemon in arrayToDisplay" @clicked-object="emitClickedObject"
+                                  :key="pokemon.pokemonId" :pokemon-to-render="pokemon">
+      </off-canvas-horizontal-card>
+       
     `,
 
 
