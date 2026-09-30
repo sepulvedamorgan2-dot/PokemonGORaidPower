@@ -18,10 +18,16 @@
     font-weight: 580;
 }
 
+.alternateBg {
+    > div:nth-child(even) {
+        background: #F5F2F8;
+    }
+}
 .fs-tinyer{
     font-size: 10px;
 
 }
+
 
 .resize-none{
     resize: none;

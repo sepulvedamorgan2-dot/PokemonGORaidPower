@@ -16,15 +16,7 @@ const PokelistContainer = {
     },
 
     methods: {
-        oddOrEven(otherClasses, poke) {
 
-            if (this.fullPokemonList.indexOf(poke) % 2 === 0) {
-                return otherClasses;
-            } else {
-
-                return otherClasses + ' bg-lighter';
-            }
-        }
     },
 
     computed: {},
@@ -85,8 +77,8 @@ const PokelistContainer = {
 
 
         <!-- Pokemon horitzonal card -->
-        <div v-for="pokemon in searchedAndFilteredArray" :key="pokemon.Id">
-          <pokemonlist-item :pokemon="pokemon" :odd-or-Even="oddOrEven('row g-0 py-0', pokemon)" @clickedPokemon="$emit('clickedPokemon', pokemon)"></pokemonlist-item>
+        <div class="alternateBg">
+          <pokemonlist-item v-for="pokemon in searchedAndFilteredArray" :key="pokemon.Id" :pokemon="pokemon"  @clickedPokemon="$emit('clickedPokemon', pokemon)" @delete-item="item => $emit('deleteItem', item)"></pokemonlist-item>
         </div>
       </div>
     `,

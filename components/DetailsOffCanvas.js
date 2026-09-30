@@ -3,11 +3,13 @@
 import PokemonImageName from "./PokemonImageName.js";
 import OffCanvasContainer from "./OffCanvasContainer.js";
 import AddEditOffCanvas from "./AddEditOffCanvas.js";
+import ConfirmDeleteModal from "./ConfirmDeleteModal.js";
 const DetailsOffCanvas = {
     components: {
         PokemonImageName,
         OffCanvasContainer,
-        AddEditOffCanvas
+        AddEditOffCanvas,
+        ConfirmDeleteModal,
     },
 
     data: function () {
@@ -50,7 +52,7 @@ const DetailsOffCanvas = {
 
         </div>
         <teleport to="#app">
-          <off-canvas-container ref="pokemonDetailsOffCanvas" title="Pokemon Details">
+          <off-canvas-container ref="pokemonDetailsOffCanvas"  title="Pokemon Details">
             <pokemon-image-name :active-item="activeItem"></pokemon-image-name>
             <div class="flex-grow-1 d-flex flex-column">
 
@@ -103,13 +105,12 @@ const DetailsOffCanvas = {
                   </div>
                 </div>
                 <!-- Edit button -->
+                <div class="pt-3">
                 <add-edit-off-canvas @previous-off-canvas="$refs.pokemonDetailsOffCanvas.openOffCanvas()" :active-item="activeItem"  @add-pokemon="addPokemon"></add-edit-off-canvas>
+                </div>
                 <!--                delete button-->
                 <div class="px-3">
-                  <button type="button"
-                          class="btn btn-danger mb-2 py-2 fs-4 text-white w-100" data-bs-toggle="modal"
-                          data-bs-target="#confirmDelete">Delete Pokemon
-                  </button>
+                  <confirm-delete-modal :item="activeItem" @delete-item="item => $emit('deleteItem', item)"></confirm-delete-modal>
                 </div>
               </div>
 

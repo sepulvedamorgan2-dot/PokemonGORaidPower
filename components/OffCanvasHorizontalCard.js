@@ -14,6 +14,7 @@ const OffCanvasHorizontalCard = {
 
     props: {
         pokemonToRender: {Object, required: true},
+        buttonStyle: {Number, required: true},
     },
 
     methods: {
@@ -50,7 +51,8 @@ const OffCanvasHorizontalCard = {
           </div>
         </div>
         <div class="col-3">
-          <add-edit-off-canvas :active-item="pokemonToRender" is-new=true @add-pokemon="emitClickedObject"></add-edit-off-canvas>
+          
+          <add-edit-off-canvas :active-item="pokemonToRender" :button-style="buttonStyle" is-new=true @add-pokemon="emitClickedObject" @previous-off-canvas="$emit('previousOffCanvas')"></add-edit-off-canvas>
         </div>
 
       </div>

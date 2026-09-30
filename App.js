@@ -7,7 +7,7 @@ import NavbarMain from "./components/NavbarMain.js";
 import FilterOffCanvas from "./components/FilterOffCanvas.js";
 import SearchBarContainer from "./components/SearchBarContainer.js";
 import HorizontalCardContainer from "./components/HorizontalCardContainer.js";
-import AddPokemonOffCanvas from "./components/AddPokemonOffCanvas.js";
+import SearchAndDisplayOffCanvas from "./components/SearchAndDisplayOffCanvas.js";
 const app = createApp({
 
     components: {
@@ -19,7 +19,7 @@ const app = createApp({
         FilterOffCanvas,
         SearchBarContainer,
         HorizontalCardContainer,
-        AddPokemonOffCanvas
+        SearchAndDisplayOffCanvas
 
     },
 
@@ -79,27 +79,7 @@ const app = createApp({
         }
         ,
 
-        searchAllPokemons(query) {
-            console.log(query);
-            let resultObjects = [];
-            for (let pokemonQueried of this.pokemonListAPI) {
-                if (resultObjects.length >= 5) {
-                    console.log("pokemonQueried: ", resultObjects.length);
-                    break;
-                }
-                if (pokemonQueried.includes(query.toLowerCase()) && pokemonQueried.includes("-mega") === false) {
-                    let pokemonObject = {};
-                    pokemonObject.name = pokemonQueried;
-                    pokemonObject.pokemonId = this.pokemonListAPI.indexOf(pokemonQueried) + 1;
-                    resultObjects.push(pokemonObject);
-                }
-            }
 
-            this.searchResults = resultObjects;
-            console.log(this.searchResults);
-
-        }
-        ,
         async fetchPokemonList() {
             fetch("https://pokeapi.co/api/v2/pokemon?limit=1331")
                 .then((response) => response.json())
@@ -121,7 +101,8 @@ const app = createApp({
         addPokemon(activeItem) {
 
 
-            this.pokemon = activeItem;
+            this.pokemon = activeItem[0];
+            this.qty = activeItem[1];
 
             for (let i = 0; i < this.qty; i++) {
                 this.pokemon.Id = this.getNextPokemonId()
@@ -130,16 +111,17 @@ const app = createApp({
             }
             this.matches = this.pokemonList
             // BAD
-            $('#pokemonAddedSuccess').modal('show')
+
 
         }
         ,
 
 
-        deletePokemon() {
-            $('#addPokemonDetailsOffcanvas').offcanvas('hide')
-            console.log(this.activeItem);
-            this.pokemonList.splice(this.pokemonList.indexOf(this.activeItem), 1);
+        deletePokemon(pokemonToDelete) {
+
+            console.log(pokemonToDelete);
+            this.pokemonList.splice(this.pokemonList.indexOf(pokemonToDelete), 1);
+            this.updateMatches(this.pokemonList);
         }
         ,
         getNextPokemonId() {

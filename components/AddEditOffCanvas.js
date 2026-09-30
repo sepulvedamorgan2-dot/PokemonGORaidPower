@@ -3,12 +3,14 @@
 import PokemonImageName from "./PokemonImageName.js";
 
 import OffCanvasContainer from "./OffCanvasContainer.js";
-
+import ConfirmAddedModal from "./ConfirmAddedModal.js";
+import confirmAddedModal from "./ConfirmAddedModal.js";
 const AddOrEditOffCanvas = {
     name: 'AddOrEditOffCanvas',
     components: {
         PokemonImageName,
         OffCanvasContainer,
+        ConfirmAddedModal,
 
     },
 
@@ -33,6 +35,7 @@ const AddOrEditOffCanvas = {
         activeItem: {type: Object, required: true},
         isNew: {type: Boolean, default: false},
         previousOffCanvas: {type: Object, required: true},
+        buttonStyle: {type: Number, default: 0},
     },
 
 
@@ -44,34 +47,46 @@ const AddOrEditOffCanvas = {
 
             this.bsOffCanvas.show();
 
+        },
+    },
+    computed: {
+        confirmAddedModall() {
+            console.log(this.activeItem);
+            confirmAddedModal.methods.handleSubmit()
         }
     },
 
-    computed: {},
-
     template: `
-      <div class="px-3 pt-4">
+      <div class="px-3 alternateBg">
         <div>
-          <button type="button"
+          
+          <button v-if="buttonStyle === '1'" type="button" class="btn btn-sm btn-primary w-100 searchedPokemonBtn"
+                  data-bs-toggle="offcanvas" ref="editPokemonOffCanvas" v-on:click="$refs.editPokemonOffCanvas.openOffCanvas()">Select
+          </button>
+          <button v-else type="button"
                   class="btn btn-primary mb-2 py-2 fs-4 w-100" data-bs-toggle="offcanvas" ref="editPokemonOffCanvas" v-on:click="$refs.editPokemonOffCanvas.openOffCanvas()">Edit Pokemon
           </button>
         </div>
         <teleport to="#app">
-          <off-canvas-container ref="editPokemonOffCanvas" title="Edit Pokemon">
+          <off-canvas-container ref="editPokemonOffCanvas" have-arrow="true" @previous-off-canvas="$emit('previousOffCanvas')">
             <pokemon-image-name :active-item="activeItem"></pokemon-image-name>
             <div class="flex-grow-1 d-flex flex-column">
 
+<!--              <confirm-added-modal item="{{ activeItem.name }}"></confirm-added-modal>-->
               <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation"
-                    v-on:submit.prevent="$emit('addPokemon', pokemon)">
+                    
+                    v-on:submit.prevent="$emit('addPokemon', [activeItem, quantity]); confirmAddedModall()">
+                
                 <!-- cp button div -->
+                
                 <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
-                  <div class="col-6">
+                  <div class="col-6" >
                     <input :id="'tierOneCP' + activeItem.Id + activeItem.pokemonId" :checked="activeItem.cp < 1500" v-model.number="activeItem.cp"
                            :value="1200" type="radio" class="btn-check" :name="'btnradio' + activeItem.Id + activeItem.pokemonId" required>
                     <label class="btn btn-outline-primary w-100" :for="'tierOneCP' + activeItem.Id + activeItem.pokemonId">0-1500CP</label>
                   </div>
                   <div class="col-6">
-                    <input :id="'tierTwoCP' + activeItem.Id + activeItem.pokemonId" :cheed="activeItem.cp >= 1500 && activeItem.cp < 2500"
+                    <input :id="'tierTwoCP' + activeItem.Id + activeItem.pokemonId" :checked="activeItem.cp >= 1500 && activeItem.cp < 2500"
                            v-model.number="activeItem.cp" :value="2300" type="radio" class="btn-check"
                            :name="'btnradio' + activeItem.Id + activeItem.pokemonId" required>
                     <label class="btn btn-outline-primary w-100" :for="'tierTwoCP' + activeItem.Id + activeItem.pokemonId">1500+CP</label>
@@ -208,7 +223,7 @@ const AddOrEditOffCanvas = {
                 <div v-if="isNew">
                   <label class="form-label w-25   ">
                     Quantity
-                    <input required type="number" v-model="quantity" v-on:change="$emit('quantity', quantity)" min="1"
+                    <input required type="number" v-model="quantity"  min="1"
                            max="10" class="form-control"
                            placeholder="Quantity">
                   </label>

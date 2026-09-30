@@ -2,6 +2,8 @@
 // import xxx from './PokemonlistItem.js';
 import OffCanvasHorizontalCard from "./OffCanvasHorizontalCard.js";
 const HorizontalCardContainer = {
+    name: "HorizontalCardContainer",
+
     components: {
         OffCanvasHorizontalCard,
     },
@@ -14,14 +16,13 @@ const HorizontalCardContainer = {
 
     props: {
         arrayToDisplay: {Array, required: true},
+        buttonStyle: {Number, Required : true},
     },
 
     methods: {
-        emitClickedObject(pokemonToEmit) {
-            console.log("please")
-            console.log(pokemonToEmit);
-            // this.$emit('clickedObject', pokemonToEmit);
-            this.$emit('clickedObject', pokemonToEmit)
+        emitClickedObject(objectToEmit) {
+
+            this.$emit('clickedObject', objectToEmit)
         },
     }
     , watch: {
@@ -37,9 +38,9 @@ const HorizontalCardContainer = {
     computed: {},
 
     template: `
-
-      <off-canvas-horizontal-card v-for="pokemon in arrayToDisplay" @clicked-object="emitClickedObject"
-                                  :key="pokemon.pokemonId" :pokemon-to-render="pokemon">
+<!--:key="card.pokemonId" -->
+      <off-canvas-horizontal-card :button-style="buttonStyle" v-for="card in arrayToDisplay" @clicked-object="emitClickedObject" @previous-off-canvas="$emit('previousOffCanvas')"
+                                  :pokemon-to-render="card">
       </off-canvas-horizontal-card>
        
     `,

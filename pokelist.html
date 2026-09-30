@@ -30,14 +30,14 @@
                           filter-toggle-id="#filterPokemonOffCanvas"
     >
         <!--        add pokemon Button-->
-        <add-pokemon-off-canvas @clicked-object="searchAllPokemons" :search-results="searchResults"> </add-pokemon-off-canvas>
+        <search-and-display-off-canvas :list-to-search="pokemonListAPI" array-length=5 button-style=1  @clicked-object-add="addPokemon" > </search-and-display-off-canvas>
 
     </search-bar-container>
     <!-- Search Bar End -->
 
     <!--    Pokemon List-->
     <pokelist-container :searched-and-filtered-array="matches" :full-pokemon-list="pokemonList"
-                        ref="pokelistContainer"></pokelist-container>
+                        ref="pokelistContainer" @delete-item="deletePokemon"></pokelist-container>
     <!--pokemon List end-->
 
     <!--View Pokemon Details Offcanvas-->
@@ -54,90 +54,9 @@
 
     <!-- added pokemon details offcanvas end -->
 
-    <!-- edit pokemon offcanvas -->
-    <off-canvas-container id="editPokemonOffCanvas" title="Edit Pokemon" back-arrow-id="#pokemonDetailsOffCanvas">
-        <add-edit-off-canvas :active-item="activeItem" @add-pokemon="addPokemon"></add-edit-off-canvas>
-    </off-canvas-container>
-    <!-- added pokemon details offcanvas end -->
-
-    <!-- Add Pokemon Offcanvas   -->
-
-    <!-- add pokemon offcanvas end -->
-    <off-canvas-container id="addPokemonDetailsOffcanvas" title="Add Pokemon" back-arrow-id="#addPokemonOffcanvas">
-        <add-edit-off-canvas :active-item="activeItem" :is-new=true @add-pokemon="addPokemon"
-                             @quantity="updateQty"></add-edit-off-canvas>
-    </off-canvas-container>
-    <!-- added pokemon details offcanvas end -->
-    <!-- success added pokemon modal -->
-    <div class="modal fade" tabindex="-1" id="pokemonAddedSuccess" v-if="activeItem">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content">
-                <div class="modal-header p-3">
-                    <h1 class="modal-title fs-5 text-center mx-auto" id="pokemonAddedSuccessTitle">Added {{ qty }}
-                        {{ activeItem.name }}</h1>
-                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
-                </div>
-                <div class="modal-body">
-                    <!-- img -->
-                    <div class="row justify-content-center">
-                        <div class="col-10">
-                            <img class="img-fluid w-100 border rounded"
-                                 :src="getSpriteLink(activeItem.pokemonId)"
-                                 :alt="activeItem.name">
-                        </div>
-                    </div>
-                    <!-- RP text -->
-                    <div class="text-center">
-                        <p class="text-uppercase fw-bold text-tertiary fs-6 mt-2 mb-1">Raid Power</p>
-                        <p class="fw-bolder fs-3 text-dark mb-0">{{ activeItem.cp }}</p>
-                    </div>
-
-                </div>
-                <div class="modal-footer p-2">
-                    <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal"
-                            data-bs-toggle="offcanvas" v-on:click="qty = 1">Close
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- modal end -->
-    <!-- confirm delete pokemon modal -->
-    <div class="modal fade" tabindex="-1" id="confirmDelete">
-        <div class="modal-dialog modal-dialog-centered  modal-sm">
-            <div class="modal-content">
-
-                <div class="modal-body">
-
-                    <div class="text-center py-2">
-
-                        <p class="fw-bolder fs-3 text-dark mb-0">Are you sure you want to delete this Pokemon?</p>
-                    </div>
-
-                </div>
-                <div class="p-2">
-
-                    <div class="row g-1 g-md-2 p-1">
-                        <div class="col12 col-6-md">
-                            <button type="button" class="btn btn-danger w-100 text-white" v-on:click="deletePokemon()"
-                                    data-bs-dismiss="modal" data-bs-toggle="offcanvas">
-                                Yes
-                            </button>
-                        </div>
-                        <div class="col-12 col-6-md">
-                            <button type="button" class="btn btn-outline-secondary w-100"
-                                    data-bs-dismiss="modal">No
-                            </button>
-                        </div>
 
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- modal end -->
-    <!-- confirm Mega Evolve pokemon modal -->
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

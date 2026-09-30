@@ -17,8 +17,7 @@ const OffCanvasContainer = {
     props: {
 
         title: {String, required: false},
-        backArrowId: {String, required: false},
-
+        haveArrow: Boolean,
 
     },
 
@@ -48,8 +47,8 @@ const OffCanvasContainer = {
     template: `
       <div ref="offCanvas" class="offcanvas offcanvas-end " :aria-labelledby="this.id" tabindex="-1"  style="overflow-y: scroll; height: 100%">
         <div class="offcanvas-header bg-primary text-center text-white">
-          <i v-if="backArrowId" type="button" class="bi bi-arrow-left text-white fs-5 me-3" data-bs-toggle="offcanvas"
-             :data-bs-target="backArrowId"></i>
+          <i v-if="haveArrow" type="button" class="bi bi-arrow-left text-white fs-5 me-3" data-bs-toggle="offcanvas"
+             v-on:click="$emit('previousOffCanvas')"></i>
           <h5 class="offcanvas-title">{{ title }}</h5>
           <button type="button" class="btn-close" v-on:click="hideOffCanvas"
                   aria-label="back"></button>
