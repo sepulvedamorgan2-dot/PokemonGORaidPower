@@ -2,6 +2,8 @@
 // import xxx from './PokemonlistItem.js';
 
 const ComponentName = {
+    name: 'ComponentName',
+
     components: {
 
     },
@@ -20,7 +22,11 @@ const ComponentName = {
 
     },
 
-    computed: {},
+    watch: {
+
+    },
+
+
 
     template: `
       

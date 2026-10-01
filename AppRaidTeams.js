@@ -1,7 +1,13 @@
 import {createApp} from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
-
+import NavbarMain from "./components/NavbarMain.js";
+import RaidTeamCardContainer from "./components/RaidTeamCardContainer.js";
 const app = createApp({
+    components: {
+        NavbarMain,
+        RaidTeamCardContainer,
+    },
     data: function () {
+
         return {
             searchForPokemon: '',
             filterFast: '',
@@ -146,19 +152,10 @@ const app = createApp({
         }
         ,
         returnFullPokemon(pokemonIdOnly) {
-            const pokemonFullObject = {...this.pokemonList.find(p => p.Id === pokemonIdOnly)}
+            return   {...this.pokemonList.find(p => p.Id === pokemonIdOnly)}
 
-           // if(Object.keys(pokemonFullObject).length === 0){
-           //     console.log(pokemonFullObject)
-           //     console.log("No matching Pokémon found for ID: " + pokemonIdOnly);
-           //     // Remove the Pokémon from the active team
-           //     for(const pokemonTeam of this.pokemonTeamList){
-           //
-           //         console.log(pokemonTeam.activeTeam.splice(pokemonTeam.activeTeam.indexOf(pokemonIdOnly), 1)[0]);
-           //     }
-           // }
 
-            return pokemonFullObject;
+
 
         }
         ,
