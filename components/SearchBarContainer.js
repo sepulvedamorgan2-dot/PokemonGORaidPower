@@ -1,14 +1,17 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
+import FilterOffCanvas from './FilterOffCanvas.js'
 
-const ComponentName = {
+const SearchBarContainer = {
+    name: 'SearchBarContainer',
     components: {
-
+        FilterOffCanvas
     },
 
     data: function () {
         return {
-            searchForPokemon: ''
+            searchQuery: '',
+            matches: []
         }
     },
 
@@ -17,18 +20,20 @@ const ComponentName = {
         haveFilter: {Boolean, default: false},
         haveExtraButton: {Boolean, default: false},
         placeHolder: {String, required: false},
-        filterToggle: {String, required: false},
-        filterToggleId: {String, required: false},
+        listToFilter: {Array, required: false},
+        listToSearch: {Array, required: false},
     },
 
-    methods: {
-
-    },
+    methods: {},
 
     watch: {
-        searchForPokemon: {
+        searchQuery: {
             handler: function () {
-                this.$emit('searchQuery', this.searchForPokemon)
+                if (!this.haveFilter) {
+
+                    this.$emit('searchQuery', this.searchQuery);
+
+                }
             }
         }
     },
@@ -48,23 +53,20 @@ const ComponentName = {
           <div class="col">
 
 
-            <label aria-label="SearchPokemon" class="w-100">
+            <label aria-label="Search Bar" class="w-100">
               <input type="text" class="form-control" id="searchBar" :placeholder="placeHolder"
-                     v-model="searchForPokemon">
+                     v-model="searchQuery">
             </label>
           </div>
           <div v-if="haveFilter" class="col-auto">
-            <div class="btn btn-outline-secondary  w-100" type="button" id="filterButton"
-                 :data-bs-toggle="filterToggle" :data-bs-target="filterToggleId">
-              <i class="bi bi-filter"></i>
-
-            </div>
+            <filter-off-canvas :each-item="listToFilter" :searchQuery="searchQuery"
+                               @matched-pokemon="matches => $emit('searchResults', matches)"></filter-off-canvas>
           </div>
-          <div v-if="haveExtraButton" class="col-12 col-sm-4 col-md-3 ">
-            <slot>
+          <!--          <div v-if="haveExtraButton" class="col-12 col-sm-4 col-md-3 ">-->
+          <!--            <slot>-->
 
-            </slot>
-          </div>
+          <!--            </slot>-->
+          <!--          </div>-->
 
 
         </div>
@@ -77,4 +79,4 @@ const ComponentName = {
 
 }
 
-export default ComponentName;
+export default SearchBarContainer;

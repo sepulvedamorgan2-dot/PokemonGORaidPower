@@ -13,25 +13,20 @@ const OffCanvasHorizontalCard = {
     },
 
     props: {
-        pokemonToRender: {Object, required: true},
-        buttonStyle: {Number, required: true},
+        pokemon: {Object, required: true},
+
     },
 
     methods: {
 
         getSpriteLink(pokemonID) {
-            console.log("ptr" + this.pokemonToRender)
+            console.log("ptr" + this.pokemon)
             if (typeof pokemonID === "number") {
                 return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID}.png`;
             }
 
         }
-        ,emitClickedObject(pokemonToEmit) {
-            console.log("please")
-            console.log(pokemonToEmit);
-            // this.$emit('clickedObject', pokemonToEmit);
-            this.$emit('clickedObject', pokemonToEmit)
-        },
+        ,
     },
 
     computed: {},
@@ -41,18 +36,18 @@ const OffCanvasHorizontalCard = {
       
       <div class="row g-0 align-items-center">
         <div class="col-3">
-          <img class="img-fluid horz-card-img " :src="getSpriteLink(pokemonToRender.pokemonId)"
+          <img class="img-fluid horz-card-img " :src="getSpriteLink(pokemon.pokemonId)"
                alt="pokemonImg">
         </div>
         <div class="col-6">
           <div class="ms-0 ms-sm-0">
-            <p class="fs-5 mb-0 text-capitalize">{{ pokemonToRender.name }}</p>
+            <p class="fs-5 mb-0 text-capitalize">{{ pokemon.name }}</p>
 
           </div>
         </div>
         <div class="col-3">
-          
-          <add-edit-off-canvas :active-item="pokemonToRender" :button-style="buttonStyle" is-new=true @add-pokemon="emitClickedObject" @previous-off-canvas="$emit('previousOffCanvas')"></add-edit-off-canvas>
+          <button v-on:click="$emit('clickedObject', pokemon)" class="btn btn-sm btn-primary w-100 searchedPokemonBtn">Select</button>
+<!--          <add-edit-off-canvas :active-item="pokemonToRender" :button-style="buttonStyle" is-new=true @add-pokemon="emitClickedObject" @previous-off-canvas="$emit('previousOffCanvas')"></add-edit-off-canvas>-->
         </div>
 
       </div>

@@ -1,14 +1,12 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
 import PokemonImageName from "./PokemonImageName.js";
-import OffCanvasContainer from "./OffCanvasContainer.js";
-import AddEditOffCanvas from "./AddEditOffCanvas.js";
 import ConfirmDeleteModal from "./ConfirmDeleteModal.js";
 const DetailsOffCanvas = {
     components: {
         PokemonImageName,
-        OffCanvasContainer,
-        AddEditOffCanvas,
+
+
         ConfirmDeleteModal,
     },
 
@@ -24,18 +22,8 @@ const DetailsOffCanvas = {
     },
 
     methods: {
-        getClass(type, otherclasses) {
-            return ` type${type} ${otherclasses}`;
-        }, openOffCanvas(OpenPrevious) {
-
-            try{
-                this.lastOffCanvas.hide()
-            } catch(e) {
-
-            }
-            this.bsOffCanvas.show();
-            this.lastOffCanvas = this.bsOffCanvas;
-
+        getClass(type, otherClasses) {
+            return ` type${type} ${otherClasses}`;
         }
 
 
@@ -44,15 +32,7 @@ const DetailsOffCanvas = {
     computed: {},
 
     template: `
-      <div class="col-auto ms-auto  align-items-center d-flex">
-        <div >
-          <i type="button"  data-bs-target="#pokemonDetailsOffCanvas"
-              v-on:click="$refs.pokemonDetailsOffCanvas.openOffCanvas()"
-             class="bi bi-three-dots me-4 fs-4"></i>
 
-        </div>
-        <teleport to="#app">
-          <off-canvas-container ref="pokemonDetailsOffCanvas"  title="Pokemon Details">
             <pokemon-image-name :active-item="activeItem"></pokemon-image-name>
             <div class="flex-grow-1 d-flex flex-column">
 
@@ -105,8 +85,11 @@ const DetailsOffCanvas = {
                   </div>
                 </div>
                 <!-- Edit button -->
-                <div class="pt-3">
-                <add-edit-off-canvas @previous-off-canvas="$refs.pokemonDetailsOffCanvas.openOffCanvas()" :active-item="activeItem"  @add-pokemon="addPokemon"></add-edit-off-canvas>
+                <div class="pt-3 px-3">
+                  <button v-else type="button"
+                          class="btn btn-primary mb-2 py-2 fs-4 w-100" v-on:click="$emit('clicked')">Edit Pokemon
+                  </button>
+                  
                 </div>
                 <!--                delete button-->
                 <div class="px-3">
@@ -116,9 +99,7 @@ const DetailsOffCanvas = {
 
               <!-- end -->
             </div>
-          </off-canvas-container>
-        </teleport>
-      </div>
+
     `,
 
 

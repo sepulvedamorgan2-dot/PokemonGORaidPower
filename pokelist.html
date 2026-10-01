@@ -18,19 +18,20 @@
     <!--    Navbar-->
     <navbar-main page-title="Raid Power"></navbar-main>
     <!--    Navbar End-->
-
+    <add-pokemon-off-canvas :pokemon-list-from-api="pokemonListAPI" array-length=5 button-style=1  @add-pokemon="addPokemon" > </add-pokemon-off-canvas>
     <!--    Search Bar Div-->
     <search-bar-container class="mt-3"
                           title="Search Pokemon"
-                          have-extra-button="true"
+                          have-filter="true"
                           place-holder="Ex: Charizard"
-                          have-filter=true
+
                           @search-query="searchForPokemon = $event"
-                          filter-toggle="offcanvas"
-                          filter-toggle-id="#filterPokemonOffCanvas"
+                          :list-to-filter="pokemonList"
+                          @search-results="matchedPokemon => matches = matchedPokemon"
+
     >
         <!--        add pokemon Button-->
-        <search-and-display-off-canvas :list-to-search="pokemonListAPI" array-length=5 button-style=1  @clicked-object-add="addPokemon" > </search-and-display-off-canvas>
+
 
     </search-bar-container>
     <!-- Search Bar End -->
@@ -40,19 +41,7 @@
                         ref="pokelistContainer" @delete-item="deletePokemon"></pokelist-container>
     <!--pokemon List end-->
 
-    <!--View Pokemon Details Offcanvas-->
 
-
-    <!--    View pokemon Details end-->
-
-    <!-- Filter pokemon offcanvas -->
-    <off-canvas-container id="filterPokemonOffCanvas" title="Filter Pokemon">
-        <filter-off-canvas :each-pokemon="pokemonList" :search-for-pokemon="searchForPokemon"
-                           @matched-pokemon="updateMatches"></filter-off-canvas>
-    </off-canvas-container>
-
-
-    <!-- added pokemon details offcanvas end -->
 
 
 

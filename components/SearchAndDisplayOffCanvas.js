@@ -23,19 +23,7 @@ const SearchAndDisplayOffCanvas =  {
     },
 
     methods: {
-        emitObject(pokemonToEmit, endTag) {
-            console.log(this.searchResults + "search results" );
-            console.log("please")
-            console.log(pokemonToEmit);
-            // this.$emit('clickedObject', pokemonToEmit);
-            if (endTag) {
-                this.$emit(`clickedObject${endTag}`, pokemonToEmit)
-            }else {
-                this.$emit(`clickedObject`, pokemonToEmit)
-            }
-
-
-        }, updateSearchResults(query) {
+         updateSearchResults(query) {
             console.log(query);
             let resultObjects = [];
             for (let pokemonQueried of this.listToSearch) {
@@ -60,29 +48,18 @@ const SearchAndDisplayOffCanvas =  {
     computed: {},
 
     template: `
-      <div >
-        
-        <button class="btn btn-primary w-100 " type="button" v-on:click="$refs.searchAndDisplayOffCanvas.openOffCanvas()">
-          <i class=" d-md-block">Add Pokemon</i>
-        </button>
-        <teleport to="#app">
-        <off-canvas-container ref="searchAndDisplayOffCanvas" title="Add Pokemon" >
 
+      <div class="p-2 mt-2 border-bottom">
+        <search-bar-container @search-query="updateSearchResults"   title="Search Pokemon"></search-bar-container>
 
-          <div class="">
-            <div class="p-2 mt-2 border-bottom">
-              <search-bar-container @search-query="updateSearchResults" title="Search Pokemon"></search-bar-container>
+        <horizontal-card-container :array-to-display="searchResults"  :button-style="buttonStyle"
+                                   @clicked-object="object => $emit('clickedObject', object)"
+                                  >
 
-              <horizontal-card-container :array-to-display="searchResults" :button-style="buttonStyle" @clicked-object="object => emitObject(object, 'Add')" @previous-off-canvas="$refs.searchAndDisplayOffCanvas.openOffCanvas()"  >
+        </horizontal-card-container>
+      </div>
 
-              </horizontal-card-container>
-            </div>
-
-          </div>
-        </off-canvas-container>
-        </teleport>
-
-      </div>    
+          
     `,
 
 

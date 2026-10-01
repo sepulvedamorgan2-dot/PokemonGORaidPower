@@ -20,10 +20,7 @@ const HorizontalCardContainer = {
     },
 
     methods: {
-        emitClickedObject(objectToEmit) {
 
-            this.$emit('clickedObject', objectToEmit)
-        },
     }
     , watch: {
         arrayToDisplay: {
@@ -39,8 +36,8 @@ const HorizontalCardContainer = {
 
     template: `
 <!--:key="card.pokemonId" -->
-      <off-canvas-horizontal-card :button-style="buttonStyle" v-for="card in arrayToDisplay" @clicked-object="emitClickedObject" @previous-off-canvas="$emit('previousOffCanvas')"
-                                  :pokemon-to-render="card">
+      <off-canvas-horizontal-card :button-style="buttonStyle" v-for="card in arrayToDisplay" @clicked-object="pokemon => $emit('clickedObject', pokemon)"
+                                  :pokemon="card">
       </off-canvas-horizontal-card>
        
     `,

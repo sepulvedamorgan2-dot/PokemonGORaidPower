@@ -1,10 +1,11 @@
 import DetailsOffCanvas from "./DetailsOffCanvas.js";
 import AddEditOffCanvas from "./AddEditOffCanvas.js";
-
+import PokemonDetailsOffCanvas from "./PokemonDetailsOffCanvas.js";
 const PokemonlistItem = {
     components: {
         AddEditOffCanvas,
         DetailsOffCanvas,
+        PokemonDetailsOffCanvas,
     },
     data: function () {
 
@@ -94,9 +95,8 @@ const PokemonlistItem = {
 
         </div>
 
-
-        <details-off-canvas :active-item="pokemon"
-                            @delete-item="item => $emit('deleteItem', item)"></details-off-canvas>
+        <pokemon-details-off-canvas :pokemon="pokemon"
+                                    @delete-item="item => $emit('deleteItem', item)"></pokemon-details-off-canvas>
 
       </div>
 
