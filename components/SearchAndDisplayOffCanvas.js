@@ -24,18 +24,24 @@ const SearchAndDisplayOffCanvas =  {
 
     methods: {
          updateSearchResults(query) {
-            console.log(query);
+            console.log(this.listToSearch);
             let resultObjects = [];
             for (let pokemonQueried of this.listToSearch) {
                 if (resultObjects.length >= this.arrayLength) {
                     break;
                 }
+                try{
                 if (pokemonQueried.includes(query.toLowerCase()) && pokemonQueried.includes("-mega") === false) {
                     let pokemonObject = {};
                     pokemonObject.name = pokemonQueried;
                     pokemonObject.pokemonId = this.listToSearch.indexOf(pokemonQueried) + 1;
                     resultObjects.push(pokemonObject);
-                }
+                } } catch(e) {
+
+                    if (pokemonQueried.name.includes(query.toLowerCase()) && pokemonQueried.name.includes("-mega") === false) {
+
+                        resultObjects.push(pokemonQueried);
+                    }}
             }
 
             this.searchResults = resultObjects;
