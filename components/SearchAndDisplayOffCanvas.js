@@ -50,7 +50,13 @@ const SearchAndDisplayOffCanvas =  {
         }
         ,
     },
-
+    watch: {
+        listToSearch: {
+            handler: function () {
+                this.updateSearchResults('');
+            }
+        }
+    },
     computed: {},
 
     template: `

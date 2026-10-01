@@ -15,6 +15,7 @@ const RaidTeamOffCanvas =  {
             editTeam: true,
             addTeam: false,
             onlyNewPokemon: [],
+            title: null,
         }
     },
 
@@ -52,40 +53,56 @@ const RaidTeamOffCanvas =  {
         }, getTitle(){
             this.addTeam = !this.addTeam;
             this.editTeam = !this.editTeam;
+            if(this.editTeam){
+                this.title = this.pokemonTeam.type + ' Type Team';
+            } else{
+                this.title = this.pokemonTeam.type + ' > Add Pokemon'
+            }
+
         }, reset(){
+            this.title = this.pokemonTeam.type + ' Type Team';
             this.addTeam = false;
             this.editTeam = true;
+            this.returnNewPokemon()
         }, addPokemonToTeam(pokemonObject) {
+
             if (this.pokemonTeam.activeTeam.length < 6) {
                 this.pokemonTeam.activeTeam.push(pokemonObject.Id);
             } else {
                 this.pokemonTeam.backupPokemon.push(pokemonObject.Id);
             }
+            this.returnNewPokemon()
+
 
         }, returnNewPokemon(){
-            const onlyNewPokemon = []
+            this.onlyNewPokemon = []
             for (const pokemonObject of this.pokemonList) {
                 if (!this.pokemonTeam.activeTeam.includes(pokemonObject.Id) && !this.pokemonTeam.backupPokemon.includes(pokemonObject.Id)) {
-                    onlyNewPokemon.push(pokemonObject);
+                    this.onlyNewPokemon.push(pokemonObject);
                 }
             }
-            return onlyNewPokemon;
+
         },
     },
 
     watch: {
-
+        pokemonList: {
+            handler() {
+                this.returnNewPokemon();
+            },
+            deep: true
+        }
     },
 
 
 
     template: `
       <div>
-        <i class="bi bi-pencil fs-5 " type="button" v-on:click="$refs.RaidTeamOffCanvas.openOffCanvas(); reset()"
+        <i class="bi bi-pencil fs-5 " type="button" v-on:click="$refs.RaidTeamOffCanvas.openOffCanvas(); reset(); "
            data-bs-target="#editTeamOffCanvas"></i>
       </div>
       <teleport to="#app2">
-        <off-canvas-container :id="pokemonTeam.type" :title="pokemonTeam.type + ' Type Team'" ref="RaidTeamOffCanvas">
+        <off-canvas-container :have-arrow="addTeam" @clicked="getTitle()"  :id="pokemonTeam.type" :title="title" ref="RaidTeamOffCanvas">
           <div v-show="editTeam">
             <div class=" ps-3">
               <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize">Active Team</p>
@@ -159,7 +176,7 @@ const RaidTeamOffCanvas =  {
             </div>
           </div>
           <div v-show="addTeam">
-            <search-and-display-off-canvas @clicked-object="addPokemonToTeam" :list-to-search=" returnNewPokemon()"></search-and-display-off-canvas>
+            <search-and-display-off-canvas @clicked-object="addPokemonToTeam" :list-to-search="onlyNewPokemon"></search-and-display-off-canvas>
           </div>
         </off-canvas-container>
       </teleport>
