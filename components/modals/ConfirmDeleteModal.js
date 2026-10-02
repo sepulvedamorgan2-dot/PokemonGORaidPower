@@ -1,7 +1,7 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
-import ModalContainer from './ModalContainer.js';
-const ConfirmAddedModal = {
+import ModalContainer from '../containers/ModalContainer.js';
+const ConfirmDeleteModal = {
     components: {
         ModalContainer,
     },
@@ -17,20 +17,18 @@ const ConfirmAddedModal = {
     },
 
     methods: {
-        handleSubmit: function (){
-            this.$refs.AddModal.openModal()
-        }
+
     },
 
     computed: {},
 
     template: `
       <div>
-        <button
-                v-on:click="handleSubmit">
+        <button type="button"
+                class="btn btn-danger mb-2 py-2 fs-4 text-white w-100" v-on:click="this.$refs.deleteItemModal.openModal()">Delete Pokemon
         </button>
         <teleport to="#app">
-          <modal-container title="Confirm Deletion" ref="AddModal">
+          <modal-container title="Confirm Deletion" ref="deleteItemModal">
             <template #default>
               <p>Are you sure you want to delete <strong>{{ item.name }}</strong>?</p>
             </template>
@@ -45,4 +43,4 @@ const ConfirmAddedModal = {
 
 }
 
-export default ConfirmAddedModal;
+export default ConfirmDeleteModal;

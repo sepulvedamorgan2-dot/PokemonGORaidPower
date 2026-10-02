@@ -1,6 +1,6 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
-import RaidTeamCard from "./RaidTeamCard.js";
+import RaidTeamCard from "../RaidTeamCard.js";
 const RaidTeamCardContainer = {
     name: 'RaidTeamCardContainer',
 

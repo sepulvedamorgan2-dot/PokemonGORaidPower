@@ -1,8 +1,8 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
-import OffCanvasContainer from "./OffCanvasContainer.js";
-import DetailsOffCanvas from "./DetailsOffCanvas.js";
-import AddEditOffCanvas from "./AddEditOffCanvas.js";
+import OffCanvasContainer from "../containers/OffCanvasContainer.js";
+import DetailsOffCanvas from "../offcanvasviews/DetailsOffCanvas.js";
+import AddEditOffCanvas from "../offcanvasviews/AddEditOffCanvas.js";
 const PokemonDetailsOffCanvas = {
     name: 'PokemonDetailsOffCanvas',
 

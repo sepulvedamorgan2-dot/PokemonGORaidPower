@@ -1,6 +1,6 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
-import OffCanvasHorizontalCard from "./OffCanvasHorizontalCard.js";
+import OffCanvasHorizontalCard from "../OffCanvasHorizontalCard.js";
 const HorizontalCardContainer = {
     name: "HorizontalCardContainer",
 

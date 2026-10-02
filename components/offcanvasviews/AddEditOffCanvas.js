@@ -1,6 +1,6 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
-import PokemonImageName from "./PokemonImageName.js";
+import PokemonImageName from "../PokemonImageName.js";
 
 const AddOrEditOffCanvas = {
     name: 'AddOrEditOffCanvas',

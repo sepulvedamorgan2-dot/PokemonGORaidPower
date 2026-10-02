@@ -1,6 +1,6 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
-import FilterOffCanvas from './FilterOffCanvas.js'
+import FilterOffCanvas from '../offcanvasviews/FilterOffCanvas.js'
 
 const SearchBarContainer = {
     name: 'SearchBarContainer',

@@ -1,7 +1,7 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
-import PokemonImageName from "./PokemonImageName.js";
-import ConfirmDeleteModal from "./ConfirmDeleteModal.js";
+import PokemonImageName from "../PokemonImageName.js";
+import ConfirmDeleteModal from "../modals/ConfirmDeleteModal.js";
 const DetailsOffCanvas = {
     components: {
         PokemonImageName,

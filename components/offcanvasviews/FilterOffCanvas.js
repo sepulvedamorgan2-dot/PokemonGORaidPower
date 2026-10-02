@@ -1,4 +1,4 @@
-import OffCanvasContainer from "./OffCanvasContainer.js";
+import OffCanvasContainer from "../containers/OffCanvasContainer.js";
 const FilterOffCanvas = {
     name: "FilterOffCanvas",
     components: {

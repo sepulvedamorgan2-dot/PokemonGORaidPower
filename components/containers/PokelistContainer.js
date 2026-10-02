@@ -1,4 +1,4 @@
-import PokemonlistItem from './PokemonlistItem.js';
+import PokemonlistItem from '../PokemonlistItem.js';
 
 const PokelistContainer = {
     components: {

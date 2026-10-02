@@ -1,6 +1,6 @@
 import {createApp} from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 import NavbarMain from "./components/NavbarMain.js";
-import RaidTeamCardContainer from "./components/RaidTeamCardContainer.js";
+import RaidTeamCardContainer from "./components/containers/RaidTeamCardContainer.js";
 const app = createApp({
     components: {
         NavbarMain,

@@ -1,6 +1,6 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
-import AddEditOffCanvas from "./AddEditOffCanvas.js";
+import AddEditOffCanvas from "./offcanvasviews/AddEditOffCanvas.js";
 const OffCanvasHorizontalCard = {
     components: {
         AddEditOffCanvas: AddEditOffCanvas,

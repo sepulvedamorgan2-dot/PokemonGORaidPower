@@ -1,6 +1,6 @@
-import DetailsOffCanvas from "./DetailsOffCanvas.js";
-import AddEditOffCanvas from "./AddEditOffCanvas.js";
-import PokemonDetailsOffCanvas from "./PokemonDetailsOffCanvas.js";
+import DetailsOffCanvas from "./offcanvasviews/DetailsOffCanvas.js";
+import AddEditOffCanvas from "./offcanvasviews/AddEditOffCanvas.js";
+import PokemonDetailsOffCanvas from "./offcanvassequence/PokemonDetailsOffCanvas.js";
 const PokemonlistItem = {
     components: {
         AddEditOffCanvas,

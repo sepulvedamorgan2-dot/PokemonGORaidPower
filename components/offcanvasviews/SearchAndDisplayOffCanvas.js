@@ -1,7 +1,7 @@
 
-import OffCanvasContainer from "./OffCanvasContainer.js";
-import SearchBarContainer from "./SearchBarContainer.js";
-import HorizontalCardContainer from "./HorizontalCardContainer.js";
+import OffCanvasContainer from "../containers/OffCanvasContainer.js";
+import SearchBarContainer from "../molecules/SearchBarContainer.js";
+import HorizontalCardContainer from "../containers/HorizontalCardContainer.js";
 const SearchAndDisplayOffCanvas =  {
     components: {
         OffCanvasContainer,
