@@ -22,7 +22,7 @@ const AddPokemonOffCanvas = {
     },
 
     props: {
-
+        cardStyle: {Number, required: true},
         pokemonListFromApi: {type: Array, required: true},
     },
 
@@ -72,11 +72,11 @@ const AddPokemonOffCanvas = {
           <teleport to="#app">
             <OffCanvasContainer :have-arrow="details" @clicked="reset(d)" :title="title" ref="AddPokemonOffCanvas">
               <div v-show="search" >
-                <SearchAndDisplayOffCanvas  :list-to-search="pokemonListFromApi" @clicked-object="object=> (pokemonToAdd = object)" :array-length="5" :button-style="1">
+                <SearchAndDisplayOffCanvas  :list-to-search="pokemonListFromApi" @clicked-object="object=> (pokemonToAdd = object)" :card-style="cardStyle" :array-length="5" :button-style="1">
                 </SearchAndDisplayOffCanvas>
               </div>
               <div v-if="details" >
-                <add-edit-off-canvas @add-pokemon="$refs.AddPokemonOffCanvas.hideOffCanvas();pokemon => $emit('add-pokemon', pokemon)" isNew="true" :active-item="pokemonToAdd" @clicked="reset();"> </add-edit-off-canvas>
+                <add-edit-off-canvas  :active-item="pokemonToAdd" @add-pokemon="$emit('addPokemon', $event); $refs.AddPokemonOffCanvas.hideOffCanvas();" :isNew=true @clicked="reset();"> </add-edit-off-canvas>
               </div>
             </OffCanvasContainer>
           </teleport>

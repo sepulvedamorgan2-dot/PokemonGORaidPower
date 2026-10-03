@@ -1,11 +1,11 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
-import OffCanvasHorizontalCard from "../OffCanvasHorizontalCard.js";
+import HorizontalCard from "../HorizontalCard.js";
 const HorizontalCardContainer = {
     name: "HorizontalCardContainer",
 
     components: {
-        OffCanvasHorizontalCard,
+        OffCanvasHorizontalCard: HorizontalCard,
     },
 
     data: function () {
@@ -16,7 +16,7 @@ const HorizontalCardContainer = {
 
     props: {
         arrayToDisplay: {Array, required: true},
-        buttonStyle: {Number, Required : true},
+        cardStyle: {Number, Required : true},
     },
 
     methods: {
@@ -36,7 +36,7 @@ const HorizontalCardContainer = {
 
     template: `
 <!--:key="card.pokemonId" -->
-      <off-canvas-horizontal-card :button-style="buttonStyle" v-for="card in arrayToDisplay" @clicked-object="pokemon => $emit('clickedObject', pokemon)"
+      <off-canvas-horizontal-card :card-style="cardStyle" v-for="card in arrayToDisplay" @clicked-object="pokemon => $emit('clickedObject', pokemon)"
                                   :pokemon="card">
       </off-canvas-horizontal-card>
        

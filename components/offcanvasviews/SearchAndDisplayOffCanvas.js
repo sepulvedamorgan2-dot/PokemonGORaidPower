@@ -19,7 +19,7 @@ const SearchAndDisplayOffCanvas =  {
     props: {
         listToSearch: Array,
         arrayLength: {type: Number, default: 5},
-        buttonStyle: {type: Number, required: true},
+        cardStyle: {type: Number, required: true},
     },
 
     methods: {
@@ -61,10 +61,10 @@ const SearchAndDisplayOffCanvas =  {
 
     template: `
 
-      <div class="p-2 mt-2 border-bottom">
-        <search-bar-container @search-query="updateSearchResults"   title="Search Pokemon"></search-bar-container>
+      <div class=" mt-2 border-bottom">
+        <search-bar-container class="px-2" @search-query="updateSearchResults"   title="Search Pokemon"></search-bar-container>
 
-        <horizontal-card-container :array-to-display="searchResults"  :button-style="buttonStyle"
+        <horizontal-card-container :array-to-display="searchResults"  :card-style="cardStyle"
                                    @clicked-object="object => $emit('clickedObject', object)"
                                   >
 

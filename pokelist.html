@@ -18,7 +18,7 @@
     <!--    Navbar-->
     <navbar-main page-title="Raid Power"></navbar-main>
     <!--    Navbar End-->
-    <add-pokemon-off-canvas :pokemon-list-from-api="pokemonListAPI" array-length=5 button-style=1  @add-pokemon="addPokemon" > </add-pokemon-off-canvas>
+    <add-pokemon-off-canvas  @add-pokemon="addPokemon"  :pokemon-list-from-api="pokemonListAPI" array-length=5 :card-style=1 > </add-pokemon-off-canvas>
     <!--    Search Bar Div-->
     <search-bar-container class="mt-3"
                           title="Search Pokemon"

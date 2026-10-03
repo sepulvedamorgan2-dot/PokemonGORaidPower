@@ -1,8 +1,8 @@
-import OffCanvasContainer from "../containers/OffCanvasContainer.js";
-const FilterOffCanvas = {
-    name: "FilterOffCanvas",
+
+const FilterView = {
+    name: "FilterView",
     components: {
-        OffCanvasContainer
+
     },
 
     data: function () {
@@ -67,13 +67,6 @@ const FilterOffCanvas = {
     },
 
     template: `
-      <div>
-        <div class="btn btn-outline-secondary  w-100" type="button" id="filterButton " v-on:click="$refs.FilterOffCanvas.openOffCanvas()">
-          <i class="bi bi-filter"></i>
-
-        </div>
-        <teleport to="#app">
-        <off-canvas-container ref="FilterOffCanvas">
           <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation pt-3"
                 v-on:change="pokemonSearch()">
             <!-- cp button div -->
@@ -204,12 +197,10 @@ const FilterOffCanvas = {
               </div>
             </div>
           </form>
-        </off-canvas-container>
-        </teleport>
-      </div>
+        
     `,
 
 
 }
 
-export default FilterOffCanvas;
+export default FilterView;

@@ -1,6 +1,6 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
-import FilterOffCanvas from '../offcanvasviews/FilterOffCanvas.js'
+import FilterOffCanvas from '../offcanvassequence/FilterOffCanvas.js'
 
 const SearchBarContainer = {
     name: 'SearchBarContainer',
@@ -17,7 +17,6 @@ const SearchBarContainer = {
 
     props: {
         title: {String, required: true},
-        haveFilter: {Boolean, default: false},
         haveExtraButton: {Boolean, default: false},
         placeHolder: {String, required: false},
         listToFilter: {Array, required: false},
@@ -29,7 +28,7 @@ const SearchBarContainer = {
     watch: {
         searchQuery: {
             handler: function () {
-                if (!this.haveFilter) {
+                if (!this.listToFilter) {
 
                     this.$emit('searchQuery', this.searchQuery);
 
@@ -58,8 +57,8 @@ const SearchBarContainer = {
                      v-model="searchQuery">
             </label>
           </div>
-          <div v-if="haveFilter" class="col-auto">
-            <filter-off-canvas :each-item="listToFilter" :searchQuery="searchQuery"
+          <div v-if="listToFilter" class="col-auto">
+            <filter-off-canvas :list-to-filter="listToFilter" :searchQuery="searchQuery"
                                @matched-pokemon="matches => $emit('searchResults', matches)"></filter-off-canvas>
           </div>
           <!--          <div v-if="haveExtraButton" class="col-12 col-sm-4 col-md-3 ">-->

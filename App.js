@@ -2,7 +2,7 @@ import {createApp} from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 import PokelistContainer from './components/containers/PokelistContainer.js';
 import OffCanvasContainer from './components/containers/OffCanvasContainer.js';
 import NavbarMain from "./components/NavbarMain.js";
-import FilterOffCanvas from "./components/offcanvasviews/FilterOffCanvas.js";
+import FilterOffCanvas from "./components/offcanvassequence/FilterOffCanvas.js";
 import SearchBarContainer from "./components/molecules/SearchBarContainer.js";
 import AddPokemonOffCanvas from "./components/offcanvassequence/AddPokemonOffCanvas.js";
 const app = createApp({
