@@ -1,14 +1,14 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
 import OffCanvasContainer from "../containers/OffCanvasContainer.js";
-import SearchAndDisplayOffCanvas from "../offcanvasviews/SearchAndDisplayOffCanvas.js";
+import SearchAndDisplayView from "../molecules/SearchAndDisplayView.js";
 import HorizontalCard from "../HorizontalCard.js";
 const RaidTeamOffCanvas =  {
     name: 'RaidTeamOffCanvas',
 
     components: {
         OffCanvasContainer,
-        SearchAndDisplayOffCanvas,
+        SearchAndDisplayView,
         HorizontalCard,
     },
 
@@ -127,9 +127,10 @@ const RaidTeamOffCanvas =  {
 
 
           <div v-show="addTeam">
-            <search-and-display-off-canvas @clicked-object="addPokemonToTeam" :card-style=2
-                                           :list-to-search="onlyNewPokemon"></search-and-display-off-canvas>
+            <search-and-display-view :filter=true  @clicked-object="addPokemonToTeam" :list="onlyNewPokemon" title="Search Your Pokemon"></search-and-display-view>
           </div>
+          
+          
 
 
         </off-canvas-container>

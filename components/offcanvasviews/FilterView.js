@@ -7,57 +7,35 @@ const FilterView = {
 
     data: function () {
         return {
-
-            filterFast: '',
-            filterCharged: '',
-            filterCP: 0,
-            filterShadow: '',
-            filterMega: '',
+            filter: {
+                filterFast: '',
+                filterCharged: '',
+                filterCP: 0,
+                filterShadow: '',
+                filterMega: '',
+            }
         }
     },
 
     props: {
-        eachItem: {Array, Required: true},
-        searchQuery: {String, Required: false}
+
+    }, mounted() {
+
+        this.emitObject()
     },
 
-
-
-
     methods: {
-        pokemonSearch() {
+        emitObject () {
 
-            console.log(this.searchQuery)
-            this.matches = [];
-
-            for (let eachItem of this.eachItem) {
-                // filter name
-                console.log(eachItem);
-                if (
-                    eachItem.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
-                    (this.filterFast === '' || eachItem.fastMoveType === this.filterFast) &&
-                    (this.filterCharged === '' || eachItem.chargedMoveType1 === this.filterCharged || eachItem.chargedMoveType2 === this.filterCharged) &&
-                    (this.filterShadow === '' || Boolean(eachItem.isShadow) === (this.filterShadow === true || this.filterShadow === 'true')) &&
-                    (this.filterMega === '' || Boolean(eachItem.canMegaEvolve) === (this.filterMega === true || this.filterMega === 'true')) &&
-                    (this.filterCP <= eachItem.cp)
-
-                ) {
-
-                    console.log(typeof(eachItem.cp));
-                    console.log(typeof(this.filterCP))
-                    this.matches.push(eachItem);
+            this.$emit('filterObject', this.filter)
+        }
 
 
-                }
-
-            }
-            console.log(this.matches);
-            this.$emit('matchedPokemon', this.matches)
-        },
     }, watch: {
-        searchQuery: {
+        filter: {
             handler: function () {
-                this.pokemonSearch()
+                console.log('triggered')
+                this.emitObject()
             }
         }
     },
@@ -67,30 +45,29 @@ const FilterView = {
     },
 
     template: `
-          <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation pt-3"
-                v-on:change="pokemonSearch()">
+          <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation pt-3" v-on:change="this.emitObject()">
             <!-- cp button div -->
             <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Filter Buttons ">
               <div class="col-6">
-                <input id="tierOneCPFilter" checked v-model.number="filterCP"
+                <input id="tierOneCPFilter" checked v-model.number="filter.filterCP"
                        :value=0 type="radio" class="btn-check" name="btnradioFilter" required>
                 <label class="btn btn-outline-primary w-100" for="tierOneCPFilter">0+CP</label>
               </div>
               <div class="col-6">
                 <input id="tierTwoCPFilter"
-                       v-model.number="filterCP" :value=1500 type="radio" class="btn-check"
+                       v-model.number="filter.filterCP" :value=1500 type="radio" class="btn-check"
                        name="btnradioFilter">
                 <label class="btn btn-outline-primary w-100" for="tierTwoCPFilter">1500+CP</label>
               </div>
               <div class="col-6">
                 <input id="tierThreeCPFilter"
-                       v-model.number="filterCP" :value=2500 type="radio" class="btn-check"
+                       v-model.number="filter.filterCP" :value=2500 type="radio" class="btn-check"
                        name="btnradioFilter">
                 <label class="btn btn-outline-primary w-100" for="tierThreeCPFilter">2500+CP</label>
               </div>
               <div class="col-6">
                 <input id="tierFourCPFilter"
-                       v-model.number="filterCP" :value=3500 type="radio" class="btn-check"
+                       v-model.number="filter.filterCP" :value=3500 type="radio" class="btn-check"
                        name="btnradioFilter">
                 <label class="btn btn-outline-primary w-100" for="tierFourCPFilter">3500+CP</label>
               </div>
@@ -103,7 +80,7 @@ const FilterView = {
                 <label class="form-label w-100">
                   Fast Move Type
                   <select class="form-select" id="fastMoveFilter"
-                          v-model="filterFast">
+                          v-model="filter.filterFast">
                     <option value="">None Selected</option>
                     <option value="normal">Normal</option>
                     <option value="fighting">Fighting</option>
@@ -137,7 +114,7 @@ const FilterView = {
                 <label class="form-label w-100">
                   Charged Move Type
                   <select class="form-select" id="chargedMoveFilter"
-                          v-model="filterCharged">
+                          v-model="filter.filterCharged">
                     <option value="">None Selected</option>
                     <option value="normal">Normal</option>
                     <option value="fighting">Fighting</option>
@@ -165,7 +142,7 @@ const FilterView = {
               <div class="col-6">
                 <label class="form-label w-100">
                   Shadow
-                  <select class="form-select" v-model="filterShadow">
+                  <select class="form-select" v-model="filter.filterShadow">
                     <option selected value="">All</option>
                     <option value=true>Shadow</option>
                     <option value=false>Normal</option>
@@ -176,7 +153,7 @@ const FilterView = {
               <div class="col-6">
                 <label class="form-label w-100">
                   Can Mega
-                  <select class="form-select" v-model="filterMega">
+                  <select class="form-select" v-model="filter.filterMega">
                     <option selected value="">All</option>
                     <option value=true>Can Mega</option>
                     <option value=false>Cant Mega</option>
@@ -191,7 +168,7 @@ const FilterView = {
             <!-- done button -->
             <div class="row g-2 mt-auto">
               <div class="col-12">
-                <button type="button" data-bs-toggle="offcanvas"
+                <button type="button" v-on:click="$emit('swapView')"
                         class="btn btn-primary mb-2 py-2 fs-4 w-100">Done
                 </button>
               </div>
