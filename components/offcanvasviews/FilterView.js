@@ -36,7 +36,7 @@ const FilterView = {
             handler: function () {
                 console.log('triggered')
                 this.emitObject()
-            }
+            }, deep: true
         }
     },
 

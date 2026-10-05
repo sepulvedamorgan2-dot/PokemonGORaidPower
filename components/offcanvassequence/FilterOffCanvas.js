@@ -61,14 +61,10 @@ const FilterOffCanvas = {
             handler: function () {
                 this.pokemonSearch();
             }
-        }, filter: {
-            handler: function () {
-                this.pokemonSearch();
-            }
         }, filterObject: {
             handler: function () {
                 this.pokemonSearch();
-            }
+            }, deep: true
         }
     },
 
@@ -85,7 +81,7 @@ const FilterOffCanvas = {
         </div>
         <teleport to="#app">
         <off-canvas-container title="Filter" ref="FilterOffCanvas">
-          <filter-view @filter-object="console.log('Change')"></filter-view>
+          <filter-view @filter-object="updateFilter"></filter-view>
         </off-canvas-container>
         </teleport>
       </div>

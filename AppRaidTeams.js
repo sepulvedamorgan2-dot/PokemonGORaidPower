@@ -9,29 +9,11 @@ const app = createApp({
     data: function () {
 
         return {
-            searchForPokemon: '',
-            filterFast: '',
-            filterCharged: '',
-            filterCP: 0,
-            filterShadow: '',
-            filterMega: '',
-            matches: [],
+
             qty: 1,
             types: ['normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'],
 
-            pokemon: {
-                Id: 1,
-                name: "",
-                pokemonId: 1,
-                cp: 1000,
-                isShadow: false,
-                canMegaEvolve: false,
-                fastMoveType: "",
-                chargedMoveType1: "",
-                chargedMoveType2: "",
 
-
-            },
             pokemonTeam: {
                 id: 1,
                 type: "",
@@ -62,124 +44,19 @@ const app = createApp({
                 },
             ],
             pokemonList: [],
-            activeItem: {},
-            activeClickedTeam: {},
+
+
             pokemonListAPI: [],
-            searchResults: [],
 
 
         }
     },
 
     methods: {
-        // TODO:
-        // Check if pokemon in pokemonTeamList still exists, if not remove it
-        addPokemonToTeam(pokemonObject) {
-            if (this.activeClickedTeam.activeTeam.length < 6) {
-                this.activeClickedTeam.activeTeam.push(pokemonObject.Id);
-            } else {
-                this.activeClickedTeam.backupPokemon.push(pokemonObject.Id);
-            }
-
-        },
-        teamCP(teamCPMeasure) {
-            let counter = 0;
-
-            for (const pokeInTeam of teamCPMeasure.activeTeam) {
-                if (teamCPMeasure.activeMegaId === pokeInTeam) {
-                    counter += this.returnFullPokemon(pokeInTeam).cp * 1.33;
-                }
-                counter += this.returnFullPokemon(pokeInTeam).cp;
-            }
-            return counter;
-        }, teamForRaid(teamForRaidMeasure) {
-            let counter = 0;
-
-
-            for (const pokeInTeam of teamForRaidMeasure.activeTeam) {
-
-
-                counter += this.returnFullPokemon(pokeInTeam).cp;
-            }
-
-            if (!counter) {
-                return 0;
-            }
-
-            return parseInt(45000 / counter);
-        }, removeFromListActive(pokemonToRemove) {
-            this.activeClickedTeam.activeTeam.splice(this.activeClickedTeam.activeTeam.indexOf(pokemonToRemove.Id) , 1);
-
-        }, removeFromListBackup(pokemonToRemove) {
-            this.activeClickedTeam.backupPokemon.splice(this.activeClickedTeam.backupPokemon.indexOf(pokemonToRemove.Id) , 1);
-
-        }, megaClickedPokemon(pokemonToMega) {
-
-            this.activeClickedTeam.activeMegaId = pokemonToMega.Id;
-
-        },
-        getSpriteLink(pokemonID) {
-
-            if (typeof pokemonID === "number") {
-                return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID}.png`;
-            } else {
-
-                return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID.pokemonId}.png`;
-            }
-
-        }
-        , updateCPIfMega(pokemonObject) {
-
-            if (this.activeClickedTeam.activeMegaId === pokemonObject.Id) {
-                return pokemonObject.cp * 1.33;
-            }
-            return pokemonObject.cp;
-        },
-        getClass(type, otherclasses) {
-            return ` type${type} ${otherclasses}`;
-        },
-        getClickedTeam(clickedPokemonTeam) {
-
-            this.activeClickedTeam = clickedPokemonTeam;
-            console.log(this.activeClickedTeam)
-        }
-        ,
-        getClickedObject(clickedPokemon) {
-            console.log(clickedPokemon.Id);
-            this.activeItem = clickedPokemon;
-            console.log(this.activeItem)
-
-        }
-        ,
-        returnFullPokemon(pokemonIdOnly) {
-            return   {...this.pokemonList.find(p => p.Id === pokemonIdOnly)}
 
 
 
 
-        }
-        ,
-        searchAllPokemons(query) {
-            console.log(query);
-            let resultObjects = [];
-            for (let pokemonQueried of this.pokemonListAPI) {
-                if (resultObjects.length >= 5) {
-                    console.log("pokemonQueried: ", resultObjects.length);
-                    break;
-                }
-                if (pokemonQueried.includes(query.toLowerCase()) && pokemonQueried.includes("-mega") === false) {
-                    let pokemonObject = {};
-                    pokemonObject.name = pokemonQueried;
-                    pokemonObject.pokemonId = this.pokemonListAPI.indexOf(pokemonQueried) + 1;
-                    resultObjects.push(pokemonObject);
-                }
-            }
-
-            this.searchResults = resultObjects;
-            console.log(this.searchResults);
-
-        }
-        ,
         async fetchPokemonList() {
             fetch("https://pokeapi.co/api/v2/pokemon?limit=1331")
                 .then((response) => response.json())
@@ -215,16 +92,7 @@ const app = createApp({
         ,
 
 
-        oddOrEven(otherClasses, poke) {
 
-            if (this.pokemonList.indexOf(poke) % 2 === 0) {
-                return otherClasses;
-            } else {
-
-                return otherClasses + ' bg-lighter';
-            }
-        }
-        ,
         deletePokemon() {
             $('#addPokemonDetailsOffcanvas').offcanvas('hide')
             this.pokemonList.splice(this.pokemonList.indexOf(this.activeItem), 1);
@@ -237,42 +105,8 @@ const app = createApp({
                 return 0;
             }
 
-        }, pokemonListBySearch() {
-            const listToRender = [];
-            for (const eachPokemon of this.pokemonList) {
-
-                if (listToRender.length > 10) {
-                    break;
-                }
-                let usedIds = []
-
-                try {
-                    for(const pokemon of this.activeClickedTeam.activeTeam){
-                        usedIds.push(pokemon);
-                    }
-                    for(const pokemon of this.activeClickedTeam.backupPokemon){
-                        usedIds.push(pokemon);
-                    }
-                } catch {
-                    // console.log("no clicked Team")
-                }
-
-                try {
-                    // console.log(usedIds);
-                    if (eachPokemon.name.toLowerCase().includes(this.searchForPokemon.toLowerCase()) && !usedIds.includes(eachPokemon.Id) ) {
-                        listToRender.push(eachPokemon);
-                    }
-                } catch
-                    (error)
-                    {
-
-                    }
-                }
-                return listToRender;
-
-
-            }
         },
+    },
         computed: {},
 
         mounted: function () {

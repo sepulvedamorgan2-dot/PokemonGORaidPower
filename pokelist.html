@@ -20,21 +20,7 @@
     <!--    Navbar End-->
     <add-pokemon-off-canvas  @add-pokemon="addPokemon"  :filter=false  :pokemon-list-from-api="pokemonListAPI" array-length=5 :card-style=1 > </add-pokemon-off-canvas>
     <!--    Search Bar Div-->
-    <search-bar-container class="mt-3"
-                          title="Search Pokemon"
 
-                          place-holder="Ex: Charizard"
-                          :filter-off-canvas=true
-                          :filter-off-canvas-list="pokemonList"
-                          @search-query="searchForPokemon = $event"
-
-                          @search-results="matchedPokemon => matches = matchedPokemon"
-
-    >
-        <!--        add pokemon Button-->
-
-
-    </search-bar-container>
     <!-- Search Bar End -->
 
     <!--    Pokemon List-->

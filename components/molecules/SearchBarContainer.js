@@ -62,7 +62,7 @@ const SearchBarContainer = {
             </div>
           </div>
           <div class="col-auto" v-if="filterOffCanvas">
-            <filter-off-canvas @search-results="matches = $event" :list-to-filter="filterOffCanvasList" :search-query="searchQuery"></filter-off-canvas>
+            <filter-off-canvas @search-results="matches => $emit('matches', matches)" :list-to-filter="filterOffCanvasList" :search-query="searchQuery"></filter-off-canvas>
           </div>
           
         </div>
