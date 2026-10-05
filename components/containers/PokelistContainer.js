@@ -25,6 +25,13 @@ const PokelistContainer = {
     },
 
     computed: {},
+    watch: {
+       fullPokemonList: {
+           handler: function () {
+               this.updateMatches(this.fullPokemonList);
+           }, deep: true
+       }
+    },
 
 
     // @search-query="searchForPokemon = $event"
