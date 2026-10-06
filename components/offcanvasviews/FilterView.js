@@ -1,4 +1,4 @@
-
+let counter = 1
 const FilterView = {
     name: "FilterView",
     components: {
@@ -7,6 +7,7 @@ const FilterView = {
 
     data: function () {
         return {
+            id: counter++,
             filter: {
                 filterFast: '',
                 filterCharged: '',
@@ -45,31 +46,31 @@ const FilterView = {
     },
 
     template: `
-          <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation pt-3" v-on:change="this.emitObject()">
+          <form :ref="id" class="container-fluid d-flex flex-column flex-grow-1 needs-validation pt-3" v-on:change="this.emitObject()">
             <!-- cp button div -->
             <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Filter Buttons ">
               <div class="col-6">
-                <input id="tierOneCPFilter" checked v-model.number="filter.filterCP"
-                       :value=0 type="radio" class="btn-check" name="btnradioFilter" required>
-                <label class="btn btn-outline-primary w-100" for="tierOneCPFilter">0+CP</label>
+                <input :id="'tierOneCPFilter' + id" checked v-model.number="filter.filterCP"
+                       :value=0 type="radio" class="btn-check" :name="'btnradioFilter' + id" required>
+                <label class="btn btn-outline-primary w-100" :for="'tierOneCPFilter' + id">0+CP</label>
               </div>
               <div class="col-6">
-                <input id="tierTwoCPFilter"
+                <input :id="'tierTwoCPFilter' + id"
                        v-model.number="filter.filterCP" :value=1500 type="radio" class="btn-check"
-                       name="btnradioFilter">
-                <label class="btn btn-outline-primary w-100" for="tierTwoCPFilter">1500+CP</label>
+                       :name="'btnradioFilter' + id">
+                <label class="btn btn-outline-primary w-100" :for="'tierTwoCPFilter' + id">1500+CP</label>
               </div>
               <div class="col-6">
-                <input id="tierThreeCPFilter"
+                <input :id="'tierThreeCPFilter' + id"
                        v-model.number="filter.filterCP" :value=2500 type="radio" class="btn-check"
-                       name="btnradioFilter">
-                <label class="btn btn-outline-primary w-100" for="tierThreeCPFilter">2500+CP</label>
+                       :name="'btnradioFilter' + id">
+                <label class="btn btn-outline-primary w-100" :for="'tierThreeCPFilter' + id">2500+CP</label>
               </div>
               <div class="col-6">
-                <input id="tierFourCPFilter"
+                <input :id="'tierFourCPFilter' + id"
                        v-model.number="filter.filterCP" :value=3500 type="radio" class="btn-check"
-                       name="btnradioFilter">
-                <label class="btn btn-outline-primary w-100" for="tierFourCPFilter">3500+CP</label>
+                       :name="'btnradioFilter' + id">
+                <label class="btn btn-outline-primary w-100" :for="'tierFourCPFilter' + id">3500+CP</label>
               </div>
             </div>
 
@@ -166,13 +167,13 @@ const FilterView = {
 
 
             <!-- done button -->
-            <div class="row g-2 mt-auto">
-              <div class="col-12">
-                <button type="button" v-on:click="$emit('swapView')"
-                        class="btn btn-primary mb-2 py-2 fs-4 w-100">Done
-                </button>
-              </div>
-            </div>
+    <!--            <div class="row g-2 mt-auto">-->
+    <!--              <div class="col-12">-->
+    <!--                <button type="button" v-on:click="$emit('swapView')"-->
+    <!--                        class="btn btn-primary mb-2 py-2 fs-4 w-100">Done-->
+    <!--                </button>-->
+    <!--              </div>-->
+    <!--            </div>-->
           </form>
         
     `,

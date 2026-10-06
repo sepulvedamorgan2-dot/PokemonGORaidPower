@@ -30,10 +30,7 @@ const SearchBarContainer = {
         searchQuery: {
             handler: function () {
 
-
                     this.$emit('searchQuery', this.searchQuery);
-
-
             }
         }
     },

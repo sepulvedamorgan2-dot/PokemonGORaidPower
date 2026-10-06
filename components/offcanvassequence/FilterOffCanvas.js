@@ -80,7 +80,7 @@ const FilterOffCanvas = {
 
         </div>
         <teleport to="#app">
-        <off-canvas-container title="Filter" ref="FilterOffCanvas">
+        <off-canvas-container pageNumber="1" :title-array="['Filter Pokemon']" ref="FilterOffCanvas">
           <filter-view @filter-object="updateFilter"></filter-view>
         </off-canvas-container>
         </teleport>

@@ -31,6 +31,7 @@ const SearchAndDisplayView = {
         list: {Type: Array, required: true},
         title: {Type: String, default: 'Search'},
         filter: {Type: Boolean, default: false},
+        pageNumber: {Type: Number},
     },
 
     methods: {
@@ -40,6 +41,11 @@ const SearchAndDisplayView = {
         }, swapView(){
             this.filterView = !this.filterView;
             this.searchView = !this.searchView;
+            if(this.filterView){
+                this.$emit('viewNumber', 3);
+            } else {
+                this.$emit('viewNumber', 4);
+            }
         }, updateFilter(filterObject){
             this.filterObject = filterObject;
         }, pokemonSearch() {
@@ -86,6 +92,16 @@ const SearchAndDisplayView = {
         list: {
             handler: function () {
                 this.pokemonSearch()
+            }, deep: true,
+        }, pageNumber: {
+            handler: function () {
+                if (this.pageNumber === 2) {
+                    this.searchView = true
+                    this.filterView = false
+                } else if (this.pageNumber === 3) {
+                    this.searchView = false
+                    this.filterView = true
+                }
             }, deep: true,
         }
 

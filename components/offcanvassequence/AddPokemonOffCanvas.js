@@ -14,9 +14,13 @@ const AddPokemonOffCanvas = {
 
     data: function () {
         return {
-            title: 'Select Pokemon To Add',
-            details: false,
-            search: true,
+
+            pageNumber: 1,
+            titleArray: [
+                "Add Pokemon",
+                ""
+            ],
+
             pokemonToAdd: null,
         }
     },
@@ -27,31 +31,21 @@ const AddPokemonOffCanvas = {
     },
 
     methods: {
-        getTitle(){
-            console.log('getTitle');
-            this.details = !this.details;
-            this.search = !this.search;
-            if(this.details){
-                this.title = this.pokemonToAdd.name + " > Details";
-            } else{
-                this.title = this.pokemonToAdd.name;
-            }
-        }, reset(){
-            this.details = false;
-            this.search = true;
-            this.title = 'Select Pokemon To Add';
-
+        handleClick: function (object) {
+            this.pokemonToAdd = object;
+            this.pageNumber++
         }
     },
 
-    computed: {},
     watch: {
-        pokemonToAdd: {
-            handler: function () {
-                this.getTitle();
-            }
+        pokemonToAdd: function () {
+            this.titleArray = [
+                "Add Pokemon",
+                this.pokemonToAdd.name
+            ]
         }
     },
+
     mounted() {
         // this.getTitle();
     },
@@ -63,20 +57,20 @@ const AddPokemonOffCanvas = {
           <div >
             
             <div class="position-fixed bottom-0 end-0 m-4" style="z-index: 1030;">
-              <button v-on:click="$refs.AddPokemonOffCanvas.openOffCanvas(); reset()" type="button" class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center shadow-lg" style="width: 56px; height: 56px;">
+              <button v-on:click="$refs.AddPokemonOffCanvas.openOffCanvas(); pageNumber = 1" type="button" class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center shadow-lg" style="width: 56px; height: 56px;">
                 <i class="bi bi-plus-lg fs-4"></i>
               </button>
             </div>
           </div>
           
           <teleport to="#app">
-            <OffCanvasContainer :have-arrow="details" @clicked="reset(d)" :title="title" ref="AddPokemonOffCanvas">
-              <div v-show="search" >
-                <SearchAndDisplayOffCanvas  :list-to-search="pokemonListFromApi" @clicked-object="object=> (pokemonToAdd = object)" :card-style="cardStyle" :array-length="5" :button-style="1">
+            <OffCanvasContainer  @clicked="pageNumber--" :page-number="pageNumber" :title-array="titleArray" ref="AddPokemonOffCanvas">
+              <div v-show="pageNumber === 1" >
+                <SearchAndDisplayOffCanvas  :list-to-search="pokemonListFromApi" @clicked-object="handleClick" :card-style="cardStyle" :array-length="5" :button-style="1">
                 </SearchAndDisplayOffCanvas>
               </div>
-              <div v-if="details" >
-                <add-edit-off-canvas  :active-item="pokemonToAdd" @add-pokemon="$emit('addPokemon', $event); $refs.AddPokemonOffCanvas.hideOffCanvas();" :isNew=true @clicked="reset();"> </add-edit-off-canvas>
+              <div v-if="pageNumber === 2" >
+                <add-edit-off-canvas  :active-item="pokemonToAdd" @add-pokemon="$emit('addPokemon', $event); $refs.AddPokemonOffCanvas.hideOffCanvas();" :isNew=true > </add-edit-off-canvas>
               </div>
             </OffCanvasContainer>
           </teleport>

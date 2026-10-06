@@ -14,10 +14,13 @@ const RaidTeamOffCanvas =  {
 
     data: function () {
         return {
-            editTeam: true,
-            addTeam: false,
+            pageNumber: 0,
             onlyNewPokemon: [],
-            title: null,
+            offCanvasTitle: [
+                this.pokemonTeam.type,
+                "Add",
+                "Filter"
+            ]
         }
     },
 
@@ -39,20 +42,17 @@ const RaidTeamOffCanvas =  {
         }
         ,getClass(type, otherClasses) {
             return ` type${type} ${otherClasses}`;
-        },  getTitle(){
-            this.addTeam = !this.addTeam;
-            this.editTeam = !this.editTeam;
-            if(this.editTeam){
-                this.title = this.pokemonTeam.type + ' Type Team';
-            } else{
-                this.title = this.pokemonTeam.type + ' > Add Pokemon'
-            }
+        },  forwardPage(){
+            this.pageNumber++
 
-        }, reset(){
-            this.title = this.pokemonTeam.type + ' Type Team';
-            this.addTeam = false;
-            this.editTeam = true;
-            this.returnNewPokemon()
+        }, backPage(){
+            this.pageNumber--;
+        },
+        reset(){
+            // this.title = this.pokemonTeam.type + ' Type Team';
+            // this.addTeam = false;
+            // this.editTeam = true;
+            // this.returnNewPokemon()
         }, addPokemonToTeam(pokemonObject) {
 
             if (this.pokemonTeam.activeTeam.length < 6) {
@@ -73,30 +73,38 @@ const RaidTeamOffCanvas =  {
 
         },
     },
+    //
+    // watch: {
+    //     pokemonList: {
+    //         handler() {
+    //             this.returnNewPokemon();
+    //         },
+    //         deep: true,
+    //         immediate: true
+    //     }
+    // },
 
-    watch: {
-        pokemonList: {
-            handler() {
-                this.returnNewPokemon();
-            },
-            deep: true
-        }
+
+    computed: {
+
     },
+
+
 
 
 
     template: `
       <div>
-        <i class="bi bi-pencil fs-5 " type="button" v-on:click="$refs.RaidTeamOffCanvas.openOffCanvas(); reset(); "
+        <i class="bi bi-pencil fs-5 " type="button" v-on:click="$refs.RaidTeamOffCanvas.openOffCanvas(); pageNumber = 1; returnNewPokemon() "
            data-bs-target="#editTeamOffCanvas"></i>
       </div>
 
 
       <teleport to="#app2">
-        <off-canvas-container :have-arrow="addTeam" @clicked="getTitle()" :id="pokemonTeam.type" :title="title"
+        <off-canvas-container :title-array="offCanvasTitle" :page-number="pageNumber" @clicked="pageNumber--"  
                               ref="RaidTeamOffCanvas">
 
-          <div v-show="editTeam">
+          <div v-show="pageNumber === 1">
             <div class=" ps-3">
               <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize">Active Team</p>
             </div>
@@ -118,7 +126,7 @@ const RaidTeamOffCanvas =  {
 
 
             <div class="p-2 sticky-bottom">
-              <button v-on:click="getTitle()"
+              <button v-on:click="forwardPage()"
                       class="btn btn-primary w-100 fs-4 w-100">
                 Add Pokemon
               </button>
@@ -126,8 +134,8 @@ const RaidTeamOffCanvas =  {
           </div>
 
 
-          <div v-show="addTeam">
-            <search-and-display-view :filter=true  @clicked-object="addPokemonToTeam" :list="onlyNewPokemon" title="Search Your Pokemon"></search-and-display-view>
+          <div v-show="pageNumber === 2 || pageNumber === 3">
+            <search-and-display-view :filter=true @view-number="pageNumber = $event" :page-number="pageNumber" @clicked-object="addPokemonToTeam" :list="onlyNewPokemon" title="Search Your Pokemon"></search-and-display-view>
           </div>
           
           
