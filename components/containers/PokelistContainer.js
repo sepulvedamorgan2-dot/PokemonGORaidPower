@@ -9,6 +9,7 @@ const PokelistContainer = {
     data: function () {
         return {
             matches: [],
+            deletedMon: null
         }
 
     },
@@ -21,6 +22,9 @@ const PokelistContainer = {
     methods: {
         updateMatches(matches){
             this.matches = matches;
+        }, assignDeleted(item){
+            this.deletedMon = item;
+            this.$emit('deleteItem', item);
         }
     },
 
@@ -28,7 +32,11 @@ const PokelistContainer = {
     watch: {
        fullPokemonList: {
            handler: function () {
-               this.updateMatches(this.fullPokemonList);
+               if(this.deletedMon) {
+                   this.updateMatches(this.matches.filter(p => p !== this.deletedMon));
+               } else{
+                   this.updateMatches(this.fullPokemonList);
+               }
            }, deep: true
        }
     },
@@ -108,7 +116,7 @@ const PokelistContainer = {
           <div class="alternateBg">
             <pokemonlist-item v-for="pokemon in matches" :key="pokemon.Id" :pokemon="pokemon"
                               @clickedPokemon="$emit('clickedPokemon', pokemon)"
-                              @delete-item="item => $emit('deleteItem', item)"></pokemonlist-item>
+                              @delete-item="assignDeleted"></pokemonlist-item>
           </div>
         </div>
       </div>

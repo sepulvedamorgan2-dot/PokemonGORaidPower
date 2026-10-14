@@ -5,6 +5,7 @@ import NavbarMain from "./components/NavbarMain.js";
 import FilterOffCanvas from "./components/offcanvassequence/FilterOffCanvas.js";
 import SearchBarContainer from "./components/molecules/SearchBarContainer.js";
 import AddPokemonOffCanvas from "./components/offcanvassequence/AddPokemonOffCanvas.js";
+
 const app = createApp({
 
     components: {
@@ -104,7 +105,7 @@ const app = createApp({
 
             for (let i = 0; i < this.qty; i++) {
                 this.pokemon.Id = this.getNextPokemonId()
-                this.pokemonList.push({...this.pokemon});
+                this.pokemonList.unshift({...this.pokemon});
                 this.activeItem = this.pokemon
             }
             this.matches = this.pokemonList

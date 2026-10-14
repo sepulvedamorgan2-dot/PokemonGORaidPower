@@ -25,7 +25,7 @@ const HorizontalCardContainer = {
     , watch: {
         arrayToDisplay: {
             handler: function () {
-                console.log("please" + this.arrayToDisplay);
+
                 this.arrayToDisplay2 = this.arrayToDisplay;
             },
             deep: true

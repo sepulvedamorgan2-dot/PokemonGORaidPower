@@ -1,5 +1,6 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
+import {getSpriteLink} from "../Helpers.js";
 import AddEditOffCanvas from "./offcanvasviews/AddEditOffCanvas.js";
 const HorizontalCard = {
     components: {
@@ -21,14 +22,8 @@ const HorizontalCard = {
 
     methods: {
 
-        getSpriteLink(pokemonID) {
-            console.log("ptr" + this.pokemon)
-            if (typeof pokemonID === "number") {
-                return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID}.png`;
-            }
-
-        }
-        ,getClass(type, otherClasses) {
+        getSpriteLink,
+        getClass(type, otherClasses) {
             return ` type${type} ${otherClasses}`;
         },updateCPIfMega(pokemonObject) {
 

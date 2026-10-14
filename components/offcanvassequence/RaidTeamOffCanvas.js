@@ -1,5 +1,6 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
+import {getSpriteLink} from "../../Helpers.js";
 import OffCanvasContainer from "../containers/OffCanvasContainer.js";
 import SearchAndDisplayView from "../molecules/SearchAndDisplayView.js";
 import HorizontalCard from "../HorizontalCard.js";
@@ -30,14 +31,8 @@ const RaidTeamOffCanvas =  {
     },
 
     methods: {
-        getSpriteLink(pokemonID) {
-
-            if (typeof pokemonID === "number") {
-                return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID}.png`;
-            }
-
-        }
-        ,returnFullPokemon(pokemonIdOnly) {
+        getSpriteLink,
+        returnFullPokemon(pokemonIdOnly) {
             return   {...this.pokemonList.find(p => p.Id === pokemonIdOnly)}
         }
         ,getClass(type, otherClasses) {
@@ -101,7 +96,7 @@ const RaidTeamOffCanvas =  {
 
 
       <teleport to="#app2">
-        <off-canvas-container :title-array="offCanvasTitle" :page-number="pageNumber" @clicked="pageNumber--"  
+        <off-canvas-container :title-array="offCanvasTitle" :page-number="pageNumber" @go-back="pageNumber--"  
                               ref="RaidTeamOffCanvas">
 
           <div v-show="pageNumber === 1">

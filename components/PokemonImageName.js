@@ -1,6 +1,6 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
-
+import {getSpriteLink} from "../Helpers.js";
 const PokemonImageName = {
     components: {
 
@@ -17,14 +17,7 @@ const PokemonImageName = {
     },
 
     methods: {
-        getSpriteLink(pokemonID) {
-
-            if (typeof pokemonID === "number") {
-                return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID}.png`;
-            }
-
-        }
-        ,
+        getSpriteLink,
     },
 
     computed: {},

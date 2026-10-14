@@ -24,7 +24,7 @@ const ComponentName = {
     computed: {},
 
     template: `
-      <nav class="navbar navbar-expand-sm bg-primary">
+      <nav class="navbar navbar-expand-sm bg-primary sticky-top">
         <div class="container-fluid container-md ">
           <a class="navbar-brand text-white" href="#">
             <img src="./media/images/demologo.png" alt="Logo" class="img-fluid " style="height: 40px;">
@@ -35,14 +35,15 @@ const ComponentName = {
              aria-label="Toggle navigation">
           </i>
           <div class="navbar-collapse collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto d-none d-sm-flex ">
+            <ul class="navbar-nav ms-auto">
+              <li  v-if="!navArray" v-for="item in defaultNavbar" class="nav-item">
+                <a class="nav-link text-white " :href="item.link">{{item.title}}</a>
+              </li>
+              <li  v-else v-for="item in navArray" class="nav-item">
+                <a class="nav-link text-white active" :href="item.link">{{item.title}}</a>
+              </li>
+            </ul>
 
-              <a v-if="!navArray" v-for="item in defaultNavbar" class="nav-link text-white active"
-                 :href="item.link">{{ item.title }}</a>
-              <a v-else v-for="item in navArray" class="nav-link text-white active"
-                 :href="item.link">{{ item.title }}</a>
-
-            </div>
           </div>
         </div>
       </nav>

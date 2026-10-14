@@ -23,7 +23,7 @@ const ModalContainer = {
 
     methods: {
         hideModal() {
-            console.log('hideModal')
+
             this.bsModal.hide();
         },
         openModal(OpenPrevious) {

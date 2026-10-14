@@ -1,6 +1,7 @@
 import DetailsOffCanvas from "./offcanvasviews/DetailsOffCanvas.js";
 import AddEditOffCanvas from "./offcanvasviews/AddEditOffCanvas.js";
 import PokemonDetailsOffCanvas from "./offcanvassequence/PokemonDetailsOffCanvas.js";
+import {getSpriteLink} from "../Helpers.js";
 const PokemonlistItem = {
     components: {
         AddEditOffCanvas,
@@ -23,13 +24,7 @@ const PokemonlistItem = {
         getClass(type, otherclasses) {
             return ` type${type} ${otherclasses}`;
         }
-        , getSpriteLink(pokemonID) {
-
-            if (typeof pokemonID === "number") {
-                return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID}.png`;
-            }
-
-        },
+        , getSpriteLink,
         openOffCanvas() {
             this.bsOffCanvas.show();
         }

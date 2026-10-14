@@ -38,7 +38,7 @@ const SearchBarContainer = {
     computed: {},
 
     template: `
-      <div class="container-fluid container-sm px-2">
+      <div class="container-fluid container-sm px-2 ">
         <p class="form-label w-100  mb-1 ms-1 fs-6">
           {{ title }}
         </p>

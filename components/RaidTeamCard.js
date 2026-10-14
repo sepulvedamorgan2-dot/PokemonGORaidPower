@@ -1,9 +1,9 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
 import RaidTeamOffCanvas from "./offcanvassequence/RaidTeamOffCanvas.js";
+import {getSpriteLink} from "../Helpers.js";
 const RaidTeamCard = {
     name: 'RaidTeamCard',
-
     components: {
         RaidTeamOffCanvas,
     },
@@ -20,14 +20,8 @@ const RaidTeamCard = {
     },
 
     methods: {
-        getSpriteLink(pokemonID) {
-
-            if (typeof pokemonID === "number") {
-                return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID}.png`;
-            }
-
-        }
-        ,returnFullPokemon(pokemonIdOnly) {
+        getSpriteLink,
+        returnFullPokemon(pokemonIdOnly) {
             return   {...this.pokemonList.find(p => p.Id === pokemonIdOnly)}
         }
         ,teamCP(pokemonTeam) {

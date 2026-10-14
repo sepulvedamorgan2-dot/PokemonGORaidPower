@@ -8,9 +8,9 @@ const OffCanvasContainer = {
 
     data: function () {
         return {
-            bsOffCanvas: null,
+
             id: "off-canvas-" + counter++,
-            lastOffCanvas: null,
+
 
         }
     },
@@ -24,7 +24,7 @@ const OffCanvasContainer = {
 
     methods: {
         hideOffCanvas() {
-            console.log('hideOffCanvas')
+
             this.bsOffCanvas.hide();
 
         },
@@ -43,14 +43,11 @@ const OffCanvasContainer = {
             }
             return test;
         }, titleClicked(titleNumber){
-            console.log(titleNumber)
-            console.log(this.pageNumber);
+
             while(titleNumber < this.pageNumber) {
                 titleNumber++;
-                this.$emit('clicked');
+                this.$emit('goBack');
             }
-        }, returnSpacer(){
-            if(this.pageNumber > 1){return ' - '}
         }
 
     }, mounted() {
@@ -64,14 +61,19 @@ const OffCanvasContainer = {
         <div class="offcanvas-header bg-primary text-center text-white">
           <i v-if="pageNumber > 1" type="button" class="bi bi-arrow-left text-white fs-5 me-3" 
              v-on:click="$emit('clicked')"></i>
-          <a v-if="pageNumber > 1" v-for="title in getTitle()" v-on:click="titleClicked(title.number)"  :class="
-          {'offcanvas-title text-capitalize me-2 text-decoration-none text-light ': true,
-          'text-decoration-underline pe-auto text-light ': title.number < pageNumber }">{{title.title}}</a>
+          <span v-if="pageNumber > 1"  v-for="title in getTitle()">
+          <a  v-on:click="titleClicked(title.number)"  :class="
+          {'offcanvas-title text-capitalize me-2 text-decoration-none text-light force-hover': true,
+          'text-decoration-underline pe-auto text-light ': title.number < pageNumber }">{{title.title}} </a>
+          <span class="text-decoration-none" v-if="title.number !== pageNumber" > > &nbsp;</span>
+          </span>
           <span v-else v-for="title in getTitle()"  class="offcanvas-title text-capitalize me-2">{{title.title}}</span>
           <button type="button" class="btn-close" v-on:click="hideOffCanvas"
                   aria-label="back"></button>
         </div>
-        <slot></slot>
+        <slot>
+          
+        </slot>
       </div>
 
     `,

@@ -29,12 +29,12 @@ const FilterOffCanvas = {
             this.filterObject = newFilter
         },  pokemonSearch() {
 
-            console.log(this.searchQuery)
+
             this.matches = [];
 
             for (let eachItem of this.listToFilter) {
                 // filter name
-                console.log(eachItem);
+
                 if (
                     eachItem.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
                     (this.filterObject.filterFast === '' || eachItem.fastMoveType === this.filterObject.filterFast) &&
@@ -51,7 +51,7 @@ const FilterOffCanvas = {
                 }
 
             }
-            console.log(this.matches);
+
             this.$emit('searchResults', this.matches)
         },
     },

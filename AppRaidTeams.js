@@ -53,10 +53,6 @@ const app = createApp({
     },
 
     methods: {
-
-
-
-
         async fetchPokemonList() {
             fetch("https://pokeapi.co/api/v2/pokemon?limit=1331")
                 .then((response) => response.json())
@@ -75,24 +71,6 @@ const app = createApp({
                 });
         }
         ,
-        addPokemon(activeItem) {
-
-            this.pokemon.name = activeItem.name.toLowerCase()
-            this.pokemon.pokemonId = activeItem.pokemonId
-
-            for (let i = 0; i < this.qty; i++) {
-                this.pokemon.Id = this.getNextPokemonId()
-                this.pokemonList.push({...this.pokemon});
-                this.activeItem = this.pokemon
-            }
-
-            $('#pokemonAddedSuccess').modal('show')
-            console.log(activeItem)
-        }
-        ,
-
-
-
         deletePokemon() {
             $('#addPokemonDetailsOffcanvas').offcanvas('hide')
             this.pokemonList.splice(this.pokemonList.indexOf(this.activeItem), 1);
@@ -108,7 +86,6 @@ const app = createApp({
         },
     },
         computed: {},
-
         mounted: function () {
 
             this.fetchPokemonList();
@@ -180,6 +157,10 @@ const app = createApp({
                 for(const team of this.pokemonTeamList){
                     // filter loops throguh all id's and if pokemonListIds.has returns false, that id is removed from the list
                     team.activeTeam = team.activeTeam.filter(id => pokemonListIds.has(id));
+
+                    if(team.activeTeam.length < 6 && team.backupPokemon.length > 0){
+                        team.activeTeam.push(team.backupPokemon.shift());
+                    }
                 }
 
             } else {

@@ -50,12 +50,12 @@ const SearchAndDisplayView = {
             this.filterObject = filterObject;
         }, pokemonSearch() {
             // I think this component is modular except for this part
-            console.log('pokemon Search')
+
             this.matches = [];
 
             for (let eachItem of this.list) {
                 // filter name
-                console.log(eachItem);
+
                 if (
                     eachItem.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
                     (this.filterObject.filterFast === '' || eachItem.fastMoveType === this.filterObject.filterFast) &&
@@ -72,7 +72,7 @@ const SearchAndDisplayView = {
                 }
 
             }
-            console.log(this.matches);
+
             this.$emit('matchedPokemon', this.matches)
         },
     },
@@ -85,7 +85,7 @@ const SearchAndDisplayView = {
         },
         filterObject: {
             handler: function () {
-                console.log('filterObject')
+
                 this.pokemonSearch()
             }, deep: true,
         },

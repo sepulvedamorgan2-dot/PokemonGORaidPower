@@ -26,11 +26,11 @@ const SearchAndDisplayOffCanvas =  {
 
     methods: {
          updateSearchResults(query) {
-            console.log(this.listToSearch);
+
             let resultObjects = [];
             for (let pokemonQueried of this.listToSearch) {
                 if (resultObjects.length >= 6) {
-                    alert(resultObjects.length);
+
                     break;
 
                 }
@@ -49,7 +49,7 @@ const SearchAndDisplayOffCanvas =  {
             }
 
             this.searchResults = resultObjects;
-            console.log(this.searchResults);
+
 
         }
         ,
