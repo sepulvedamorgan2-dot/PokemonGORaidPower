@@ -67,16 +67,7 @@ const app = createApp({
         }
         ,
 
-        getClickedObject(clickedPokemonId) {
-            console.log(clickedPokemonId);
-            this.activeItem = this.pokemonList.find(p => p.Id === clickedPokemonId.Id);
-            if (!this.activeItem) {
-                console.log("BAD" + clickedPokemonId.pokemonId);
-                this.activeItem = {...clickedPokemonId};
-                console.log(this.activeItem);
-            }
-        }
-        ,
+
 
 
         async fetchPokemonList() {

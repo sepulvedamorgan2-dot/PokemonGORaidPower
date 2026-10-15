@@ -14,13 +14,10 @@ const AddPokemonOffCanvas = {
 
     data: function () {
         return {
-
-            pageNumber: 1,
             titleArray: [
                 "Add Pokemon",
                 ""
             ],
-
             pokemonToAdd: null,
         }
     },
@@ -33,7 +30,8 @@ const AddPokemonOffCanvas = {
     methods: {
         handleClick: function (object) {
             this.pokemonToAdd = object;
-            this.pageNumber++
+            this.$refs.AddPokemonOffCanvas.pageNumber++
+
         }
     },
 
@@ -57,21 +55,21 @@ const AddPokemonOffCanvas = {
           <div >
             
             <div class="position-fixed bottom-0 end-0 m-4" style="z-index: 1030;">
-              <button v-on:click="$refs.AddPokemonOffCanvas.openOffCanvas(); pageNumber = 1" type="button" class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center shadow-lg" style="width: 56px; height: 56px;">
+              <button v-on:click="$refs.AddPokemonOffCanvas.openOffCanvas(); $refs.AddPokemonOffCanvas.pageNumber = 1" type="button" class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center shadow-lg" style="width: 56px; height: 56px;">
                 <i class="bi bi-plus-lg fs-4"></i>
               </button>
             </div>
           </div>
           
           <teleport to="#app">
-            <OffCanvasContainer  @clicked="pageNumber--" :page-number="pageNumber" :title-array="titleArray" ref="AddPokemonOffCanvas">
-              <div v-show="pageNumber === 1" >
+            <OffCanvasContainer :title-array="titleArray" ref="AddPokemonOffCanvas">
+              <template v-slot:pageOne>
                 <SearchAndDisplayOffCanvas  :list-to-search="pokemonListFromApi" @clicked-object="handleClick" :card-style="cardStyle" :array-length="5" :button-style="1">
-                </SearchAndDisplayOffCanvas>
-              </div>
-              <div v-if="pageNumber === 2" >
-                <add-edit-off-canvas  :active-item="pokemonToAdd" @add-pokemon="$emit('addPokemon', $event); $refs.AddPokemonOffCanvas.hideOffCanvas();" :isNew=true > </add-edit-off-canvas>
-              </div>
+                </SearchAndDisplayOffCanvas> 
+              </template>
+              <template v-slot:pageTwo >
+                <add-edit-off-canvas :active-item="pokemonToAdd" @add-pokemon="$emit('addPokemon', $event); $refs.AddPokemonOffCanvas.hideOffCanvas();" :isNew=true > </add-edit-off-canvas>
+              </template>
             </OffCanvasContainer>
           </teleport>
         </div>

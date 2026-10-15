@@ -75,14 +75,17 @@ const FilterOffCanvas = {
 
     template: `
       <div>
-        <div class="btn btn-outline-secondary  w-100" type="button" id="filterButton " v-on:click="$refs.FilterOffCanvas.openOffCanvas()">
+        <div class="btn btn-outline-secondary  w-100" type="button" id="filterButton "
+             v-on:click="$refs.FilterOffCanvas.openOffCanvas()">
           <i class="bi bi-filter"></i>
 
         </div>
         <teleport to="#app">
-        <off-canvas-container pageNumber="1" :title-array="['Filter Pokemon']" ref="FilterOffCanvas">
-          <filter-view @filter-object="updateFilter"></filter-view>
-        </off-canvas-container>
+          <off-canvas-container :title-array="['Filter Pokemon']" ref="FilterOffCanvas">
+            <template #pageOne>
+              <filter-view @filter-object="updateFilter"></filter-view>
+            </template>
+          </off-canvas-container>
         </teleport>
       </div>
     `,

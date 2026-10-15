@@ -3,6 +3,7 @@
 import SearchBarContainer from "./SearchBarContainer.js";
 import HorizontalCardContainer from "../containers/HorizontalCardContainer.js";
 import FilterView from "../offcanvasviews/FilterView.js";
+
 const SearchAndDisplayView = {
     name: 'SearchAndDisplayView',
     components: {
@@ -13,16 +14,8 @@ const SearchAndDisplayView = {
 
     data: function () {
         return {
-            searchView: true,
-            filterView: false,
             searchQuery: "",
-            filterObject: {
-                filterFast: '',
-                filterCharged: '',
-                filterCP: 0,
-                filterShadow: '',
-                filterMega: '',
-            },
+
             matches: [],
         }
     },
@@ -30,25 +23,23 @@ const SearchAndDisplayView = {
     props: {
         list: {Type: Array, required: true},
         title: {Type: String, default: 'Search'},
-        filter: {Type: Boolean, default: false},
+        filterObject: {
+            Type: Object, default: {
+                filterFast: '',
+                filterCharged: '',
+                filterCP: 0,
+                filterShadow: '',
+                filterMega: '',
+            },
+        },
         pageNumber: {Type: Number},
     },
 
     methods: {
-        updateSearchQuery(newQuery){
+        updateSearchQuery(newQuery) {
             this.searchQuery = newQuery;
             this.pokemonSearch()
-        }, swapView(){
-            this.filterView = !this.filterView;
-            this.searchView = !this.searchView;
-            if(this.filterView){
-                this.$emit('viewNumber', 3);
-            } else {
-                this.$emit('viewNumber', 4);
-            }
-        }, updateFilter(filterObject){
-            this.filterObject = filterObject;
-        }, pokemonSearch() {
+        },  pokemonSearch() {
             // I think this component is modular except for this part
 
             this.matches = [];
@@ -93,31 +84,21 @@ const SearchAndDisplayView = {
             handler: function () {
                 this.pokemonSearch()
             }, deep: true,
-        }, pageNumber: {
-            handler: function () {
-                if (this.pageNumber === 2) {
-                    this.searchView = true
-                    this.filterView = false
-                } else if (this.pageNumber === 3) {
-                    this.searchView = false
-                    this.filterView = true
-                }
-            }, deep: true,
-        }
+        },
 
     },
 
 
-
     template: `
-      <div v-show="searchView">
-        <search-bar-container :filter="filter" @search-query="updateSearchQuery" class="p-2" @filter-clicked="swapView" place-holder="Ex: Bidoof" :title="title"></search-bar-container>
-        <horizontal-card-container @clicked-object="object => $emit('clickedObject', object)" :array-to-display="matches" :card-style=2 ></horizontal-card-container>
+      <div>
+        <search-bar-container :filter=true @search-query="updateSearchQuery" class="p-2"
+                              @filter-clicked="$emit('filterClicked')" place-holder="Ex: Bidoof"
+                              :title="title"></search-bar-container>
+        <horizontal-card-container @clicked-object="object => $emit('clickedObject', object)"
+                                   :array-to-display="matches" :card-style=2></horizontal-card-container>
       </div>
-      <div v-show="filterView">
-        <filter-view @filter-object="updateFilter" @swap-view="swapView" ></filter-view>
-      </div>
-        
+
+
     `,
 
 

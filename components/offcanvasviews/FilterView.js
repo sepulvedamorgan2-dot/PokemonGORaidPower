@@ -18,10 +18,7 @@ const FilterView = {
         }
     },
 
-    props: {
-
-    }, mounted() {
-
+     mounted() {
         this.emitObject()
     },
 

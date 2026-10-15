@@ -3,6 +3,7 @@
 import {getSpriteLink} from "../../Helpers.js";
 import OffCanvasContainer from "../containers/OffCanvasContainer.js";
 import SearchAndDisplayView from "../molecules/SearchAndDisplayView.js";
+import FilterView from "../offcanvasviews/FilterView.js";
 import HorizontalCard from "../HorizontalCard.js";
 const RaidTeamOffCanvas =  {
     name: 'RaidTeamOffCanvas',
@@ -10,18 +11,26 @@ const RaidTeamOffCanvas =  {
     components: {
         OffCanvasContainer,
         SearchAndDisplayView,
+        FilterView,
         HorizontalCard,
     },
 
     data: function () {
         return {
-            pageNumber: 0,
+
             onlyNewPokemon: [],
             offCanvasTitle: [
                 this.pokemonTeam.type,
                 "Add",
                 "Filter"
-            ]
+            ],
+            filterObject: {
+                filterFast: '',
+                filterCharged: '',
+                filterCP: 0,
+                filterShadow: '',
+                filterMega: '',
+            },
         }
     },
 
@@ -35,29 +44,14 @@ const RaidTeamOffCanvas =  {
         returnFullPokemon(pokemonIdOnly) {
             return   {...this.pokemonList.find(p => p.Id === pokemonIdOnly)}
         }
-        ,getClass(type, otherClasses) {
-            return ` type${type} ${otherClasses}`;
-        },  forwardPage(){
-            this.pageNumber++
-
-        }, backPage(){
-            this.pageNumber--;
-        },
-        reset(){
-            // this.title = this.pokemonTeam.type + ' Type Team';
-            // this.addTeam = false;
-            // this.editTeam = true;
-            // this.returnNewPokemon()
-        }, addPokemonToTeam(pokemonObject) {
-
+        ,
+        addPokemonToTeam(pokemonObject) {
             if (this.pokemonTeam.activeTeam.length < 6) {
                 this.pokemonTeam.activeTeam.push(pokemonObject.Id);
             } else {
                 this.pokemonTeam.backupPokemon.push(pokemonObject.Id);
             }
-            this.returnNewPokemon()
-
-
+            this.returnNewPokemon();
         }, returnNewPokemon(){
             this.onlyNewPokemon = []
             for (const pokemonObject of this.pokemonList) {
@@ -68,17 +62,6 @@ const RaidTeamOffCanvas =  {
 
         },
     },
-    //
-    // watch: {
-    //     pokemonList: {
-    //         handler() {
-    //             this.returnNewPokemon();
-    //         },
-    //         deep: true,
-    //         immediate: true
-    //     }
-    // },
-
 
     computed: {
 
@@ -99,7 +82,7 @@ const RaidTeamOffCanvas =  {
         <off-canvas-container :title-array="offCanvasTitle" :page-number="pageNumber" @go-back="pageNumber--"  
                               ref="RaidTeamOffCanvas">
 
-          <div v-show="pageNumber === 1">
+          <template v-slot:pageOne>
             <div class=" ps-3">
               <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize">Active Team</p>
             </div>
@@ -121,21 +104,21 @@ const RaidTeamOffCanvas =  {
 
 
             <div class="p-2 sticky-bottom">
-              <button v-on:click="forwardPage()"
+              <button v-on:click="$refs.RaidTeamOffCanvas.pageNumber++"
                       class="btn btn-primary w-100 fs-4 w-100">
                 Add Pokemon
               </button>
             </div>
-          </div>
+          </template>
 
 
-          <div v-show="pageNumber === 2 || pageNumber === 3">
-            <search-and-display-view :filter=true @view-number="pageNumber = $event" :page-number="pageNumber" @clicked-object="addPokemonToTeam" :list="onlyNewPokemon" title="Search Your Pokemon"></search-and-display-view>
-          </div>
-          
-          
-
-
+          <template v-slot:pageTwo>
+            <search-and-display-view :filter-object=filterObject @filter-clicked="$refs.RaidTeamOffCanvas.pageNumber++"  @clicked-object="addPokemonToTeam" :list="onlyNewPokemon" title="Search Your Pokemon"></search-and-display-view>
+          </template>
+            
+          <template v-slot:pageThree>
+            <FilterView  @filter-object="filterObject = $event"></FilterView>
+          </template>
         </off-canvas-container>
       </teleport>
 

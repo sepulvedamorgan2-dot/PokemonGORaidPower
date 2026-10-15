@@ -18,7 +18,7 @@ const PokemonDetailsOffCanvas = {
                 this.pokemon.name,
                 'edit'
             ],
-            pageNumber: 1,
+
         }
     },
 
@@ -39,25 +39,26 @@ const PokemonDetailsOffCanvas = {
         <div class="col-auto ms-auto  align-items-center d-flex">
           <div >
             <i type="button" 
-               v-on:click="$refs.PokemonDetailsOffCanvas.openOffCanvas(); pageNumber = 1 "
+               v-on:click="$refs.PokemonDetailsOffCanvas.openOffCanvas(); $refs.PokemonDetailsOffCanvas.pageNumber = 1"
                class="bi bi-three-dots me-4 fs-4"></i>
 
           </div>
           
           <teleport to="#app">
-            <OffCanvasContainer :page-number="pageNumber" @clicked="pageNumber--" :title-array="title" ref="PokemonDetailsOffCanvas">
-              <div v-show="pageNumber === 1" >
-                <details-off-canvas @clicked="pageNumber++" @delete-item="item => $emit('deleteItem', item)" :active-item="pokemon"></details-off-canvas>
-              </div>
-              <div v-show="pageNumber === 2" >
-                <add-edit-off-canvas @clicked="pageNumber--" :active-item="pokemon"></add-edit-off-canvas>
-              </div>
+            <OffCanvasContainer   :title-array="title" ref="PokemonDetailsOffCanvas">
+              <template #pageOne>
+                <details-off-canvas @clicked="$refs.PokemonDetailsOffCanvas.pageNumber++" @delete-item="item => $emit('deleteItem', item)" :active-item="pokemon"></details-off-canvas>
+              </template>
+              <template #pageTwo>
+                <add-edit-off-canvas @clicked="$refs.PokemonDetailsOffCanvas.pageNumber--" :active-item="pokemon"></add-edit-off-canvas>
+              </template>
             </OffCanvasContainer>
           </teleport>
         </div>
       
         
     `,
+
 
 
 }
