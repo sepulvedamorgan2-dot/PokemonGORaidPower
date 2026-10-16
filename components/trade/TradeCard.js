@@ -1,4 +1,4 @@
-import {getSpriteLink} from "../../Helpers.js";
+
 import AddPokemonOffCanvas from "../offcanvassequence/AddPokemonOffCanvas.js";
 const ComponentName = {
     name: 'ComponentName',
@@ -21,7 +21,6 @@ const ComponentName = {
     },
 
     methods: {
-        getSpriteLink,
         addHaveList(pokemon) {
             this.haveList.push(pokemon);
         },
@@ -83,7 +82,7 @@ const ComponentName = {
               <div class="row row-cols-5 g-1 g-sm-2 g-md-2 p-sm-1 ">
                 <div class="col text-center " v-for="pokemon in haveList">
                   <img class="img-fluid  rounded-4 w-100"
-                       :src="getSpriteLink(pokemon.pokemonId)"
+                       :src="pokemon.image"
                        alt="pokemonImg">
                 </div>
               </div>

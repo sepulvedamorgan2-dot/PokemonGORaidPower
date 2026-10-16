@@ -34,11 +34,11 @@ const FilterOffCanvas = {
 
             for (let eachItem of this.listToFilter) {
                 // filter name
-
+                console.log(eachItem.fastMove.type.name)
                 if (
                     eachItem.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
-                    (this.filterObject.filterFast === '' || eachItem.fastMoveType === this.filterObject.filterFast) &&
-                    (this.filterObject.filterCharged === '' || eachItem.chargedMoveType1 === this.filterObject.filterCharged || eachItem.chargedMoveType2 === this.filterObject.filterCharged) &&
+                    (this.filterObject.filterFast === '' || eachItem.fastMove.type.name === this.filterObject.filterFast) &&
+                    (this.filterObject.filterCharged === '' || eachItem.chargedMoveOne.type.name === this.filterObject.filterCharged  || eachItem.chargedMoveTwo.type.name === this.filterObject.filterCharged) &&
                     (this.filterObject.filterShadow === '' || Boolean(eachItem.isShadow) === (this.filterObject.filterShadow === true || this.filterObject.filterShadow === 'true')) &&
                     (this.filterObject.filterMega === '' || Boolean(eachItem.canMegaEvolve) === (this.filterObject.filterMega === true || this.filterObject.filterMega === 'true')) &&
                     (this.filterObject.filterCP <= eachItem.cp)

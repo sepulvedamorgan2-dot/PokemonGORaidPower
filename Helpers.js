@@ -12,7 +12,22 @@ function calculateCP(baseAtk, baseDef, baseSta) {
     // CP cannot be lower than 10
     return Math.max(10, calculatedCP);
 }
+
 const pokemonListApi = [];
+function addPokemon(pokemon, shiny) {
+
+    pokemonListApi.push({name: pokemon.id.toLowerCase(),
+        pokemonId: pokemon.dexNr,
+        type: pokemon.primaryType.names.English.toLowerCase(),
+        secondaryType: pokemon.secondaryType ? pokemon.secondaryType.names.English.toLowerCase() : null,
+        image: shiny? String(pokemon.assets.image): String(pokemon.assets.shinyImage) ,
+        maxCp: calculateCP(pokemon.stats.attack, pokemon.stats.defense, pokemon.stats.stamina),
+        fastMoves: pokemon.quickMoves,
+        chargedMoves: pokemon.cinematicMoves,
+
+
+    });
+}
 export async function fetchPokemonList() {
     fetch("https://pokemon-go-api.github.io/pokemon-go-api/api/pokedex.json")
         .then((response) => response.json())
@@ -23,7 +38,7 @@ export async function fetchPokemonList() {
                 try{
                     if(pokemon.assets.image){
 
-                        pokemonListApi.push({name: pokemon.id.toLowerCase(), pokemonId: pokemon.dexNr, image: String(pokemon.assets.image), maxCp: calculateCP(pokemon.stats.attack, pokemon.stats.defense, pokemon.stats.stamina)});
+                        addPokemon(pokemon, true);
                     }
                 } catch{
 
@@ -31,16 +46,13 @@ export async function fetchPokemonList() {
                 try{
                     if(pokemon.assets.shinyImage){
 
-                        pokemonListApi.push({name: pokemon.id.toLowerCase(), pokemonId: pokemon.dexNr, image: pokemon.assets.shinyImage, maxCp: calculateCP(pokemon.stats.attack, pokemon.stats.defense, pokemon.stats.stamina)});
+                        addPokemon(pokemon);
                     }
                 } catch{
 
                 }
 
-
-
             }
-
 
         })
         .catch((error) => {

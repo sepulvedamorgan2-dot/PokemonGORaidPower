@@ -46,12 +46,12 @@ const PokemonlistItem = {
 
         </div>
         <div class=" col ms-auto d-flex d-sm-none align-items-center ">
-          <i v-if="pokemon.fastMoveType"
-             :class="getClass(pokemon.fastMoveType, \`rounded  p-1 fs-tinyer bi bi-lightning-charge\`)"></i>
-          <i v-if="pokemon.chargedMoveType1"
-             :class="getClass(pokemon.chargedMoveType1, \`rounded ms-1 fs-tinyer p-1 bi bi-lightning-charge-fill\`)"></i>
-          <i v-if="pokemon.chargedMoveType2"
-             :class="getClass(pokemon.chargedMoveType2, \`rounded ms-1  fs-tinyer p-1 bi bi-lightning-charge-fill\`)"></i>
+          <i v-if="pokemon.fastMove"
+             :class="getClass(pokemon.fastMove.type.name, \`rounded  p-1 fs-tinyer bi bi-lightning-charge\`)"></i>
+          <i v-if="pokemon.chargedMoveOne"
+             :class="getClass(pokemon.chargedMoveOne.type.name, \`rounded ms-1 fs-tinyer p-1 bi bi-lightning-charge-fill\`)"></i>
+          <i v-if="pokemon.chargedMoveTwo"
+             :class="getClass(pokemon.chargedMoveTwo.type.name, \`rounded ms-1  fs-tinyer p-1 bi bi-lightning-charge-fill\`)"></i>
         </div>
         <div class="col-auto d-none d-sm-flex">
           <div class="spacer"></div>

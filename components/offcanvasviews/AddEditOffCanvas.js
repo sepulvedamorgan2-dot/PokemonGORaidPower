@@ -15,16 +15,20 @@ const AddOrEditOffCanvas = {
             pokemon: {
                 Id: 1,
                 name: "",
+                type: "",
                 pokemonId: 1,
                 cp: 1000,
                 isShadow: false,
                 canMegaEvolve: false,
-                fastMoveType: "",
-                chargedMoveType1: "",
-                chargedMoveType2: "",
+                fastMove: {},
+                chargedMoveOne: {},
+                chargedMoveTwo: {},
+                image: '',
+                maxCp: 0,
+                fastMoves: [],
+                chargedMoves: []},
+            quantity: 1,
 
-            }, quantity: 1,
-            level: ''
         }
     },
 
@@ -46,6 +50,31 @@ const AddOrEditOffCanvas = {
         }, updateCpNumber(number){
             this.activeItem.cp = Math.round(number.target.value * this.activeItem.maxCp / 100);
 
+        }, submitPokemon(pokemon, quantity) {
+            if(!pokemon.cp){
+                pokemon.cp = 50;
+            }
+
+            if(pokemon.fastMove){
+            pokemon.fastMove.type.name = pokemon.fastMove.type.names.English.toLowerCase()
+                console.log(pokemon.fastMove)
+            } else{
+
+            }
+            if (pokemon.chargedMoveOne){
+                pokemon.chargedMoveOne.type.name = pokemon.chargedMoveOne.type.names.English.toLowerCase()
+            } else{
+
+            }
+            if (pokemon.chargedMoveTwo){
+                pokemon.chargedMoveTwo.type.name = pokemon.chargedMoveTwo.type.names.English.toLowerCase()
+            } else{
+
+            }
+
+
+
+            this.$emit('addPokemon', [pokemon, quantity]);
         }
     },
     computed: {
@@ -63,11 +92,11 @@ const AddOrEditOffCanvas = {
           <!--              <confirm-added-modal item="{{ activeItem.name }}"></confirm-added-modal>-->
           <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation"
 
-                v-on:submit.prevent="$emit('addPokemon', [activeItem, quantity]); " >
+                v-on:submit.prevent="submitPokemon(activeItem, quantity); " >
 
             <div>
               <label :for="'range' + activeItem.Id" class="form-label">Creature Power (CP): {{ activeItem.cp }}</label>
-              <input type="range" class="form-range" min="1" :max="100" v-on:input="updateCpNumber($event)"  :id="'range' + activeItem.Id">
+              <input required type="range" class="form-range" min="1" :max="100" v-on:input="updateCpNumber($event)"  :id="'range' + activeItem.Id">
             </div>
             
             <div class="mt-2">
@@ -84,26 +113,8 @@ const AddOrEditOffCanvas = {
                   <div class="col-12">
                     <label class="form-label w-100">
                       Fast Move
-                      <select class="form-select" v-model="activeItem.fastMoveType">
-                        <option value="">None Selected</option>
-                        <option value="normal">Normal</option>
-                        <option value="fighting">Fighting</option>
-                        <option value="flying">Flying</option>
-                        <option value="poison">Poison</option>
-                        <option value="ground">Ground</option>
-                        <option value="rock">Rock</option>
-                        <option value="bug">Bug</option>
-                        <option value="ghost">Ghost</option>
-                        <option value="steel">Steel</option>
-                        <option value="fire">Fire</option>
-                        <option value="water">Water</option>
-                        <option value="grass">Grass</option>
-                        <option value="electric">Electric</option>
-                        <option value="psychic">Psychic</option>
-                        <option value="ice">Ice</option>
-                        <option value="dragon">Dragon</option>
-                        <option value="dark">Dark</option>
-                        <option value="fairy">Fairy</option>
+                      <select class="form-select" v-model="activeItem.fastMove">
+                        <option v-for="move in activeItem.fastMoves" :value="move">{{move.names.English}}</option>
                       </select>
                     </label>
                   </div>
@@ -115,26 +126,8 @@ const AddOrEditOffCanvas = {
                     <label class="form-label w-100">
                       Charged Move 1
                       <select class="form-select" id="chargedMoveSelect1edit"
-                              v-model="activeItem.chargedMoveType1">
-                        <option value="">None Selected</option>
-                        <option value="normal">Normal</option>
-                        <option value="fighting">Fighting</option>
-                        <option value="flying">Flying</option>
-                        <option value="poison">Poison</option>
-                        <option value="ground">Ground</option>
-                        <option value="rock">Rock</option>
-                        <option value="bug">Bug</option>
-                        <option value="ghost">Ghost</option>
-                        <option value="steel">Steel</option>
-                        <option value="fire">Fire</option>
-                        <option value="water">Water</option>
-                        <option value="grass">Grass</option>
-                        <option value="electric">Electric</option>
-                        <option value="psychic">Psychic</option>
-                        <option value="ice">Ice</option>
-                        <option value="dragon">Dragon</option>
-                        <option value="dark">Dark</option>
-                        <option value="fairy">Fairy</option>
+                              v-model="activeItem.chargedMoveOne">
+                        <option v-for="move in activeItem.chargedMoves" :value="move">{{move.names.English}}</option>
                       </select>
                     </label>
                   </div>
@@ -142,26 +135,8 @@ const AddOrEditOffCanvas = {
                     <label class="form-label w-100">
                       Charged Move 2
                       <select class="form-select" id="chargedMoveSelect2edit"
-                              v-model="activeItem.chargedMoveType2">
-                        <option value="">None Selected</option>
-                        <option value="normal">Normal</option>
-                        <option value="fighting">Fighting</option>
-                        <option value="flying">Flying</option>
-                        <option value="poison">Poison</option>
-                        <option value="ground">Ground</option>
-                        <option value="rock">Rock</option>
-                        <option value="bug">Bug</option>
-                        <option value="ghost">Ghost</option>
-                        <option value="steel">Steel</option>
-                        <option value="fire">Fire</option>
-                        <option value="water">Water</option>
-                        <option value="grass">Grass</option>
-                        <option value="electric">Electric</option>
-                        <option value="psychic">Psychic</option>
-                        <option value="ice">Ice</option>
-                        <option value="dragon">Dragon</option>
-                        <option value="dark">Dark</option>
-                        <option value="fairy">Fairy</option>
+                              v-model="activeItem.chargedMoveTwo">
+                        <option v-for="move in activeItem.chargedMoves" :value="move">{{move.names.English}}</option>
                       </select>
                     </label>
                   </div>

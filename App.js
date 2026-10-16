@@ -34,15 +34,18 @@ const app = createApp({
             pokemon: {
                 Id: 1,
                 name: "",
+                type: "",
                 pokemonId: 1,
                 cp: 1000,
                 isShadow: false,
                 canMegaEvolve: false,
-                fastMoveType: "",
-                chargedMoveType1: "",
-                chargedMoveType2: "",
+                fastMove: {},
+                chargedMoveOne: {},
+                chargedMoveTwo: {},
                 image: '',
                 maxCp: 0,
+                fastMoves: [],
+                chargedMoves: []
 
 
             },
@@ -76,6 +79,7 @@ const app = createApp({
 
             for (let i = 0; i < this.qty; i++) {
                 this.pokemon.Id = this.getNextPokemonId()
+                console.log(this.pokemon.Id);
                 this.pokemonList.unshift({...this.pokemon});
                 this.activeItem = this.pokemon
             }
@@ -96,7 +100,8 @@ const app = createApp({
         ,
         getNextPokemonId() {
             try {
-                return this.pokemonList.at(-1).Id + 1;
+                // return this.pokemonList.at(-1).Id + 1;
+                return this.pokemonList.at(1).Id + 1
             } catch (error) {
                 return 0;
             }
@@ -106,7 +111,10 @@ const app = createApp({
         }
 
     },
-    computed: {},
+    computed: {
+
+    },
+
 
     mounted: async function () {
         this.pokemonListAPI = await this.fetchPokemonList();
@@ -125,6 +133,30 @@ const app = createApp({
     watch: {
         pokemonList: {
             handler: function () {
+                for (let pokemon of this.pokemonList) {
+                    if(!pokemon.cp){
+                        pokemon.cp = 50;
+                    }
+
+                    if(pokemon.fastMove){
+                        pokemon.fastMove.type.name = pokemon.fastMove.type.names.English.toLowerCase()
+                        console.log(pokemon.fastMove)
+                    } else{
+
+                    }
+                    if (pokemon.chargedMoveOne){
+                        pokemon.chargedMoveOne.type.name = pokemon.chargedMoveOne.type.names.English.toLowerCase()
+                    } else{
+
+                    }
+                    if (pokemon.chargedMoveTwo){
+                        pokemon.chargedMoveTwo.type.name = pokemon.chargedMoveTwo.type.names.English.toLowerCase()
+                    } else{
+
+                    }
+                }
+
+
 
                 if (this.pokemonList) {
                     localStorage.setItem('pokemonList', JSON.stringify(this.pokemonList))
