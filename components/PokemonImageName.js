@@ -1,6 +1,6 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
-import {getSpriteLink} from "../Helpers.js";
+
 const PokemonImageName = {
     components: {
 
@@ -17,7 +17,7 @@ const PokemonImageName = {
     },
 
     methods: {
-        getSpriteLink,
+
     },
 
     computed: {},
@@ -26,7 +26,7 @@ const PokemonImageName = {
       <div>
         <div class="d-flex justify-content-center pt-3 pb-2">
           <div class="" style="width: 50%">
-            <img :src="getSpriteLink(activeItem.pokemonId)"
+            <img :src="activeItem.image"
                  class="bg-white img-fluid details-img w-100 border border-dark-subtle rounded" :alt="activeItem.name">
           </div>
         </div>

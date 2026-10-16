@@ -1,6 +1,6 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
-import {getSpriteLink} from "../../Helpers.js";
+
 import OffCanvasContainer from "../containers/OffCanvasContainer.js";
 import SearchAndDisplayView from "../molecules/SearchAndDisplayView.js";
 import FilterView from "../offcanvasviews/FilterView.js";
@@ -40,7 +40,7 @@ const RaidTeamOffCanvas =  {
     },
 
     methods: {
-        getSpriteLink,
+
         returnFullPokemon(pokemonIdOnly) {
             return   {...this.pokemonList.find(p => p.Id === pokemonIdOnly)}
         }

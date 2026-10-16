@@ -1,7 +1,7 @@
 import DetailsOffCanvas from "./offcanvasviews/DetailsOffCanvas.js";
 import AddEditOffCanvas from "./offcanvasviews/AddEditOffCanvas.js";
 import PokemonDetailsOffCanvas from "./offcanvassequence/PokemonDetailsOffCanvas.js";
-import {getSpriteLink} from "../Helpers.js";
+
 const PokemonlistItem = {
     components: {
         AddEditOffCanvas,
@@ -25,17 +25,12 @@ const PokemonlistItem = {
         getClass(type, otherclasses) {
             return ` type${type} ${otherclasses}`;
         }
-        , getSpriteLink,
+        ,
         openOffCanvas() {
             this.bsOffCanvas.show();
         }
     },
-    async created() {
-        // Fetch the sprite link as soon as the component is created
-        if (this.pokemon && this.pokemon.pokemonId) {
-            this.spriteUrl = await getSpriteLink(this.pokemon.pokemonId);
-        }
-    },
+
     computed: {},
 
     template: `
@@ -43,7 +38,7 @@ const PokemonlistItem = {
 
       <div class="row g-0 py-0">
         <div class="col-auto">
-          <img :src="getSpriteLink(pokemon.pokemonId)"
+          <img :src="pokemon.image"
                alt="Pokemon" class="img-fluid horz-card-img">
         </div>
         <div class="col-4 col-sm-3 col-lg-2 d-flex  align-items-center">

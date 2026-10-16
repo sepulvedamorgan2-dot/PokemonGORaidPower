@@ -24,6 +24,7 @@ const AddOrEditOffCanvas = {
                 chargedMoveType2: "",
 
             }, quantity: 1,
+            level: ''
         }
     },
 
@@ -43,7 +44,8 @@ const AddOrEditOffCanvas = {
             this.bsOffCanvas.show();
 
         }, updateCpNumber(number){
-            this.activeItem.cp = number.target.value * 100;
+            this.activeItem.cp = Math.round(number.target.value * this.activeItem.maxCp / 100);
+
         }
     },
     computed: {
@@ -63,42 +65,9 @@ const AddOrEditOffCanvas = {
 
                 v-on:submit.prevent="$emit('addPokemon', [activeItem, quantity]); " >
 
-            <!-- cp button div -->
-
-<!--            <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">-->
-<!--              <div class="col-6">-->
-<!--                <input :id="'tierOneCP' + activeItem.Id + activeItem.pokemonId" :checked="activeItem.cp < 1500"-->
-<!--                       v-model.number="activeItem.cp"-->
-<!--                       :value="1200" type="radio" class="btn-check"-->
-<!--                       :name="'btnradio' + activeItem.Id + activeItem.pokemonId" required>-->
-<!--                <label class="btn btn-outline-primary w-100" :for="'tierOneCP' + activeItem.Id + activeItem.pokemonId">0-1500CP</label>-->
-<!--              </div>-->
-<!--              <div class="col-6">-->
-<!--                <input :id="'tierTwoCP' + activeItem.Id + activeItem.pokemonId"-->
-<!--                       :checked="activeItem.cp >= 1500 && activeItem.cp < 2500"-->
-<!--                       v-model.number="activeItem.cp" :value="2300" type="radio" class="btn-check"-->
-<!--                       :name="'btnradio' + activeItem.Id + activeItem.pokemonId" required>-->
-<!--                <label class="btn btn-outline-primary w-100" :for="'tierTwoCP' + activeItem.Id + activeItem.pokemonId">1500+CP</label>-->
-<!--              </div>-->
-<!--              <div class="col-6">-->
-<!--                <input :id="'tierThreeCP' + activeItem.Id + activeItem.pokemonId"-->
-<!--                       :checked="activeItem.cp >= 2500 && activeItem.cp < 3500"-->
-<!--                       v-model.number="activeItem.cp" :value="3400" type="radio" class="btn-check"-->
-<!--                       :name="'btnradio' + activeItem.Id + activeItem.pokemonId">-->
-<!--                <label class="btn btn-outline-primary w-100"-->
-<!--                       :for="'tierThreeCP' + activeItem.Id + activeItem.pokemonId">2500+CP</label>-->
-<!--              </div>-->
-<!--              <div class="col-6">-->
-<!--                <input :id="'tierFourCP' + activeItem.Id + activeItem.pokemonId" :checked="activeItem.cp >= 3500"-->
-<!--                       v-model.number="activeItem.cp"-->
-<!--                       :value="3700" type="radio" class="btn-check"-->
-<!--                       :name="'btnradio' + activeItem.Id + activeItem.pokemonId">-->
-<!--                <label class="btn btn-outline-primary w-100" :for="'tierFourCP' + activeItem.Id + activeItem.pokemonId">3500+CP</label>-->
-<!--              </div>-->
-<!--            </div>-->
             <div>
               <label :for="'range' + activeItem.Id" class="form-label">Creature Power (CP): {{ activeItem.cp }}</label>
-              <input type="range" class="form-range" min="1" max="50" :value="activeItem.cp / 100" v-on:input="updateCpNumber($event)"  :id="'range' + activeItem.Id">
+              <input type="range" class="form-range" min="1" :max="100" v-on:input="updateCpNumber($event)"  :id="'range' + activeItem.Id">
             </div>
             
             <div class="mt-2">

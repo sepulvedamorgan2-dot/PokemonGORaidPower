@@ -5,6 +5,7 @@ import NavbarMain from "./components/NavbarMain.js";
 import FilterOffCanvas from "./components/offcanvassequence/FilterOffCanvas.js";
 import SearchBarContainer from "./components/molecules/SearchBarContainer.js";
 import AddPokemonOffCanvas from "./components/offcanvassequence/AddPokemonOffCanvas.js";
+import {fetchPokemonList} from "./Helpers.js";
 
 const app = createApp({
 
@@ -40,6 +41,9 @@ const app = createApp({
                 fastMoveType: "",
                 chargedMoveType1: "",
                 chargedMoveType2: "",
+                image: '',
+                maxCp: 0,
+
 
             },
             pokemonList: [],
@@ -58,37 +62,12 @@ const app = createApp({
             this.matches = newList;
         },
 
-        getSpriteLink(pokemonID) {
-
-            if (typeof pokemonID === "number") {
-                return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID}.png`;
-            }
-
-        }
-        ,
 
 
 
 
-        async fetchPokemonList() {
-            fetch("https://pokeapi.co/api/v2/pokemon?limit=1331")
-                .then((response) => response.json())
-                .then((data) => {
 
-                    console.log(data);
-                    for (const pokemon of data.results) {
-                        this.pokemonListAPI.push(pokemon.name);
-
-                    }
-
-                })
-                .catch((error) => {
-
-                    console.error(error);
-                });
-        }
-
-        ,
+        fetchPokemonList,
         addPokemon(activeItem) {
 
 
@@ -129,8 +108,8 @@ const app = createApp({
     },
     computed: {},
 
-    mounted: function () {
-        this.fetchPokemonList();
+    mounted: async function () {
+        this.pokemonListAPI = await this.fetchPokemonList();
 
         if (localStorage.getItem('pokemonList')) {
 

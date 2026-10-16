@@ -1,6 +1,6 @@
 // For subcomponent
 // import xxx from './PokemonlistItem.js';
-import {getSpriteLink} from "../Helpers.js";
+
 import AddEditOffCanvas from "./offcanvasviews/AddEditOffCanvas.js";
 const HorizontalCard = {
     components: {
@@ -22,7 +22,7 @@ const HorizontalCard = {
 
     methods: {
 
-        getSpriteLink,
+    
         getClass(type, otherClasses) {
             return ` type${type} ${otherClasses}`;
         },updateCPIfMega(pokemonObject) {
@@ -56,7 +56,7 @@ const HorizontalCard = {
       <!--      Style 1-->
       <div v-if="cardStyle === 1" class="row g-0 align-items-center">
         <div class="col-3">
-          <img class="img-fluid horz-card-img " :src="getSpriteLink(pokemon.pokemonId)"
+          <img class="img-fluid horz-card-img " :src="pokemon.image"
                alt="pokemonImg">
         </div>
         <div class="col-6">
@@ -75,7 +75,7 @@ const HorizontalCard = {
       <div v-if="cardStyle === 2" class="row g-0 border-bottom">
         <div class="col-3 col-md-2">
           <img class="img-fluid"
-               :src="getSpriteLink(pokemon.pokemonId)"
+               :src="pokemon.image"
                alt="pokemonImg">
         </div>
         <div class="col-6 col-md-7">
@@ -109,7 +109,7 @@ const HorizontalCard = {
       <div  v-if="cardStyle === 3" class="row g-0 border-bottom">
         <div class="col-3 col-md-2">
           <img class="img-fluid"
-               :src="getSpriteLink(pokemon.pokemonId)"
+               :src="pokemon.image"
                alt="pokemonImg">
         </div>
         <div class="col-6 col-md-7">
