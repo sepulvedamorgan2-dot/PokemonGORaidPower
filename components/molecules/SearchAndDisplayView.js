@@ -32,6 +32,7 @@ const SearchAndDisplayView = {
                 filterMega: '',
             },
         },
+        noFilter: {Type: Boolean, default: false},
         pageNumber: {Type: Number},
     },
 
@@ -44,9 +45,13 @@ const SearchAndDisplayView = {
 
             this.matches = [];
 
+
             for (let eachItem of this.list) {
                 // filter name
-
+                if (this.noFilter) {
+                    this.matches.push(eachItem);
+                    continue;
+                }
                 if (
                     eachItem.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
                     (this.filterObject.filterFast === '' || eachItem.fastMoveType === this.filterObject.filterFast) &&

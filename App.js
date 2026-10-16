@@ -87,6 +87,7 @@ const app = createApp({
                     console.error(error);
                 });
         }
+
         ,
         addPokemon(activeItem) {
 

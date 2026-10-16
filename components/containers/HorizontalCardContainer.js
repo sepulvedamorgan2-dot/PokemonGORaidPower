@@ -36,7 +36,7 @@ const HorizontalCardContainer = {
 
     template: `
 <!--:key="card.pokemonId" -->
-      <off-canvas-horizontal-card :card-style="cardStyle" v-for="card in arrayToDisplay" @clicked-object="pokemon => $emit('clickedObject', pokemon)"
+      <off-canvas-horizontal-card :card-style="cardStyle" v-for="card in arrayToDisplay" @clicked-object-existing="pokemon => $emit('clickedObjectExisting', pokemon)" @clicked-object="pokemon => $emit('clickedObject', pokemon)"
                                   :pokemon="card">
       </off-canvas-horizontal-card>
        

@@ -18,6 +18,7 @@ const PokemonlistItem = {
         pokemon: {Object, required: false},
 
 
+
     },
 
     methods: {
@@ -29,7 +30,12 @@ const PokemonlistItem = {
             this.bsOffCanvas.show();
         }
     },
-
+    async created() {
+        // Fetch the sprite link as soon as the component is created
+        if (this.pokemon && this.pokemon.pokemonId) {
+            this.spriteUrl = await getSpriteLink(this.pokemon.pokemonId);
+        }
+    },
     computed: {},
 
     template: `

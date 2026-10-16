@@ -61,7 +61,7 @@ const HorizontalCard = {
         </div>
         <div class="col-6">
           <div class="ms-0 ms-sm-0">
-            <p class="fs-5 mb-0 text-capitalize">{{ pokemon.name }}</p>
+            <p class="fs-5 mb-0 text-capitalize">{{ pokemon.name }} </p>
 
           </div>
         </div>
@@ -160,6 +160,24 @@ const HorizontalCard = {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+<!--      Card 4-->
+      <div v-if="cardStyle === 4" class="row g-0 align-items-center">
+        <div class="col-3">
+          <img class="img-fluid horz-card-img " :src="pokemon.image"
+               alt="pokemonImg">
+        </div>
+        <div class="col-6">
+          <div class="ms-0 ms-sm-0">
+            <p class="fs-5 mb-0 text-capitalize">{{ pokemon.name }} </p>
+
+          </div>
+        </div>
+        <div class="col-3">
+          <button v-on:click="$emit('clickedObjectExisting', pokemon)" class="btn btn-sm btn-primary w-100 searchedPokemonBtn">
+            Select
+          </button>
         </div>
       </div>
     `,

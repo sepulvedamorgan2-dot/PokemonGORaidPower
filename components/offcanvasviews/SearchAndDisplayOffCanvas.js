@@ -29,13 +29,14 @@ const SearchAndDisplayOffCanvas =  {
 
             let resultObjects = [];
             for (let pokemonQueried of this.listToSearch) {
-                if (resultObjects.length >= 6) {
+
+                if (resultObjects.length >= 12) {
 
                     break;
 
                 }
                 try{
-                if (pokemonQueried.includes(query.toLowerCase()) && pokemonQueried.includes("-mega") === false) {
+                if (pokemonQueried.includes(query.toLowerCase())) {
                     let pokemonObject = {};
                     pokemonObject.name = pokemonQueried;
                     pokemonObject.pokemonId = this.listToSearch.indexOf(pokemonQueried) + 1;
@@ -70,6 +71,7 @@ const SearchAndDisplayOffCanvas =  {
 
         <horizontal-card-container :array-to-display="searchResults"  :card-style="cardStyle"
                                    @clicked-object="object => $emit('clickedObject', object)"
+                                   @clicked-object-existing="object => $emit('clickedObjectExisting', object)"
                                   >
 
         </horizontal-card-container>
