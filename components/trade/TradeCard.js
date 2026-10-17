@@ -9,7 +9,8 @@ const ComponentName = {
 
     data: function () {
         return {
-
+            pokeListApiFiltered: [],
+            pokeListFiltered: [],
         }
     },
 
@@ -26,10 +27,42 @@ const ComponentName = {
         },
         addWantedList(pokemon) {
             this.wantedList.push(pokemon);
+        }, returnNewPokemon(allList, listToExclude, listToUpdate) {
+            console.log(this.pokemonListApi[0])
+            const onlyNewPokemon = []
+            for (const pokemonObject of allList) {
+                if (!listToExclude.map(p => p.image).includes(pokemonObject.image)) {
+                    onlyNewPokemon.push(pokemonObject);
+                }
+            }
+            if (listToUpdate) {
+                this.pokeListApiFiltered = onlyNewPokemon;
+            } else{
+                this.pokeListFiltered = onlyNewPokemon;
+            }
+
+        }, deleteFromList(pokemon, list) {
+            if(list){
+                const index = this.wantedList.indexOf(pokemon);
+                if (index > -1) {
+                    this.wantedList.splice(index, 1);
+                }
+            }
+
         }
     },
 
     watch: {
+        wantedList: {
+            handler: function () {
+                this.returnNewPokemon(this.pokemonListApi, this.wantedList, true);
+            }, deep: true
+        },
+        haveList: {
+            handler: function () {
+                this.returnNewPokemon(this.pokemonList, this.haveList, false);
+            }, deep: true
+        }
 
     },
 
@@ -50,16 +83,18 @@ const ComponentName = {
               <div class="col-2 d-flex justify-content-end">
 
                 <div class="p-sm-2 me-sm-1 mt-sm-1 p-2 pb-0 pb-sm-0">
-                  <add-pokemon-off-canvas @clicked-object-existing="addWantedList" button="pencil" :pokemon-list-from-api="pokemonListApi" :card-style=4></add-pokemon-off-canvas>
+                  <add-pokemon-off-canvas @clicked-object-existing="addWantedList" v-on:click="returnNewPokemon(pokemonListApi, wantedList, true)" button="pencil" :pokemon-list-from-api="pokeListApiFiltered"
+                                          :card-style=4></add-pokemon-off-canvas>
                 </div>
               </div>
             </div>
             <div class="row  p-2 py-0 mb-1">
               <div class="row row-cols-5 g-1 g-sm-2 g-md-2 p-sm-1 ">
-                <div class="col text-center " v-for="pokemon in wantedList">
+                <div class="col text-center position-relative" v-on:dblclick="deleteFromList(pokemon, true)" v-for="pokemon in wantedList">
                   <img class="img-fluid  rounded-4 w-100"
                        :src="pokemon.image"
                        alt="pokemonImg">
+                  <img v-if="pokemon.image.includes('.s.')" src="/media/images/shiny.png" alt="Shiny" class="corner-tr-img">
                 </div>
               </div>
             </div>
@@ -74,16 +109,17 @@ const ComponentName = {
               <div class="col-2 d-flex justify-content-end">
 
                 <div class="p-sm-2 me-sm-1 mt-sm-1 p-2 pb-0 pb-sm-0">
-                    <add-pokemon-off-canvas @clicked-object-existing="addHaveList" button="pencil" :pokemon-list-from-api="pokemonList" :card-style=4></add-pokemon-off-canvas>
+                    <add-pokemon-off-canvas v-on:click="returnNewPokemon(pokemonList, haveList, false)" @clicked-object-existing="addHaveList" button="pencil" :pokemon-list-from-api="pokeListFiltered" :card-style=4></add-pokemon-off-canvas>
                 </div>
               </div>
             </div>
             <div class="row  p-2 py-0 mb-1">
-              <div class="row row-cols-5 g-1 g-sm-2 g-md-2 p-sm-1 ">
-                <div class="col text-center " v-for="pokemon in haveList">
+              <div class="row row-cols-5 row-cols-lg-6 g-1 g-sm-2 g-md-2 p-sm-1 ">
+                <div class="col text-center position-relative" v-on:dblclick="deleteFromList(pokemon, false)" v-for="pokemon in haveList">
                   <img class="img-fluid  rounded-4 w-100"
                        :src="pokemon.image"
                        alt="pokemonImg">
+                  <img v-if="pokemon.image.includes('.s.')" src="/media/images/shiny.png" alt="Shiny" class="corner-tr-img">
                 </div>
               </div>
             </div>

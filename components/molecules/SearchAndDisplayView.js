@@ -55,12 +55,10 @@ const SearchAndDisplayView = {
 
                 if (
                     eachItem.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
-                    (this.filterObject.filterFast === '' || eachItem.fastMove.type.name === this.filterObject.filterFast) &&
-                    (this.filterObject.filterCharged === '' || eachItem.chargedMoveOne.type.name === this.filterObject.filterCharged || eachItem.chargedMoveTwo.type.name === this.filterObject.filterCharged) &&
+                    (this.filterObject.filterType === '' || eachItem.type.name === this.filterObject.filterType) &&
                     (this.filterObject.filterShadow === '' || Boolean(eachItem.isShadow) === (this.filterObject.filterShadow === true || this.filterObject.filterShadow === 'true')) &&
                     (this.filterObject.filterMega === '' || Boolean(eachItem.canMegaEvolve) === (this.filterObject.filterMega === true || this.filterObject.filterMega === 'true')) &&
                     (this.filterObject.filterCP <= eachItem.cp)
-
                 ) {
 
                     this.matches.push(eachItem);

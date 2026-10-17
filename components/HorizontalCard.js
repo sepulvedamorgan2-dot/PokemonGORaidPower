@@ -32,6 +32,7 @@ const HorizontalCard = {
             }
             return pokemonObject.cp;
         },removeFromListActive(pokemonToRemove) {
+            this.$emit('pokemonRemoved')
             if(this.pokemonTeam.activeTeam.includes(pokemonToRemove.Id)) {
                 this.pokemonTeam.activeTeam.splice(this.pokemonTeam.activeTeam.indexOf(pokemonToRemove.Id) , 1);
                 if(this.pokemonTeam.backupPokemon.length > 0){
@@ -55,9 +56,12 @@ const HorizontalCard = {
 
       <!--      Style 1-->
       <div v-if="cardStyle === 1" class="row g-0 align-items-center">
-        <div class="col-3">
+        <div class="col-3 position-relative">
           <img class="img-fluid horz-card-img " :src="pokemon.image"
                alt="pokemonImg">
+          <div v-if="pokemon.image">
+            <img v-if="pokemon.image.includes('.s.')" src="/media/images/shiny.png" alt="Shadow" class="corner-tr-img">
+          </div>
         </div>
         <div class="col-6">
           <div class="ms-0 ms-sm-0">
@@ -73,10 +77,12 @@ const HorizontalCard = {
       </div>
       <!--    Style 2-->
       <div v-if="cardStyle === 2" class="row g-0 border-bottom">
-        <div class="col-3 col-md-2">
-          <img class="img-fluid"
+        <div class="col-3 col-md-2 position-relative">
+          <img class="img-fluid "
                :src="pokemon.image"
                alt="pokemonImg">
+          <img v-if="pokemon.isShadow" src="/media/images/shadow.png" alt="Shadow" class="corner-bl-img">
+          <img v-if="pokemon.image.includes('.s.')" src="/media/images/shiny.png" alt="Shadow" class="corner-tr-img">
         </div>
         <div class="col-6 col-md-7">
           <div class="p-1 ms-1">
@@ -107,10 +113,14 @@ const HorizontalCard = {
       </div>
       <!--    card 3-->
       <div  v-if="cardStyle === 3" class="row g-0 border-bottom">
-        <div class="col-3 col-md-2">
+        <div class="col-3 col-md-2 position-relative">
           <img class="img-fluid"
                :src="pokemon.image"
                alt="pokemonImg">
+          <img v-if="pokemon.isShadow" src="/media/images/shadow.png" alt="Shadow" class="corner-bl-img">
+          <div v-if="pokemon.image">
+            <img v-if="pokemon.image.includes('.s.')" src="/media/images/shiny.png" alt="Shadow" class="corner-tr-img">
+          </div>
         </div>
         <div class="col-6 col-md-7">
           <div class="p-1 ms-1">
@@ -127,12 +137,12 @@ const HorizontalCard = {
         </div>
         <div class="col-3">
           <div class="d-flex justify-content-end me-4 align-items-center h-100">
-            <i v-if="pokemon.fastMoveType"
-               :class="getClass(pokemon.fastMoveType, \`rounded mb-1 p-1  fs-tinyer bi bi-lightning-charge\`)"></i>
-            <i v-if="pokemon.chargedMoveType1"
-               :class="getClass(pokemon.chargedMoveType1, \`rounded mb-1 ms-1 fs-tinyer p-1 bi bi-lightning-charge-fill\`)"></i>
-            <i v-if="pokemon.chargedMoveType2"
-               :class="getClass(pokemon.chargedMoveType2, \`rounded mb-1 ms-1   fs-tinyer p-1 bi bi-lightning-charge-fill\`)"></i>
+            <i v-if="pokemon.fastMove"
+               :class="getClass(pokemon.fastMove.type.name, \`rounded mb-1 p-1  fs-tinyer bi bi-lightning-charge\`)"></i>
+            <i v-if="pokemon.chargedMoveOne"
+               :class="getClass(pokemon.chargedMoveOne.type.name, \`rounded mb-1 ms-1 fs-tinyer p-1 bi bi-lightning-charge-fill\`)"></i>
+            <i v-if="pokemon.chargedMoveTwo"
+               :class="getClass(pokemon.chargedMoveTwo.type.name, \`rounded mb-1 ms-1   fs-tinyer p-1 bi bi-lightning-charge-fill\`)"></i>
             <i type="button" data-bs-toggle="collapse"
                :data-bs-target="'#'+pokemon.Id"
                class="bi bi-pencil ms-2 ms-sm-4"></i>
@@ -164,9 +174,12 @@ const HorizontalCard = {
       </div>
 <!--      Card 4-->
       <div v-if="cardStyle === 4" class="row g-0 align-items-center">
-        <div class="col-3">
+        <div class="col-3 position-relative">
           <img class="img-fluid horz-card-img " :src="pokemon.image"
                alt="pokemonImg">
+          <div v-if="pokemon.image">
+            <img v-if="pokemon.image.includes('.s.')" src="/media/images/shiny.png" alt="Shadow" class="corner-tr-img">
+          </div>
         </div>
         <div class="col-6">
           <div class="ms-0 ms-sm-0">

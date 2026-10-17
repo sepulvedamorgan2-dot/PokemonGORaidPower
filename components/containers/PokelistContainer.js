@@ -34,6 +34,7 @@ const PokelistContainer = {
            handler: function () {
                if(this.deletedMon) {
                    this.updateMatches(this.matches.filter(p => p !== this.deletedMon));
+                   this.deletedMon = null;
                } else{
                    this.updateMatches(this.fullPokemonList);
                }

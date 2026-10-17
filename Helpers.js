@@ -1,6 +1,8 @@
 
 
 
+
+
 function calculateCP(baseAtk, baseDef, baseSta) {
     const attackFactor = baseAtk + 15;
     const defenseFactor = Math.sqrt(baseDef + 15);
@@ -24,7 +26,7 @@ function addPokemon(pokemon, shiny) {
         maxCp: calculateCP(pokemon.stats.attack, pokemon.stats.defense, pokemon.stats.stamina),
         fastMoves: pokemon.quickMoves,
         chargedMoves: pokemon.cinematicMoves,
-
+        megaCapable: pokemon.hasMegaEvolution,
 
     });
 }

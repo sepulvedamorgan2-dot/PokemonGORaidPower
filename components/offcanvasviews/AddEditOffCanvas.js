@@ -27,6 +27,7 @@ const AddOrEditOffCanvas = {
                 maxCp: 0,
                 fastMoves: [],
                 chargedMoves: []},
+
             quantity: 1,
 
         }
@@ -153,9 +154,9 @@ const AddOrEditOffCanvas = {
                   Shadow
                 </label>
               </div>
-              <div>
+              <div v-show="activeItem.megaCapable">
                 <label class="form-check-label">
-                  <input type="checkbox" id="isMegaedit" v-model="activeItem.canMegaEvolve"
+                  <input type="checkbox" v-model="activeItem.canMegaEvolve"
                          class="border-dark-subtle form-check-input">
                   Can Mega Evolve
                 </label>

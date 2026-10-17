@@ -19,6 +19,7 @@ const AddPokemonOffCanvas = {
                 ""
             ],
             pokemonToAdd: null,
+            pokemonList: []
         }
     },
 
@@ -37,17 +38,22 @@ const AddPokemonOffCanvas = {
     },
 
     watch: {
+        pokemonListFromApi: {
+            handler: function () {
+                this.pokemonList = this.pokemonListFromApi;
+            }, deep: true,
+        },
+
+
         pokemonToAdd: function () {
             this.titleArray = [
                 "Add Pokemon",
                 this.pokemonToAdd.name
             ]
-        }
+        },deep: true,
     },
 
-    mounted() {
-        // this.getTitle();
-    },
+
 
 
     template: `
@@ -71,7 +77,7 @@ const AddPokemonOffCanvas = {
           <teleport to="#app">
             <OffCanvasContainer :title-array="titleArray" ref="AddPokemonOffCanvas">
               <template v-slot:pageOne>
-                <SearchAndDisplayOffCanvas @clicked-object-existing="$emit('clicked-object-existing', $event)" :list-to-search="pokemonListFromApi" @clicked-object="handleClick" :card-style="cardStyle" :array-length="5" :button-style="1">
+                <SearchAndDisplayOffCanvas @clicked-object-existing="$emit('clicked-object-existing', $event)" :list-to-search="pokemonList" @clicked-object="handleClick" :card-style="cardStyle" :array-length="5" :button-style="1">
                 </SearchAndDisplayOffCanvas> 
               </template>
               <template v-slot:pageTwo >

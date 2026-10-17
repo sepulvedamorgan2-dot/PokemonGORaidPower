@@ -86,10 +86,11 @@ const RaidTeamCard = {
 
 
           <div class="row g-2 g-sm-2 g-md-2 p-sm-1 ">
-            <div class="col-4 text-center " v-for="pokemon in pokemonTeam.activeTeam">
+            <div class="col-4 text-center position-relative " v-for="pokemon in pokemonTeam.activeTeam">
               <img class="img-fluid border rounded w-100"
                    :src="returnFullPokemon(pokemon).image"
                    alt="pokemonImg">
+              
             </div>
 
 

@@ -36,15 +36,19 @@ const app = createApp({
         } else {
             this.pokemonList = []
         }
+            
         if (localStorage.getItem('haveList')) {
 
             this.haveList = JSON.parse(localStorage.getItem('haveList'));
+            const idList = new Set(this.pokemonList.map(pokemon => pokemon.Id))
+            this.haveList = this.haveList.filter(pokemon => idList.has(pokemon.Id));
         } else {
             this.haveList = []
         }
+
         if (localStorage.getItem('wantList')) {
 
-            this.pokemonList = JSON.parse(localStorage.getItem('wantList'));
+            this.wantList = JSON.parse(localStorage.getItem('wantList'));
         } else {
             this.wantList = []
         }
@@ -65,7 +69,32 @@ const app = createApp({
 
             }, deep: true
 
+        },
+        wantList: {
+            handler: function () {
+
+                if (this.wantList) {
+                    localStorage.setItem('wantList', JSON.stringify(this.wantList))
+                } else {
+                    this.wantList = []
+                }
+
+
+            }, deep: true
+
+        },
+        haveList: {
+            handler: function () {
+                if (this.haveList) {
+                    localStorage.setItem('haveList', JSON.stringify(this.haveList))
+
+
+                } else {
+                    this.haveList = []
+                }
+            }, deep: true
         }
+
 
 
     }

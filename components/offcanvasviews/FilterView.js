@@ -9,8 +9,7 @@ const FilterView = {
         return {
             id: counter++,
             filter: {
-                filterFast: '',
-                filterCharged: '',
+                filterType: '',
                 filterCP: 0,
                 filterShadow: '',
                 filterMega: '',
@@ -73,46 +72,13 @@ const FilterView = {
 
 
             <!-- Fast type div -->
-            <div class="row g-2 btn-group mt-3" role="group" aria-label="Pokemon Creature Power Buttons">
-              <div class="col-12 ">
-                <label class="form-label w-100">
-                  Fast Move Type
-                  <select class="form-select" id="fastMoveFilter"
-                          v-model="filter.filterFast">
-                    <option value="">None Selected</option>
-                    <option value="normal">Normal</option>
-                    <option value="fighting">Fighting</option>
-                    <option value="flying">Flying</option>
-                    <option value="poison">Poison</option>
-                    <option value="ground">Ground</option>
-                    <option value="rock">Rock</option>
-                    <option value="bug">Bug</option>
-                    <option value="ghost">Ghost</option>
-                    <option value="steel">Steel</option>
-                    <option value="fire">Fire</option>
-                    <option value="water">Water</option>
-                    <option value="grass">Grass</option>
-                    <option value="electric">Electric</option>
-                    <option value="psychic">Psychic</option>
-                    <option value="ice">Ice</option>
-                    <option value="dragon">Dragon</option>
-                    <option value="dark">Dark</option>
-                    <option value="fairy">Fairy</option>
-                  </select>
-                </label>
-              </div>
-              <!--                            move types end-->
-              <!--is shadow/canMega-->
-
-
-            </div>
             <!-- Charged type div -->
-            <div class="row g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
+            <div class="row pt-2 g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
               <div class="col-12 ">
                 <label class="form-label w-100">
-                  Charged Move Type
+                  Pokemon Type
                   <select class="form-select" id="chargedMoveFilter"
-                          v-model="filter.filterCharged">
+                          v-model="filter.filterType">
                     <option value="">None Selected</option>
                     <option value="normal">Normal</option>
                     <option value="fighting">Fighting</option>

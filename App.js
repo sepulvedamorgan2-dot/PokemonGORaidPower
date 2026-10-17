@@ -79,6 +79,7 @@ const app = createApp({
 
             for (let i = 0; i < this.qty; i++) {
                 this.pokemon.Id = this.getNextPokemonId()
+
                 console.log(this.pokemon.Id);
                 this.pokemonList.unshift({...this.pokemon});
                 this.activeItem = this.pokemon
@@ -99,9 +100,13 @@ const app = createApp({
         }
         ,
         getNextPokemonId() {
+            if(this.pokemonList.length < 1){
+                return 1
+            }
+
             try {
                 // return this.pokemonList.at(-1).Id + 1;
-                return this.pokemonList.at(1).Id + 1
+                return Math.max(...this.pokemonList.map(p => p.Id)) + 1
             } catch (error) {
                 return 0;
             }

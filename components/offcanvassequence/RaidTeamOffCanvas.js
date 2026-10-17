@@ -25,8 +25,7 @@ const RaidTeamOffCanvas =  {
                 "Filter"
             ],
             filterObject: {
-                filterFast: '',
-                filterCharged: '',
+                filterType: '',
                 filterCP: 0,
                 filterShadow: '',
                 filterMega: '',
@@ -79,7 +78,7 @@ const RaidTeamOffCanvas =  {
 
 
       <teleport to="#app2">
-        <off-canvas-container :title-array="offCanvasTitle" :page-number="pageNumber" @go-back="pageNumber--"  
+        <off-canvas-container :title-array="offCanvasTitle" 
                               ref="RaidTeamOffCanvas">
 
           <template v-slot:pageOne>
@@ -89,7 +88,7 @@ const RaidTeamOffCanvas =  {
             <div v-for="pokemon in pokemonTeam.activeTeam"
                  :key="pokemon.Id">
               <horizontal-card :pokemon-team="pokemonTeam" :card-style="3"
-                               :pokemon="returnFullPokemon(pokemon)"></horizontal-card>
+                               :pokemon="returnFullPokemon(pokemon)" @pokemon-removed="returnNewPokemon"></horizontal-card>
             </div>
             <div v-if="pokemonTeam.backupPokemon.length > 0">
               <div class=" ps-3">
@@ -98,7 +97,7 @@ const RaidTeamOffCanvas =  {
               <div v-for="pokemon in pokemonTeam.backupPokemon"
                    :key="pokemon.Id">
                 <horizontal-card :pokemon-team="pokemonTeam" :card-style="3"
-                                 :pokemon="returnFullPokemon(pokemon)"></horizontal-card>
+                                 :pokemon="returnFullPokemon(pokemon)" @pokemon-removed="returnNewPokemon"></horizontal-card>
               </div>
             </div>
 

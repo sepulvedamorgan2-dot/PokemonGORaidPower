@@ -10,8 +10,7 @@ const FilterOffCanvas = {
     data: function () {
         return {
             filterObject: {
-                filterFast: '',
-                filterCharged: '',
+                filterType: '',
                 filterCP: 0,
                 filterShadow: '',
                 filterMega: '',
@@ -27,6 +26,7 @@ const FilterOffCanvas = {
     methods: {
         updateFilter(newFilter){
             this.filterObject = newFilter
+            this.pokemonSearch()
         },  pokemonSearch() {
 
 
@@ -34,14 +34,14 @@ const FilterOffCanvas = {
 
             for (let eachItem of this.listToFilter) {
                 // filter name
-                console.log(eachItem.fastMove.type.name)
+
                 if (
                     eachItem.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
-                    (this.filterObject.filterFast === '' || eachItem.fastMove.type.name === this.filterObject.filterFast) &&
-                    (this.filterObject.filterCharged === '' || eachItem.chargedMoveOne.type.name === this.filterObject.filterCharged  || eachItem.chargedMoveTwo.type.name === this.filterObject.filterCharged) &&
+                    (this.filterObject.filterType === '' || eachItem.type === this.filterObject.filterType) &&
                     (this.filterObject.filterShadow === '' || Boolean(eachItem.isShadow) === (this.filterObject.filterShadow === true || this.filterObject.filterShadow === 'true')) &&
                     (this.filterObject.filterMega === '' || Boolean(eachItem.canMegaEvolve) === (this.filterObject.filterMega === true || this.filterObject.filterMega === 'true')) &&
                     (this.filterObject.filterCP <= eachItem.cp)
+
 
                 ) {
 
@@ -56,15 +56,15 @@ const FilterOffCanvas = {
         },
     },
 
+    mounted() {
+        this.pokemonSearch();
+    },
+
     watch: {
         searchQuery: {
             handler: function () {
                 this.pokemonSearch();
             }
-        }, filterObject: {
-            handler: function () {
-                this.pokemonSearch();
-            }, deep: true
         }
     },
 

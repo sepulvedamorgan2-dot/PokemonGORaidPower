@@ -58,29 +58,29 @@ const DetailsOffCanvas = {
 
 
                   <div class="mt-2">
-                    <h5>Fast Move Type</h5>
+                    <h5>Fast Move</h5>
                   </div>
                   <div class="">
-                        <span v-if="activeItem.fastMoveType"
-                              :class="getClass(activeItem.fastMoveType, \`badge p-2 px-3 fs-tiny text-capitalize\`)">{{ activeItem.fastMoveType }}</span>
-                    <span v-if="!activeItem.fastMoveType"
+                        <span v-if="activeItem.fastMove"
+                              :class="getClass(activeItem.fastMove.type.name, \`badge p-2 px-3 fs-tiny text-capitalize\`)">{{ activeItem.fastMove.names.English }}</span>
+                    <span v-else
                           :class="\`bg-secondary badge p-2 px-3 fs-tiny text-capitalize\`">Not Added</span>
                   </div>
 
 
                   <div class="mt-2">
-                    <h5>Charged Move Type</h5>
+                    <h5>Charged Move(s)</h5>
                   </div>
                   <div class="">
 
-                        <span v-if="activeItem.chargedMoveType1"
-                              :class="getClass(activeItem.chargedMoveType1, \`badge p-2 px-3 fs-tiny text-capitalize\`)">{{ activeItem.chargedMoveType1 }}</span>
-                    <span v-if="!activeItem.chargedMoveType1"
+                        <span v-if="activeItem.chargedMoveOne"
+                              :class="getClass(activeItem.chargedMoveOne.type.name, \`badge p-2 px-3 fs-tiny text-capitalize\`)">{{ activeItem.chargedMoveOne.names.English }}</span>
+                    <span v-else
                           :class="\`bg-secondary badge p-2 text-capitalize\`">Not Added</span>
 
-                    <span v-if="activeItem.chargedMoveType2"
-                          :class="getClass(activeItem.chargedMoveType2, \`badge p-2 px-3 fs-tiny ms-2 text-capitalize\`)">{{ activeItem.chargedMoveType2 }}</span>
-                    <span v-if="!activeItem.chargedMoveType2"
+                    <span v-if="activeItem.chargedMoveTwo"
+                          :class="getClass(activeItem.chargedMoveTwo.type.name, \`badge p-2 px-3 fs-tiny ms-2 text-capitalize\`)">{{ activeItem.chargedMoveTwo.names.English }}</span>
+                    <span v-else
                           :class="\`bg-secondary badge p-2 text-capitalize\`">Not Added</span>
                   </div>
                 </div>
