@@ -41,7 +41,7 @@ function addPokemon(pokemon, version, index) {
     pokemonListApi.push(pokemonToAdd);
 }
 export async function fetchPokemonList() {
-    fetch("https://pokemon-go-api.github.io/pokemon-go-api/api/pokedex.json")
+    fetch("./styles/Data/pokedex.json")
         .then((response) => response.json())
         .then((data) => {
 
