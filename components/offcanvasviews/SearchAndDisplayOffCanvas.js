@@ -12,7 +12,7 @@ const SearchAndDisplayOffCanvas =  {
     data: function () {
         return {
             searchResults: [],
-
+            query: ''
         }
     },
 
@@ -26,15 +26,16 @@ const SearchAndDisplayOffCanvas =  {
 
     methods: {
          updateSearchResults(query) {
-
+            this.query = query;
             let resultObjects = [];
             for (let pokemonQueried of this.listToSearch) {
-
+                if(query.length < 5){
                 if (resultObjects.length >= 12) {
 
                     break;
 
-                }
+                }}
+
                 try{
                 if (pokemonQueried.includes(query.toLowerCase())) {
                     let pokemonObject = {};
@@ -58,7 +59,7 @@ const SearchAndDisplayOffCanvas =  {
     watch: {
         listToSearch: {
             handler: function () {
-                this.updateSearchResults('');
+                this.updateSearchResults(this.query);
             }
         }
     },
