@@ -66,7 +66,7 @@ export async function fetchPokemonList() {
 
                         for(let i = 0; i < pokemon.assetForms.length; i++){
                             if (pokemon.assetForms[i].costume || pokemon.assetForms[i].form && pokemon.assetForms[i].form !== "PRIMAL"  && pokemon.assetForms[i].form !== "MEGA"&& pokemon.assetForms[i].form !== "MEGA_X" && pokemon.assetForms[i].form !== "MEGA_Y" ){
-                                console.log(pokemon.assetForms[i]);
+
                                 addPokemon(pokemon, 3, i);
                                 try{
                                     if(pokemon.assetForms[i].shinyImage){

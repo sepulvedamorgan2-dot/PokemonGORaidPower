@@ -18,8 +18,14 @@
 <div id="app">
     <navbar-main page-title="Trade Tool"></navbar-main>
 
-    <trade-card :have-list="haveList" :pokemon-list="pokemonList" :pokemon-list-api="pokemonListAPI" :wanted-list="wantList"></trade-card>
-
+    <div class="container gx-3">
+        <div class="d-flex justify-content-center">
+            <div class="col-12 col-lg-6 mt-3">
+                <toggle-card class="mb-2" :selected-options="selectedOptions"></toggle-card>
+                <trade-card class="mb-2" :options="selectedOptions" :have-list="haveList"  :wanted-list="wantList" :pokemon-list-api="pokemonListAPI" :pokemon-list="pokemonList" :></trade-card>
+            </div>
+        </div>
+    </div>
 
 </div>
 <!-- modal end -->
