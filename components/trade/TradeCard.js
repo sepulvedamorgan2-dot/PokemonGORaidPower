@@ -88,7 +88,7 @@ const ComponentName = {
 
         </template>
         <template v-slot:card-body>
-
+          
           <div class="ms-1">
             <h4 v-for="option in options" :class="{
                 ['bg-'+option.tagClass]: option.tagClass !== 'd-none',
