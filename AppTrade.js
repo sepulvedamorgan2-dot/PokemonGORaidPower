@@ -75,9 +75,9 @@ const app = createApp({
                 trinket: {
                     title: 'Trinket Usage',
                     text: 'My Trinket',
-                    tagClass: 'typeground',
+                    tagClass: 'tertiary',
                     optionsArray: [
-                        {text: 'No Trinket', tagClass: 'd-none'}, {text: 'My Trinket', tagClass: 'typeelectric'}, {text: 'Your Trinket', tagClass: 'typeelectric'}
+                        {text: 'No Trinket', tagClass: 'd-none'}, {text: 'My Trinket', tagClass: 'tertiary'}, {text: 'Your Trinket', tagClass: 'tertiary'}
                     ]
                 },
                 tradeFriendshipDays: {

@@ -55,11 +55,11 @@ const ToggleButton = {
 
     template: `
       <div>
-        <label class="ms-1 mb-1 d-block"> {{ this.savedValue.title }}</label>
+        <label class="ms-1 mb-1  d-block"> {{ this.savedValue.title }}</label>
         <div :class=" 
-        {'w-100 rounded-pill shadow fs-6 border p-1  text-center': true,
+        {'w-100 rounded-pill btn fs-6 border p-1  text-center': true,
         'border': savedValue.optionsArray[index].tagClass  === 'd-none',
-         ['text-pink bg-' + savedValue.optionsArray[index].tagClass]: (savedValue.optionsArray[index].tagClass !== 'd-none'),
+         ['border-light  btn-' + savedValue.optionsArray[index].tagClass]: (savedValue.optionsArray[index].tagClass !== 'd-none'),
         }
             " style="min-width: 80px"  v-on:click="nextOption">
           {{ savedValue.optionsArray[index].text }}
