@@ -170,7 +170,7 @@ const app = createApp({
                     this.pokemonTeamList.push({
                         id: this.pokemonTeamList.length,
                         type: type,
-                        activeTeam: [1,2],
+
                         backupPokemon: []
                     });
 

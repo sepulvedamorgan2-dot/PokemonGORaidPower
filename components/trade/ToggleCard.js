@@ -23,11 +23,7 @@ const ComponentName = {
     },
 
     methods: {
-        // updateOption(index) {
-        //     console.log('sad')
-        //     index[0].text = index[0].optionsArray[index[1]].text;
-        //     index[0].tagClass = index[0].optionsArray[index[1]].tagClass;
-        // }
+
     },
 
     watch: {

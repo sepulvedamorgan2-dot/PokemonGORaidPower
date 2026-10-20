@@ -45,7 +45,8 @@ const app = createApp({
                 image: '',
                 maxCp: 0,
                 fastMoves: [],
-                chargedMoves: []
+                chargedMoves: [],
+                megaCapable: false,
 
 
             },

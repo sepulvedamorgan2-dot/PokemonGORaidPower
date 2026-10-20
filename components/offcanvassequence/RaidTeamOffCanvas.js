@@ -65,6 +65,13 @@ const RaidTeamOffCanvas =  {
     computed: {
 
     },
+    watch: {
+      pokemonTeam: {
+          handler: function () {
+              this.returnNewPokemon()
+          }, deep: true
+      }
+    },
 
 
 
