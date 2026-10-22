@@ -31,7 +31,7 @@ const PokemonImageName = {
           </div>
         </div>
 
-        <div class="">
+        <div v-if="activeItem.name" class="">
 
           <h3 class="text-center text-capitalize">{{ activeItem.name }}</h3>
 

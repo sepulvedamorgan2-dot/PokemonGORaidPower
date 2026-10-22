@@ -93,55 +93,7 @@ const app = createApp({
 
                 this.pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
             } else {
-                this.pokemonList = [{
-                    Id: 1,
-                    name: "bidoof",
-                    pokemonId: 399,
-                    cp: 2800,
-                    isShadow: false,
-                    canMegaEvolve: false,
-                    fastMoveType: "electric",
-                    chargedMoveType1: "normal",
-                    chargedMoveType2: "normal",
-
-
-                },{
-                    Id: 2,
-                    name: "bulbasaur",
-                    pokemonId: 1,
-                    cp: 4000,
-                    isShadow: true,
-                    canMegaEvolve: false,
-                    fastMoveType: "grass",
-                    chargedMoveType1: "grass",
-                    chargedMoveType2: "poison",
-
-
-                },{
-                    Id: 3,
-                    name: "bulbasaur",
-                    pokemonId: 1,
-                    cp: 3000,
-                    isShadow: true,
-                    canMegaEvolve: false,
-                    fastMoveType: "electric",
-                    chargedMoveType1: "grass",
-                    chargedMoveType2: "poison",
-
-
-                },{
-                    Id: 4,
-                    name: "bulbasaur",
-                    pokemonId: 1,
-                    cp: 4000,
-                    isShadow: true,
-                    canMegaEvolve: false,
-                    fastMoveType: "steel",
-                    chargedMoveType1: "grass",
-                    chargedMoveType2: "poison",
-
-
-                }]
+                this.pokemonList = []
                 localStorage.setItem('pokemonList', JSON.stringify(this.pokemonList))
             }
 
@@ -170,8 +122,9 @@ const app = createApp({
                     this.pokemonTeamList.push({
                         id: this.pokemonTeamList.length,
                         type: type,
-
-                        backupPokemon: []
+                        activeTeam: [],
+                        backupPokemon: [],
+                        activeMegaId: null
                     });
 
                 }

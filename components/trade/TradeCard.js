@@ -1,5 +1,6 @@
 
 import AddPokemonOffCanvas from "../offcanvassequence/AddPokemonOffCanvas.js";
+import PokemonTagsOffCanvas from "../offcanvassequence/PokemonTagsOffCanvas.js";
 import CardContainer from "../CardContainer.js";
 const ComponentName = {
     name: 'ComponentName',
@@ -7,6 +8,7 @@ const ComponentName = {
     components: {
         AddPokemonOffCanvas,
         CardContainer,
+        PokemonTagsOffCanvas,
     },
 
     data: function () {
@@ -88,7 +90,7 @@ const ComponentName = {
 
         </template>
         <template v-slot:card-body>
-          
+
           <div class="ms-1">
             <h4 v-for="option in options" :class="{
                 ['bg-'+option.tagClass]: option.tagClass !== 'd-none',
@@ -97,15 +99,26 @@ const ComponentName = {
             }" class="col-auto badge me-1  ">{{ option.text }}</h4>
           </div>
           <div class="row  p-2 py-0 mb-1">
-            <div class="row row-cols-md-1 row-cols-5 g-1 g-sm-2 g-md-2 p-sm-1 ">
-              <div class="col col-md-2 text-center position-relative" v-on:
-                   v-on:dblclick="deleteFromList(pokemon, true)"
-                   v-for="pokemon in wantedList">
-                <img class="img-fluid  rounded-4 w-100"
-                     :src="pokemon.image"
-                     alt="pokemonImg">
-                <img v-if="pokemon.image.includes('.s.')" src="/media/images/shiny.png" alt="Shiny"
-                     class="corner-tr-img">
+            <div class="row row-cols-md-1  row-cols-4 g-1 g-sm-2 g-md-2 p-sm-1 ">
+              <div class="col col-md-2" v-for="pokemon in wantedList">
+                <div class="text-center border rounded-4 ">
+                  <div class="position-relative">
+                  <img :class="{'img-fluid w-100': true,
+                  'lucky': pokemon.tags['guaranteed lucky'] === 'Lucky'}"
+                       :src="pokemon.image"
+                       alt="pokemonImg">
+                    <p v-if="pokemon.tradeQuantity > 1"  class="corner-tl-text"> {{pokemon.tradeQuantity}}x</p>
+                  <img v-if="pokemon.image.includes('.s.')" src="/media/images/shiny.png" alt="Shiny"
+                       class="corner-tl-img m-2">
+                  <pokemon-tags-off-canvas :pokemon="pokemon"></pokemon-tags-off-canvas>
+                  </div>
+                  <div>
+                    <p style="font-size: 14px;" v-for="tag in pokemon.tags" v-show="tag !== 'None' && tag !=='Lucky'" class="mb-0">
+                      {{ tag }}
+                    </p>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -128,14 +141,26 @@ const ComponentName = {
             </div>
           </div>
           <div class="row  p-2 py-0 mb-1">
-            <div class="row row-cols-5 row-cols-lg-6 g-1 g-sm-2 g-md-2 p-sm-1 ">
-              <div class="col text-center position-relative" v-on:dblclick="deleteFromList(pokemon, false)"
-                   v-for="pokemon in haveList">
-                <img class="img-fluid  rounded-4 w-100"
-                     :src="pokemon.image"
-                     alt="pokemonImg">
-                <img v-if="pokemon.image.includes('.s.')" src="/media/images/shiny.png" alt="Shiny"
-                     class="corner-tr-img">
+            <div class="row row-cols-md-1  row-cols-4 g-1 g-sm-2 g-md-2 p-sm-1 ">
+              <div class="col col-md-2" v-for="pokemon in haveList">
+                <div class="text-center border rounded-4 ">
+                  <div class="position-relative">
+                    <img :class="{'img-fluid w-100': true,
+                  'lucky': pokemon.tags['guaranteed lucky'] === 'Lucky'}"
+                         :src="pokemon.image"
+                         alt="pokemonImg">
+                    <p v-if="pokemon.tradeQuantity > 1"  class="corner-tl-text"> {{pokemon.tradeQuantity}}x</p>
+                    <img v-if="pokemon.image.includes('.s.')" src="/media/images/shiny.png" alt="Shiny"
+                         class="corner-tl-img m-2">
+                    <pokemon-tags-off-canvas :pokemon="pokemon"></pokemon-tags-off-canvas>
+                  </div>
+                  <div>
+                    <p style="font-size: 14px;" v-for="tag in pokemon.tags" v-show="tag !== 'None' && tag !=='Lucky'" class="mb-0">
+                      {{ tag }}
+                    </p>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>

@@ -1,8 +1,13 @@
 # Changelog
 
 ## [6.1.1 - 0.6.4.1]
+
+
+### Upcoming
+- Tags 
+
 ### Added
-- `Trade Tool` page: Build a card to display what Pokémon you want and what your willing to trade for them
+- `Trade Tool` page: Build a card to display what Pokémon you want and what you're willing to trade for them
   - `TradeCard` component displays the trade information.
   - `ToggleCard` component allows users to toggle between different tags for the trade card.
   - `ToggleButton` cycles through an array as the user clicks the button

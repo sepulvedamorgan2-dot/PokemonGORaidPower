@@ -1,96 +1,80 @@
-
-
-
-
+const CPM_SQUARED = 0.840300 ** 2;
 
 function calculateCP(baseAtk, baseDef, baseSta) {
     const attackFactor = baseAtk + 15;
     const defenseFactor = Math.sqrt(baseDef + 15);
     const staminaFactor = Math.sqrt(baseSta + 15);
-    const cpmFactor = Math.pow(0.840300, 2)
-
-    const calculatedCP = Math.floor((attackFactor * defenseFactor * staminaFactor * cpmFactor) / 10);
-
+    const calculatedCP = Math.floor((attackFactor * defenseFactor * staminaFactor * CPM_SQUARED) / 10);
     // CP cannot be lower than 10
     return Math.max(10, calculatedCP);
 }
 
-const pokemonListApi = [];
-function addPokemon(pokemon, version, index) {
-    const pokemonToAdd = {}
-    pokemonToAdd.name = pokemon.id.toLowerCase();
-    pokemonToAdd.pokemonId = pokemon.dexNr;
-    pokemonToAdd.type = pokemon.primaryType.names.English.toLowerCase();
-    pokemonToAdd.secondaryType = pokemon.secondaryType ? pokemon.secondaryType.names.English.toLowerCase() : null;
+function createPokemonObject(pokemon, version, index = null) {
+    const assetForm = pokemon.assetForms?.[index];
 
-    pokemonToAdd.maxCp = calculateCP(pokemon.stats.attack, pokemon.stats.defense, pokemon.stats.stamina);
-    pokemonToAdd.fastMoves = pokemon.quickMoves;
-    pokemonToAdd.chargedMoves = pokemon.cinematicMoves;
-    pokemonToAdd.megaCapable = pokemon.hasMegaEvolution;
+    let image = null;
+    if (version === 1) image = pokemon.assets?.image;
+    else if (version === 2) image = pokemon.assets?.shinyImage;
+    else if (version === 3) image = assetForm?.image;
+    else if (version === 4) image = assetForm?.shinyImage;
 
-    // pokemonToAdd.image = version === 1 ? String(pokemon.assets.image) : version === 2 ? String(pokemon.assets.shinyImage) : version === 3 ? String(pokemon.assetForms[0].image) : null;
-    if(version === 1){
-        pokemonToAdd.image = String(pokemon.assets.image);
-    } else if(version === 2){
-        pokemonToAdd.image = String(pokemon.assets.shinyImage);
-    } else if(version === 3){
-        pokemonToAdd.image = String(pokemon.assetForms[index].image);
-    } else if(version === 4){
-        pokemonToAdd.image = String(pokemon.assetForms[index].shinyImage);
-    }
-    pokemonListApi.push(pokemonToAdd);
+    return {
+        name: pokemon.id?.toLowerCase() || '',
+        pokemonId: pokemon.dexNr,
+        type: pokemon.primaryType?.names?.English?.toLowerCase() || null,
+        secondaryType: pokemon.secondaryType?.names?.English?.toLowerCase() || null,
+        maxCp: calculateCP(pokemon.stats?.attack || 0, pokemon.stats?.defense || 0, pokemon.stats?.stamina || 0),
+        fastMoves: pokemon.quickMoves || [],
+        chargedMoves: pokemon.cinematicMoves || [],
+        specialFastMoves: pokemon.eliteQuickMoves || [],
+        specialChargedMoves: pokemon.eliteCinematicMoves || [],
+        megaCapable: pokemon.hasMegaEvolution || false,
+        tags: {},
+        tradeQuantity: 1,
+        image: image ? String(image) : null
+    };
 }
+
 export async function fetchPokemonList() {
-    fetch("./styles/Data/pokedex.json")
-        .then((response) => response.json())
-        .then((data) => {
+    try {
+        const response = await fetch("https://pokemon-go-api.github.io/pokemon-go-api/api/pokedex.json");
+        const data = await response.json();
 
-            console.log(data);
-            for (const pokemon of data) {
-                try{
-                    if(pokemon.assets.image){
+        const pokemonListApi = [];
 
-                        addPokemon(pokemon, 1);
-                    }
-                } catch{
-                }
-                try{
-                    if(pokemon.assets.shinyImage){
-
-                        addPokemon(pokemon, 2);
-                    }
-                } catch{
-                }
-                try{
-                    if(pokemon.assetForms.length > 0){
-
-                        for(let i = 0; i < pokemon.assetForms.length; i++){
-                            if (pokemon.assetForms[i].costume || pokemon.assetForms[i].form && pokemon.assetForms[i].form !== "PRIMAL"  && pokemon.assetForms[i].form !== "MEGA"&& pokemon.assetForms[i].form !== "MEGA_X" && pokemon.assetForms[i].form !== "MEGA_Y" ){
-
-                                addPokemon(pokemon, 3, i);
-                                try{
-                                    if(pokemon.assetForms[i].shinyImage){
-                                        addPokemon(pokemon, 4, i);
-                                    }
-                                }catch(e){
-
-                                }
-                            }
-
-                        }
-
-                    }
-                } catch{
-                }
-
-
+        for (const pokemon of data) {
+            // Version 1: Standard image
+            if (pokemon.assets?.image) {
+                pokemonListApi.push(createPokemonObject(pokemon, 1));
             }
 
-        })
-        .catch((error) => {
+            // Version 2: Shiny image
+            if (pokemon.assets?.shinyImage) {
+                pokemonListApi.push(createPokemonObject(pokemon, 2));
+            }
 
-            console.error(error);
-        });
-    console.log(pokemonListApi[0]);
-    return pokemonListApi;
+            // Version 3 & 4: Asset forms
+            if (Array.isArray(pokemon.assetForms)) {
+                pokemon.assetForms.forEach((form, i) => {
+                    const isFormValid = form.costume || (form.form && !["PRIMAL", "MEGA", "MEGA_X", "MEGA_Y"].includes(form.form));
+
+                    if (isFormValid) {
+                        if (form.image) {
+                            pokemonListApi.push(createPokemonObject(pokemon, 3, i));
+                        }
+                        if (form.shinyImage) {
+                            pokemonListApi.push(createPokemonObject(pokemon, 4, i));
+                        }
+                    }
+                });
+            }
+        }
+
+        console.log("First processed Pokémon:", pokemonListApi[0]);
+        return pokemonListApi;
+
+    } catch (error) {
+        console.error("Failed to fetch Pokémon list:", error);
+        return [];
+    }
 }
