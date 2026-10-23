@@ -70,7 +70,19 @@ export const defaultOptions = {
                 [
                     {text: 'N/A', tagClass: 'd-none'}, {text: 'Mirror Trade', tagClass: 'typepoison'}
                 ]
-        }]
+        },
+
+        {
+            title: 'Guaranteed Lucky',
+            text: 'N/A',
+            tagClass: 'd-none',
+            optionsArray: [
+                {text: 'N/A', tagClass: 'd-none'}, {text: 'Guaranteed Lucky', tagClass: 'typeelectric'}
+
+            ]
+        }
+
+        ]
     ,
     have: [
     {
@@ -99,7 +111,19 @@ export const defaultOptions = {
                 tagClass: 'typefire'
             }
         ]
-    }],
+    },
+        {
+            title: 'Guaranteed Lucky',
+            text: 'N/A',
+            tagClass: 'd-none',
+            optionsArray: [
+                {text: 'N/A', tagClass: 'd-none'}, {text: 'Guaranteed Lucky', tagClass: 'typeelectric'}
+
+            ]
+        }
+
+
+    ],
 
 
 
@@ -111,6 +135,7 @@ export const defaultTags = [
         Options: ['XXS', 'None', 'XXL'],
         selected: 'None'
     },
+
     {
         text: 'Lucky',
         Options: ['Lucky', 'None'],

@@ -50,7 +50,7 @@ const TradePage = {
         <template #pageOne>
           <div class="row g-2">
             <div v-for="tradeCard in tradeCardList" class="col-12 col-md-6">
-              <card-container   card-title="Trade Card">
+              <card-container   :card-title="tradeCard.title">
                 <template v-slot:card-actions>
                   <i v-on:click="$refs.pageTab.tabNumber = 3; tradeCardToEdit = tradeCard " class="bi bi-eye fs-3 "></i>
                 </template>
@@ -72,12 +72,13 @@ const TradePage = {
             </div>
           </div>
         </template>
-        <template #pageTwo>
+        <template #pageTwo> 
+          
           <trade-card @add-trade-card="$emit('addTradeCard', $event); console.log('clicked page')"
                       :pokemon-list="pokemonList" :pokemon-list-api="pokemonListApi" :is-new=true></trade-card>
         </template>
         <template #pageThree>
-          <trade-card @add-trade-card="$emit('addTradeCard', $event); console.log('clicked page')"
+          <trade-card @return-home="$refs.pageTab.tabNumber = 1; tradeCardToEdit = null; console.log('clicked page')"
                       :pokemon-list="pokemonList" :existing-trade-card="tradeCardToEdit"
                       :pokemon-list-api="pokemonListApi" :is-new=false></trade-card>
         </template>

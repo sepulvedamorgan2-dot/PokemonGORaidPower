@@ -18,7 +18,9 @@ const CardContainer = {
         cardTitle: {
             type: String,
             default: 'Card Title'
-        }
+        },
+        customTitle: {type: Boolean, default: false},
+
     },
 
     methods: {
@@ -37,9 +39,14 @@ const CardContainer = {
           <div class="row p-2 py-0  mb-1">
             <div class="col-10 ps-2 ps-sm-2">
               <div class="ms-0 ms-sm-1">
-                <h4 class="fs-3 fw-bold pt-2 mb-0 text-capitalize text-start pb-0">
-                  {{ cardTitle }}</h4>
-
+                <div v-if="!customTitle">
+                  <h4 class="fs-3 fw-bold pt-2 mb-0 text-capitalize text-start pb-0">
+                    {{ cardTitle }}</h4>
+                </div>
+                <div v-if="customTitle">
+                  <slot name="card-header-manuel">
+                  </slot>
+                </div>
               </div>
             </div>
             <div class="col-2 d-flex justify-content-end">
@@ -54,7 +61,7 @@ const CardContainer = {
           </slot>
         </div>
       </div>
-        
+
     `,
 
 

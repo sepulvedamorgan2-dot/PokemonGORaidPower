@@ -61,10 +61,6 @@ const app = createApp({
         }
 
 
-
-
-
-
     }, deep: true,
 
     watch: {
@@ -82,23 +78,44 @@ const app = createApp({
 
         },
         tradeCardList: {
+
             handler: function () {
-                if (this.tradeCardList) {
-                    localStorage.setItem('tradeCardList', JSON.stringify(this.tradeCardList))
-                } else {
-                    this.tradeCardList = []
+                for (const tradeCard of this.tradeCardList) {
+                    for (const option of tradeCard.selectedOptions.want) {
+                        for (const subOption of option.optionsArray) {
+                            if (subOption.text === option.text) {
+                                option.tagClass = subOption.tagClass;
+                                break;
+                            }
+                        }
+                    }
+                    for (const option of tradeCard.selectedOptions.have) {
+                        for (const subOption of option.optionsArray) {
+                            if (subOption.text === option.text) {
+                                option.tagClass = subOption.tagClass;
+                                break;
+                            }
+                        }
+                    }
                 }
 
 
-            }, deep: true
+                    if (this.tradeCardList) {
+                        localStorage.setItem('tradeCardList', JSON.stringify(this.tradeCardList))
+                    } else {
+                        this.tradeCardList = []
+                    }
 
-        },
+
+                }
+            ,
+                deep: true
+
+            },
 
 
+        }
 
-
-    }
-
-});
+    });
 
 export default app;

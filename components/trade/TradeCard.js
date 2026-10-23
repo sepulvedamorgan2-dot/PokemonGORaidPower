@@ -23,7 +23,7 @@ const TradeCard = {
             pokeListFiltered: [],
             mode: 0,
             tradeCard: this.existingTradeCard  || {
-                title: '',
+                title: 'My Trade',
                 haveList: [],
                 wantList: [],
                 selectedOptions: defaultOptions
@@ -40,7 +40,27 @@ const TradeCard = {
           }
         },
         immediate: true
-      }
+      }, tradeCard: {
+          handler: function (newVal) {
+              console.log('changed')
+              for (const option of this.tradeCard.selectedOptions.want) {
+                  for (const subOption of option.optionsArray) {
+                      if (subOption.text === option.text) {
+                          option.tagClass = subOption.tagClass;
+                          break;
+                      }
+                  }
+              }
+              for (const option of this.tradeCard.selectedOptions.have) {
+                  for (const subOption of option.optionsArray) {
+                      if (subOption.text === option.text) {
+                          option.tagClass = subOption.tagClass;
+                          break;
+                      }
+                  }
+              }
+          }, deep: true
+        }
     },
     props: {
         pokemonList: {Type: Array, required: true},
@@ -113,7 +133,7 @@ const TradeCard = {
 
 
     template: `
-      <CardContainer :card-title="tradeCard.title" >
+      <CardContainer :custom-title="true" >
         <template v-slot:card-actions>
           <div class="d-flex  py-0  mb-1">
             <i v-show="mode === 0" v-on:click="mode = 1" class="bi bi-pencil-fill fs-5 mt-1"></i>
@@ -128,6 +148,14 @@ const TradeCard = {
                 
           </div>
 
+        </template>
+        <template v-slot:card-header-manuel>
+          <h4 v-if="mode===0" class="fs-2 fw-bold pt-2 mb-0 text-capitalize text-start pb-0">
+            {{ tradeCard.title }}</h4>
+          <label v-if="mode===1" class="form-label">
+            Trade Card Title
+          <input  type="text" v-if="mode===1" class="form-control" v-model="tradeCard.title">
+          </label>
         </template>
         <template v-slot:card-body>
           <div class="col-10  ps-1 pb-2">
@@ -178,7 +206,11 @@ const TradeCard = {
                          class="corner-tl-img m-2">
                    
                   </div>
-                  <div>
+                  <div class="pb-1">
+                    <p style="font-size: 13px; font-weight: 500" v-if="pokemon.tradeDetails.tradeBackground.shorthandName" v-show="pokemon.tradeDetails.tradeBackground !== ''"
+                       :class="{'mb-0': true, ['text-type' + pokemon.tradeDetails.tradeBackground.color]: true}">
+                      {{ pokemon.tradeDetails.tradeBackground.shorthandName }}
+                    </p>
                     <p style="font-size: 14px;" v-for="tag in pokemon.tradeDetails.tags" v-show="tag.selected !== 'None' && tag.selected !=='Lucky'"
                        class="mb-0">
                       {{ tag.selected }}
@@ -259,7 +291,8 @@ const TradeCard = {
               </div>
             </div>
           </div>
-            <button v-if="isNew" type="button" class="btn btn-primary" @click="manageAdd(tradeCard)">Add New Trade Card</button>
+            <button v-if="isNew" type="button" class="btn btn-primary" @click="manageAdd(tradeCard)">Save New Trade Card</button>
+          <button v-if="!isNew && mode === 1" type="button" class="btn btn-primary" @click="mode = 0">Save Trade Card</button>
         </template>
       </CardContainer>
 

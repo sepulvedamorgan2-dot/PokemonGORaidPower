@@ -38,7 +38,7 @@ const PageTabs = {
           <p  v-for="tab in tabArray" v-on:click="tabNumber = tabArray.indexOf(tab) + 1" 
                :class="{
               'col text-center btn mx-1': true,
-              'border-dark rounded': tabArray.indexOf(tab) + 1 === tabNumber
+              'border-secondary bg-white rounded': tabArray.indexOf(tab) + 1 === tabNumber
           
                 }">{{ tab }}
           </p>

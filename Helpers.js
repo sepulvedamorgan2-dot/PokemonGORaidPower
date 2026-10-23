@@ -1,5 +1,6 @@
 const CPM_SQUARED = 0.840300 ** 2;
 import {defaultTags} from '/styles/Data/DefaultTradeSettings.js'
+
 function calculateCP(baseAtk, baseDef, baseSta) {
     const attackFactor = baseAtk + 15;
     const defenseFactor = Math.sqrt(baseDef + 15);
@@ -33,14 +34,20 @@ function createPokemonObject(pokemon, version, index = null) {
             megaCapable: pokemon.hasMegaEvolution || false,
         },
         tradeDetails: {
-            tags: [{
-                text: 'Size',
-                Options: ['XXS', 'None', 'XXL'],
-                selected: 'None'
-            },
+            tags: [
+                {
+                    text: 'Size',
+                    Options: ['None', 'XXS', 'XXL'],
+                    selected: 'None'
+                },
+                {
+                    text: 'None',
+                    Options: ['None', 'Registered', 'Unregistered'],
+                    selected: 'None'
+                },
                 {
                     text: 'Lucky',
-                    Options: ['Lucky', 'None'],
+                    Options: ['None', 'Lucky'],
                     selected: 'None'
                 },
                 {
@@ -57,7 +64,7 @@ function createPokemonObject(pokemon, version, index = null) {
                     text: 'Priority',
                     Options: ['None', 'Priority'],
                     selected: 'None'
-                },]  ,
+                },],
             tradeQuantity: 1,
             tradeBackground: '',
         },
