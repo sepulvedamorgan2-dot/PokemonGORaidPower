@@ -19,13 +19,14 @@ const app = createApp({
             pokemonListAPI: [],
             haveList: [],
             wantList: [],
-            option: {
-                name: 'Can Fly',
-                tagClass: 'success'
+            tradeCard: {
+                id: 0,
+                title: '',
+                haveList: [],
+                wantList: [],
+                selectedOptions: {},
             },
-            selectedOptions: {
-
-            }
+            selectedOptions: {}
         }
     },
 
@@ -63,24 +64,17 @@ const app = createApp({
         if (localStorage.getItem('selectedOptions')) {
             this.selectedOptions = JSON.parse(localStorage.getItem('selectedOptions'));
         } else{
-            this.selectedOptions = {
-                canFly: {
-                    title: 'Flying Capability',
-                    text: 'Can Fly',
-                    tagClass: 'success',
-                    optionsArray: [
-                        {text: 'Can Fly ', tagClass: 'success'}, {text: 'Cant Fly', tagClass: 'danger'}, {text: 'N/A Fly', tagClass: 'd-none'}
-                    ]
-                },
-                trinket: {
+            this.selectedOptions.want = [
+
+                {
                     title: 'Trinket Usage',
-                    text: 'My Trinket',
-                    tagClass: 'tertiary',
+                    text: 'No Trinket',
+                    tagClass: 'd-none',
                     optionsArray: [
-                        {text: 'No Trinket', tagClass: 'd-none'}, {text: 'My Trinket', tagClass: 'tertiary'}, {text: 'Your Trinket', tagClass: 'tertiary'}
+                        {text: 'No Trinket', tagClass: 'd-none'}, {text: 'Your Trinket', tagClass: 'tertiary'}
                     ]
                 },
-                tradeFriendshipDays: {
+                {
                     title: 'Trade Friendship',
                     text: 'Instant',
                     tagClass: 'success',
@@ -88,23 +82,60 @@ const app = createApp({
                         {text: 'Instant', tagClass: 'success'}, {text: '7 Day Trade', tagClass: 'typeground'}, {text: '30 Day Trade', tagClass: 'typeground'},
                     ]
                 },
-                level: {
+                {
                     title: 'Pokemon Level',
                     text: 'Any Level',
                     tagClass: 'success',
                     optionsArray: [
-                        {text: 'Any Level', tagClass: 'secondary'}, {text: 'Level 40', tagClass: 'typewater'}, {text: 'Level 50', tagClass: 'typefire'}, {text: 'No Level', tagClass: 'd-none'}
+                        {text: 'Any Level', tagClass: 'd-none'}, {text: 'Level 40', tagClass: 'typewater'}, {text: 'Level 50', tagClass: 'typefire'}
                     ]
                 },
-                ratio: {
+                {
                     title: 'Trade Ratio',
                     text: '1:1',
                     tagClass: 'success',
                     optionsArray: [
-                        {text: '1:1', tagClass: 'typenormal'}, {text: '2:1', tagClass: 'typewater'}, {text: '3:1', tagClass: 'typefire'}
+                        {text: '1:1', tagClass: 'd-none'}, {text: '2:1', tagClass: 'typewater'}, {text: '3:1', tagClass: 'typefire'}
+                    ]
+                },
+                {
+                    title: 'Mirror Trade',
+                    text: 'N/A',
+                    tagClass: 'success',
+                    optionsArray: [
+                        {text: 'N/A', tagClass: 'd-none'}, {text: 'Mirror Trade', tagClass: 'typePoison'}
                     ]
                 }
-            }
+
+            ]
+            this.selectedOptions.have = [
+                {
+                    title: 'Flying Capability',
+                    text: 'Can Fly',
+                    tagClass: 'success',
+                    optionsArray: [
+                        {text: 'Can Fly', tagClass: 'success'}, {text: 'Cant Fly', tagClass: 'danger'}
+                    ]
+                },
+                {
+                    title: 'Trinket Usage',
+                    text: 'No Trinket',
+                    tagClass: 'd-none',
+                    optionsArray: [
+                        {text: 'No Trinket', tagClass: 'd-none'}, {text: 'My Trinket', tagClass: 'tertiary'}
+                    ]
+                },
+                {
+                    title: 'Pokemon Level',
+                    text: 'Any Level',
+                    tagClass: 'success',
+                    optionsArray: [
+                        {text: 'Any Level', tagClass: 'd-none'}, {text: 'Level 40', tagClass: 'typewater'}, {text: 'Level 50', tagClass: 'typefire'}
+                    ]
+                },
+
+
+            ]
         }
 
 
@@ -149,7 +180,21 @@ const app = createApp({
             }, deep: true
         },
         selectedOptions: {
+
+
+
+
+
+
             handler: function () {
+                for(const option of this.selectedOptions.want) {
+                    for(const subOption of option.optionsArray) {
+                        if(subOption.text === option.text) {
+                            option.tagClass = subOption.tagClass;
+                            break;
+                        }
+                    }
+                }
                 if (this.selectedOptions) {
                     localStorage.setItem('selectedOptions', JSON.stringify(this.selectedOptions))
                 } else {

@@ -58,8 +58,8 @@ const AddPokemonOffCanvas = {
 
     template: `
         
-        <div class="">
-          <div >
+      
+          
             
             <div v-if="button==='plus'"  class="position-fixed bottom-0 end-0 m-4" style="z-index: 1030;">
               <button v-on:click="$refs.AddPokemonOffCanvas.openOffCanvas(); $refs.AddPokemonOffCanvas.pageNumber = 1" type="button" class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center shadow-lg" style="width: 56px; height: 56px;">
@@ -69,10 +69,9 @@ const AddPokemonOffCanvas = {
             </div>
             <div v-else>
               
-                <i v-on:click="$refs.AddPokemonOffCanvas.openOffCanvas(); $refs.AddPokemonOffCanvas.pageNumber = 1" class="bi bi-pencil-fill fs-4"></i>
+                <i v-on:click="$refs.AddPokemonOffCanvas.openOffCanvas(); $refs.AddPokemonOffCanvas.pageNumber = 1" class="bi bi-plus fs-3"></i>
             
             </div>
-          </div>
           
           <teleport to="#app">
             <OffCanvasContainer :title-array="titleArray" ref="AddPokemonOffCanvas">
@@ -85,7 +84,6 @@ const AddPokemonOffCanvas = {
               </template>
             </OffCanvasContainer>
           </teleport>
-        </div>
       
         
     `,
