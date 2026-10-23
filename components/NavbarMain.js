@@ -8,7 +8,7 @@ const ComponentName = {
 
     data: function () {
         return {
-            defaultNavbar: [{title: "Raid Teams", link: "./index.html" }, {title: "Poke-List", link: "./pokelist.html"}, {title: "Trade Tool", link: "./trade.html" }],
+            defaultNavbar: [{title: "Raid Teams", link: "./index.html" }, {title: "Poke-List", link: "./pokelist.html"}, {title: "Trade Cards", link: "./trade.html" }],
         }
     },
 

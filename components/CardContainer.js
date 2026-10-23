@@ -44,7 +44,7 @@ const CardContainer = {
             </div>
             <div class="col-2 d-flex justify-content-end">
 
-              <div class="p-sm-2 me-sm-1 mt-sm-1 p-2 pb-0 pb-sm-0">
+              <div class="me-sm-1 mt-sm-1 pb-0 pb-sm-0">
                 <slot name="card-actions">
                 </slot>
               </div>

@@ -90,10 +90,7 @@ const RaidTeamCard = {
               <img class="img-fluid border rounded w-100"
                    :src="returnFullPokemon(pokemon).image"
                    alt="pokemonImg">
-              
             </div>
-
-
           </div>
         </div>
         

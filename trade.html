@@ -20,13 +20,13 @@
 
 <body class="bg-light">
 <div id="app">
-    <navbar-main page-title="Trade Tool"></navbar-main>
+    <navbar-main page-title="Trade Cards"></navbar-main>
 
-    <div class="container gx-3">
-        <div class="d-flex justify-content-center">
-            <div class="col-12 col-lg-6 mt-3">
-<!--                <toggle-card class="mb-2" :selected-options="selectedOptions.want"></toggle-card>-->
-                <trade-card class="mb-2" :options="selectedOptions" :have-list="haveList"  :wanted-list="wantList" :pokemon-list-api="pokemonListAPI" :pokemon-list="pokemonList" :></trade-card>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8 mt-3">
+                <trade-page @add-trade-card="addTradeCard" :pokemon-list-api="pokemonListAPI" :pokemon-list="pokemonList" :trade-card-list="tradeCardList" ></trade-page>
+<!--                <trade-card class="mb-2" :options="selectedOptions" :have-list="haveList"  :wanted-list="wantList" :pokemon-list-api="pokemonListAPI" :pokemon-list="pokemonList" :></trade-card>-->
             </div>
         </div>
     </div>

@@ -1,14 +1,20 @@
 import AddPokemonOffCanvas from "../offcanvassequence/AddPokemonOffCanvas.js";
 import PokemonTagsOffCanvas from "../offcanvassequence/PokemonTagsOffCanvas.js";
 import CardContainer from "../CardContainer.js";
+import {defaultOptions} from '/styles/Data/DefaultTradeSettings.js'
 
-const ComponentName = {
-    name: 'ComponentName',
+
+const TradeCard = {
+    name: 'TradeCard',
+    computed: {
+
+    },
 
     components: {
         AddPokemonOffCanvas,
         CardContainer,
         PokemonTagsOffCanvas,
+
     },
 
     data: function () {
@@ -16,25 +22,45 @@ const ComponentName = {
             pokeListApiFiltered: [],
             pokeListFiltered: [],
             mode: 0,
+            tradeCard: this.existingTradeCard  || {
+                haveList: [],
+                wantList: [],
+                selectedOptions: defaultOptions
+            },
+            validation: false,
+
         }
     },
-
+    watch: {
+      existingTradeCard: {
+        handler: function (newVal) {
+          if (newVal) {
+            this.tradeCard = newVal;
+          }
+        },
+        immediate: true
+      }
+    },
     props: {
         pokemonList: {Type: Array, required: true},
         pokemonListApi: {Type: Array, required: true},
-        wantedList: {Type: Array, required: true},
-        haveList: {Type: Array, required: true},
-        options: {Type: Object},
+        existingTradeCard: {type: Object},
+        isNew: {type: Boolean, default: false},
     },
 
     methods: {
         addHaveList(pokemon) {
-            this.haveList.push(pokemon);
+
+            this.tradeCard.haveList.push(pokemon);
+            this.returnNewPokemon(this.pokemonListApi, this.tradeCard.haveList, false);
         },
         addWantedList(pokemon) {
-            this.wantedList.push(pokemon);
+            this.validation = false;
+            this.tradeCard.wantList.push(pokemon);
+            this.returnNewPokemon(this.pokemonListApi, this.tradeCard.wantList, true);
         }, returnNewPokemon(allList, listToExclude, listToUpdate) {
-            console.log(this.pokemonListApi[0])
+            console.log('returning new pokemon');
+
             const onlyNewPokemon = []
             for (const pokemonObject of allList) {
                 if (!listToExclude.map(p => p.image).includes(pokemonObject.image)) {
@@ -50,66 +76,72 @@ const ComponentName = {
         }, deleteFromList(pokemon, list) {
             if (this.mode === 1) {
                 if (list) {
-                    const index = this.wantedList.indexOf(pokemon);
+                    const index = this.tradeCard.wantList.indexOf(pokemon);
                     if (index > -1) {
-                        this.wantedList.splice(index, 1);
+                        this.tradeCard.wantList.splice(index, 1);
                     }
                 } else {
-                    const index = this.haveList.indexOf(pokemon);
+                    const index = this.tradeCard.haveList.indexOf(pokemon);
                     if (index > -1) {
-                        this.haveList.splice(index, 1);
+                        this.tradeCard.haveList.splice(index, 1);
                     }
                 }
 
             }
+        }, manageAdd(cardToAdd){
+            if(cardToAdd.wantList.length < 1) {
+                this.validation = true
+                return false;
+
+            }
+
+            this.$emit('addTradeCard', cardToAdd);
+            this.tradeCard = {
+                haveList: [],
+                wantList: [],
+                selectedOptions: defaultOptions
+            }
+
         }
     },
-
-    watch: {
-        wantedList: {
-            handler: function () {
-                this.returnNewPokemon(this.pokemonListApi, this.wantedList, true);
-            }, deep: true
-        },
-        haveList: {
-            handler: function () {
-                this.returnNewPokemon(this.pokemonList, this.haveList, false);
-
-            }, deep: true
-        }
-
+    mounted(){
+      if(this.isNew){
+          this.mode = 1
+      }
     },
 
 
     template: `
-      <CardContainer card-title="Wanted">
+      <CardContainer card-title="Wanted" >
         <template v-slot:card-actions>
           <div class="d-flex  py-0  mb-1">
             <i v-show="mode === 0" v-on:click="mode = 1" class="bi bi-pencil-fill fs-5 mt-1"></i>
             <i v-show="mode === 1" v-on:click="mode = 0" class="bi bi-eye me-3 fs-5 mt-1"></i>
-            <div v-show="mode === 1">
-            <add-pokemon-off-canvas @clicked-object-existing="addWantedList"
-                                    v-on:click="returnNewPokemon(pokemonListApi, wantedList, true)"
-                                    button="pencil" :pokemon-list-from-api="pokeListApiFiltered"
-                                    :card-style=4></add-pokemon-off-canvas>
+            <div v-if="mode === 1 && pokemonListApi"  v-on:click="returnNewPokemon(pokemonListApi, tradeCard.wantList, true);">
+             
+              <add-pokemon-off-canvas @clicked-object-existing="addWantedList"
+                                      
+                                      button="pencil" :pokemon-list-from-api="pokeListApiFiltered"
+                                      :card-style=4></add-pokemon-off-canvas>
               </div>
+                
           </div>
 
         </template>
         <template v-slot:card-body>
 
           <div class="ms-1" v-if="mode === 0">
-            <h4 v-for="option in options.want" :class="{
+            <h4 v-for="option in tradeCard.selectedOptions.want" :class="{
                 ['bg-'+option.tagClass]: option.tagClass !== 'd-none',
                 'd-none': option.tagClass === 'd-none',
             
             }" class="col-auto badge me-1  ">{{ option.text }}</h4>
           </div>
 
-          <div v-if="options.want && mode === 1">
-            <div v-if="options.want && Object.keys(options.want).length > 0">
+          <div v-if="tradeCard.selectedOptions.want && mode === 1">
+            <div v-if="tradeCard.selectedOptions.want && Object.keys(tradeCard.selectedOptions.want).length > 0">
               <div class="ms-1 d-flex   flex-wrap">
-                <label v-for="option in options.want" :key="option.title" class="fs-tiny fw-light form-label">
+                <label v-for="option in tradeCard.selectedOptions.want" :key="option.title" class="fs-tiny fw-light form-label">
                   {{ option.title }}
                   <select style="text-indent: -1px; border-width: 1.5px" :class="{
                     'form-select  w-auto px-4 rounded-pill me-2 ': true,
@@ -123,13 +155,13 @@ const ComponentName = {
               </div>
             </div>
           </div>
-
+            <p v-if="validation" class="text-danger ms-1">Must have one pokemon wanted</p>
           <div class="row  p-2 py-0 mb-1">
             <div class="row row-cols-md-1 mt-0 pt-0 row-cols-4 g-1 g-sm-2 g-md-2 p-sm-1 ">
-              <div class="col col-md-2" v-for="pokemon in wantedList">
+              <div class="col col-md-2" v-for="pokemon in tradeCard.wantList">
                 <div class="text-center border rounded-4 ">
                   <div class="position-relative">
-                    <img :class="{'img-fluid w-100': true,
+                    <img v-on:dblclick="deleteFromList(pokemon, true)" :class="{'img-fluid w-100': true,
                   'lucky': pokemon.tags['guaranteed lucky'] === 'Lucky'}"
                          :src="pokemon.image"
                          alt="pokemonImg">
@@ -160,25 +192,27 @@ const ComponentName = {
             <div class="col-2 d-flex justify-content-end">
 
               <div class="d-flex p-sm-2 me-sm-1 mt-sm-1 p-2 pb-0 pb-sm-0">
-                <add-pokemon-off-canvas v-show="mode === 1" v-on:click="returnNewPokemon(pokemonList, haveList, false)"
-                                        @clicked-object-existing="addHaveList" button="pencil"
-                                        :pokemon-list-from-api="pokeListFiltered"
-                                        :card-style=4></add-pokemon-off-canvas>
+                <div v-show="mode === 1" v-on:click="returnNewPokemon(pokemonList, tradeCard.haveList, false)">
+                  <add-pokemon-off-canvas 
+                                          @clicked-object-existing="addHaveList" button="pencil"
+                                          :pokemon-list-from-api="pokeListFiltered"
+                                          :card-style=4></add-pokemon-off-canvas>
+                </div>
               </div>
             </div>
           </div>
           <div class="ms-1" v-if="mode === 0">
-            <h4 v-for="option in options.have" :class="{
+            <h4 v-for="option in tradeCard.selectedOptions.have" :class="{
                 ['bg-'+option.tagClass]: option.tagClass !== 'd-none',
                 'd-none': option.tagClass === 'd-none',
             
             }" class="col-auto badge me-1  ">{{ option.text }}</h4>
           </div>
 
-          <div v-if="options.have && mode === 1">
-            <div v-if="options.have && Object.keys(options.have).length > 0">
+          <div v-if="tradeCard.selectedOptions.have && mode === 1">
+            <div v-if="tradeCard.selectedOptions.have && Object.keys(tradeCard.selectedOptions.have).length > 0">
               <div class="ms-1 d-flex   flex-wrap">
-                <label v-for="option in options.have" :key="option.title" class="fs-tiny fw-light form-label">
+                <label v-for="option in tradeCard.selectedOptions.have" :key="option.title" class="fs-tiny fw-light form-label">
                   {{ option.title }}
                   <select style="text-indent: -1px; border-width: 1.5px" :class="{
                     'form-select  w-auto px-4 rounded-pill me-2 ': true,
@@ -195,7 +229,7 @@ const ComponentName = {
 
           <div class="row  p-2 py-0 mb-1">
             <div class="row row-cols-md-1 mt-0 pt-0 row-cols-4 g-1 g-sm-2 g-md-2 p-sm-1 ">
-              <div class="col col-md-2" v-for="pokemon in haveList">
+              <div class="col col-md-2" v-for="pokemon in tradeCard.haveList">
                 <div class="text-center border rounded-4 ">
                   <div class="position-relative">
                     <img v-on:dblclick="deleteFromList(pokemon, false)" :class="{'img-fluid w-100': true,
@@ -217,7 +251,7 @@ const ComponentName = {
               </div>
             </div>
           </div>
-
+            <button v-if="isNew" type="button" class="btn btn-primary" @click="manageAdd(tradeCard)">Add New Trade Card</button>
         </template>
       </CardContainer>
 
@@ -226,4 +260,4 @@ const ComponentName = {
 
 }
 
-export default ComponentName;
+export default TradeCard;

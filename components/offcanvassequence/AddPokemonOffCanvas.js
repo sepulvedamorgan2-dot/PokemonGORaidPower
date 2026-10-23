@@ -62,7 +62,7 @@ const AddPokemonOffCanvas = {
           
             
             <div v-if="button==='plus'"  class="position-fixed bottom-0 end-0 m-4" style="z-index: 1030;">
-              <button v-on:click="$refs.AddPokemonOffCanvas.openOffCanvas(); $refs.AddPokemonOffCanvas.pageNumber = 1" type="button" class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center shadow-lg" style="width: 56px; height: 56px;">
+              <button v-on:click="console.log('eee');$refs.AddPokemonOffCanvas.openOffCanvas(); $refs.AddPokemonOffCanvas.pageNumber = 1" type="button" class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center shadow-lg" style="width: 56px; height: 56px;">
                 <i class="bi bi-plus-lg fs-4"></i>
               </button>
               
