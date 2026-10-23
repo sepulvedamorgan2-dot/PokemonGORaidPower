@@ -1,5 +1,5 @@
 const CPM_SQUARED = 0.840300 ** 2;
-
+import {defaultTags} from '/styles/Data/DefaultTradeSettings.js'
 function calculateCP(baseAtk, baseDef, baseSta) {
     const attackFactor = baseAtk + 15;
     const defenseFactor = Math.sqrt(baseDef + 15);
@@ -19,19 +19,50 @@ function createPokemonObject(pokemon, version, index = null) {
     else if (version === 4) image = assetForm?.shinyImage;
 
     return {
-        name: pokemon.id?.toLowerCase() || '',
         pokemonId: pokemon.dexNr,
+        name: pokemon.id?.toLowerCase() || '',
+        image: image ? String(image) : null,
         type: pokemon.primaryType?.names?.English?.toLowerCase() || null,
         secondaryType: pokemon.secondaryType?.names?.English?.toLowerCase() || null,
-        maxCp: calculateCP(pokemon.stats?.attack || 0, pokemon.stats?.defense || 0, pokemon.stats?.stamina || 0),
-        fastMoves: pokemon.quickMoves || [],
-        chargedMoves: pokemon.cinematicMoves || [],
-        specialFastMoves: pokemon.eliteQuickMoves || [],
-        specialChargedMoves: pokemon.eliteCinematicMoves || [],
-        megaCapable: pokemon.hasMegaEvolution || false,
-        tags: {},
-        tradeQuantity: 1,
-        image: image ? String(image) : null
+        pokemonDetails: {
+            maxCp: calculateCP(pokemon.stats?.attack || 0, pokemon.stats?.defense || 0, pokemon.stats?.stamina || 0),
+            fastMoves: pokemon.quickMoves || [],
+            chargedMoves: pokemon.cinematicMoves || [],
+            specialFastMoves: pokemon.eliteQuickMoves || [],
+            specialChargedMoves: pokemon.eliteCinematicMoves || [],
+            megaCapable: pokemon.hasMegaEvolution || false,
+        },
+        tradeDetails: {
+            tags: [{
+                text: 'Size',
+                Options: ['XXS', 'None', 'XXL'],
+                selected: 'None'
+            },
+                {
+                    text: 'Lucky',
+                    Options: ['Lucky', 'None'],
+                    selected: 'None'
+                },
+                {
+                    text: 'Level',
+                    Options: ['None', 'Lvl 1', 'Lvl 40', 'Lvl 50'],
+                    selected: 'None'
+                },
+                {
+                    text: 'Special Move',
+                    Options: ['None',],
+                    selected: 'None'
+                },
+                {
+                    text: 'Priority',
+                    Options: ['None', 'Priority'],
+                    selected: 'None'
+                },]  ,
+            tradeQuantity: 1,
+            tradeBackground: '',
+        },
+
+
     };
 }
 

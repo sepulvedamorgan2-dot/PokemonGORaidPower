@@ -105,4 +105,32 @@ export const defaultOptions = {
 
 }
 
+export const defaultTags = [
+    {
+        text: 'Size',
+        Options: ['XXS', 'None', 'XXL'],
+        selected: 'None'
+    },
+    {
+        text: 'Lucky',
+        Options: ['Lucky', 'None'],
+        selected: 'None'
+    },
+    {
+        text: 'Level',
+        Options: ['None', 'Lvl 1', 'Lvl 40', 'Lvl 50'],
+        selected: 'None'
+    },
+    {
+        text: 'Special Move',
+        Options: ['None',],
+        selected: 'None'
+    },
+    {
+        text: 'Priority',
+        Options: ['None', 'Priority'],
+        selected: 'None'
+    },
+
+]
 

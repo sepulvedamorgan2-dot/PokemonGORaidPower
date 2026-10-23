@@ -26,7 +26,7 @@ const DetailsOffCanvas = {
                     selected: 'None'
                 },
                 {
-                    text: 'Guaranteed Lucky',
+                    text: 'Lucky',
                     Options: ['Lucky', 'None'],
                     selected: 'None'
                 },
@@ -66,20 +66,15 @@ const DetailsOffCanvas = {
 
     },
     mounted() {
-        if (Object.keys(this.pokemon.tags).length === 0) {
-            for(let i = 0; i < this.defaultTags.length; i++) {
-                this.pokemon.tags[this.defaultTags[i].text.toLowerCase()] =  this.defaultTags[i].selected;
-            }
 
-        }
         const moves = ['None']
-        const movesArray = Object.values(this.pokemon.specialChargedMoves);
-        movesArray.push = Object.values(this.pokemon.specialFastMoves);
+        const movesArray = Object.values(this.pokemon.pokemonDetails.specialChargedMoves);
+        movesArray.push = Object.values(this.pokemon.pokemonDetails.specialFastMoves);
         movesArray.forEach(move => {
             moves.push(move.names.English);
         });
 
-        this.defaultTags[3].Options = moves
+        this.pokemon.tradeDetails.tags[3].Options = moves
 
 
     },
@@ -92,22 +87,22 @@ const DetailsOffCanvas = {
         <div v-if="haveQuantity" class="px-3">
           <div class="mt-3">
             <h5 >Quantity</h5>
-            <input style="width: 100px" type="number" min="1" max="100" class="form-control" v-model="pokemon.tradeQuantity">
+            <input style="width: 100px" type="number" min="1" max="100" class="form-control" v-model="pokemon.tradeDetails.tradeQuantity">
           </div>
         </div>
         <!--                delete button-->
         <div class="px-3">
-          <div v-for="tag in defaultTags" :key="tag.text">
+          <div v-for="tag in pokemon.tradeDetails.tags" :key="tag.text">
             <div class="mt-2">
               <h5 >{{ tag.text }}</h5>
             </div>
             <div class="d-flex g-1 ">
               <div class="col-auto me-1" v-for="option in tag.Options" :key="option">
 
-                <input v-model="pokemon.tags[tag.text.toLowerCase()]" :value="option" type="radio" class="btn-check "
+                <input v-model="tag.selected" :value="option" type="radio" class="btn-check "
                        :name="pokemon.image + tag.text"
                        :id="pokemon.image + tag.text+option" autocomplete="off"
-                       :checked="pokemon.tags[tag.text.toLowerCase()] === option">
+                       :checked="pokemon.tradeDetails.tags[tag.text.toLowerCase()] === option">
                 <label class="btn rounded-pill btn-outline-success "
                        :for="pokemon.image + tag.text+option">{{ option }}</label>
 

@@ -23,6 +23,7 @@ const TradeCard = {
             pokeListFiltered: [],
             mode: 0,
             tradeCard: this.existingTradeCard  || {
+                title: '',
                 haveList: [],
                 wantList: [],
                 selectedOptions: defaultOptions
@@ -112,7 +113,7 @@ const TradeCard = {
 
 
     template: `
-      <CardContainer card-title="Wanted" >
+      <CardContainer :card-title="tradeCard.title" >
         <template v-slot:card-actions>
           <div class="d-flex  py-0  mb-1">
             <i v-show="mode === 0" v-on:click="mode = 1" class="bi bi-pencil-fill fs-5 mt-1"></i>
@@ -129,7 +130,13 @@ const TradeCard = {
 
         </template>
         <template v-slot:card-body>
+          <div class="col-10  ps-1 pb-2">
+            <div class="ms-0 ms-sm-1">
+              <h4 class="fs-3 fw-bold pt-2 mb-0 text-capitalize text-start pb-0">
+                Wanted</h4>
 
+            </div>
+          </div>
           <div class="ms-1" v-if="mode === 0">
             <h4 v-for="option in tradeCard.selectedOptions.want" :class="{
                 ['bg-'+option.tagClass]: option.tagClass !== 'd-none',
@@ -161,19 +168,20 @@ const TradeCard = {
               <div class="col col-md-2" v-for="pokemon in tradeCard.wantList">
                 <div class="text-center border rounded-4 ">
                   <div class="position-relative">
-                    <img v-on:dblclick="deleteFromList(pokemon, true)" :class="{'img-fluid w-100': true,
-                  'lucky': pokemon.tags['guaranteed lucky'] === 'Lucky'}"
+                    <pokemon-tags-off-canvas v-if="mode === 1" :pokemon="pokemon"></pokemon-tags-off-canvas>
+                    <img  v-on:dblclick="deleteFromList(pokemon, true)" :class="{'img-fluid w-100': true,
+                  'lucky': pokemon.tradeDetails.tags[1].selected === 'Lucky'}"
                          :src="pokemon.image"
                          alt="pokemonImg">
-                    <p v-if="pokemon.tradeQuantity > 1" class="corner-tl-text"> {{ pokemon.tradeQuantity }}x</p>
+                    <p v-if="pokemon.tradeDetails.tradeQuantity > 1" class="corner-tl-text"> {{ pokemon.tradeDetails.tradeQuantity }}x</p>
                     <img v-if="pokemon.image.includes('.s.')" src="/media/images/shiny.png" alt="Shiny"
                          class="corner-tl-img m-2">
-                    <pokemon-tags-off-canvas v-if="mode === 1" :pokemon="pokemon"></pokemon-tags-off-canvas>
+                   
                   </div>
                   <div>
-                    <p style="font-size: 14px;" v-for="tag in pokemon.tags" v-show="tag !== 'None' && tag !=='Lucky'"
+                    <p style="font-size: 14px;" v-for="tag in pokemon.tradeDetails.tags" v-show="tag.selected !== 'None' && tag.selected !=='Lucky'"
                        class="mb-0">
-                      {{ tag }}
+                      {{ tag.selected }}
                     </p>
                   </div>
                 </div>
@@ -233,7 +241,7 @@ const TradeCard = {
                 <div class="text-center border rounded-4 ">
                   <div class="position-relative">
                     <img v-on:dblclick="deleteFromList(pokemon, false)" :class="{'img-fluid w-100': true,
-                  'lucky': pokemon.tags['guaranteed lucky'] === 'Lucky'}"
+                  'lucky': pokemon.tradeDetails.tags['guaranteed lucky'] === 'Lucky'}"
                          :src="pokemon.image"
                          alt="pokemonImg">
                     <p v-if="pokemon.tradeQuantity > 1" class="corner-tl-text"> {{ pokemon.tradeQuantity }}x</p>
@@ -242,7 +250,7 @@ const TradeCard = {
                     <pokemon-tags-off-canvas v-if="mode === 1" :pokemon="pokemon"></pokemon-tags-off-canvas>
                   </div>
                   <div>
-                    <p style="font-size: 14px;" v-for="tag in pokemon.tags" v-show="tag !== 'None' && tag !=='Lucky'"
+                    <p style="font-size: 14px;" v-for="tag in pokemon.tradeDetails.tags" v-show="tag !== 'None' && tag !=='Lucky'"
                        class="mb-0">
                       {{ tag }}
                     </p>

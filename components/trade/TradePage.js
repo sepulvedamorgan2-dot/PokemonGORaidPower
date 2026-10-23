@@ -59,7 +59,7 @@ const TradePage = {
                     <div class="col-4  position-relative" v-if="tradeCard.wantList.length > 0"
                          v-for="pokemon in tradeCard.wantList.slice(0,6)">
                       <img :class="{'img-fluid w-100': true,
-                  'lucky': pokemon.tags['guaranteed lucky'] === 'Lucky'}"
+                  'lucky': pokemon.tradeDetails.tags[1] === 'Lucky'}"
                            :src="pokemon.image"
                            alt="pokemonImg">
                       <!--                  <p v-if="pokemon.tradeQuantity > 1" class="corner-tl-text"> {{ pokemon.tradeQuantity }}x</p>-->

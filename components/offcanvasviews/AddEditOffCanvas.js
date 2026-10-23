@@ -49,7 +49,7 @@ const AddOrEditOffCanvas = {
             this.bsOffCanvas.show();
 
         }, updateCpNumber(number){
-            this.activeItem.cp = Math.round(number.target.value * this.activeItem.maxCp / 100);
+            this.activeItem.cp = Math.round(number.target.value * this.activeItem.pokemonDetails.maxCp / 100);
 
         }, submitPokemon(pokemon, quantity) {
             if(!pokemon.cp){
@@ -115,7 +115,8 @@ const AddOrEditOffCanvas = {
                     <label class="form-label w-100">
                       Fast Move
                       <select class="form-select" v-model="activeItem.fastMove">
-                        <option v-for="move in activeItem.fastMoves" :value="move">{{move.names.English}}</option>
+                        <option v-for="move in activeItem.pokemonDetails.fastMoves" :value="move">{{move.names.English}}</option>
+                        <option v-for="move in activeItem.pokemonDetails.specialFastMoves" :value="move">{{move.names.English}}*</option>
                       </select>
                     </label>
                   </div>
@@ -128,7 +129,8 @@ const AddOrEditOffCanvas = {
                       Charged Move 1
                       <select class="form-select" id="chargedMoveSelect1edit"
                               v-model="activeItem.chargedMoveOne">
-                        <option v-for="move in activeItem.chargedMoves" :value="move">{{move.names.English}}</option>
+                        <option v-for="move in activeItem.pokemonDetails.chargedMoves" :value="move">{{move.names.English}}</option>
+                        <option v-for="move in activeItem.pokemonDetails.specialChargedMoves" :value="move">{{move.names.English}}*</option>
                       </select>
                     </label>
                   </div>
@@ -137,7 +139,8 @@ const AddOrEditOffCanvas = {
                       Charged Move 2
                       <select class="form-select" id="chargedMoveSelect2edit"
                               v-model="activeItem.chargedMoveTwo">
-                        <option v-for="move in activeItem.chargedMoves" :value="move">{{move.names.English}}</option>
+                        <option v-for="move in activeItem.pokemonDetails.chargedMoves" :value="move">{{move.names.English}}</option>
+                        <option v-for="move in activeItem.pokemonDetails.specialChargedMoves" :value="move">{{move.names.English}}*</option>
                       </select>
                     </label>
                   </div>
@@ -154,7 +157,7 @@ const AddOrEditOffCanvas = {
                   Shadow
                 </label>
               </div>
-              <div v-show="activeItem.megaCapable">
+              <div v-show="activeItem.pokemonDetails.megaCapable">
                 <label class="form-check-label">
                   <input type="checkbox" v-model="activeItem.canMegaEvolve"
                          class="border-dark-subtle form-check-input">
