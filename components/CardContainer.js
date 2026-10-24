@@ -17,7 +17,7 @@ const CardContainer = {
     props: {
         cardTitle: {
             type: String,
-            default: 'Card Title'
+
         },
         customTitle: {type: Boolean, default: false},
 
@@ -36,7 +36,7 @@ const CardContainer = {
     template: `
       <div class="card ">
         <div class="card-body p-2  p-sm-2 p-md-2">
-          <div class="row p-2 py-0  mb-1">
+          <div v-if="cardTitle || customTitle" class="row p-2 py-0  mb-1">
             <div class="col-10 ps-2 ps-sm-2">
               <div class="ms-0 ms-sm-1">
                 <div v-if="!customTitle">

@@ -11,7 +11,7 @@ const CollapseArea = {
     data: function () {
         return {
             id: 'collapse' + counter++,
-            iconClass: 'fs-4 bi bi-plus'
+            iconClass: 'ps-1 fs-6 bi bi-eye'
         }
     },
 
@@ -21,10 +21,10 @@ const CollapseArea = {
 
     methods: {
         swapIcon: function () {
-            if(this.iconClass === 'fs-4 bi bi-plus'){
-                this.iconClass = 'fs-4 bi bi-dash'
-            } else if(this.iconClass === 'fs-4 bi bi-dash'){
-                this.iconClass = 'fs-4 bi bi-plus'
+            if(this.iconClass === 'ps-1 fs-6 bi bi-eye'){
+                this.iconClass = 'ps-1 fs-6 bi bi-eye-slash'
+            } else{
+                this.iconClass = 'ps-1 fs-6 bi bi-eye'
             }
 
         }
@@ -38,8 +38,9 @@ const CollapseArea = {
 
     template: `
       <div>
-        <div>
-          <i data-bs-toggle="collapse" v-on:click="swapIcon" :data-bs-target="'#' + id" :class="iconClass"></i>
+        <div class="btn btn-outline-dark d-inline " data-bs-toggle="collapse" :data-bs-target="'#' + id"  v-on:click="swapIcon" >
+          <i class="h6">View Tags</i>
+          <i  :class="iconClass"></i>
         </div>
         <teleport defer :to="'#' + teleportId">
           <div :id="id" data-bs-toggle="collapse" class="collapse">

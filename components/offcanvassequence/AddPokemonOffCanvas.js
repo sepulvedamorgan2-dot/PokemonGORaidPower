@@ -27,6 +27,7 @@ const AddPokemonOffCanvas = {
         cardStyle: {Number, required: true},
         pokemonListFromApi: {type: Array, required: true},
         button: {type: String, required: true},
+        warning: {type: Boolean, default: false},
     },
 
     methods: {
@@ -52,6 +53,9 @@ const AddPokemonOffCanvas = {
             ]
         },deep: true,
     },
+    mounted(){
+        this.pokemonList = this.pokemonListFromApi;
+    },
 
 
 
@@ -67,16 +71,16 @@ const AddPokemonOffCanvas = {
               </button>
               
             </div>
-            <div v-else>
+            <div class="d-flex justify-content-end" v-else>
               
-                <i v-on:click="$refs.AddPokemonOffCanvas.openOffCanvas(); $refs.AddPokemonOffCanvas.pageNumber = 1" class="bi bi-plus fs-3"></i>
+                <i  v-on:click="$refs.AddPokemonOffCanvas.openOffCanvas(); $refs.AddPokemonOffCanvas.pageNumber = 1" class="bi bi-plus fs-3 p-2 force-hover"></i>
             
             </div>
           
           <teleport to="#app">
             <OffCanvasContainer :title-array="titleArray" ref="AddPokemonOffCanvas">
               <template v-slot:pageOne>
-                <SearchAndDisplayOffCanvas @clicked-object-existing="$emit('clicked-object-existing', $event)" :list-to-search="pokemonList" @clicked-object="handleClick" :card-style="cardStyle" :array-length="5" :button-style="1">
+                <SearchAndDisplayOffCanvas :warning="warning"  @clicked-object-existing="$emit('clicked-object-existing', $event)" :list-to-search="pokemonList" @clicked-object="handleClick" :card-style="cardStyle" :array-length="5" :button-style="1">
                 </SearchAndDisplayOffCanvas> 
               </template>
               <template v-slot:pageTwo >

@@ -34,7 +34,7 @@ const PageTabs = {
 
     template: `
       <div ref="pageTabs">
-        <div class="row g-2">
+        <div v-if="tabNumber === 1 " class="row g-2">
           <p  v-for="tab in tabArray" v-on:click="tabNumber = tabArray.indexOf(tab) + 1" 
                :class="{
               'col text-center btn mx-1': true,

@@ -3,6 +3,7 @@ import OffCanvasContainer from "../containers/OffCanvasContainer.js";
 import SearchBarContainer from "../molecules/SearchBarContainer.js";
 import HorizontalCardContainer from "../containers/HorizontalCardContainer.js";
 const SearchAndDisplayOffCanvas =  {
+    name: 'SearchAndDisplayOffCanvas',
     components: {
         OffCanvasContainer,
         SearchBarContainer,
@@ -21,7 +22,7 @@ const SearchAndDisplayOffCanvas =  {
         filter: {Boolean, default: true},
         arrayLength: {type: Number, default: 5},
         cardStyle: {type: Number, required: true},
-
+        warning: { type: Boolean, default: false }
     },
 
     methods: {
@@ -61,16 +62,19 @@ const SearchAndDisplayOffCanvas =  {
             handler: function () {
                 this.updateSearchResults(this.query);
             }
-        }
+        }, deep: true,
+    },
+    mounted() {
+        this.updateSearchResults(this.query);
     },
     computed: {},
 
     template: `
 
-      <div class=" mt-2 border-bottom">
-        <search-bar-container class="px-2" @search-query="updateSearchResults" @filter-clicked="console.log('filterclicked')" :list-to-search="listToSearch"  title="Search Pokemon"></search-bar-container>
+      <div class=" mt-2 ">
+        <search-bar-container  class="px-2" @search-query="updateSearchResults" @filter-clicked="console.log('filterclicked')" :list-to-search="listToSearch"  title="Search Pokemon"></search-bar-container>
 
-        <horizontal-card-container :array-to-display="searchResults"  :card-style="cardStyle"
+        <horizontal-card-container :warning="warning" :search-query="query" :array-to-display="searchResults"  :card-style="cardStyle"
                                    @clicked-object="object => $emit('clickedObject', object)"
                                    @clicked-object-existing="object => $emit('clickedObjectExisting', object)"
                                   >

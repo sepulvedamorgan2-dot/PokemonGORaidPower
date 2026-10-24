@@ -34,6 +34,7 @@ const SearchAndDisplayView = {
         },
         noFilter: {Type: Boolean, default: false},
         pageNumber: {Type: Number},
+        warning: { type: Boolean, default: false},
     },
 
     methods: {
@@ -98,7 +99,7 @@ const SearchAndDisplayView = {
         <search-bar-container :filter=true @search-query="updateSearchQuery" class="p-2"
                               @filter-clicked="$emit('filterClicked')" place-holder="Ex: Bidoof"
                               :title="title"></search-bar-container>
-        <horizontal-card-container @clicked-object="object => $emit('clickedObject', object)"
+        <horizontal-card-container :warning="warning"  @clicked-object="object => $emit('clickedObject', object)"
                                    :array-to-display="matches" :card-style=2></horizontal-card-container>
       </div>
 

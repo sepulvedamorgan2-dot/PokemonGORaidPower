@@ -47,7 +47,7 @@ const DetailsOffCanvas = {
             moves.push(move.names.English);
         });
 
-        this.pokemon.tradeDetails.tags[3].Options = moves
+        this.pokemon.tradeDetails.tags[4].Options = moves
 
 
     },
@@ -65,6 +65,7 @@ const DetailsOffCanvas = {
 
               <!-- Special Event / In-Game Backgrounds -->
               <optgroup label="Special Backgrounds">
+                <option :value="{ shorthandName: 'Com Day', color: 'ghost' }">Community Day</option>
                 <option :value="{ shorthandName: 'Beast Ball', color: 'dragon' }">Beast Ball / Wormhole</option>
                 <option :value="{ shorthandName: 'Black Version', color: 'dark' }">Black Version</option>
                 <option :value="{ shorthandName: 'White Version', color: 'fairy' }">White Version</option>
