@@ -5,25 +5,19 @@ const ConfirmAddedModal = {
     components: {
         ModalContainer,
     },
-
     data: function () {
         return {
 
         }
     },
-
     props: {
         item: {Object, required: true },
     },
-
     methods: {
         handleSubmit: function (){
             this.$refs.AddModal.openModal()
         }
     },
-
-    computed: {},
-
     template: `
       <div>
         <button

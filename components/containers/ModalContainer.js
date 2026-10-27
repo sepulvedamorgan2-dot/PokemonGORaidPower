@@ -2,9 +2,6 @@
 // import xxx from './PokemonlistItem.js';
 let counter = 1
 const ModalContainer = {
-    components: {
-
-    },
 
     data: function () {
         return {

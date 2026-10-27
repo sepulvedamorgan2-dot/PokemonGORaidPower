@@ -55,12 +55,13 @@ const HorizontalCard = {
     template: `
 
       <!--      Style 1-->
+      <div>
       <div v-if="cardStyle === 1" class="row g-0 align-items-center">
         <div class="col-3 position-relative">
           <img class="img-fluid horz-card-img " :src="pokemon.image"
                alt="pokemonImg">
           <div v-if="pokemon.image">
-            <img v-if="pokemon.image.includes('.s.')" src="/media/images/shiny.png" alt="Shadow" class="corner-tr-img">
+            <img v-if="pokemon.image.includes('.s.')" src="@/Images/shiny.png" alt="Shadow" class="corner-tr-img">
           </div>
         </div>
         <div class="col-6">
@@ -81,8 +82,8 @@ const HorizontalCard = {
           <img class="img-fluid "
                :src="pokemon.image"
                alt="pokemonImg">
-          <img v-if="pokemon.isShadow" src="/media/images/shadow.png" alt="Shadow" class="corner-bl-img">
-          <img v-if="pokemon.image.includes('.s.')" src="/media/images/shiny.png" alt="Shadow" class="corner-tr-img">
+          <img v-if="pokemon.isShadow" :src="require('@/Images/shadow.png')" alt="Shadow" class="corner-bl-img">
+          <img v-if="pokemon.image.includes('.s.')" src="@/Images/shiny.png" alt="Shadow" class="corner-tr-img">
         </div>
         <div class="col-6 col-md-7">
           <div class="p-1 ms-1">
