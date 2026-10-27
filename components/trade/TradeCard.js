@@ -94,17 +94,19 @@ const TradeCard = {
 
             // Filter Have List (User Data)
             this.pokeListFiltered = this.pokemonList.filter(
-                pokemonObject => !this.tradeCard.haveList.some(p => p.image === pokemonObject.image)
+                pokemonObject => !this.tradeCard.haveList.some(p => p.Id === pokemonObject.Id)
             );
+            if(this.warning && this.pokeListFiltered.length > 0){
+                this.warning = false
+                this.pokeListFiltered = this.pokemonList.filter(
+                    pokemonObject => !this.tradeCard.haveList.some(p => p.Id === pokemonObject.Id)
+                );
+            }
             if(this.pokeListFiltered.length === 0){
                 this.pokeListFiltered = [...this.pokemonListApi]
                 this.warning = true
             }
-            if(this.warning){
-                this.pokeListFiltered = this.pokemonListApi.filter(
-                    pokemonObject => !this.tradeCard.haveList.some(p => p.image === pokemonObject.image)
-                );
-            }
+
         },
         deleteFromList(pokemon, list) {
             if (this.mode === 1) {

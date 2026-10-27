@@ -48,11 +48,11 @@ const TradePage = {
 
 
         <template #pageOne>
-          <div class="row g-2">
-            <div v-for="tradeCard in tradeCardList" class="col-12 col-md-6">
-              <card-container :card-title="tradeCard.title">
+          <div class="row  g-2">
+            <div v-on:click="$refs.pageTab.tabNumber = 3; tradeCardToEdit = tradeCard " v-for="tradeCard in tradeCardList" class="force-hover col-12  col-md-6">
+              <card-container class="h-100" :card-title="tradeCard.title">
                 <template v-slot:card-actions>
-                  <i v-on:click="$refs.pageTab.tabNumber = 3; tradeCardToEdit = tradeCard " class="bi bi-eye fs-3 "></i>
+                  <i  class="bi bi-eye fs-3 "></i>
                 </template>
                 <template v-slot:card-body>
                   <div class="row g-2 g-sm-2 g-md-2 pt-2 ">
