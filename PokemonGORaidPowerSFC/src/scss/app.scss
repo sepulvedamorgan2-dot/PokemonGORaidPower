@@ -1,0 +1,81 @@
+//0.0 Import/Use this
+@use "Sass:color";
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+//1.0  unlike css and most things, variables for bootstrap that are defined ABOVE
+// the import statement take priority!
+@import "./variable";
+
+
+
+$border-radius: 1.2rem;
+$font-family-sans-serif: 'Maven Pro', sans-serif;
+$btn-close-color: white;
+$offcanvas-horizontal-width: calc(400px + 2rem);
+$headings-font-famiy: 'Lato', sans-serif;
+//1.0
+
+
+//2.0 Import Bootstrap
+@import "../../node_modules/bootstrap/scss/bootstrap";
+//2.0
+
+
+
+//3.0 custom override
+//just for a classes, takes power over above primary since its more specific
+// $primary-ov: yellow;
+
+.resize-none {
+  resize: none;
+}
+.card {
+  .card-header {
+    font-weight: 450;
+  }
+}
+button.btn, label.btn, select.form-select {
+  border-radius: .6rem;
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+.w-small {
+  width: 10%;
+  min-width: 40px;
+  max-width: 60px;
+}
+.fs-tiny {
+  font-size: 13px;
+  font-weight: 580;
+}
+.force-hover {
+  &:focus,
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+}
+.fs-tinyer {
+  font-size: 10px;
+}
+
+
+
+
+
+
+
+// .main-call-to-action{
+//     background-color: $primary-ov;
+//     font-size: $font-size-sm;
+// }
+//3.0
+//test
+//TO ACTIVATE SCRIP
+//add "sass": "sass scss/app.scss css/app.css --style=compressed --watch" to package.json scrips{}
+// right click folder your working in and click "open integrated terminal"
+// "npm run sass" in console
+
+
