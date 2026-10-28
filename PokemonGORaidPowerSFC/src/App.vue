@@ -13,7 +13,7 @@ export default {
       pokemonList: [],
       pokemonTeamList: [],
       pokemonListAPI: [],
-
+      tradeCardList: [],
     }
   },
   methods: {
@@ -55,6 +55,12 @@ export default {
 
       }
       localStorage.setItem('pokemonTeamList', JSON.stringify(this.pokemonTeamList))
+    }
+    if (localStorage.getItem('tradeCardList')) {
+
+      this.tradeCardList = JSON.parse(localStorage.getItem('tradeCardList'));
+    } else {
+      this.tradeCardList = []
     }
   },
   watch: {
@@ -105,16 +111,44 @@ export default {
         }
 
       }, deep: true
+    },tradeCardList: {
+
+      handler: function () {
+        for (const tradeCard of this.tradeCardList) {
+          for (const option of tradeCard.selectedOptions.want) {
+            for (const subOption of option.optionsArray) {
+              if (subOption.text === option.text) {
+                option.tagClass = subOption.tagClass;
+                break;
+              }
+            }
+          }
+          for (const option of tradeCard.selectedOptions.have) {
+            for (const subOption of option.optionsArray) {
+              if (subOption.text === option.text) {
+                option.tagClass = subOption.tagClass;
+                break;
+              }
+            }
+          }
+        }
+        if (this.tradeCardList) {
+          localStorage.setItem('tradeCardList', JSON.stringify(this.tradeCardList))
+        } else {
+          this.tradeCardList = []
+        }
+      }
+      ,
+      deep: true
     },
   }
-
 }
 
 </script>
 
-<template>
+<template >
   <NavbarMain pageTitle="Pokemon Go Raid Power"/>
-  <router-view :pokemon-list-api="pokemonListAPI" :pokemon-team-list="pokemonTeamList" :pokemon-list="pokemonList"></router-view>
+  <router-view :trade-card-list="tradeCardList" :pokemon-list-api="pokemonListAPI" :pokemon-team-list="pokemonTeamList" :pokemon-list="pokemonList"></router-view>
 </template>
 
 <style scoped></style>

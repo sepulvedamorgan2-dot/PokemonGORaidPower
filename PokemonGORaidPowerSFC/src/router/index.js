@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import PokeList from "@/views/PokeList.vue";
 import RaidTeams from "@/views/RaidTeams.vue";
-import pokeList from "@/views/PokeList.vue";
+import TradeCardView from "@/views/TradeCardView.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -22,11 +22,16 @@ const router = createRouter({
         pokemonTeamList: {Type: Array, required: true},
       }
     },
-    // {
-    //   path: '/raid-teams',
-    //   name: 'Raid Teams',
-    //   component: RaidTeams
-    // },
+    {
+      path: '/trade-cards',
+      name: 'Trade Cards',
+      component: TradeCardView,
+      props: {
+        pokeList: {Type: Array, required: true},
+        pokemonListApi: {Type: Array, required: true},
+        tradeCardList: {Type: Array, required: true},
+      }
+    },
   ],
 })
 

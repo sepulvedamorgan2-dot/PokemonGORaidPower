@@ -158,12 +158,8 @@ export default {
   </div>
   <!--      Card 4-->
 
-  <div v-if="cardStyle === 4 || cardStyle === 5" class="col-3 position-relative">
-    <img v-on:click="$emit('clickedObjectExisting', pokemon)" class="img-fluid  " :src="pokemon.image"
-         alt="pokemonImg">
-    <div v-if="pokemon.image">
-      <img v-if="pokemon.image.includes('.s.')" :src="require('@/Images/shiny.png')" alt="Shadow" class="corner-tr-img">
-    </div>
+  <div v-if="cardStyle === 4 || cardStyle === 5" class="col-auto position-relative">
+    <image-with-details  v-on:click="$emit('clickedObjectExisting', pokemon)" :pokemon="pokemon"></image-with-details>
   </div>
 </template>
 

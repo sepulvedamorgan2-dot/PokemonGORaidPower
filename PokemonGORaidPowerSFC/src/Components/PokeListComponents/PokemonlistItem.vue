@@ -105,6 +105,15 @@ export default {
 
 </template>
 
-<style scoped>
+<style scss scoped>
+.power-width {
+  width: 80px;
+}
 
+.movewidth {
+  width: 120px;
+}
+.spacer {
+  width: 25px;
+}
 </style>

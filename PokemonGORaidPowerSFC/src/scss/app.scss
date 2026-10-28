@@ -22,10 +22,6 @@ $headings-font-famiy: 'Lato', sans-serif;
 
 
 
-//3.0 custom override
-//just for a classes, takes power over above primary since its more specific
-// $primary-ov: yellow;
-
 .resize-none {
   resize: none;
 }
@@ -67,15 +63,6 @@ button.btn, label.btn, select.form-select {
 
 
 
-// .main-call-to-action{
-//     background-color: $primary-ov;
-//     font-size: $font-size-sm;
-// }
-//3.0
-//test
-//TO ACTIVATE SCRIP
-//add "sass": "sass scss/app.scss css/app.css --style=compressed --watch" to package.json scrips{}
-// right click folder your working in and click "open integrated terminal"
-// "npm run sass" in console
+
 
 

@@ -33,6 +33,9 @@ export default {
           <li class="nav-item">
             <router-link class="nav-link text-white" to="/raid-teams">Raid Teams</router-link>
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link text-white" to="/trade-cards">Trade Cards</router-link>
+          </li>
         </ul>
 
       </div>

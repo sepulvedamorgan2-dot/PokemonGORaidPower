@@ -116,7 +116,7 @@ export default {
       </div>
 
       <!-- Pokemon horitzonal card -->
-      <div class="alternateBg">
+      <div class="alternateBg poke-list">
         <pokemonlist-item v-for="pokemon in matches" :key="pokemon.Id" :pokemon="pokemon"
                           @clickedPokemon="$emit('clickedPokemon', pokemon)"
                           @delete-item="assignDeleted"></pokemonlist-item>
@@ -126,11 +126,19 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import "../../scss/_variable";
+
 .horz-card-img {
   width: 80px;
 
   @media (max-width: 767px) {
     width: 70px;
+  }
+}
+
+.poke-list {
+  > div:nth-child(even){
+    background-color: $lighter;
   }
 }
 
