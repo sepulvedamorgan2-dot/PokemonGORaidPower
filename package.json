@@ -1,18 +1,25 @@
 {
-  "name": "npm",
-  "version": "1.0.0",
-  "description": "",
-  "license": "ISC",
-  "author": "",
-  "type": "commonjs",
-  "main": "index.js",
+  "name": "pokemongoraidpower",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "Sass": "sass styles/scss/app.scss styles/css/app.css --style=compressed --watch"
-    
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "bootstrap": "^5.3.8",
-    "sass": "^1.104.1"
+    "vue": "^3.5.42",
+    "vue-router": "^5.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.8",
+    "sass-embedded": "^1.106.1",
+    "vite": "^8.2.2",
+    "vite-plugin-vue-devtools": "^8.2.1"
+  },
+  "engines": {
+    "node": "^22.18.0 || >=24.12.0"
   }
 }
