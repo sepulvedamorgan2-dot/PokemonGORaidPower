@@ -69,7 +69,7 @@ export default {
   </div>
   <div class="d-flex justify-content-end" v-else>
 
-    <i  v-on:click="$refs.AddPokemonOffCanvas.openOffCanvas(); $refs.AddPokemonOffCanvas.pageNumber = 1" class="bi bi-plus fs-3 p-2 force-hover"></i>
+    <i  v-on:click="$refs.AddPokemonOffCanvas.openOffCanvas(); $refs.AddPokemonOffCanvas.pageNumber = 1" class="bi bi-plus fs-3 p-1 force-hover"></i>
 
   </div>
 

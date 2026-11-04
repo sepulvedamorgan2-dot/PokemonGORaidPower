@@ -55,12 +55,12 @@ export default {
             </template>
           </card-container>
         </div>
-        <div v-if="tradeCardList.length === 0" class="col-12 col-md-6">
+        <div v-on:click="$refs.pageTab.tabNumber = 2" v-if="tradeCardList.length === 0" class="col-12 force-hover col-md-6">
           <card-container>
 
             <template v-slot:card-body>
               <div style="height: 200px" class="text-center justify-content-center align-items-center  d-flex">
-                <div v-on:click="$refs.pageTab.tabNumber = 2">
+                <div >
                   <p class="mb-0">Create a Trade Card</p>
                   <p class="mb-1"><i class="fs-2  bi bi-plus-circle"></i></p>
 

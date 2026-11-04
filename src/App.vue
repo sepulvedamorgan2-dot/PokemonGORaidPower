@@ -2,6 +2,7 @@
 
 import {fetchPokemonList} from "@/Services/Helpers";
 import NavbarMain from "@/Components/Universal/NavbarMain.vue";
+import {shallowRef} from "vue";
 
 export default {
   name: "App",
@@ -12,7 +13,7 @@ export default {
     return {
       pokemonList: [],
       pokemonTeamList: [],
-      pokemonListAPI: [],
+      pokemonListAPI: shallowRef([]),
       tradeCardList: [],
     }
   },

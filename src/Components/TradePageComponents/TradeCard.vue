@@ -177,7 +177,7 @@ export default{
     </template>
     <template v-slot:card-body>
       <div class="row ">
-        <div class="col-10 ps-3 ps-1 pb-2">
+        <div class="col-10 ps-3 ps-1 ">
           <div class="ms-0 ms-sm-1">
             <h4 class="fs-3 fw-bold pt-2 mb-0 text-capitalize text-start pb-0">
               Wanted</h4>
@@ -203,7 +203,7 @@ export default{
         </div>
       </div>
 
-      <div v-if="mode === 1">
+      <div class="row ps-1" v-if="mode === 1">
         <collapse-area teleport-id="want">
           <div class="pt-2" v-if="tradeCard.selectedOptions.want">
             <div v-if="tradeCard.selectedOptions.want && Object.keys(tradeCard.selectedOptions.want).length > 0">
@@ -264,7 +264,7 @@ export default{
       </div>
 
       <div class="row  border-top ">
-        <div class="col-10 ps-3 ps-1 pb-2">
+        <div class="col-10 ps-3 ps-1 ">
           <div class="ms-0 ms-sm-1">
             <h4 class="fs-3 fw-bold pt-2 mb-0 text-capitalize text-start pb-0">
               For Trade</h4>
@@ -287,7 +287,7 @@ export default{
         </div>
       </div>
 
-      <div v-if="mode === 1">
+      <div class="row ps-1" v-if="mode === 1">
         <collapse-area teleport-id="have">
           <div class="pt-2" v-if="tradeCard.selectedOptions.have">
             <div v-if="tradeCard.selectedOptions.have && Object.keys(tradeCard.selectedOptions.have).length > 0">
@@ -346,9 +346,9 @@ export default{
           </div>
         </div>
       </div>
-      <button v-if="isNew" type="button" class="btn btn-primary w-100" @click="manageAdd(tradeCard)">Save New Trade Card
+      <button v-if="isNew" type="button" class="btn btn-primary w-100 rounded-4" @click="manageAdd(tradeCard)">Save New Trade Card
       </button>
-      <button v-if="!isNew && mode === 1" type="button" class="btn btn-primary w-100" @click="mode = 0">Save Trade Card
+      <button v-if="!isNew && mode === 1" type="button" class="btn btn-primary w-125 rounded-4" @click="mode = 0">Save Trade Card
       </button>
     </template>
   </CardContainer>

@@ -1,4 +1,5 @@
 const CPM_SQUARED = 0.840300 ** 2;
+import {Pokemon, PokemonDetails, TradeDetails} from '@/models/pokemon.js';
 import {defaultTags} from '@/Services/DefaultTradeSettings.js'
 
 function calculateCP(baseAtk, baseDef, baseSta) {
@@ -10,67 +11,38 @@ function calculateCP(baseAtk, baseDef, baseSta) {
     return Math.max(10, calculatedCP);
 }
 
-function createPokemonObject(pokemon, version, index = null) {
-    const assetForm = pokemon.assetForms?.[index];
+function createPokemonObject(pokemon1, version, index = null) {
+    const assetForm = pokemon1.assetForms?.[index];
 
     let image = null;
-    if (version === 1) image = pokemon.assets?.image;
-    else if (version === 2) image = pokemon.assets?.shinyImage;
+    if (version === 1) image = pokemon1.assets?.image;
+    else if (version === 2) image = pokemon1.assets?.shinyImage;
     else if (version === 3) image = assetForm?.image;
     else if (version === 4) image = assetForm?.shinyImage;
-
-    return {
-        pokemonId: pokemon.dexNr,
-        name: pokemon.id?.toLowerCase() || '',
-        image: image ? String(image) : null,
-        type: pokemon.primaryType?.names?.English?.toLowerCase() || null,
-        secondaryType: pokemon.secondaryType?.names?.English?.toLowerCase() || null,
-        pokemonDetails: {
-            maxCp: calculateCP(pokemon.stats?.attack || 0, pokemon.stats?.defense || 0, pokemon.stats?.stamina || 0),
-            fastMoves: pokemon.quickMoves || [],
-            chargedMoves: pokemon.cinematicMoves || [],
-            specialFastMoves: pokemon.eliteQuickMoves || [],
-            specialChargedMoves: pokemon.eliteCinematicMoves || [],
-            megaCapable: pokemon.hasMegaEvolution || false,
-        },
-        tradeDetails: {
-            tags: [
-                {
-                    text: 'Size',
-                    Options: ['None', 'XXS', 'XXL'],
-                    selected: 'None'
-                },
-                {
-                    text: 'None',
-                    Options: ['None', 'Registered', 'Unregistered'],
-                    selected: 'None'
-                },
-                {
-                    text: 'Lucky',
-                    Options: ['None', 'Lucky'],
-                    selected: 'None'
-                },
-                {
-                    text: 'Level',
-                    Options: ['None', 'Lvl 1', 'Lvl 40', 'Lvl 50'],
-                    selected: 'None'
-                },
-                {
-                    text: 'Special Move',
-                    Options: ['None',],
-                    selected: 'None'
-                },
-                {
-                    text: 'Priority',
-                    Options: ['None', 'Priority'],
-                    selected: 'None'
-                },],
-            tradeQuantity: 1,
-            tradeBackground: '',
-        },
-
-
-    };
+    const pokemonDetails = new PokemonDetails(
+        calculateCP(pokemon1.stats?.attack || 0, pokemon1.stats?.defense || 0, pokemon1.stats?.stamina || 0),
+        pokemon1.quickMoves || [],
+        pokemon1.cinematicMoves || [],
+        pokemon1.eliteQuickMoves || [],
+        pokemon1.eliteCinematicMoves || [],
+        pokemon1.hasMegaEvolution || false
+    );
+    const tradeDetails = new TradeDetails(
+        {...defaultTags},
+        1,
+        ''
+    );
+    const pokemonToAdd = new Pokemon(
+        pokemon1.dexNr,
+        pokemon1.id?.toLowerCase() || '',
+        image ? String(image) : null,
+        pokemon1.primaryType?.names?.English?.toLowerCase() || null,
+        pokemon1.secondaryType?.names?.English?.toLowerCase() || null
+        ,pokemonDetails,
+        tradeDetails,
+    )
+    console.log(pokemonToAdd)
+    return pokemonToAdd;
 }
 
 export async function fetchPokemonList() {
