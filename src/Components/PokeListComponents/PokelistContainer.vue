@@ -26,10 +26,7 @@ export default {
   methods: {
     updateMatches(matches){
       this.matches = matches;
-    }, assignDeleted(item){
-      this.deletedMon = item;
-      this.$emit('deleteItem', item);
-    }
+    },
   },
 
 
@@ -40,7 +37,7 @@ export default {
           this.updateMatches(this.matches.filter(p => p !== this.deletedMon));
           this.deletedMon = null;
         } else{
-          this.updateMatches(this.fullPokemonList);
+          this.updateMatches(this.fullPokemonList.items);
         }
       }, deep: true
     }
@@ -55,7 +52,7 @@ export default {
                           @matches="updateMatches"
                           place-holder="Ex: Charizard"
                           :filter-off-canvas=true
-                          :filter-off-canvas-list="fullPokemonList"
+                          :filter-off-canvas-list="fullPokemonList.items"
 
 
     >
@@ -118,8 +115,8 @@ export default {
       <!-- Pokemon horitzonal card -->
       <div class="alternateBg poke-list">
         <pokemonlist-item v-for="pokemon in matches" :key="pokemon.Id" :pokemon="pokemon"
-                          @clickedPokemon="$emit('clickedPokemon', pokemon)"
-                          @delete-item="assignDeleted"></pokemonlist-item>
+
+                          @delete-item="fullPokemonList.remove($event.id)"></pokemonlist-item>
       </div>
     </div>
   </div>

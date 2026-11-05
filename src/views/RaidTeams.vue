@@ -11,7 +11,7 @@ export default {
   data: function () {
 
     return {
-      types: ['normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'],
+
       pokemonTeam: {
         id: 1,
         type: "",

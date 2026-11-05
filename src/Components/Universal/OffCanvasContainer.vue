@@ -5,13 +5,10 @@ export default {
   name: "OffCanvasContainer",
   data: function () {
     return {
-
       id: "off-canvas-" + counter++,
       pageNumber: 1,
-
     }
   },
-
   props: {
 
     title: {String, required: false},
@@ -42,7 +39,6 @@ export default {
     }, titleClicked(titleNumber){
       this.pageNumber = titleNumber;
     },
-
 
   }, mounted() {
     this.bsOffCanvas = new Offcanvas(this.$refs.offCanvas);

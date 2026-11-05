@@ -12,21 +12,6 @@ export default {
 
   data: function () {
     return {
-      pokemon: {
-        Id: 1,
-        name: "",
-        type: "",
-        pokemonId: 1,
-        cp: 1000,
-        isShadow: false,
-        canMegaEvolve: false,
-        fastMove: {},
-        chargedMoveOne: {},
-        chargedMoveTwo: {},
-        image: '',
-        maxCp: 0,
-        fastMoves: [],
-        chargedMoves: []},
 
       quantity: 1,
 
@@ -34,47 +19,19 @@ export default {
   },
 
   props: {
-    activeItem: {type: Object, required: true},
+    pokemon: {type: Object, required: true},
     isNew: {type: Boolean, default: false},
-
   },
-
-
-
 
   methods: {
     openOffCanvas() {
-
-
       this.bsOffCanvas.show();
-
     }, updateCpNumber(number){
-      this.activeItem.cp = Math.round(number.target.value * this.activeItem.pokemonDetails.maxCp / 100);
-
+      this.pokemon.cp = Math.round(number.target.value * this.pokemon.pokemonDetails.maxCp / 100);
     }, submitPokemon(pokemon, quantity) {
       if(!pokemon.cp){
         pokemon.cp = 50;
       }
-
-      if(pokemon.fastMove){
-        pokemon.fastMove.type.name = pokemon.fastMove.type.names.English.toLowerCase()
-        console.log(pokemon.fastMove)
-      } else{
-
-      }
-      if (pokemon.chargedMoveOne){
-        pokemon.chargedMoveOne.type.name = pokemon.chargedMoveOne.type.names.English.toLowerCase()
-      } else{
-
-      }
-      if (pokemon.chargedMoveTwo){
-        pokemon.chargedMoveTwo.type.name = pokemon.chargedMoveTwo.type.names.English.toLowerCase()
-      } else{
-
-      }
-
-
-
       this.$emit('addPokemon', [pokemon, quantity]);
     }
   },
@@ -82,18 +39,18 @@ export default {
 </script>
 
 <template>
-  <div v-if="activeItem">
-    <pokemon-image-name :active-item="activeItem"></pokemon-image-name>
+  <div v-if="pokemon">
+    <pokemon-image-name :active-item="pokemon"></pokemon-image-name>
     <div class="flex-grow-1 d-flex flex-column">
 
-      <!--              <confirm-added-modal item="{{ activeItem.name }}"></confirm-added-modal>-->
+      <!--              <confirm-added-modal item="{{ pokemon.name }}"></confirm-added-modal>-->
       <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation"
 
-            v-on:submit.prevent="submitPokemon(activeItem, quantity); " >
+            v-on:submit.prevent="submitPokemon(pokemon, quantity); " >
 
         <div>
-          <label :for="'range' + activeItem.Id" class="form-label">Creature Power (CP): {{ activeItem.cp }}</label>
-          <input required type="range" class="form-range" min="1" :max="100" v-on:input="updateCpNumber($event)"  :id="'range' + activeItem.Id">
+          <label :for="'range' + pokemon.Id" class="form-label">Creature Power (CP): {{ pokemon.cp }}</label>
+          <input required type="range" class="form-range" min="1" :max="100" v-on:input="updateCpNumber($event)"  :id="'range' + pokemon.Id">
         </div>
 
         <div class="mt-2">
@@ -110,9 +67,9 @@ export default {
               <div class="col-12">
                 <label class="form-label w-100">
                   Fast Move
-                  <select class="form-select" v-model="activeItem.fastMove">
-                    <option v-for="move in activeItem.pokemonDetails.fastMoves" :value="move">{{move.names.English}}</option>
-                    <option v-for="move in activeItem.pokemonDetails.specialFastMoves" :value="move">{{move.names.English}}*</option>
+                  <select class="form-select" v-model="pokemon.fastMove">
+                    <option v-for="move in pokemon.pokemonDetails.fastMoves" :value="move">{{move.name}}</option>
+                    <option v-for="move in pokemon.pokemonDetails.specialFastMoves" :value="move">{{move.name}}*</option>
                   </select>
                 </label>
               </div>
@@ -124,9 +81,8 @@ export default {
                 <label class="form-label w-100">
                   Charged Move 1
                   <select class="form-select" id="chargedMoveSelect1edit"
-                          v-model="activeItem.chargedMoveOne">
-                    <option v-for="move in activeItem.pokemonDetails.chargedMoves" :value="move">{{move.names.English}}</option>
-                    <option v-for="move in activeItem.pokemonDetails.specialChargedMoves" :value="move">{{move.names.English}}*</option>
+                          v-model="pokemon.chargedMoveOne">
+                    <option v-for="move in pokemon.pokemonDetails.chargedMoves" :value="move">{{move.name}}</option>
                   </select>
                 </label>
               </div>
@@ -134,9 +90,8 @@ export default {
                 <label class="form-label w-100">
                   Charged Move 2
                   <select class="form-select" id="chargedMoveSelect2edit"
-                          v-model="activeItem.chargedMoveTwo">
-                    <option v-for="move in activeItem.pokemonDetails.chargedMoves" :value="move">{{move.names.English}}</option>
-                    <option v-for="move in activeItem.pokemonDetails.specialChargedMoves" :value="move">{{move.names.English}}*</option>
+                          v-model="pokemon.chargedMoveTwo">
+                    <option v-for="move in pokemon.pokemonDetails.chargedMoves" :value="move">{{move.name}}</option>
                   </select>
                 </label>
               </div>
@@ -148,14 +103,14 @@ export default {
         <div class="row g-2 my-2">
           <div>
             <label class="form-check-label">
-              <input type="checkbox" id="isShadowedit" v-model="activeItem.isShadow"
+              <input type="checkbox" id="isShadowedit" v-model="pokemon.isShadow"
                      class="border-dark-subtle form-check-input">
               Shadow
             </label>
           </div>
-          <div v-show="activeItem.pokemonDetails.megaCapable">
+          <div v-show="pokemon.pokemonDetails.megaCapable">
             <label class="form-check-label">
-              <input type="checkbox" v-model="activeItem.canMegaEvolve"
+              <input type="checkbox" v-model="pokemon.canMegaEvolve"
                      class="border-dark-subtle form-check-input">
               Can Mega Evolve
             </label>

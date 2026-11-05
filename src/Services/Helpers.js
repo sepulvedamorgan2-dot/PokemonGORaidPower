@@ -1,6 +1,10 @@
-const CPM_SQUARED = 0.840300 ** 2;
-import {Pokemon, PokemonDetails, TradeDetails} from '@/models/pokemon.js';
+import {PokemonDetails} from "@/models/PokemonDetails.js";
 import {defaultTags} from '@/Services/DefaultTradeSettings.js'
+import {TradeDetails} from "@/models/TradeDetails.js";
+
+const CPM_SQUARED = 0.840300 ** 2;
+import {Pokemon} from '@/models/Pokemon.js';
+
 
 function calculateCP(baseAtk, baseDef, baseSta) {
     const attackFactor = baseAtk + 15;
@@ -9,6 +13,32 @@ function calculateCP(baseAtk, baseDef, baseSta) {
     const calculatedCP = Math.floor((attackFactor * defenseFactor * staminaFactor * CPM_SQUARED) / 10);
     // CP cannot be lower than 10
     return Math.max(10, calculatedCP);
+}
+function simpleMoves(arr, category){
+    let simpleArray = [];
+    const arrLength = Object.keys(arr).length;
+    const arrKeys = Object.keys(arr);
+    const arrName = arr.constructor.name;
+    let i = 0;
+    if (arrLength > 0) {
+        while (i < arrLength) {
+            const move = arr[arrKeys[i]];
+            console.log(move)
+            const moveToAdd = {
+                name: move.names?.English?.toLowerCase() || null,
+                type : move.type?.names?.English?.toLowerCase() || null
+            }
+            if(category === 1){
+                moveToAdd.isElite = 'false';
+            }
+            else if(category === 2){
+                moveToAdd.isElite = 'true';
+            }
+            simpleArray.push(moveToAdd);
+            i++;
+        }
+    }
+    return simpleArray;
 }
 
 function createPokemonObject(pokemon1, version, index = null) {
@@ -21,10 +51,10 @@ function createPokemonObject(pokemon1, version, index = null) {
     else if (version === 4) image = assetForm?.shinyImage;
     const pokemonDetails = new PokemonDetails(
         calculateCP(pokemon1.stats?.attack || 0, pokemon1.stats?.defense || 0, pokemon1.stats?.stamina || 0),
-        pokemon1.quickMoves || [],
-        pokemon1.cinematicMoves || [],
-        pokemon1.eliteQuickMoves || [],
-        pokemon1.eliteCinematicMoves || [],
+        simpleMoves(pokemon1.quickMoves, 1) || [],
+        simpleMoves(pokemon1.cinematicMoves, 1) || [],
+        simpleMoves(pokemon1.eliteQuickMoves, 2) || [],
+        simpleMoves(pokemon1.eliteCinematicMoves, 2) || [],
         pokemon1.hasMegaEvolution || false
     );
     const tradeDetails = new TradeDetails(
@@ -41,7 +71,7 @@ function createPokemonObject(pokemon1, version, index = null) {
         ,pokemonDetails,
         tradeDetails,
     )
-    console.log(pokemonToAdd)
+    // console.log(pokemonToAdd)
     return pokemonToAdd;
 }
 

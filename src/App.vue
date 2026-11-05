@@ -2,7 +2,8 @@
 
 import {fetchPokemonList} from "@/Services/Helpers";
 import NavbarMain from "@/Components/Universal/NavbarMain.vue";
-import {shallowRef} from "vue";
+import {shallowRef} from "vue"
+import {PokemonList} from "@/models/PokemonList.js"
 
 export default {
   name: "App",
@@ -11,7 +12,8 @@ export default {
   },
   data: function () {
     return {
-      pokemonList: [],
+      types: ['normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'],
+      pokemonList: new PokemonList([]),
       pokemonTeamList: [],
       pokemonListAPI: shallowRef([]),
       tradeCardList: [],
@@ -22,19 +24,23 @@ export default {
 
   },
   mounted: async function () {
-    this.pokemonListAPI = await this.fetchPokemonList();
-    if (localStorage.getItem('pokemonList')) {
-      this.pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
-    } else {
-      this.pokemonList = []
-    }
+    this.pokemonListAPI = await this.fetchPokemonList()
+
+
+
+    // if (localStorage.getItem('pokemonList')) {
+    //   this.pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
+    // } else {
+    //   this.pokemonList = []
+    // }
+    this.pokemonList = new PokemonList();
     if (localStorage.getItem('pokemonTeamList')) {
       this.pokemonTeamList = JSON.parse(localStorage.getItem('pokemonTeamList'));
 
       // Notes because i googled if there was a better way than looping through 3 arrays to find what does/doesnt exist and this is new-ish to me
       // All set items must be unique
       // .map returns a new array with only the id's that gets turned into a set
-      const pokemonListIds = new Set(this.pokemonList.map(p => p.Id));
+      const pokemonListIds = new Set(this.pokemonList.items.map(p => p.Id));
       for (const team of this.pokemonTeamList) {
         // filter loops throguh all id's and if pokemonListIds.has returns false, that id is removed from the list
         team.activeTeam = team.activeTeam.filter(id => pokemonListIds.has(id));
@@ -63,37 +69,22 @@ export default {
     } else {
       this.tradeCardList = []
     }
+
+    this.pokemonList.add(this.pokemonListAPI[0])
   },
   watch: {
     pokemonList: {
       handler: function () {
-        for (let pokemon of this.pokemonList) {
+        for (let pokemon of this.pokemonList.items) {
           if(!pokemon.cp){
             pokemon.cp = 50;
           }
-
-          if(pokemon.fastMove){
-            pokemon.fastMove.type.name = pokemon.fastMove.type.names.English.toLowerCase()
-            console.log(pokemon.fastMove)
-          } else{
-
-          }
-          if (pokemon.chargedMoveOne){
-            pokemon.chargedMoveOne.type.name = pokemon.chargedMoveOne.type.names.English.toLowerCase()
-          } else{
-
-          }
-          if (pokemon.chargedMoveTwo){
-            pokemon.chargedMoveTwo.type.name = pokemon.chargedMoveTwo.type.names.English.toLowerCase()
-          } else{
-
-          }
         }
-        if (this.pokemonList) {
-          localStorage.setItem('pokemonList', JSON.stringify(this.pokemonList))
-        } else {
-          this.pokemonList = []
-        }
+        // if (this.pokemonList) {
+        //   localStorage.setItem('pokemonList', JSON.stringify(this.pokemonList))
+        // } else {
+        //   this.pokemonList = []
+        // }
 
 
 

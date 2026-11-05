@@ -21,7 +21,6 @@ export default {
 
   methods: {
     emitObject () {
-
       this.$emit('filterObject', this.filter)
     }
 
@@ -30,7 +29,6 @@ export default {
   watch: {
     filter: {
       handler: function () {
-
         this.emitObject()
       }, deep: true
     }

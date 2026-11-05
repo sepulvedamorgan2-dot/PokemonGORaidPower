@@ -25,36 +25,9 @@ export default {
   data: function () {
 
     return {
-
       matches: [],
       searchForPokemon: '',
-      qty: 1,
-
-      pokemon: {
-        Id: 1,
-        name: "",
-        type: "",
-        pokemonId: 1,
-        cp: 1000,
-        isShadow: false,
-        canMegaEvolve: false,
-        fastMove: {},
-        chargedMoveOne: {},
-        chargedMoveTwo: {},
-        image: '',
-        maxCp: 0,
-        fastMoves: [],
-        chargedMoves: [],
-        megaCapable: false,
-
-
-      },
-
-      activeItem: {},
-
       searchResults: [],
-
-
     }
   },
 
@@ -64,8 +37,6 @@ export default {
     },
     fetchPokemonList,
         addPokemon(activeItem) {
-
-
       this.pokemon = activeItem[0];
       this.qty = activeItem[1];
 
@@ -74,30 +45,14 @@ export default {
 
         console.log(this.pokemon.Id);
         this.pokemonList.unshift({...this.pokemon});
-        this.activeItem = this.pokemon
       }
       this.matches = this.pokemonList
-      // BAD
 
 
     }
   ,
-    deletePokemon(pokemonToDelete) {
-      console.log(pokemonToDelete);
-      this.pokemonList.splice(this.pokemonList.indexOf(pokemonToDelete), 1);
-      this.updateMatches(this.pokemonList);
-    }
-  ,
-    getNextPokemonId() {
-      if(this.pokemonList.length < 1){
-        return 1
-      }
-      try {
-        return Math.max(...this.pokemonList.map(p => p.Id)) + 1
-      } catch (error) {
-        return 0;
-      }
-    },
+
+
 
   },
 
@@ -112,10 +67,10 @@ export default {
 <template>
   <div>
 
-  <add-pokemon-off-canvas button="plus" @add-pokemon="addPokemon"  :filter=false  :pokemon-list-from-api="pokemonListApi" array-length=5 :card-style=1 > </add-pokemon-off-canvas>
+  <add-pokemon-off-canvas button="plus" @add-pokemon="pokemonList.add($event)" :filter=false  :pokemon-list-from-api="pokemonListApi" array-length=5 :card-style=1 > </add-pokemon-off-canvas>
 
   <pokelist-container :searched-and-filtered-array="matches" :full-pokemon-list="pokemonList"
-                      ref="pokelistContainer" @delete-item="deletePokemon"></pokelist-container>
+                      ref="pokelistContainer"></pokelist-container>
   </div>
 
 </template>

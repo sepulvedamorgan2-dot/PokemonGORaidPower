@@ -24,6 +24,7 @@ export default {
 
 
     getClass(type, otherClasses) {
+
       return ` type${type} ${otherClasses}`;
     }, updateCPIfMega(pokemonObject) {
 
@@ -122,11 +123,11 @@ export default {
     <div class="col-3">
       <div class="d-flex justify-content-end me-4 align-items-center h-100">
         <i v-if="pokemon.fastMove"
-           :class="getClass(pokemon.fastMove.type.name, `rounded mb-1 p-1  fs-tinyer bi bi-lightning-charge`)"></i>
+           :class="pokemon.getFastClass('text-bg', `rounded mb-1 p-1  fs-tinyer bi bi-lightning-charge`)"></i>
         <i v-if="pokemon.chargedMoveOne"
-           :class="getClass(pokemon.chargedMoveOne.type.name, `rounded mb-1 ms-1 fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
+           :class="pokemon.getChargedClass('text-bg', 1, `rounded mb-1 ms-1 fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
         <i v-if="pokemon.chargedMoveTwo"
-           :class="getClass(pokemon.chargedMoveTwo.type.name, `rounded mb-1 ms-1   fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
+           :class="pokemon.getChargedClass('text-bg', 2, `rounded mb-1 ms-1   fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
         <i type="button" data-bs-toggle="collapse"
            :data-bs-target="'#'+pokemon.Id"
            class="bi bi-pencil ms-2 ms-sm-4"></i>

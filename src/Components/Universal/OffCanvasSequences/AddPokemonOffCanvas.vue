@@ -34,17 +34,14 @@ export default {
     handleClick: function (object) {
       this.pokemonToAdd = object;
       this.$refs.AddPokemonOffCanvas.pageNumber++
-
     }
   },
-
   watch: {
     pokemonListFromApi: {
       handler: function () {
         this.pokemonList = this.pokemonListFromApi;
       }, deep: true,
     },
-
 
     pokemonToAdd: function () {
       this.titleArray = [
@@ -65,12 +62,9 @@ export default {
     <button v-on:click="console.log('eee');$refs.AddPokemonOffCanvas.openOffCanvas(); $refs.AddPokemonOffCanvas.pageNumber = 1" type="button" class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center shadow-lg" style="width: 56px; height: 56px;">
       <i class="bi bi-plus-lg fs-4"></i>
     </button>
-
   </div>
   <div class="d-flex justify-content-end" v-else>
-
     <i  v-on:click="$refs.AddPokemonOffCanvas.openOffCanvas(); $refs.AddPokemonOffCanvas.pageNumber = 1" class="bi bi-plus fs-3 p-1 force-hover"></i>
-
   </div>
 
   <teleport to="#app">
@@ -80,7 +74,7 @@ export default {
         </SearchAndDisplayOffCanvas>
       </template>
       <template v-slot:pageTwo >
-        <add-edit-view :active-item="pokemonToAdd" @add-pokemon="$emit('addPokemon', $event); $refs.AddPokemonOffCanvas.hideOffCanvas();" :isNew=true > </add-edit-view>
+        <add-edit-view :pokemon="pokemonToAdd" @add-pokemon="$emit('addPokemon', $event); $refs.AddPokemonOffCanvas.hideOffCanvas();" :isNew=true > </add-edit-view>
       </template>
     </OffCanvasContainer>
   </teleport>

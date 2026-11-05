@@ -30,10 +30,6 @@ export default {
   },
 
   methods: {
-    getClass(type, otherclasses) {
-      return ` type${type} ${otherclasses}`;
-    }
-    ,
     openOffCanvas() {
       this.bsOffCanvas.show();
     }
@@ -54,11 +50,11 @@ export default {
     </div>
     <div class=" col ms-auto d-flex d-sm-none align-items-center ">
       <i v-if="pokemon.fastMove"
-         :class="getClass(pokemon.fastMove.type.name, `rounded  p-1 fs-tinyer bi bi-lightning-charge`)"></i>
+         :class="pokemon.getFastClass(`text-bg`, `rounded  p-1 fs-tinyer bi bi-lightning-charge`)"></i>
       <i v-if="pokemon.chargedMoveOne"
-         :class="getClass(pokemon.chargedMoveOne.type.name, `rounded ms-1 fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
+         :class="pokemon.getChargedClass(`text-bg`,1, `rounded ms-1 fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
       <i v-if="pokemon.chargedMoveTwo"
-         :class="getClass(pokemon.chargedMoveTwo.type.name, `rounded ms-1  fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
+         :class="pokemon.getChargedClass(`text-bg`,2, `rounded ms-1  fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
     </div>
     <div class="col-auto d-none d-sm-flex">
       <div class="spacer"></div>
@@ -79,7 +75,7 @@ export default {
     </div>
     <div class=" col-auto d-none d-lg-flex movewidth align-items-center ">
                     <span v-if="pokemon.fastMove"
-                          :class="getClass(pokemon.fastMove.type.name, `badge p-2 text-capitalize`)">{{ pokemon.fastMove.names.English }}</span>
+                          :class="pokemon.getFastClass(`text-bg`, `badge p-2 text-capitalize`)">{{ pokemon.fastMove.name }}</span>
       <span v-if="!pokemon.fastMove"
             :class="`bg-secondary badge p-2 text-capitalize`">Not Added</span>
 
@@ -89,11 +85,11 @@ export default {
     </div>
     <div class=" col-auto d-none d-lg-flex movewidth align-items-center ms-2">
             <span
-                v-if="pokemon.chargedMoveOne" :class="getClass(pokemon.chargedMoveOne.type.name, `badge p-2 text-capitalize`)">{{ pokemon.chargedMoveOne.names.English }}</span>
+                v-if="pokemon.chargedMoveOne" :class="pokemon.getChargedClass(`text-bg`,1, `badge p-2 text-capitalize`)">{{ pokemon.chargedMoveOne.name }}</span>
       <span v-else
             :class="`bg-secondary badge p-2 text-capitalize`">Move 1 Not Added</span>
       <span
-          v-if="pokemon.chargedMoveTwo" :class="getClass(pokemon.chargedMoveTwo.type.name, `badge p-2 ms-2 text-capitalize`)">{{ pokemon.chargedMoveTwo.names.English }}</span>
+          v-if="pokemon.chargedMoveTwo" :class="pokemon.getChargedClass(`text-bg`,2, `badge p-2 ms-2 text-capitalize`)">{{ pokemon.chargedMoveTwo.name }}</span>
       <span v-else :class="`bg-secondary ms-2 badge p-2 text-capitalize`">Move 2 Not Added</span>
 
     </div>
