@@ -40,21 +40,11 @@ export default {
 
   methods: {
 
-    returnFullPokemon(pokemonIdOnly) {
-      return {...this.pokemonList.find(p => p.Id === pokemonIdOnly)}
-    }
-    ,
-    addPokemonToTeam(pokemonObject) {
-      if (this.pokemonTeam.activeTeam.length < 6) {
-        this.pokemonTeam.activeTeam.push(pokemonObject.Id);
-      } else {
-        this.pokemonTeam.backupPokemon.push(pokemonObject.Id);
-      }
-      this.returnNewPokemon();
-    }, returnNewPokemon() {
+
+     returnNewPokemon() {
       this.onlyNewPokemon = []
-      for (const pokemonObject of this.pokemonList) {
-        if (!this.pokemonTeam.activeTeam.includes(pokemonObject.Id) && !this.pokemonTeam.backupPokemon.includes(pokemonObject.Id)) {
+      for (const pokemonObject of this.pokemonList.items) {
+        if (!this.pokemonTeam.activeTeam.includes(pokemonObject.id) && !this.pokemonTeam.backupPokemon.includes(pokemonObject.id)) {
           this.onlyNewPokemon.push(pokemonObject);
         }
       }
@@ -81,10 +71,13 @@ export default {
             <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize">Active Team</p>
           </div>
           <div v-for="pokemon in pokemonTeam.activeTeam"
-               :key="pokemon.Id">
+               :key="pokemon">
             <horizontal-card :pokemon-team="pokemonTeam" :card-style="3"
-                             :pokemon="returnFullPokemon(pokemon)"
-                             @pokemon-removed="returnNewPokemon"></horizontal-card>
+                             :pokemon="pokemonList.findPokemonById(pokemon)"
+                             @pokemon-removed="returnNewPokemon"
+                             @remove-pokemon="pokemonTeam.removeFromTeam($event.id)"
+                             @mega-pokemon="pokemonTeam.activeTeamMega($event.id)"
+            ></horizontal-card>
           </div>
           <div v-if="pokemonTeam.backupPokemon.length > 0">
             <div class=" ps-3">
@@ -93,8 +86,10 @@ export default {
             <div v-for="pokemon in pokemonTeam.backupPokemon"
                  :key="pokemon.Id">
               <horizontal-card :pokemon-team="pokemonTeam" :card-style="3"
-                               :pokemon="returnFullPokemon(pokemon)"
-                               @pokemon-removed="returnNewPokemon"></horizontal-card>
+                               :pokemon="pokemonList.findPokemonById(pokemon)"
+                               @remove-pokemon="pokemonTeam.removeFromTeam($event.id)"
+
+                              ></horizontal-card>
             </div>
           </div>
 
@@ -111,7 +106,7 @@ export default {
 
         <template  v-slot:pageTwo>
           <search-and-display-view :card-style="2" :filter-object=filterObject @filter-clicked="$refs.RaidTeamOffCanvas.pageNumber++"
-                                   @clicked-object="addPokemonToTeam" :list-to-search="onlyNewPokemon"
+                                   @clicked-object="pokemonTeam.addToTeam($event.id); returnNewPokemon()" :list-to-search="onlyNewPokemon"
                                    title="Search Your Pokemon"></search-and-display-view>
         </template>
 

@@ -4,9 +4,11 @@ export class PokemonList {
     constructor(initialList = []) {
         this.items = initialList;
     }
-
+    setItems(newList) {
+        this.items = newList;
+    }
     add(pokemon) {
-        console.log(pokemon ?? 'nopokemo')
+
         if (!pokemon[1]) {
             const lastPokemon = this.items.at(-1);
             pokemon.id = lastPokemon ? lastPokemon.id + 1 : 1;
@@ -16,7 +18,7 @@ export class PokemonList {
             while (pokemon[1] > 0) {
                 console.log(pokemon[0]);
                 pokemon[1]--;
-                const lastPokemon = this.items[this.items.length - 1].id;
+                const lastPokemon = this.items[this.items.length - 1]?.id;
                 pokemon[0].id = lastPokemon ? lastPokemon + 1 : 1;
                 this.items.push(pokemon[0]);
             }
@@ -27,7 +29,7 @@ export class PokemonList {
         this.items = this.items.filter(pokemon => pokemon.id !== id);
     }
 
-    find(id) {
-        return this.items.find(pokemon => pokemon.id === id);
+    findPokemonById(id) {
+        return this.items.find(pokemon => pokemon.id === id) ?? false;
     }
 }

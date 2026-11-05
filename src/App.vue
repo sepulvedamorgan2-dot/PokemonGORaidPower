@@ -4,6 +4,7 @@ import {fetchPokemonList} from "@/Services/Helpers";
 import NavbarMain from "@/Components/Universal/NavbarMain.vue";
 import {shallowRef} from "vue"
 import {PokemonList} from "@/models/PokemonList.js"
+import {PokemonTeam} from "@/models/PokemonTeam.js";
 
 export default {
   name: "App",
@@ -27,40 +28,39 @@ export default {
     this.pokemonListAPI = await this.fetchPokemonList()
 
 
-
     // if (localStorage.getItem('pokemonList')) {
     //   this.pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
     // } else {
     //   this.pokemonList = []
     // }
     this.pokemonList = new PokemonList();
-    if (localStorage.getItem('pokemonTeamList')) {
-      this.pokemonTeamList = JSON.parse(localStorage.getItem('pokemonTeamList'));
-
-      // Notes because i googled if there was a better way than looping through 3 arrays to find what does/doesnt exist and this is new-ish to me
-      // All set items must be unique
-      // .map returns a new array with only the id's that gets turned into a set
-      const pokemonListIds = new Set(this.pokemonList.items.map(p => p.Id));
-      for (const team of this.pokemonTeamList) {
-        // filter loops throguh all id's and if pokemonListIds.has returns false, that id is removed from the list
-        team.activeTeam = team.activeTeam.filter(id => pokemonListIds.has(id));
-        if (team.activeTeam.length < 6 && team.backupPokemon.length > 0) {
-          team.activeTeam.push(team.backupPokemon.shift());
-        }
-      }
-    } else {
+    // if (localStorage.getItem('pokemonTeamList')) {
+    //   this.pokemonTeamList = JSON.parse(localStorage.getItem('pokemonTeamList'));
+    //
+    //   // Notes because i googled if there was a better way than looping through 3 arrays to find what does/doesnt exist and this is new-ish to me
+    //   // All set items must be unique
+    //   // .map returns a new array with only the id's that gets turned into a set
+    //   const pokemonListIds = new Set(this.pokemonList.items.map(p => p.Id));
+    //   for (const team of this.pokemonTeamList) {
+    //     // filter loops throguh all id's and if pokemonListIds.has returns false, that id is removed from the list
+    //     team.activeTeam = team.activeTeam.filter(id => pokemonListIds.has(id));
+    //     if (team.activeTeam.length < 6 && team.backupPokemon.length > 0) {
+    //       team.activeTeam.push(team.backupPokemon.shift());
+    //     }
+    //   }
+    // } else {
       this.pokemonTeamList = [];
       for (const type of this.types) {
         console.log(type);
-        this.pokemonTeamList.push({
-          id: this.pokemonTeamList.length,
-          type: type,
-          activeTeam: [],
-          backupPokemon: [],
-          activeMegaId: null
-        });
+        this.pokemonTeamList.push(new PokemonTeam(
+            this.pokemonTeamList.length,
+            type,
+            [],
+            [],
+            null
+        ))
 
-      }
+      // }
       localStorage.setItem('pokemonTeamList', JSON.stringify(this.pokemonTeamList))
     }
     if (localStorage.getItem('tradeCardList')) {
@@ -71,12 +71,15 @@ export default {
     }
 
     this.pokemonList.add(this.pokemonListAPI[0])
+    this.pokemonList.add(this.pokemonListAPI[1])
+    this.pokemonList.add(this.pokemonListAPI[2])
+    this.pokemonList.add(this.pokemonListAPI[3])
   },
   watch: {
     pokemonList: {
       handler: function () {
         for (let pokemon of this.pokemonList.items) {
-          if(!pokemon.cp){
+          if (!pokemon.cp) {
             pokemon.cp = 50;
           }
         }
@@ -85,7 +88,6 @@ export default {
         // } else {
         //   this.pokemonList = []
         // }
-
 
 
       }, deep: true
@@ -103,7 +105,7 @@ export default {
         }
 
       }, deep: true
-    },tradeCardList: {
+    }, tradeCardList: {
 
       handler: function () {
         for (const tradeCard of this.tradeCardList) {
@@ -138,9 +140,10 @@ export default {
 
 </script>
 
-<template >
+<template>
   <NavbarMain pageTitle="Pokemon Go Raid Power"/>
-  <router-view :trade-card-list="tradeCardList" :pokemon-list-api="pokemonListAPI" :pokemon-team-list="pokemonTeamList" :pokemon-list="pokemonList"></router-view>
+  <router-view :trade-card-list="tradeCardList" :pokemon-list-api="pokemonListAPI" :pokemon-team-list="pokemonTeamList"
+               :pokemon-list="pokemonList"></router-view>
 </template>
 
 <style scoped></style>

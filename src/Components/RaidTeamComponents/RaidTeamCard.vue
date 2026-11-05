@@ -1,6 +1,7 @@
 <script>
 
 import RaidTeamOffCanvas from "./RaidTeamsOffCanvas.vue";
+import {PokemonList} from "@/models/PokemonList.js";
 export default {
   name: "RaidTeamCard",
 
@@ -14,28 +15,16 @@ export default {
 
   props: {
     pokemonTeam: {Array, required: true},
-    pokemonList: {Array, required: true},
+    pokemonList: {PokemonList, required: true},
   },
 
   methods: {
 
-    returnFullPokemon(pokemonIdOnly) {
-      return {...this.pokemonList.find(p => p.Id === pokemonIdOnly)}
-    }
-    , teamCP(pokemonTeam) {
+    teamForRaid(pokemonTeam) {
       let counter = 0;
+      for (const pokeInTeam of pokemonTeam.activeTeam) {
 
-      for (const pokeInTeam of pokemonTeam.activeTeam) {
-        if (pokemonTeam.activeMegaId === pokeInTeam) {
-          counter += this.returnFullPokemon(pokeInTeam).cp * 1.33;
-        }
-        counter += this.returnFullPokemon(pokeInTeam).cp;
-      }
-      return counter;
-    }, teamForRaid(pokemonTeam) {
-      let counter = 0;
-      for (const pokeInTeam of pokemonTeam.activeTeam) {
-        counter += Number(this.returnFullPokemon(pokeInTeam).cp);
+        counter += Number(this.pokemonList.findPokemonById(pokeInTeam).cp);
       }
       if (!counter) {
         return 0;
@@ -71,7 +60,7 @@ export default {
         </div>
         <div class="col-12 ps-2 pe-0">
           <div class="ms-sm-1">
-            <span class="fw-semibold fs-5 text-dark mb-0">{{ teamCP(pokemonTeam) }}</span>
+            <span class="fw-semibold fs-5 text-dark mb-0">{{ pokemonTeam.calculateTeamCp(pokemonList) }}</span>
             <span class="text-uppercase fw-bold text-tertiary ms-1 fs-6 mt-2 mb-1">RP</span>
             <span class="fw-semibold fs-5 text-dark mb-0 ms-2">{{ teamForRaid(pokemonTeam) }}</span>
             <span class="text-uppercase fw-bold text-secondary fs-tiny ms-1  mt-2 mb-1">Players per 5* Raid</span>
@@ -83,7 +72,7 @@ export default {
       <div class="row g-2 g-sm-2 g-md-2 p-sm-1 ">
         <div class="col-4 text-center position-relative " v-for="pokemon in pokemonTeam.activeTeam">
           <img class="img-fluid border rounded w-100"
-               :src="returnFullPokemon(pokemon).image"
+               :src="pokemonList.findPokemonById(pokemon).image"
                alt="pokemonImg">
         </div>
       </div>
