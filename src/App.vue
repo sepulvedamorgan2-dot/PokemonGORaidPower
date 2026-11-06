@@ -54,7 +54,7 @@ export default {
       // Notes because i googled if there was a better way than looping through 3 arrays to find what does/doesnt exist and this is new-ish to me
       // All set items must be unique
       // .map returns a new array with only the id's that gets turned into a set
-      const pokemonListIds = new Set(this.pokemonList.items.map(p => p.Id));
+      const pokemonListIds = new Set(this.pokemonList.items.map(p => p.id));
       for (const team of this.pokemonTeamList) {
         // filter loops throguh all id's and if pokemonListIds.has returns false, that id is removed from the list
         team.activeTeam = team.activeTeam.filter(id => pokemonListIds.has(id));
@@ -73,56 +73,41 @@ export default {
       this.pokemonTeamList = [];
       for (const type of this.types) {
         console.log(type);
-        this.pokemonTeamList.push(new PokemonTeam(
-            this.pokemonTeamList.length,
-            type,
-            [],
-            [],
-            null
-        ))
+        this.pokemonTeamList.push(new PokemonTeam({
+          id: this.pokemonTeamList.length,
+          type: type,
+          activeTeam: [],
+          backupTeam: [],
+          activeMegaId: null
+        }))
 
-        // }
+        }
         localStorage.setItem('pokemonTeamList', JSON.stringify(this.pokemonTeamList))
       }
-
+      console.log(localStorage.getItem('tradeCardList'));
       if (localStorage.getItem('tradeCardList')) {
-
         this.tradeCardList = JSON.parse(localStorage.getItem('tradeCardList'));
-        const moistCards = new TradeCardList();
-        // TODO this;-;
-        // for (const card of this.tradeCardList.items) {
-        //   const moistToAdd = (Object.assign(new TradeCard, card));
-        //   for (const pokemon of card.wantList){
-        //
-        //       const moistToAdd = (Object.assign(new Pokemon, pokemon));
-        //       moistToAdd.pokemonDetails = Object.assign(new PokemonDetails, pokemon.pokemonDetails);
-        //       moistToAdd.tradeDetails = Object.assign(new TradeDetails, pokemon.tradeDetails);
-        //       card.add(moistToAdd);
-        //
-        //   }
-        //   for (const pokemon of card.haveList){
-        //
-        //     const moistToAdd = (Object.assign(new Pokemon, pokemon));
-        //     moistToAdd.pokemonDetails = Object.assign(new PokemonDetails, pokemon.pokemonDetails);
-        //     moistToAdd.tradeDetails = Object.assign(new TradeDetails, pokemon.tradeDetails);
-        //     card.add(moistToAdd);
-        //
-        //   }
-        //   for (const tag of card.haveOptions){
-        //     const tag = (Object.assign(new TagObject, tag));
-        //
-        //   }
-        //
-        //   moistCards.add(moistToAdd);
-        // }
-        this.tradeCardList = moistCards;
+        const moistTradeCardList = new TradeCardList();
+        for (let tradeCard of this.tradeCardList.items) {
+          tradeCard = Object.assign(new TradeCard, tradeCard);
+          let moistWantList = [];
+          for (let pokemon of tradeCard.wantList) {
+            pokemon = Object.assign(new Pokemon, pokemon);
+            pokemon.pokemonDetails = Object.assign(new PokemonDetails, pokemon.pokemonDetails);
+            pokemon.tradeDetails = Object.assign(new TradeDetails, pokemon.tradeDetails);
+            moistWantList.push(pokemon);
+            console.log(pokemon);
+          }
+          tradeCard.wantList = moistWantList;
+        }
+        this.tradeCardList = moistTradeCardList;
 
       } else {
-        this.tradeCardList = []
+        this.tradeCardList = new TradeCardList();
       }
 
 
-    }
+
   },
   watch: {
     pokemonList: {
@@ -154,18 +139,17 @@ export default {
         }
 
       }, deep: true
-    }, tradeCardList: {
-
+    },
+    tradeCardList: {
       handler: function () {
 
         if (this.tradeCardList) {
           localStorage.setItem('tradeCardList', JSON.stringify(this.tradeCardList))
+
         } else {
           this.tradeCardList = []
         }
-      }
-      ,
-      deep: true
+      }, deep: true
     },
   }
 }
