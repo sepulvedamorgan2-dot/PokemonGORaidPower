@@ -23,7 +23,7 @@ function simpleMoves(arr, category){
     if (arrLength > 0) {
         while (i < arrLength) {
             const move = arr[arrKeys[i]];
-            console.log(move)
+
             const moveToAdd = {
                 name: move.names?.English?.toLowerCase() || null,
                 type : move.type?.names?.English?.toLowerCase() || null
@@ -58,7 +58,6 @@ function createPokemonObject(pokemon1, version, index = null) {
         pokemon1.hasMegaEvolution || false
     );
     const tradeDetails = new TradeDetails(
-        {...defaultTags},
         1,
         ''
     );

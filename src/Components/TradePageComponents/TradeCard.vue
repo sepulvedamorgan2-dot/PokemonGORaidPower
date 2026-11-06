@@ -7,8 +7,9 @@ import PokemonTagsOffCanvas from "@/Components/Universal/OffCanvasSequences/Poke
 import CollapseArea from "@/Components/TradePageComponents/CollapseArea.vue";
 import ConfirmDeleteModal from "@/Components/Universal/Modal/ConfirmDeleteModal.vue";
 import ImageWithDetails from "@/Components/Universal/ImageWithDetails.vue";
+import {TradeCard} from "@/models/TradeCard.js";
 
-export default{
+export default {
   name: 'TradeCard',
   components: {
     AddPokemonOffCanvas,
@@ -24,16 +25,16 @@ export default{
       pokeListApiFiltered: [],
       pokeListFiltered: [],
       mode: 0,
-      tradeCard: this.existingTradeCard  || {
-        title: 'My Trade',
-        haveList: [],
-        wantList: [],
-        selectedOptions: defaultOptions
-      },
+      tradeCard: this.existingTradeCard || new TradeCard(),
       validation: false,
       warning: false,
-
     }
+  },
+  props: {
+    pokemonList: {Type: Array, required: true},
+    pokemonListApi: {Type: Array, required: true},
+    existingTradeCard: {type: Object},
+    isNew: {type: Boolean, default: false},
   },
   watch: {
     existingTradeCard: {
@@ -45,106 +46,67 @@ export default{
       immediate: true
     }, tradeCard: {
       handler: function (newVal) {
-        console.log('changed')
-        for (const option of this.tradeCard.selectedOptions.want) {
-          for (const subOption of option.optionsArray) {
-            if (subOption.text === option.text) {
-              option.tagClass = subOption.tagClass;
-              break;
-            }
-          }
-        }
-        for (const option of this.tradeCard.selectedOptions.have) {
-          for (const subOption of option.optionsArray) {
-            if (subOption.text === option.text) {
-              option.tagClass = subOption.tagClass;
-              break;
-            }
-          }
-        }
+        this.tradeCard.updateOptionClasses();
       }, deep: true
     }
   },
-  props: {
-    pokemonList: {Type: Array, required: true},
-    pokemonListApi: {Type: Array, required: true},
-    existingTradeCard: {type: Object},
-    isNew: {type: Boolean, default: false},
-  },
+
   methods: {
     addHaveList(pokemon) {
-
-      this.tradeCard.haveList.push(pokemon);
+      this.tradeCard.addHaveList(pokemon);
       this.returnNewPokemon(this.pokemonListApi, this.tradeCard.haveList, false);
     },
     addWantedList(pokemon) {
       this.validation = false;
-      this.tradeCard.wantList.push(pokemon);
+      this.tradeCard.addWantedList(pokemon);
       this.returnNewPokemon(this.pokemonListApi, this.tradeCard.wantList, true);
     },
     returnNewPokemon() {
-
-      this.pokeListApiFiltered = this.pokemonListApi.filter(
-          pokemonObject => !this.tradeCard.wantList.some(p => p.image === pokemonObject.image)
-      );
-
-      // Filter Have List (User Data)
-      this.pokeListFiltered = this.pokemonList.filter(
-          pokemonObject => !this.tradeCard.haveList.some(p => p.Id === pokemonObject.Id)
-      );
-      if(this.warning && this.pokeListFiltered.length > 0){
+      this.pokeListApiFiltered = this.pokemonListApi.filter(pokemonObject => {
+        const wantList = this.tradeCard?.wantList ?? [];
+        return !wantList.some(p => p.image === pokemonObject.image);
+      });
+      //
+      this.pokeListFiltered = this.pokemonList.items.filter(p => {
+                for (const pokemon of this.tradeCard.haveList) {
+                  if (pokemon === p) {
+                    return false
+                  }
+                }
+                return true
+              }
+          );
+      //
+      if (this.warning && this.pokeListFiltered.length > 0) {
         this.warning = false
-        this.pokeListFiltered = this.pokemonList.filter(
-            pokemonObject => !this.tradeCard.haveList.some(p => p.Id === pokemonObject.Id)
-        );
+        this.pokeListFiltered = this.pokemonList.items.filter(pokemonObject =>
+            this.pokeListApiFiltered = this.pokemonList.items.filter(pokemonObject => {
+              const haveList = [this.tradeCard?.haveList ?? []];
+              return !haveList.some(p => p.image === pokemonObject.image);
+            }))
       }
-      if(this.pokeListFiltered.length === 0){
+      //
+      if (this.pokeListFiltered.length === 0) {
         this.pokeListFiltered = [...this.pokemonListApi]
         this.warning = true
       }
 
     },
-    deleteFromList(pokemon, list) {
-      if (this.mode === 1) {
-        if (list) {
-          const index = this.tradeCard.wantList.indexOf(pokemon);
-          if (index > -1) {
-            this.tradeCard.wantList.splice(index, 1);
-          }
-        } else {
-          const index = this.tradeCard.haveList.indexOf(pokemon);
-          if (index > -1) {
-            this.tradeCard.haveList.splice(index, 1);
-          }
-          this.warning = false
-          this.returnNewPokemon()
-        }
-
-      }
-    }, manageAdd(cardToAdd){
-      if(cardToAdd.wantList.length < 1) {
+    manageAdd(cardToAdd) {
+      if (cardToAdd.wantList.length < 1) {
         this.validation = true
         return false;
-
       }
-
       this.$emit('addTradeCard', cardToAdd);
-      this.tradeCard = {
-        haveList: [],
-        wantList: [],
-        selectedOptions: defaultOptions
-      }
+      this.tradeCard = new TradeCard();
 
     }
   },
-  mounted(){
-    if(this.isNew){
+  mounted() {
+    if (this.isNew) {
       this.mode = 1
     }
     this.returnNewPokemon()
-
-
-
   },
 }
 
@@ -154,14 +116,14 @@ export default{
   <CardContainer :custom-title="true">
     <template v-slot:card-actions>
       <div class="d-flex  py-0  mb-1">
-        <i v-show="mode === 0" v-on:click="mode = 1; returnNewPokemon()"  class="bi bi-pencil-fill fs-5 mt-1"></i>
+        <i v-show="mode === 0" v-on:click="mode = 1; returnNewPokemon()" class="bi bi-pencil-fill fs-5 mt-1"></i>
         <!--            <i v-show="mode === 1" v-on:click="mode = 0" class="bi bi-eye me-3 fs-5 mt-1"></i>-->
         <div v-if="mode === 1 && pokemonListApi"
         >
-
         </div>
         <div v-if="mode === 1 && !isNew">
-          <confirm-delete-modal @delete-item="$emit('deleteItem', tradeCard)" :item="{name: tradeCard.title}"><i class="bi bi-trash-fill fs-3 p-3"></i></confirm-delete-modal>
+          <confirm-delete-modal @delete-item="$emit('deleteItem', tradeCard)" :item="{name: tradeCard.title}"><i
+              class="bi bi-trash-fill fs-3 p-3"></i></confirm-delete-modal>
         </div>
 
       </div>
@@ -184,39 +146,33 @@ export default{
 
           </div>
         </div>
-        <div class="col-2 "  v-if="mode ===1">
-          <!-- AFTER (Fixed) -->
-          <add-pokemon-off-canvas @clicked-object-existing="addWantedList"
-                                  button="pencil"
-                                  v-on:click="returnNewPokemon()"
-                                  :pokemon-list-from-api="pokeListApiFiltered"
-                                  :card-style="4">
-          </add-pokemon-off-canvas>
-        </div>
+
 
         <div class="ms-1" v-if="mode === 0">
-          <h4 v-for="option in tradeCard.selectedOptions.want" :class="{
+          <h4 v-for="option in tradeCard.wantOptions" :class="{
                 ['bg-'+option.tagClass]: option.tagClass !== 'd-none',
                 'd-none': option.tagClass === 'd-none',}" class="col-auto badge me-1  ">
-            {{ option.text }}
+            {{ option.selected }}
           </h4>
         </div>
       </div>
 
-      <div class="row ps-1" v-if="mode === 1">
+      <div class="row ps-0 pt-2 pb-0" v-if="mode === 1">
         <collapse-area teleport-id="want">
-          <div class="pt-2" v-if="tradeCard.selectedOptions.want">
-            <div v-if="tradeCard.selectedOptions.want && Object.keys(tradeCard.selectedOptions.want).length > 0">
+          <div class="pt-2" v-if="tradeCard.wantOptions">
+            <div v-if="tradeCard.wantOptions && Object.keys(tradeCard.wantOptions).length > 0">
               <div class="ms-1 d-flex   flex-wrap">
-                <label v-for="option in tradeCard.selectedOptions.want" :key="option.title"
+                <label v-for="option in tradeCard.wantOptions" :key="option.title"
                        class="fs-tiny fw-light form-label">
                   {{ option.title }}
                   <select style="text-indent: -1px; border-width: 1.5px" :class="{
                     'form-select  w-auto px-3 rounded-pill me-2 ': true,
                     ['border-'+option.tagClass]: option.tagClass !== 'd-none',
                 'btn-outline border-dark': option.tagClass === 'd-none',
-                }" v-model="option.text" :key="option.title">
-                    <option v-for="subOption in option.optionsArray" :value="subOption.text">{{ subOption.text }}
+                }" v-model="option.selected" :key="option.title">
+                    <option v-for="subOption in option.optionsArray" :value="subOption.selected">{{
+                        subOption.selected
+                      }}
                     </option>
                   </select>
                 </label>
@@ -225,43 +181,52 @@ export default{
           </div>
         </collapse-area>
       </div>
-      <div class="pb-2" id="want">
+      <div class="pb-0" id="want">
 
       </div>
 
-      <p v-if="validation" class="text-danger ms-1 pt-2">Must have one pokemon wanted</p>
-      <div style="height: 120px" class="w-100 text-center align-content-center" v-if="tradeCard.wantList.length < 1">
-        <p>No Wanted Pokemon Added</p>
+      <p v-if="validation" class="text-danger ms-1 pt-0">Must have one pokemon wanted</p>
+      <div class="row pb-1 row-cols-md-1 mt-0 pt-0 row-cols-4 g-1 g-sm-2 g-md-2 p-sm-1 ">
+        <div style="aspect-ratio: 1/1"  v-if="mode ===1" class="col col-md-2" >
+          <div class="d-flex text-center align-items-center h-100  justify-content-center border rounded-4 ">
 
-      </div>
-      <div class="row  p-2 py-0 mb-1">
-        <div class="row row-cols-md-1 mt-0 pt-0 row-cols-4 g-1 g-sm-2 g-md-2 p-sm-1 ">
-          <div class="col col-md-2" v-for="pokemon in tradeCard.wantList">
-            <div class="text-center border rounded-4 ">
-              <div class="position-relative">
+            <!-- AFTER (Fixed) -->
+            <add-pokemon-off-canvas @clicked-object-existing="addWantedList"
+                                    button="pencil"
+                                    v-on:click="returnNewPokemon()"
+                                    :pokemon-list-from-api="pokeListApiFiltered"
+                                    :card-style="4">
+            </add-pokemon-off-canvas>
+          </div>
 
-                <image-with-details :no-quantity="true" :noPresetSize="true" :pokemon="pokemon">
-                  <pokemon-tags-off-canvas v-if="mode === 1" :pokemon="pokemon"></pokemon-tags-off-canvas>
-                </image-with-details>
+        </div>
+        <div class="col col-md-2" v-for="pokemon in tradeCard.wantList">
+          <div class="text-center border rounded-4 ">
+            <div class="position-relative">
 
-              </div>
-              <div class="pb-1">
-                <p style="font-size: 13px; font-weight: 500"
-                   v-if="pokemon.tradeDetails.tradeBackground.shorthandName"
-                   v-show="pokemon.tradeDetails.tradeBackground !== ''"
-                   :class="{'mb-0': true, ['text-type' + pokemon.tradeDetails.tradeBackground.color]: true}">
-                  {{ pokemon.tradeDetails.tradeBackground.shorthandName }}
-                </p>
-                <p style="font-size: 14px;" v-for="tag in pokemon.tradeDetails.tags"
-                   v-show="tag.selected !== 'None' && tag.selected !=='Lucky'"
-                   class="mb-0">
-                  {{ tag.selected }}
-                </p>
-              </div>
+              <image-with-details @dblclick="tradeCard.removeFromWantedList(pokemon)" :no-quantity="true" :noPresetSize="true" :pokemon="pokemon">
+                <pokemon-tags-off-canvas v-if="mode === 1" :pokemon="pokemon"></pokemon-tags-off-canvas>
+              </image-with-details>
+
+            </div>
+            <div class="pb-1">
+              <p style="font-size: 13px; font-weight: 500"
+                 v-if="pokemon.tradeDetails.tradeBackground.shorthandName"
+                 v-show="pokemon.tradeDetails.tradeBackground !== ''"
+                 :class="{'mb-0': true, ['text-type' + pokemon.tradeDetails.tradeBackground.color]: true}">
+                {{ pokemon.tradeDetails.tradeBackground.shorthandName }}
+              </p>
+              <p style="font-size: 14px;" v-for="tag in pokemon.tradeDetails.tags"
+                 v-show="tag.selected !== 'None' && tag.selected !=='Lucky'"
+                 class="mb-0">
+                {{ tag.selected }}
+              </p>
             </div>
           </div>
         </div>
       </div>
+
+
 
       <div class="row  border-top ">
         <div class="col-10 ps-3 ps-1 ">
@@ -271,36 +236,33 @@ export default{
 
           </div>
         </div>
-        <div class="col-2" v-if="mode ===1">
-          <add-pokemon-off-canvas @clicked-object-existing="addHaveList"
-                                  :warning="warning"
-                                  button="pencil" :pokemon-list-from-api="pokeListFiltered"
-                                  :card-style=5 ></add-pokemon-off-canvas>
-        </div>
+
 
         <div class="ms-1" v-if="mode === 0">
-          <h4 v-for="option in tradeCard.selectedOptions.have" :class="{
+          <h4 v-for="option in tradeCard.haveOptions" :class="{
                 ['bg-'+option.tagClass]: option.tagClass !== 'd-none',
                 'd-none': option.tagClass === 'd-none',}" class="col-auto badge me-1  ">
-            {{ option.text }}
+            {{ option.selected }}
           </h4>
         </div>
       </div>
 
-      <div class="row ps-1" v-if="mode === 1">
+      <div class="row ps-0 pt-2 pb-1" v-if="mode === 1">
         <collapse-area teleport-id="have">
-          <div class="pt-2" v-if="tradeCard.selectedOptions.have">
-            <div v-if="tradeCard.selectedOptions.have && Object.keys(tradeCard.selectedOptions.have).length > 0">
+          <div class="pt-2" v-if="tradeCard.haveOptions">
+            <div v-if="tradeCard.haveOptions && Object.keys(tradeCard.haveOptions).length > 0">
               <div class="ms-1 d-flex   flex-wrap">
-                <label v-for="option in tradeCard.selectedOptions.have" :key="option.title"
+                <label v-for="option in tradeCard.haveOptions" :key="option.title"
                        class="fs-tiny fw-light form-label">
                   {{ option.title }}
                   <select style="text-indent: -1px; border-width: 1.5px" :class="{
                     'form-select  w-auto px-4 rounded-pill me-2 ': true,
                     ['border-'+option.tagClass]: option.tagClass !== 'd-none',
                 'btn-outline border-dark': option.tagClass === 'd-none',
-                }" v-model="option.text" :key="option.title">
-                    <option v-for="subOption in option.optionsArray" :value="subOption.text">{{ subOption.text }}
+                }" v-model="option.selected" :key="option.title">
+                    <option v-for="subOption in option.optionsArray" :value="subOption.selected">{{
+                        subOption.selected
+                      }}
                     </option>
                   </select>
                 </label>
@@ -309,16 +271,25 @@ export default{
           </div>
         </collapse-area>
       </div>
-      <div class="pb-2" id="have">
-
-      </div>
-      <div style="height: 120px" class="w-100 text-center align-content-center" v-if="tradeCard.haveList.length < 1">
-        <p>No Pokemon For Trade Listed</p>
+      <div class="pb-0" id="have">
 
       </div>
 
-      <div class="row  p-2 py-0 mb-1">
+      <div class="row  p-2 py-1 mb-1">
         <div class="row row-cols-md-1 mt-0 pt-0 row-cols-4 g-1 g-sm-2 g-md-2 p-sm-1 ">
+          <div style="aspect-ratio: 1/1"  v-if="mode ===1" class="col col-md-2" >
+            <div class="d-flex text-center align-items-center h-100  justify-content-center border rounded-4 ">
+
+              <!-- AFTER (Fixed) -->
+              <add-pokemon-off-canvas @clicked-object-existing="addHaveList"
+                                      button="pencil"
+                                      v-on:click="returnNewPokemon()"
+                                      :pokemon-list-from-api="pokeListFiltered"
+                                      :card-style="4">
+              </add-pokemon-off-canvas>
+            </div>
+
+          </div>
           <div class="col col-md-2" v-for="pokemon in tradeCard.haveList">
             <div class="text-center border rounded-4 ">
               <div class="position-relative">
@@ -346,9 +317,11 @@ export default{
           </div>
         </div>
       </div>
-      <button v-if="isNew" type="button" class="btn btn-primary w-100 rounded-4" @click="manageAdd(tradeCard)">Save New Trade Card
+      <button v-if="isNew" type="button" class="btn btn-primary w-100 rounded-4" @click="manageAdd(tradeCard)">Save New
+        Trade Card
       </button>
-      <button v-if="!isNew && mode === 1" type="button" class="btn btn-primary w-125 rounded-4" @click="mode = 0">Save Trade Card
+      <button v-if="!isNew && mode === 1" type="button" class="btn btn-primary w-125 rounded-4" @click="mode = 0">Save
+        Trade Card
       </button>
     </template>
   </CardContainer>

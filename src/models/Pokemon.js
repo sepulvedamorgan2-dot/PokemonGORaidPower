@@ -26,5 +26,6 @@ export function Pokemon(pokemonId, name, image, type, secondaryType, pokemonDeta
     }
 
 
+
 }
 

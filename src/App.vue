@@ -5,6 +5,7 @@ import NavbarMain from "@/Components/Universal/NavbarMain.vue";
 import {shallowRef} from "vue"
 import {PokemonList} from "@/models/PokemonList.js"
 import {PokemonTeam} from "@/models/PokemonTeam.js";
+import {TradeCard} from "@/models/TradeCard.js";
 
 export default {
   name: "App",
@@ -63,12 +64,13 @@ export default {
       // }
       localStorage.setItem('pokemonTeamList', JSON.stringify(this.pokemonTeamList))
     }
-    if (localStorage.getItem('tradeCardList')) {
-
-      this.tradeCardList = JSON.parse(localStorage.getItem('tradeCardList'));
-    } else {
-      this.tradeCardList = []
-    }
+    // if (localStorage.getItem('tradeCardList')) {
+    //
+    //   this.tradeCardList = JSON.parse(localStorage.getItem('tradeCardList'));
+    // } else {
+    //   this.tradeCardList = []
+    // }
+    this.tradeCardList.push(new TradeCard());
 
     this.pokemonList.add(this.pokemonListAPI[0])
     this.pokemonList.add(this.pokemonListAPI[1])
@@ -108,29 +110,29 @@ export default {
     }, tradeCardList: {
 
       handler: function () {
-        for (const tradeCard of this.tradeCardList) {
-          for (const option of tradeCard.selectedOptions.want) {
-            for (const subOption of option.optionsArray) {
-              if (subOption.text === option.text) {
-                option.tagClass = subOption.tagClass;
-                break;
-              }
-            }
-          }
-          for (const option of tradeCard.selectedOptions.have) {
-            for (const subOption of option.optionsArray) {
-              if (subOption.text === option.text) {
-                option.tagClass = subOption.tagClass;
-                break;
-              }
-            }
-          }
-        }
-        if (this.tradeCardList) {
-          localStorage.setItem('tradeCardList', JSON.stringify(this.tradeCardList))
-        } else {
-          this.tradeCardList = []
-        }
+        // for (const tradeCard of this.tradeCardList) {
+        //   for (const option of tradeCard.selectedOptions.want) {
+        //     for (const subOption of option.optionsArray) {
+        //       if (subOption.text === option.text) {
+        //         option.tagClass = subOption.tagClass;
+        //         break;
+        //       }
+        //     }
+        //   }
+        //   for (const option of tradeCard.selectedOptions.have) {
+        //     for (const subOption of option.optionsArray) {
+        //       if (subOption.text === option.text) {
+        //         option.tagClass = subOption.tagClass;
+        //         break;
+        //       }
+        //     }
+        //   }
+        // }
+        // if (this.tradeCardList) {
+        //   localStorage.setItem('tradeCardList', JSON.stringify(this.tradeCardList))
+        // } else {
+        //   this.tradeCardList = []
+        // }
       }
       ,
       deep: true

@@ -82,49 +82,49 @@ export const defaultOptions = {
             ]
         }
 
-        ]
+    ]
     ,
     have: [
-    {
-        title: 'Flying Capability',
-        text: 'Can Fly',
-        tagClass: 'success',
-        optionsArray: [
-            {text: 'Can Fly', tagClass: 'success'}, {text: 'Cant Fly', tagClass: 'danger'}
-        ]
-    },
-    {
-        title: 'Trinket Usage',
-        text: 'No Trinket',
-        tagClass: 'd-none',
-        optionsArray: [
-            {text: 'No Trinket', tagClass: 'd-none'}, {text: 'My Trinket', tagClass: 'tertiary'}
-        ]
-    },
-    {
-        title: 'Pokemon Level',
-        text: 'Any Level',
-        tagClass: 'd-none',
-        optionsArray: [
-            {text: 'Any Level', tagClass: 'd-none'}, {text: 'Level 40', tagClass: 'typewater'}, {
-                text: 'Level 50',
-                tagClass: 'typefire'
-            }
-        ]
-    },
+        {
+            title: 'Flying Capability',
+            text: 'Can Fly',
+            tagClass: 'success',
+            optionsArray: [
+                {text: 'Can Fly', tagClass: 'success'},
+                {text: 'Cant Fly', tagClass: 'danger'}
+            ]
+        },
+        {
+            title: 'Trinket Usage',
+            text: 'No Trinket',
+            tagClass: 'd-none',
+            optionsArray: [
+                {text: 'No Trinket', tagClass: 'd-none'},
+                {text: 'My Trinket', tagClass: 'tertiary'}
+            ]
+        },
+        {
+            title: 'Pokemon Level',
+            text: 'Any Level',
+            tagClass: 'd-none',
+            optionsArray: [
+                {text: 'Any Level', tagClass: 'd-none'},
+                {text: 'Level 40', tagClass: 'typewater'},
+                {text: 'Level 50', tagClass: 'typefire'}
+            ]
+        },
         {
             title: 'Guaranteed Lucky',
             text: 'N/A',
             tagClass: 'd-none',
             optionsArray: [
-                {text: 'N/A', tagClass: 'd-none'}, {text: 'Guaranteed Lucky', tagClass: 'typeelectric'}
-
+                {text: 'N/A', tagClass: 'd-none'},
+                {text: 'Guaranteed Lucky', tagClass: 'typeelectric'}
             ]
         }
 
 
     ],
-
 
 
 }
@@ -133,29 +133,27 @@ export const defaultTags = [
     {
         text: 'Size',
         Options: ['XXS', 'None', 'XXL'],
-        selected: 'None'
     },
-
     {
         text: 'Lucky',
         Options: ['Lucky', 'None'],
-        selected: 'None'
     },
     {
         text: 'Level',
         Options: ['None', 'Lvl 1', 'Lvl 40', 'Lvl 50'],
-        selected: 'None'
     },
     {
         text: 'Special Move',
         Options: ['None',],
-        selected: 'None'
     },
     {
         text: 'Priority',
         Options: ['None', 'Priority'],
-        selected: 'None'
     },
+    {
+        text: 'Registered',
+        Options: ['None', 'Registered',],
+    }
 
 ]
 

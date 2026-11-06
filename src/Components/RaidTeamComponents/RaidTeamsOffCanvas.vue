@@ -105,7 +105,7 @@ export default {
 
 
         <template  v-slot:pageTwo>
-          <search-and-display-view :card-style="2" :filter-object=filterObject @filter-clicked="$refs.RaidTeamOffCanvas.pageNumber++"
+          <search-and-display-view :card-style="2"   :filter-object=filterObject @filter-clicked="$refs.RaidTeamOffCanvas.pageNumber++"
                                    @clicked-object="pokemonTeam.addToTeam($event.id); returnNewPokemon()" :list-to-search="onlyNewPokemon"
                                    title="Search Your Pokemon"></search-and-display-view>
         </template>

@@ -15,7 +15,6 @@ export default {
         text: 'Size',
         Options: ['XXL', 'None', 'XXS'],
         selected: 'XXL'
-
       },
 
     }
@@ -37,15 +36,15 @@ export default {
 
   },
   mounted() {
-
+    this.pokemon.tradeDetails.addMoveTag(this.pokemon)
     const moves = ['None']
-    const movesArray = Object.values(this.pokemon.pokemonDetails.specialChargedMoves);
-    movesArray.push = Object.values(this.pokemon.pokemonDetails.specialFastMoves);
-    movesArray.forEach(move => {
-      moves.push(move.names.English);
-    });
-
-    this.pokemon.tradeDetails.tags[4].Options = moves
+    // const movesArray = Object.values(this.pokemon.pokemonDetails.specialChargedMoves);
+    // movesArray.push = Object.values(this.pokemon.pokemonDetails.specialFastMoves);
+    // movesArray.forEach(move => {
+    //   moves.push(move.names.English);
+    // });
+    //
+    // this.pokemon.tradeDetails.tags[4].Options = moves
 
 
   },
@@ -120,26 +119,26 @@ export default {
       </div>
     </div>
     <!--                delete button-->
-    <div class="px-3">
-      <div v-for="tag in pokemon.tradeDetails.tags" :key="tag.text">
-        <div class="mt-2" v-if="(tag.Options).length > 1" >
-          <h5 >{{ tag.text }}</h5>
-        </div>
-        <div class="d-flex g-1 " v-if="(tag.Options).length > 1" >
-          <div class="col-auto me-1" v-for="option in tag.Options" :key="option">
 
-            <input v-model="tag.selected" :value="option" type="radio" class="btn-check "
-                   :name="pokemon.image + tag.text"
-                   :id="pokemon.image + tag.text+option" autocomplete="off"
+    <div class="px-3 d-flex flex-column w-100" v-for="tag in pokemon.tradeDetails.tags" :key="tag.title">
+      <div class="mt-2" v-if="tag.optionsArray.length > 1">
+        <h5>{{ tag.title }}</h5>
+
+        <div class="d-flex flex-wrap gap-1" v-if="tag.optionsArray.length > 1">
+          <div class="col-auto" v-for="option in tag.optionsArray" :key="option">
+
+            <input v-model="tag.selected" :value="option" type="radio" class="btn-check"
+                   :name="pokemon.image + tag.title"
+                   :id="pokemon.image + tag.title+option" autocomplete="off"
                    :checked="tag.selected === option">
-            <label class="btn rounded-pill btn-outline-success "
-                   :for="pokemon.image + tag.text+option">{{ option }}</label>
-
+            <label class="btn rounded-pill btn-outline-success text-capitalize"
+                   :for="pokemon.image + tag.title+option">{{ option }}</label>
 
           </div>
         </div>
       </div>
     </div>
+
 
 
 
