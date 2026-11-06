@@ -1,28 +1,29 @@
 import {TagObject} from "@/models/Tag.js";
 
-export function TradeCard(title, haveList, wantList, haveOptions, wantOptions) {
+export function TradeCard(data = {}) {
     this.id = null;
-    this.title = title ?? 'My Trade Card';
-    this.haveList = haveList ?? [];
-    this.wantList = wantList ?? [];
-    this.haveOptions = haveOptions?.length > 0
-        ? haveOptions
-        : TradeCard.defaultHaveOptions.map(tag => new TagObject(
-            tag.title,
-            tag.selected,
-            [...tag.optionsArray], // Shallow copy the inner options array too
-            tag.tagClass
+    this.title = data.title ?? 'My Trade Card';
+    this.haveList = data.haveList ?? [];
+    this.wantList = data.wantList ?? [];
+    this.haveOptions = data.haveOptions?.length > 0
+        ? data.haveOptions
+        : TradeCard.defaultHaveOptions.map(tag => new TagObject({
+                title: tag.title,
+                selected: tag.selected,
+                optionsArray: [...tag.optionsArray],
+                tagClass: tag.tagClass
+            }
         ));
 
-    this.wantOptions = wantOptions?.length > 0
-        ? wantOptions
-        : TradeCard.defaultWantOptions.map(tag => new TagObject(
-            tag.title,
-            tag.selected,
-            [...tag.optionsArray],
-            tag.tagClass
-        ));
-    this.addHaveList = function(pokemon) {
+    this.wantOptions = data.wantOptions?.length > 0
+        ? data.wantOptions
+        : TradeCard.defaultWantOptions.map(tag => new TagObject({
+            title: tag.title,
+            selected: tag.selected,
+            optionsArray: [...tag.optionsArray],
+            tagClass: tag.tagClass
+        }));
+    this.addHaveList = function (pokemon) {
         this.haveList.push(pokemon);
     }
     this.addWantedList = function (pokemon) {
@@ -34,7 +35,7 @@ export function TradeCard(title, haveList, wantList, haveOptions, wantOptions) {
     this.removeFromWantedList = function (pokemon) {
         this.wantList = this.wantList.filter(p => p !== pokemon);
     }
-    this.updateOptionClasses = function() {
+    this.updateOptionClasses = function () {
         for (const option of this.wantOptions) {
             for (const subOption of option.optionsArray) {
                 if (subOption.selected === option.selected) {
@@ -57,102 +58,104 @@ export function TradeCard(title, haveList, wantList, haveOptions, wantOptions) {
 }
 
 TradeCard.defaultHaveOptions = [
-    new TagObject(
-        'Flying Capability',
-        'Cant Fly',
-        [
-            { selected: 'Can Fly', tagClass: 'success' },
-            { selected: 'Cant Fly', tagClass: 'danger' }
+    new TagObject({
+        title: 'Flying Capability',
+        selected: 'Cant Fly',
+        optionsArray: [
+            {selected: 'Can Fly', tagClass: 'success'},
+            {selected: 'Cant Fly', tagClass: 'danger'}
         ],
-        'danger'
+        tagClass: 'danger'
+    }),
+    new TagObject({
+        title: 'Trinket Usage',
+        selected: 'No Trinket',
+        optionsArray: [
+            {selected: 'No Trinket', tagClass: 'd-none'},
+            {selected: 'My Trinket', tagClass: 'tertiary'}
+        ],
+        tagClass: 'd-none'
+    }),
+    new TagObject({
+            title: 'Pokemon Level',
+            selected: 'Any Level',
+            optionsArray: [
+                {selected: 'Any Level', tagClass: 'd-none'},
+                {selected: 'Level 40', tagClass: 'typewater'},
+                {selected: 'Level 50', tagClass: 'typefire'}
+            ],
+            tagClass: 'd-none'
+        }
     ),
-    new TagObject(
-        'Trinket Usage',
-        'No Trinket',
-        [
-            { selected: 'No Trinket', tagClass: 'd-none' },
-            { selected: 'My Trinket', tagClass: 'tertiary' }
-        ],
-        'd-none'
-    ),
-    new TagObject(
-        'Pokemon Level',
-        'Any Level',
-        [
-            { selected: 'Any Level', tagClass: 'd-none' },
-            { selected: 'Level 40', tagClass: 'typewater' },
-            { selected: 'Level 50', tagClass: 'typefire' }
-        ],
-        'd-none'
-    ),
-    new TagObject(
-        'Guaranteed Lucky',
-        'N/A',
-        [
-            { selected: 'N/A', tagClass: 'd-none' },
-            { selected: 'Guaranteed Lucky', tagClass: 'typeelectric' }
-        ],
-        'd-none'
+    new TagObject({
+            title: 'Guaranteed Lucky',
+            selected: 'N/A',
+            optionsArray: [
+                {selected: 'N/A', tagClass: 'd-none'},
+                {selected: 'Guaranteed Lucky', tagClass: 'typeelectric'}
+            ],
+            tagClass: 'd-none'
+        }
     )
 ];
 TradeCard.defaultWantOptions = [
-    new TagObject(
-        'Trinket Usage',
-        'No Trinket',
-        [
-            { selected: 'No Trinket', tagClass: 'd-none' },
-            { selected: 'Your Trinket', tagClass: 'tertiary' }
+    new TagObject({
+        title: 'Trinket Usage',
+        selected: 'No Trinket',
+        optionsArray: [
+            {selected: 'No Trinket', tagClass: 'd-none'},
+            {selected: 'Your Trinket', tagClass: 'tertiary'}
         ],
-        'd-none'
+        tagClass: 'd-none'
+    }),
+    new TagObject({
+        title: 'Trade Friendship',
+        selected: 'Instant',
+        optionsArray: [
+            {selected: 'Instant', tagClass: 'success'},
+            {selected: '7 Day Trade', tagClass: 'typeground'},
+            {selected: '30 Day Trade', tagClass: 'typeground'},
+            {selected: '1 Mil Dust Trade', tagClass: 'typedragon'},
+            {selected: '800k Dust Trade', tagClass: 'typedragon'}
+        ],
+        tagClass: 'success'}
     ),
-    new TagObject(
-        'Trade Friendship',
-        'Instant',
-        [
-            { selected: 'Instant', tagClass: 'success' },
-            { selected: '7 Day Trade', tagClass: 'typeground' },
-            { selected: '30 Day Trade', tagClass: 'typeground' },
-            { selected: '1 Mil Dust Trade', tagClass: 'typedragon' },
-            { selected: '800k Dust Trade', tagClass: 'typedragon' }
+    new TagObject({
+        title: 'Pokemon Level',
+        selected: 'Any Level',
+        optionsArray: [
+            {selected: 'Any Level', tagClass: 'd-none'},
+            {selected: 'Level 40', tagClass: 'typewater'},
+            {selected: 'Level 50', tagClass: 'typefire'}
         ],
-        'success'
+        tagClass: 'success'}
     ),
-    new TagObject(
-        'Pokemon Level',
-        'Any Level',
-        [
-            { selected: 'Any Level', tagClass: 'd-none' },
-            { selected: 'Level 40', tagClass: 'typewater' },
-            { selected: 'Level 50', tagClass: 'typefire' }
+    new TagObject({
+        title: 'Trade Ratio',
+        selected: '1:1',
+        optionsArray: [
+            {selected: '1:1', tagClass: 'd-none'},
+            {selected: '2:1', tagClass: 'typewater'},
+            {selected: '3:1', tagClass: 'typefire'}
         ],
-        'success'
+        tagClass: 'success'}
     ),
-    new TagObject(
-        'Trade Ratio',
-        '1:1',
-        [
-            { selected: '1:1', tagClass: 'd-none' },
-            { selected: '2:1', tagClass: 'typewater' },
-            { selected: '3:1', tagClass: 'typefire' }
+    new TagObject({
+        title: 'Mirror Trade',
+        selected: 'N/A',
+        optionsArray: [
+            {selected: 'N/A', tagClass: 'd-none'},
+            {selected: 'Mirror Trade', tagClass: 'typepoison'}
         ],
-        'success'
+        tagClass: 'success'}
     ),
-    new TagObject(
-        'Mirror Trade',
-        'N/A',
-        [
-            { selected: 'N/A', tagClass: 'd-none' },
-            { selected: 'Mirror Trade', tagClass: 'typepoison' }
+    new TagObject({
+        title: 'Guaranteed Lucky',
+        selected: 'N/A',
+        optionsArray: [
+            {selected: 'N/A', tagClass: 'd-none'},
+            {selected: 'Guaranteed Lucky', tagClass: 'typeelectric'}
         ],
-        'success'
-    ),
-    new TagObject(
-        'Guaranteed Lucky',
-        'N/A',
-        [
-            { selected: 'N/A', tagClass: 'd-none' },
-            { selected: 'Guaranteed Lucky', tagClass: 'typeelectric' }
-        ],
-        'd-none'
+        tagClass: 'd-none'}
     )
 ];

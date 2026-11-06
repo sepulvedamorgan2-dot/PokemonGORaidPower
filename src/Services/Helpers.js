@@ -49,26 +49,24 @@ function createPokemonObject(pokemon1, version, index = null) {
     else if (version === 2) image = pokemon1.assets?.shinyImage;
     else if (version === 3) image = assetForm?.image;
     else if (version === 4) image = assetForm?.shinyImage;
-    const pokemonDetails = new PokemonDetails(
-        calculateCP(pokemon1.stats?.attack || 0, pokemon1.stats?.defense || 0, pokemon1.stats?.stamina || 0),
-        simpleMoves(pokemon1.quickMoves, 1) || [],
-        simpleMoves(pokemon1.cinematicMoves, 1) || [],
-        simpleMoves(pokemon1.eliteQuickMoves, 2) || [],
-        simpleMoves(pokemon1.eliteCinematicMoves, 2) || [],
-        pokemon1.hasMegaEvolution || false
-    );
-    const tradeDetails = new TradeDetails(
-        1,
-        ''
-    );
-    const pokemonToAdd = new Pokemon(
-        pokemon1.dexNr,
-        pokemon1.id?.toLowerCase() || '',
-        image ? String(image) : null,
-        pokemon1.primaryType?.names?.English?.toLowerCase() || null,
-        pokemon1.secondaryType?.names?.English?.toLowerCase() || null
-        ,pokemonDetails,
-        tradeDetails,
+    const pokemonDetailsData = new PokemonDetails({
+        maxCp: calculateCP(pokemon1.stats?.attack || 0, pokemon1.stats?.defense || 0, pokemon1.stats?.stamina || 0),
+        fastMoves: simpleMoves(pokemon1.quickMoves, 1) || [],
+        chargedMoves: simpleMoves(pokemon1.cinematicMoves, 1) || [],
+        specialFastMoves: simpleMoves(pokemon1.eliteQuickMoves, 2) || [],
+        specialChargedMoves: simpleMoves(pokemon1.eliteCinematicMoves, 2) || [],
+        megaCapable: pokemon1.hasMegaEvolution || false
+    });
+    const tradeDetailsData = new TradeDetails();
+    const pokemonToAdd = new Pokemon({
+            pokemonId: pokemon1.dexNr,
+            name: pokemon1.id?.toLowerCase() || '',
+            image: image ? String(image) : null,
+            type: pokemon1.primaryType?.names?.English?.toLowerCase() || null,
+            secondaryType: pokemon1.secondaryType?.names?.English?.toLowerCase() || null,
+            pokemonDetails: pokemonDetailsData,
+            tradeDetails: tradeDetailsData,
+        }
     )
     // console.log(pokemonToAdd)
     return pokemonToAdd;

@@ -38,7 +38,7 @@ export default {
 </script>
 
 <template>
-  <div class="card">
+  <div class="card" v-if="pokemonTeam != null">
 
     <!-- imgs -->
     <div class="card-body p-2  p-sm-2 p-md-2">

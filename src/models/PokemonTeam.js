@@ -1,10 +1,11 @@
 
-export function PokemonTeam(id, type, activeTeam, backupPokemon, activeMegaId) {
-    this.id = id ?? null;
-    this.type = type ?? null;
-    this.activeTeam = activeTeam ?? [];
-    this.backupPokemon = backupPokemon ?? [];
-    this.activeMegaId = activeMegaId ?? null;
+
+export function PokemonTeam(data = {}) {
+    this.id = data.id ?? null;
+    this.type = data.type ?? null;
+    this.activeTeam = data.activeTeam ?? [];
+    this.backupPokemon = data.backupPokemon ?? [];
+    this.activeMegaId = data.activeMegaId ?? null;
 
     this.addToTeam = function (pokemon)  {
         console.log(pokemon);

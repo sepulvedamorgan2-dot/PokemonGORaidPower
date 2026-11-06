@@ -1,13 +1,13 @@
 import {Pokemon} from './Pokemon.js';
 
-export class PokemonList {
-    constructor(initialList = []) {
-        this.items = initialList;
-    }
-    setItems(newList) {
+export function PokemonList(initialList = []) {
+
+        this.items = initialList ?? [];
+
+    this.setItems = function(newList) {
         this.items = newList;
     }
-    add(pokemon) {
+    this.add = function(pokemon) {
 
         if (!pokemon[1]) {
             const lastPokemon = this.items.at(-1);
@@ -25,11 +25,11 @@ export class PokemonList {
         }
     }
 
-    remove(id) {
+    this.remove = function(id) {
         this.items = this.items.filter(pokemon => pokemon.id !== id);
     }
 
-    findPokemonById(id) {
+    this.findPokemonById = function(id) {
         return this.items.find(pokemon => pokemon.id === id) ?? false;
     }
 }

@@ -1,16 +1,17 @@
 import {TagObject} from "@/models/Tag.js";
 
-export function TradeDetails(tradeQuantity, tradeBackground, tags) {
-    this.tags = (tags && tags.length > 0)
-        ? tags
-        : TradeDetails.defaultTags.map(tag => new TagObject(
-            tag.title,
-            tag.selected,
-            [...tag.optionsArray]
+export function TradeDetails(data = {}) {
+    this.tags = (data.tags && data.tags.length > 0)
+        ? data.tags
+        : TradeDetails.defaultTags.map(tag => new TagObject({
+            title: tag.title,
+            selected: tag.selected,
+            optionsArray: [...tag.optionsArray],
 
-        ));
-    this.tradeQuantity = tradeQuantity ?? 1;
-    this.tradeBackground = tradeBackground ?? '';
+        }));
+
+    this.tradeQuantity = data.tradeQuantity ?? 1;
+    this.tradeBackground = data.tradeBackground ?? '';
 
 
         this.addMoveTag = function (pokemon){
@@ -38,9 +39,9 @@ export function TradeDetails(tradeQuantity, tradeBackground, tags) {
 }
 
 TradeDetails.defaultTags = [
-    new TagObject('Size', 'None', ['None', 'XXL', 'XXS']),
-    new TagObject('Level', 'None', ['None', 'Lvl 1', 'Lvl 40', 'Lvl 50']),
-    new TagObject('Special Move', 'None', ['None']),
-    new TagObject('Priority', 'None', ['None', 'Priority']),
-    new TagObject('Registered', 'None', ['None', 'Unreg', 'Reg'])
+    new TagObject({title: 'Size', selected: 'None', optionsArray: ['None', 'XXL', 'XXS']}),
+    new TagObject({title: 'Level', selected: 'None', optionsArray: ['None', 'Lvl 1', 'Lvl 40', 'Lvl 50']}),
+    new TagObject({title: 'Special Move', selected: 'None', optionsArray: ['None']}),
+    new TagObject({title: 'Priority', selected: 'None', optionsArray: ['None', 'Priority']}),
+    new TagObject({title: 'Registered', selected: 'None', optionsArray: ['None', 'Unreg', 'Reg']})
 ]

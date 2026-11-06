@@ -6,6 +6,10 @@ import {shallowRef} from "vue"
 import {PokemonList} from "@/models/PokemonList.js"
 import {PokemonTeam} from "@/models/PokemonTeam.js";
 import {TradeCard} from "@/models/TradeCard.js";
+import {Pokemon} from "@/models/Pokemon.js";
+import {PokemonDetails} from "@/models/PokemonDetails.js";
+import {TradeDetails} from "@/models/TradeDetails.js";
+import {TradeCardList} from "@/models/TradeCardList.js";
 
 export default {
   name: "App",
@@ -15,10 +19,10 @@ export default {
   data: function () {
     return {
       types: ['normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'],
-      pokemonList: new PokemonList([]),
-      pokemonTeamList: [],
+      pokemonList: new PokemonList(),
+      pokemonTeamList: null,
       pokemonListAPI: shallowRef([]),
-      tradeCardList: [],
+      tradeCardList: new TradeCardList(),
     }
   },
   methods: {
@@ -29,27 +33,43 @@ export default {
     this.pokemonListAPI = await this.fetchPokemonList()
 
 
-    // if (localStorage.getItem('pokemonList')) {
-    //   this.pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
-    // } else {
-    //   this.pokemonList = []
-    // }
-    this.pokemonList = new PokemonList();
-    // if (localStorage.getItem('pokemonTeamList')) {
-    //   this.pokemonTeamList = JSON.parse(localStorage.getItem('pokemonTeamList'));
-    //
-    //   // Notes because i googled if there was a better way than looping through 3 arrays to find what does/doesnt exist and this is new-ish to me
-    //   // All set items must be unique
-    //   // .map returns a new array with only the id's that gets turned into a set
-    //   const pokemonListIds = new Set(this.pokemonList.items.map(p => p.Id));
-    //   for (const team of this.pokemonTeamList) {
-    //     // filter loops throguh all id's and if pokemonListIds.has returns false, that id is removed from the list
-    //     team.activeTeam = team.activeTeam.filter(id => pokemonListIds.has(id));
-    //     if (team.activeTeam.length < 6 && team.backupPokemon.length > 0) {
-    //       team.activeTeam.push(team.backupPokemon.shift());
-    //     }
-    //   }
-    // } else {
+    if (localStorage.getItem('pokemonList')) {
+      this.pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
+      const moistList = new PokemonList();
+      for (const pokemon of this.pokemonList.items) {
+        const moistToAdd = (Object.assign(new Pokemon, pokemon));
+        moistToAdd.pokemonDetails = Object.assign(new PokemonDetails, pokemon.pokemonDetails);
+        moistToAdd.tradeDetails = Object.assign(new TradeDetails, pokemon.tradeDetails);
+        moistList.add(moistToAdd);
+      }
+      this.pokemonList = moistList
+    } else {
+      this.pokemonList = new PokemonList();
+    }
+
+
+    if (localStorage.getItem('pokemonTeamList')) {
+      this.pokemonTeamList = JSON.parse(localStorage.getItem('pokemonTeamList'));
+
+      // Notes because i googled if there was a better way than looping through 3 arrays to find what does/doesnt exist and this is new-ish to me
+      // All set items must be unique
+      // .map returns a new array with only the id's that gets turned into a set
+      const pokemonListIds = new Set(this.pokemonList.items.map(p => p.Id));
+      for (const team of this.pokemonTeamList) {
+        // filter loops throguh all id's and if pokemonListIds.has returns false, that id is removed from the list
+        team.activeTeam = team.activeTeam.filter(id => pokemonListIds.has(id));
+        if (team.activeTeam.length < 6 && team.backupPokemon.length > 0) {
+          team.activeTeam.push(team.backupPokemon.shift());
+        }
+      }
+      const moistTeamList = [];
+      for (const pokemonTeam of this.pokemonTeamList) {
+        const moistToAdd = (Object.assign(new PokemonTeam, pokemonTeam));
+        moistTeamList.push(moistToAdd);
+      }
+      console.log(moistTeamList);
+      this.pokemonTeamList = moistTeamList
+    } else {
       this.pokemonTeamList = [];
       for (const type of this.types) {
         console.log(type);
@@ -61,21 +81,48 @@ export default {
             null
         ))
 
-      // }
-      localStorage.setItem('pokemonTeamList', JSON.stringify(this.pokemonTeamList))
-    }
-    // if (localStorage.getItem('tradeCardList')) {
-    //
-    //   this.tradeCardList = JSON.parse(localStorage.getItem('tradeCardList'));
-    // } else {
-    //   this.tradeCardList = []
-    // }
-    this.tradeCardList.push(new TradeCard());
+        // }
+        localStorage.setItem('pokemonTeamList', JSON.stringify(this.pokemonTeamList))
+      }
 
-    this.pokemonList.add(this.pokemonListAPI[0])
-    this.pokemonList.add(this.pokemonListAPI[1])
-    this.pokemonList.add(this.pokemonListAPI[2])
-    this.pokemonList.add(this.pokemonListAPI[3])
+      if (localStorage.getItem('tradeCardList')) {
+
+        this.tradeCardList = JSON.parse(localStorage.getItem('tradeCardList'));
+        const moistCards = new TradeCardList();
+        // TODO this;-;
+        // for (const card of this.tradeCardList.items) {
+        //   const moistToAdd = (Object.assign(new TradeCard, card));
+        //   for (const pokemon of card.wantList){
+        //
+        //       const moistToAdd = (Object.assign(new Pokemon, pokemon));
+        //       moistToAdd.pokemonDetails = Object.assign(new PokemonDetails, pokemon.pokemonDetails);
+        //       moistToAdd.tradeDetails = Object.assign(new TradeDetails, pokemon.tradeDetails);
+        //       card.add(moistToAdd);
+        //
+        //   }
+        //   for (const pokemon of card.haveList){
+        //
+        //     const moistToAdd = (Object.assign(new Pokemon, pokemon));
+        //     moistToAdd.pokemonDetails = Object.assign(new PokemonDetails, pokemon.pokemonDetails);
+        //     moistToAdd.tradeDetails = Object.assign(new TradeDetails, pokemon.tradeDetails);
+        //     card.add(moistToAdd);
+        //
+        //   }
+        //   for (const tag of card.haveOptions){
+        //     const tag = (Object.assign(new TagObject, tag));
+        //
+        //   }
+        //
+        //   moistCards.add(moistToAdd);
+        // }
+        this.tradeCardList = moistCards;
+
+      } else {
+        this.tradeCardList = []
+      }
+
+
+    }
   },
   watch: {
     pokemonList: {
@@ -85,11 +132,11 @@ export default {
             pokemon.cp = 50;
           }
         }
-        // if (this.pokemonList) {
-        //   localStorage.setItem('pokemonList', JSON.stringify(this.pokemonList))
-        // } else {
-        //   this.pokemonList = []
-        // }
+        if (this.pokemonList) {
+          localStorage.setItem('pokemonList', JSON.stringify(this.pokemonList))
+        } else {
+          this.pokemonList = []
+        }
 
 
       }, deep: true
@@ -110,29 +157,12 @@ export default {
     }, tradeCardList: {
 
       handler: function () {
-        // for (const tradeCard of this.tradeCardList) {
-        //   for (const option of tradeCard.selectedOptions.want) {
-        //     for (const subOption of option.optionsArray) {
-        //       if (subOption.text === option.text) {
-        //         option.tagClass = subOption.tagClass;
-        //         break;
-        //       }
-        //     }
-        //   }
-        //   for (const option of tradeCard.selectedOptions.have) {
-        //     for (const subOption of option.optionsArray) {
-        //       if (subOption.text === option.text) {
-        //         option.tagClass = subOption.tagClass;
-        //         break;
-        //       }
-        //     }
-        //   }
-        // }
-        // if (this.tradeCardList) {
-        //   localStorage.setItem('tradeCardList', JSON.stringify(this.tradeCardList))
-        // } else {
-        //   this.tradeCardList = []
-        // }
+
+        if (this.tradeCardList) {
+          localStorage.setItem('tradeCardList', JSON.stringify(this.tradeCardList))
+        } else {
+          this.tradeCardList = []
+        }
       }
       ,
       deep: true

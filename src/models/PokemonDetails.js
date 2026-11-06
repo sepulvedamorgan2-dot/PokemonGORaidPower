@@ -1,10 +1,10 @@
-export function PokemonDetails(maxCp, fastMoves, chargedMoves, specialFastMoves, specialChargedMoves, megaCapable) {
-    this.maxCp = maxCp;
-    this.fastMoves = fastMoves;
-    this.chargedMoves = chargedMoves;
-    this.specialFastMoves = specialFastMoves;
-    this.specialChargedMoves = specialChargedMoves;
-    this.megaCapable = megaCapable;
+export function PokemonDetails(data = {}) {
+    this.maxCp = data.maxCp || 0;
+    this.fastMoves = data.fastMoves || [];
+    this.chargedMoves = data.chargedMoves || [];
+    this.specialFastMoves = data.specialFastMoves || [];
+    this.specialChargedMoves = data.specialChargedMoves || [];
+    this.megaCapable = data.megaCapable || false;
 
     this.test = function() {
         console.log('PokemonDetails test function called');
