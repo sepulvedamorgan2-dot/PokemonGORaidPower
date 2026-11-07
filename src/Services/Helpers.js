@@ -72,7 +72,7 @@ function createPokemonObject(pokemon1, version, index = null) {
     return pokemonToAdd;
 }
 
-export async function fetchPokemonList() {
+export async function fetchPokemonListApi() {
     try {
         const response = await fetch("https://pokemon-go-api.github.io/pokemon-go-api/api/pokedex.json");
         const data = await response.json();

@@ -5,7 +5,7 @@ import FilterOffCanvas from "@/Components/Universal/OffCanvasSequences/FilterOff
 import SearchBarContainer from "@/Components/Universal/SearchBarContainer.vue";
 import AddPokemonOffCanvas from "@/Components/Universal/OffCanvasSequences/AddPokemonOffCanvas.vue";
 import NavbarMain from "@/Components/Universal/NavbarMain.vue";
-import {fetchPokemonList} from "@/Services/Helpers";
+
 
 export default {
 
@@ -35,7 +35,7 @@ export default {
     updateMatches(newList){
       this.matches = newList;
     },
-    fetchPokemonList,
+
         addPokemon(activeItem) {
       this.pokemon = activeItem[0];
       this.qty = activeItem[1];

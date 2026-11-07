@@ -43,7 +43,7 @@ export default {
             <template v-slot:card-body>
               <div  class="row g-2 g-sm-2 g-md-2 pt-2 ">
                 <div class="col-4"
-                   v-for="pokemon in tradeCard.wantList.slice(0,6)">
+                   v-for="pokemon in tradeCard.wantList.items.slice(0,6)">
                   <image-with-details :no-quantity="true" :pokemon="pokemon">
                   </image-with-details>
                 </div>

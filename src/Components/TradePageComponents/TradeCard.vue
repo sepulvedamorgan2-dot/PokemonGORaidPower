@@ -54,21 +54,21 @@ export default {
   methods: {
     addHaveList(pokemon) {
       this.tradeCard.addHaveList(pokemon);
-      this.returnNewPokemon(this.pokemonListApi, this.tradeCard.haveList, false);
+      this.returnNewPokemon(this.pokemonListApi, this.tradeCard.haveList.items, false);
     },
     addWantedList(pokemon) {
       this.validation = false;
       this.tradeCard.addWantedList(pokemon);
-      this.returnNewPokemon(this.pokemonListApi, this.tradeCard.wantList, true);
+      this.returnNewPokemon(this.pokemonListApi, this.tradeCard.wantList.items, true);
     },
     returnNewPokemon() {
       this.pokeListApiFiltered = this.pokemonListApi.filter(pokemonObject => {
-        const wantList = this.tradeCard?.wantList ?? [];
+        const wantList = this.tradeCard?.wantList.items ?? [];
         return !wantList.some(p => p.image === pokemonObject.image);
       });
       //
       this.pokeListFiltered = this.pokemonList.items.filter(p => {
-                for (const pokemon of this.tradeCard.haveList) {
+                for (const pokemon of this.tradeCard.haveList.items) {
                   if (pokemon === p) {
                     return false
                   }
@@ -81,7 +81,7 @@ export default {
         this.warning = false
         this.pokeListFiltered = this.pokemonList.items.filter(pokemonObject =>
             this.pokeListApiFiltered = this.pokemonList.items.filter(pokemonObject => {
-              const haveList = [this.tradeCard?.haveList ?? []];
+              const haveList = [this.tradeCard?.haveList.items ?? []];
               return !haveList.some(p => p.image === pokemonObject.image);
             }))
       }
@@ -93,7 +93,7 @@ export default {
 
     },
     manageAdd(cardToAdd) {
-      if (cardToAdd.wantList.length < 1) {
+      if (cardToAdd.wantList.items.length < 1) {
         this.validation = true
         return false;
       }
@@ -200,7 +200,7 @@ export default {
           </div>
 
         </div>
-        <div class="col col-md-2" v-for="pokemon in tradeCard.wantList">
+        <div class="col col-md-2" v-for="pokemon in tradeCard.wantList.items">
           <div class="text-center border rounded-4 ">
             <div class="position-relative">
 
@@ -290,7 +290,7 @@ export default {
             </div>
 
           </div>
-          <div class="col col-md-2" v-for="pokemon in tradeCard.haveList">
+          <div class="col col-md-2" v-for="pokemon in tradeCard.haveList.items">
             <div class="text-center border rounded-4 ">
               <div class="position-relative">
 
