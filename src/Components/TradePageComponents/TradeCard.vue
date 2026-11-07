@@ -1,6 +1,5 @@
 <script>
 
-import {defaultOptions} from "@/Services/DefaultTradeSettings.js";
 import AddPokemonOffCanvas from "@/Components/Universal/OffCanvasSequences/AddPokemonOffCanvas.vue";
 import CardContainer from "@/Components/Universal/CardContainer.vue";
 import PokemonTagsOffCanvas from "@/Components/Universal/OffCanvasSequences/PokemonTagsOffCanvas.vue";

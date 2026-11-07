@@ -7,7 +7,7 @@ import {shallowRef} from "vue"
 import {PokemonList} from "@/models/PokemonList.js"
 import {TradeCardList} from "@/models/TradeCardList.js";
 import DataFactory from "@/models/DataFactory.js";
-
+import GameDataFactory from "@/models/GameDataFactory.js";
 
 export default {
   name: "App",
@@ -27,7 +27,7 @@ export default {
     fetchPokemonListApi,
   },
   mounted: async function () {
-    this.pokemonListAPI = await this.fetchPokemonListApi()
+    this.pokemonListAPI = await GameDataFactory.fetchPokemonListApi();
     this.pokemonList = DataFactory.fetchPokemonList();
     this.pokemonTeamList = DataFactory.fetchPokemonTeamList(this.pokemonList);
     this.tradeCardList = DataFactory.fetchTradeCardList()

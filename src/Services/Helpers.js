@@ -1,5 +1,4 @@
 import {PokemonDetails} from "@/models/PokemonDetails.js";
-import {defaultTags} from '@/Services/DefaultTradeSettings.js'
 import {TradeDetails} from "@/models/TradeDetails.js";
 
 const CPM_SQUARED = 0.840300 ** 2;
@@ -57,7 +56,6 @@ function createPokemonObject(pokemon1, version, index = null) {
         specialChargedMoves: simpleMoves(pokemon1.eliteCinematicMoves, 2) || [],
         megaCapable: pokemon1.hasMegaEvolution || false
     });
-    const tradeDetailsData = new TradeDetails();
     const pokemonToAdd = new Pokemon({
             pokemonId: pokemon1.dexNr,
             name: pokemon1.id?.toLowerCase() || '',
@@ -65,7 +63,7 @@ function createPokemonObject(pokemon1, version, index = null) {
             type: pokemon1.primaryType?.names?.English?.toLowerCase() || null,
             secondaryType: pokemon1.secondaryType?.names?.English?.toLowerCase() || null,
             pokemonDetails: pokemonDetailsData,
-            tradeDetails: tradeDetailsData,
+            tradeDetails: new TradeDetails(),
         }
     )
     // console.log(pokemonToAdd)
