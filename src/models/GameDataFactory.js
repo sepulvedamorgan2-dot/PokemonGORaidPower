@@ -8,6 +8,7 @@ export default class GameDataFactory {
     static CPM_SQUARED = 0.840300 ** 2;
 
 
+
     static calculateCP(baseAtk, baseDef, baseSta) {
         const attackFactor = baseAtk + 15;
         const defenseFactor = Math.sqrt(baseDef + 15);
@@ -42,35 +43,68 @@ export default class GameDataFactory {
         }
         return simpleArray;
     }
-
-    static createPokemonObject(pokemon1, version, index = null) {
+    static createSimplePokemonObject(pokemon1, version, index = null) {
         const assetForm = pokemon1.assetForms?.[index];
-
         let image = null;
         if (version === 1) image = pokemon1.assets?.image;
         else if (version === 2) image = pokemon1.assets?.shinyImage;
         else if (version === 3) image = assetForm?.image;
         else if (version === 4) image = assetForm?.shinyImage;
+        return {
+            pokemonId: pokemon1.dexNr,
+            name: pokemon1.id?.toLowerCase() || '',
+            image: image ? String(image) : null,
+        };
+    }
+
+
+    static createPokemonObject(data, pokemon) {
+
         const pokemonDetailsData = new PokemonDetails({
-            maxCp: GameDataFactory.calculateCP(pokemon1.stats?.attack || 0, pokemon1.stats?.defense || 0, pokemon1.stats?.stamina || 0),
-            fastMoves: GameDataFactory.simpleMoves(pokemon1.quickMoves, 1) || [],
-            chargedMoves: GameDataFactory.simpleMoves(pokemon1.cinematicMoves, 1) || [],
-            specialFastMoves: GameDataFactory.simpleMoves(pokemon1.eliteQuickMoves, 2) || [],
-            specialChargedMoves: GameDataFactory.simpleMoves(pokemon1.eliteCinematicMoves, 2) || [],
-            megaCapable: pokemon1.hasMegaEvolution || false
+            maxCp: GameDataFactory.calculateCP(data.stats?.attack || 0, data.stats?.defense || 0, data.stats?.stamina || 0),
+            fastMoves: GameDataFactory.simpleMoves(data.quickMoves, 1) || [],
+            chargedMoves: GameDataFactory.simpleMoves(data.cinematicMoves, 1) || [],
+            specialFastMoves: GameDataFactory.simpleMoves(data.eliteQuickMoves, 2) || [],
+            specialChargedMoves: GameDataFactory.simpleMoves(data.eliteCinematicMoves, 2) || [],
+            megaCapable: data.hasMegaEvolution || false
         });
         const pokemonToAdd = new Pokemon({
-                pokemonId: pokemon1.dexNr,
-                name: pokemon1.id?.toLowerCase() || '',
-                image: image ? String(image) : null,
-                type: pokemon1.primaryType?.names?.English?.toLowerCase() || null,
-                secondaryType: pokemon1.secondaryType?.names?.English?.toLowerCase() || null,
+                pokemonId: pokemon?.pokemonId,
+                name: pokemon?.name,
+                image: pokemon?.image,
+                type: data.primaryType?.names?.English?.toLowerCase() || null,
+                secondaryType: data.secondaryType?.names?.English?.toLowerCase() || null,
                 pokemonDetails: pokemonDetailsData,
                 tradeDetails: new TradeDetails(),
             }
         )
         // console.log(pokemonToAdd)
         return pokemonToAdd;
+    }
+
+    static async fetchSinglePokemon(pokemon){
+        try {
+            if (pokemon?.pokemonId) {
+                return fetch(`https://pokemon-go-api.github.io/pokemon-go-api/api/pokedex/id/${pokemon.pokemonId}.json`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const pokemonObject = GameDataFactory.createPokemonObject(data, pokemon);
+                        console.log('Fetched single pokemon data:', pokemonObject);
+                        return pokemonObject;
+                    })
+                    .catch(err => {
+                        console.error('Error fetching single pokemon:', err);
+                        return null;
+                    });
+
+
+
+            } else{
+                console.error('No id provided')
+            }
+        } catch (e){
+            console.error(e);
+        }
     }
 
     static async fetchPokemonListApi() {
@@ -83,12 +117,12 @@ export default class GameDataFactory {
             for (const pokemon of data) {
                 // Version 1: Standard image
                 if (pokemon.assets?.image) {
-                    pokemonListApi.push(GameDataFactory.createPokemonObject(pokemon, 1));
+                    pokemonListApi.push(GameDataFactory.createSimplePokemonObject(pokemon, 1));
                 }
 
                 // Version 2: Shiny image
                 if (pokemon.assets?.shinyImage) {
-                    pokemonListApi.push(GameDataFactory.createPokemonObject(pokemon, 2));
+                    pokemonListApi.push(GameDataFactory.createSimplePokemonObject(pokemon, 2));
                 }
 
                 // Version 3 & 4: Asset forms
@@ -98,10 +132,10 @@ export default class GameDataFactory {
 
                         if (isFormValid) {
                             if (form.image) {
-                                pokemonListApi.push(GameDataFactory.createPokemonObject(pokemon, 3, i));
+                                pokemonListApi.push(GameDataFactory.createSimplePokemonObject(pokemon, 3, i));
                             }
                             if (form.shinyImage) {
-                                pokemonListApi.push(GameDataFactory.createPokemonObject(pokemon, 4, i));
+                                pokemonListApi.push(GameDataFactory.createSimplePokemonObject(pokemon, 4, i));
                             }
                         }
                     });

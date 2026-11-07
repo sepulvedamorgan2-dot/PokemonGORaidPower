@@ -1,6 +1,8 @@
 <script>
 
 import PokemonImageName from "@/Components/Universal/PokemonImageName.vue";
+import GameDataFactory from "@/models/GameDataFactory.js";
+
 
 export default {
   name: "AddEditOffCanvas",
@@ -15,6 +17,7 @@ export default {
 
       quantity: 1,
 
+
     }
   },
 
@@ -22,8 +25,11 @@ export default {
     pokemon: {type: Object, required: true},
     isNew: {type: Boolean, default: false},
   },
-
+  // async mounted() {
+  //   await this.initPokemon();
+  // },
   methods: {
+
     openOffCanvas() {
       this.bsOffCanvas.show();
     }, updateCpNumber(number){

@@ -1,7 +1,5 @@
 <script>
 
-
-import {fetchPokemonListApi} from "@/Services/Helpers.js";
 import NavbarMain from "@/Components/Universal/NavbarMain.vue";
 import {shallowRef} from "vue"
 import {PokemonList} from "@/models/PokemonList.js"
@@ -23,9 +21,6 @@ export default {
       tradeCardList: new TradeCardList(),
     }
   },
-  methods: {
-    fetchPokemonListApi,
-  },
   mounted: async function () {
     this.pokemonListAPI = await GameDataFactory.fetchPokemonListApi();
     this.pokemonList = DataFactory.fetchPokemonList();
@@ -38,7 +33,12 @@ export default {
     pokemonList: {
       handler: function () {
         DataFactory.savePokemonList(this.pokemonList)
-      }
+        GameDataFactory.fetchSinglePokemon({
+          pokemonId: 1,
+          image: `https://raw.githubusercontent.com/pokemon-go-api/assets/main/Pokemon/pm1.cJAN_2020_NOEVOLVE.s.icon.png`,
+          name: 'Bulbasaur',
+        })
+      }, deep: true
     },
       pokemonTeamList: {
         handler: function () {

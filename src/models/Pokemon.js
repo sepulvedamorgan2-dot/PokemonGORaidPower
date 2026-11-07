@@ -12,6 +12,7 @@ export function Pokemon(data = {}) {
     this.image = data.image ?? '';
     this.type = data.type ?? 'normal';
     this.secondaryType = data.secondaryType ?? null;
+    this.isShadow = data.isShadow ?? false;
 
     this.pokemonDetails = data.pokemonDetails
         ? new PokemonDetails(data.pokemonDetails)

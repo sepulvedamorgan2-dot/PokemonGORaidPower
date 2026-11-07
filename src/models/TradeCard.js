@@ -1,6 +1,7 @@
 import {TagObject} from "@/models/Tag.js";
 import {PokemonDetails} from "@/models/PokemonDetails.js";
 import {PokemonList} from "@/models/PokemonList.js";
+import GameDataFactory from "@/models/GameDataFactory.js";
 
 export function TradeCard(data = {}) {
     this.id = null;
@@ -32,8 +33,16 @@ export function TradeCard(data = {}) {
     this.addHaveList = function (pokemon) {
         this.haveList.add(pokemon);
     }
-    this.addWantedList = function (pokemon) {
-        this.wantList.add(pokemon);
+    this.addWantedList = async function(pokemon) {
+        await GameDataFactory.fetchSinglePokemon(pokemon)
+            .then(fetchedPokemon => {
+            if (fetchedPokemon) {
+                this.wantList.add(fetchedPokemon);
+            } else {
+                console.error('Failed to fetch pokemon for want list:', pokemon);
+            }
+        });
+
     }
     this.removeFromHaveList = function (pokemon) {
         this.haveList.remove(pokemon.id);
