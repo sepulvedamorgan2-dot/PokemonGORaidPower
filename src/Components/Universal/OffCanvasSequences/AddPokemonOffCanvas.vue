@@ -30,6 +30,7 @@ export default {
     pokemonListFromApi: {type: Array, required: true},
     button: {type: String, required: true},
     warning: {type: Boolean, default: false},
+    listToHighlight: {type: Array, default: []}
   },
 
   methods: {
@@ -98,7 +99,7 @@ export default {
       <template v-slot:pageOne>
         <SearchAndDisplayOffCanvas :warning="warning"
                                    @clicked-object-existing="$emit('clicked-object-existing', $event)"
-                                   :list-to-search="pokemonList" @clicked-object="handleClick" :card-style="cardStyle"
+                                   :list-to-search="pokemonList" :list-to-highlight="listToHighlight" @clicked-object="handleClick" :card-style="cardStyle"
                                    :array-length="5" :button-style="1">
         </SearchAndDisplayOffCanvas>
       </template>

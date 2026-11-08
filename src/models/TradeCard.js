@@ -30,8 +30,22 @@ export function TradeCard(data = {}) {
             optionsArray: [...tag.optionsArray],
             tagClass: tag.tagClass
         }));
-    this.addHaveList = function (pokemon) {
-        this.haveList.add(pokemon);
+    this.addHaveList = async function (pokemon) {
+        if (pokemon?.tradeDetails?.tags){
+            this.haveList.add(pokemon);
+        } else {
+            await GameDataFactory.fetchSinglePokemon(pokemon)
+                .then(fetchedPokemon => {
+                    if (fetchedPokemon) {
+                        this.haveList.add(fetchedPokemon);
+                    } else {
+                        console.error('Failed to fetch pokemon for have list:', pokemon);
+                    }
+                });
+        }
+
+
+
     }
     this.addWantedList = async function(pokemon) {
         await GameDataFactory.fetchSinglePokemon(pokemon)
@@ -48,7 +62,7 @@ export function TradeCard(data = {}) {
         this.haveList.remove(pokemon.id);
     }
     this.removeFromWantedList = function (pokemon) {
-        this.wantList.remove(pokemon.id);
+        this.wantList.removeByImage(pokemon.image);
     }
     this.updateOptionClasses = function () {
         for (const option of this.wantOptions) {
@@ -92,22 +106,11 @@ TradeCard.defaultHaveOptions = [
         tagClass: 'd-none'
     }),
     new TagObject({
-            title: 'Pokemon Level',
-            selected: 'Any Level',
-            optionsArray: [
-                {selected: 'Any Level', tagClass: 'd-none'},
-                {selected: 'Level 40', tagClass: 'typewater'},
-                {selected: 'Level 50', tagClass: 'typefire'}
-            ],
-            tagClass: 'd-none'
-        }
-    ),
-    new TagObject({
-            title: 'Guaranteed Lucky',
+            title: 'Guaranteed Luckies',
             selected: 'N/A',
             optionsArray: [
                 {selected: 'N/A', tagClass: 'd-none'},
-                {selected: 'Guaranteed Lucky', tagClass: 'typeelectric'}
+                {selected: 'Guaranteed Luckies', tagClass: 'typeelectric'}
             ],
             tagClass: 'd-none'
         }
@@ -125,55 +128,33 @@ TradeCard.defaultWantOptions = [
     }),
     new TagObject({
             title: 'Trade Friendship',
-            selected: 'Instant',
+            selected: 'No Friendship Info',
             optionsArray: [
-                {selected: 'Instant', tagClass: 'success'},
-                {selected: '7 Day Trade', tagClass: 'typeground'},
-                {selected: '30 Day Trade', tagClass: 'typeground'},
-                {selected: '1 Mil Dust Trade', tagClass: 'typedragon'},
-                {selected: '800k Dust Trade', tagClass: 'typedragon'}
+                {selected: 'No Friendship Info', tagClass: 'd-none'},
+                {selected: 'Instant Registered', tagClass: 'success'},
+                {selected: 'Instant Un-Registered', tagClass: 'typedragon'},
+                {selected: '7 Day / 800k Dust', tagClass: 'typeground'},
+                {selected: '30 Day / 80k Dust', tagClass: 'typeghost'},
             ],
             tagClass: 'success'
         }
     ),
     new TagObject({
-            title: 'Pokemon Level',
-            selected: 'Any Level',
-            optionsArray: [
-                {selected: 'Any Level', tagClass: 'd-none'},
-                {selected: 'Level 40', tagClass: 'typewater'},
-                {selected: 'Level 50', tagClass: 'typefire'}
-            ],
-            tagClass: 'success'
-        }
-    ),
-    new TagObject({
-            title: 'Trade Ratio',
-            selected: '1:1',
-            optionsArray: [
-                {selected: '1:1', tagClass: 'd-none'},
-                {selected: '2:1', tagClass: 'typewater'},
-                {selected: '3:1', tagClass: 'typefire'}
-            ],
-            tagClass: 'success'
-        }
-    ),
-    new TagObject({
-            title: 'Mirror Trade',
+            title: 'Mirror Trade(s)',
             selected: 'N/A',
             optionsArray: [
                 {selected: 'N/A', tagClass: 'd-none'},
-                {selected: 'Mirror Trade', tagClass: 'typepoison'}
+                {selected: 'Mirror Trade(s)', tagClass: 'typepoison'}
             ],
             tagClass: 'success'
         }
     ),
     new TagObject({
-            title: 'Guaranteed Lucky',
+            title: 'Guaranteed Luckies',
             selected: 'N/A',
             optionsArray: [
                 {selected: 'N/A', tagClass: 'd-none'},
-                {selected: 'Guaranteed Lucky', tagClass: 'typeelectric'}
+                {selected: 'Guaranteed Luckies', tagClass: 'typeelectric'}
             ],
             tagClass: 'd-none'
         }

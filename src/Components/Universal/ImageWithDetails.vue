@@ -27,9 +27,9 @@ export default {
 </script>
 
 <template>
-  <div class="position-relative">
+  <div style="user-select: none;" class="position-relative">
     <img :src="pokemon.image"
-         alt="Pokemon" :class="{'img-fluid': true, 'horz-card-img': !noPresetSize, 'lucky': testLucky()}">
+         onerror="this.remove()" :class="{'img-fluid ': true, 'horz-card-img': !noPresetSize, 'lucky': testLucky()}">
     <p  v-if="pokemon?.tradeDetails?.tradeQuantity > 1 && noQuantity" class="corner-tl-text"> {{ pokemon.tradeDetails.tradeQuantity }}x</p>
     <img v-if="pokemon.isShadow" src="@/Images/shadow.png" alt="Shadow" class="corner-bl-img">
     <img v-if="pokemon.image.includes('.s.')" src="@/Images/shiny.png" alt="Shadow" class="corner-tl-img">

@@ -26,7 +26,8 @@ export default {
     filter: {Boolean, default: true},
     arrayLength: {type: Number, default: 5},
     cardStyle: {type: Number, required: true},
-    warning: { type: Boolean, default: false }
+    warning: { type: Boolean, default: false },
+    listToHighlight: { type: Array, default: [] },
   },
 
   methods: {
@@ -79,7 +80,7 @@ export default {
   <div class=" mt-2 ">
     <search-bar-container  class="px-2" @search-query="updateSearchResults" @filter-clicked="console.log('filterclicked')" :list-to-search="listToSearch"  title="Search Pokemon"></search-bar-container>
 
-    <horizontal-card-container :warning="warning" :search-query="query" :array-to-display="searchResults"  :card-style="cardStyle"
+    <horizontal-card-container :warning="warning" :search-query="query" :array-to-display="searchResults"  :card-style="cardStyle" :list-to-highlight="listToHighlight" :array-length="arrayLength"
                                @clicked-object="object => $emit('clickedObject', object)"
                                @clicked-object-existing="object => $emit('clickedObjectExisting', object)"
     >

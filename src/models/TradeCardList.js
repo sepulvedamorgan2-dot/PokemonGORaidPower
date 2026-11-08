@@ -15,7 +15,7 @@ export function TradeCardList(initialList = []) {
             this.items.push(tradeCard);
         }
     }
-    this.remove = function (id) {
-        this.items = this.items.filter(tradeCard => tradeCard.id !== id);
+    this.remove = function (tradeCard) {
+        this.items = this.items.filter(card => card.id !== tradeCard.id);
     }
 }

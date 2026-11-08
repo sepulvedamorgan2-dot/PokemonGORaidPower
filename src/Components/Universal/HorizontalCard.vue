@@ -17,11 +17,10 @@ export default {
     pokemon: {Object, required: true},
     cardStyle: {Number, required: true},
     pokemonTeam: {Object, required: false},
+    listToHighlight: {Array, required: false},
   },
 
-  methods: {
-
-  },
+  methods: {},
 
 }
 </script>
@@ -29,7 +28,7 @@ export default {
 <template>
   <div v-if="cardStyle === 1" class="row g-0 align-items-center">
     <div class="col-auto">
-      <image-with-details  :pokemon="pokemon"></image-with-details>
+      <image-with-details :pokemon="pokemon"></image-with-details>
     </div>
     <div class="col">
       <div class="ms-0 ms-sm-0">
@@ -46,7 +45,7 @@ export default {
   <!--    Style 2-->
   <div v-if="cardStyle === 2" class="row g-0 border-bottom">
     <div class="col-auto ">
-      <image-with-details  :pokemon="pokemon"></image-with-details>
+      <image-with-details :pokemon="pokemon"></image-with-details>
     </div>
     <div class="col">
       <div class="p-1 ms-1">
@@ -130,9 +129,13 @@ export default {
     </div>
   </div>
   <!--      Card 4-->
+  <!--i need to be shot batmans parents style for this bit of code-->
+  <div v-if="cardStyle === 4 || cardStyle === 5"
+       :class="{ 'col-auto position-relative' : true, 'bg-light' : cardStyle === 4 ? listToHighlight && listToHighlight.some((p) => p.image === pokemon.image) : listToHighlight && listToHighlight.some((p) => p.id === pokemon.id)}">
 
-  <div v-if="cardStyle === 4 || cardStyle === 5" class="col-auto position-relative">
-    <image-with-details  v-on:click="$emit('clickedObjectExisting', pokemon)" :pokemon="pokemon"></image-with-details>
+    <image-with-details
+        v-on:click="cardStyle === 4 ? listToHighlight && listToHighlight.some((p) => p.image === pokemon.image) ? $emit('clickedObjectExisting', [pokemon, true]) : $emit('clickedObjectExisting', [pokemon, false]) : listToHighlight && listToHighlight.some((p) => p.id === pokemon.id) ? $emit('clickedObjectExisting', [pokemon, true]) : $emit('clickedObjectExisting', [pokemon, false])"
+        :pokemon="pokemon"></image-with-details>
   </div>
 </template>
 

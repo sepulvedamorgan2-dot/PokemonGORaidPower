@@ -3,7 +3,7 @@ import { TradeDetails} from "./TradeDetails.js";
 
 
 export function Pokemon(data = {}) {
-    this.id = null;
+    this.id = data.id ?? null;
     this.pokemonId = data.pokemonId ?? null;
     this.name = data.name ?? 'Unknown Pokémon';
     this.fastMove = data.fastMove ?? null;

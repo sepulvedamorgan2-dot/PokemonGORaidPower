@@ -15,7 +15,7 @@ export default {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-sm bg-primary sticky-top">
+  <nav class="navbar navbar-expand-sm bg-primary sticky-sm-top">
     <div class="container-fluid container-md ">
       <a class="navbar-brand text-white" href="#">
         <img src="@/Images/demologo.png" alt="Logo" class="img-fluid " style="height: 40px;">

@@ -19,6 +19,7 @@ export default {
     cardStyle: {Number, Required : true},
     searchQuery: {type: String, Default : ""},
     warning: {type: Boolean, Default : false},
+    listToHighlight: {type: Array, default: []},
   },
 
   methods: {
@@ -50,6 +51,7 @@ export default {
                                 @clicked-object="pokemon => $emit('clickedObject', pokemon)"
                                 @pokemon-removed="$emit('pokemonRemoved')"
                                 :pokemon="card"
+                                :list-to-highlight="listToHighlight"
     >
     </off-canvas-horizontal-card>
   </div>

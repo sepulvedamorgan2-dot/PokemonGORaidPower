@@ -8,25 +8,27 @@ export function PokemonList(initialList = []) {
         this.items = newList;
     }
     this.add = function(pokemon) {
-
         if (!pokemon[1]) {
-            const lastPokemon = this.items.at(-1);
-            pokemon.id = lastPokemon ? lastPokemon.id + 1 : 1;
+            console.log(pokemon)
             this.items.push(pokemon);
         }
         else {
-            while (pokemon[1] > 0) {
-                console.log(pokemon[0]);
-                pokemon[1]--;
-                const lastPokemon = this.items[this.items.length - 1]?.id;
-                pokemon[0].id = lastPokemon ? lastPokemon + 1 : 1;
-                this.items.push(pokemon[0]);
+
+            for (let i = 0; i < pokemon[1]; i++) {
+                const lastPokemon = this.items.at(-1);
+
+                const newPokemon = {...pokemon[0]};
+                newPokemon.id = lastPokemon ? lastPokemon.id + 1 : 1;
+                this.items.push(newPokemon);
             }
         }
     }
 
     this.remove = function(id) {
         this.items = this.items.filter(pokemon => pokemon.id !== id);
+    }
+    this.removeByImage = function(image) {
+        this.items = this.items.filter(pokemon => pokemon.image !== image);
     }
 
     this.findPokemonById = function(id) {

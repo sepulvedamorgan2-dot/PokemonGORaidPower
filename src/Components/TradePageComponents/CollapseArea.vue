@@ -27,11 +27,11 @@ export default {
 </script>
 
 <template>
-  <div>
-    <div class="btn btn-outline-dark d-inline " data-bs-toggle="collapse" :data-bs-target="'#' + id"  v-on:click="swapIcon" >
-      <i class="h6">View Tags</i>
+  <div class="pt-1">
+    <button class=" ms-sm-1 rounded-5 btn pt-1 btn-outline-primary d-inline " data-bs-toggle="collapse" :data-bs-target="'#' + id"  v-on:click="swapIcon" >
+      <x style="font-size: 15px">View Trade Tags</x>
       <i  :class="iconClass"></i>
-    </div>
+    </button>
     <teleport defer :to="'#' + teleportId">
       <div :id="id" data-bs-toggle="collapse" class="collapse">
         <slot>
