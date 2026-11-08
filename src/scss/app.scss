@@ -1,12 +1,10 @@
 //0.0 Import/Use this
-@use "Sass:color";
+@use "sass:color";
 @import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 //1.0  unlike css and most things, variables for bootstrap that are defined ABOVE
 // the import statement take priority!
 @import "./variable";
-
-
 
 $border-radius: 1.2rem;
 $font-family-sans-serif: 'Maven Pro', sans-serif;

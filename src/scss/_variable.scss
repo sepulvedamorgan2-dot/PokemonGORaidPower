@@ -1,9 +1,10 @@
-$primary : #3B2951;
+
+$primary: #3B2951;
 $secondary: #5a6c77;
 $card-cap-bg: #EAE4F1;
 $light: #e6deed;
 $lighter: #F5F2F8;
-
+$teritary: #ff5300;
 $typenormal: #A8A878;
 $typefire: #F08030;
 $typewater: #6890F0;
@@ -25,33 +26,33 @@ $typefairy: #EE99AC;
 
 
 $theme-colors: (
-  "primary":    $primary,
-  "secondary":  $secondary,
-  "lighter":    $lighter,
-  "success":    green,
-  "info":       #005ea2,
-  "warning":    yellow,
-  "danger":     red,
-  "light":      $light,
-  "dark":       black,
-  "tertiary":   #ff5300,
-        "muted":   #ccc,
-        "typenormal":  $typenormal,
-        "typefire":  $typefire,
-        "typewater":  $typewater,
-        "typegrass":  $typegrass,
-        "typeelectric":  $typeelectric,
-        "typeice":  $typeice,
-        "typefighting":  $typefighting,
-        "typepoison":  $typepoison,
-        "typeground":  $typeground,
-        "typeflying":  $typeflying,
-        "typepsychic":  $typepsychic,
-        "typebug":  $typebug,
-        "typerock":  $typerock,
-        "typeghost":  $typeghost,
-        "typedragon":  $typedragon,
-        "typedark":  $typedark,
-        "typesteel":  $typesteel,
-        "typefairy":  $typefairy
+        "primary": $primary,
+        "secondary": $secondary,
+        "lighter": $lighter,
+        "success": green,
+        "info": #005ea2,
+        "warning": yellow,
+        "danger": red,
+        "light": $light,
+        "dark": black,
+        "tertiary": #ff5300,
+        "muted": #ccc,
+        "typenormal": $typenormal,
+        "typefire": $typefire,
+        "typewater": $typewater,
+        "typegrass": $typegrass,
+        "typeelectric": $typeelectric,
+        "typeice": $typeice,
+        "typefighting": $typefighting,
+        "typepoison": $typepoison,
+        "typeground": $typeground,
+        "typeflying": $typeflying,
+        "typepsychic": $typepsychic,
+        "typebug": $typebug,
+        "typerock": $typerock,
+        "typeghost": $typeghost,
+        "typedragon": $typedragon,
+        "typedark": $typedark,
+        "typesteel": $typesteel,
+        "typefairy": $typefairy
 )

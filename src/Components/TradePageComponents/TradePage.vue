@@ -4,6 +4,7 @@ import ImageWithDetails from "@/Components/Universal/ImageWithDetails.vue";
 import CardContainer from "@/Components/Universal/CardContainer.vue";
 import PageTabs from "@/Components/TradePageComponents/PageTabs.vue";
 import TradeCard from "@/Components/TradePageComponents/TradeCard.vue";
+
 export default {
   name: 'TradePage',
 
@@ -11,6 +12,7 @@ export default {
     PageTabs,
     TradeCard,
     CardContainer,
+
     ImageWithDetails
 
   },
@@ -23,6 +25,7 @@ export default {
     pokemonList: {type: Array, required: true},
     pokemonListApi: {type: Array, required: true},
     tradeCardList: {type: Array, required: true},
+
   },
 
 
@@ -69,6 +72,7 @@ export default {
     </template>
     <template #pageTwo>
       <button class="btn btn-primary rounded-pill mb-2" v-on:click="$refs.pageTab.tabNumber = 1">Back</button>
+
       <trade-card
           @add-trade-card="tradeCardList.add($event); tradeCardToEdit = tradeCardList.items[tradeCardList.items.length - 1]; $refs.pageTab.tabNumber = 3; console.log('clicked page')"
           :pokemon-list="pokemonList" :pokemon-list-api="pokemonListApi" :is-new=true></trade-card>

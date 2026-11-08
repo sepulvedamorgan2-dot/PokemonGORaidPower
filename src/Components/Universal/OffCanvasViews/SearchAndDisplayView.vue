@@ -15,7 +15,9 @@ export default {
   data: function () {
     return {
       searchResults: [],
-      query: ''
+      query: '',
+      resultsLength: 50,
+
     }
   },
 
@@ -32,8 +34,8 @@ export default {
       this.query = query;
       let resultObjects = [];
       for (let pokemonQueried of this.listToSearch) {
-        if(query.length < 5){
-          if (resultObjects.length >= 12) {
+        if(query.length < 4){
+          if (resultObjects.length >= this.resultsLength) {
 
             break;
 
@@ -67,7 +69,7 @@ export default {
     }, deep: true,
   },
   mounted() {
-    this.updateSearchResults(this.query);
+    this.updateSearchResults('');
   },
 
 }
