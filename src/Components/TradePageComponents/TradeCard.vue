@@ -174,7 +174,7 @@ export default {
         <div class="row ">
           <div class="col-10 ps-3 ps-1 ">
             <div class="ms-0 ms-sm-1">
-              <h4 class="fs-3 fw-semibold pt-1 mb-0 text-capitalize text-start pb-0">
+              <h4 class="fs-3 fw-bold pt-1 mb-0 text-capitalize text-start pb-0">
                 Wanted</h4>
 
             </div>
@@ -223,7 +223,7 @@ export default {
           <div class="col col-md-2 draggable" v-for="pokemon in tradeCard.wantList.items">
             <div class="text-center border rounded-4 ">
               <div class="position-relative">
-                <image-with-details @dblclick="tradeCard.removeFromWantedList(pokemon)" :no-quantity="true"
+                <image-with-details @dblclick="mode === 1 ? tradeCard.removeFromWantedList(pokemon) : null" :no-quantity="true"
                                     :noPresetSize="true" :pokemon="pokemon">
                   <pokemon-tags-off-canvas v-if="mode === 1" :pokemon="pokemon"></pokemon-tags-off-canvas>
                 </image-with-details>
@@ -237,7 +237,7 @@ export default {
                 </p>
                 <p style="font-size: 14px;" v-for="tag in pokemon.tradeDetails.tags"
                    v-show="tag.selected !== 'None' && tag.selected !=='Lucky'"
-                   class="mb-0">
+                   class="mb-0 text-capitalize">
                   {{ tag.selected }}
                 </p>
               </div>
@@ -295,7 +295,7 @@ export default {
           <div class="col col-md-2 draggable" v-for="pokemon in tradeCard.haveList.items">
             <div class="text-center border rounded-4 ">
               <div class="position-relative">
-                <image-with-details @dblclick="manageHaveRemove(pokemon)" :no-quantity="true"
+                <image-with-details @dblclick="mode === 1 ? manageHaveRemove(pokemon) : null" :no-quantity="true"
                                     :noPresetSize="true" :pokemon="pokemon">
                   <pokemon-tags-off-canvas v-if="mode === 1" :pokemon="pokemon"></pokemon-tags-off-canvas>
                 </image-with-details>
@@ -309,7 +309,7 @@ export default {
                 </p>
                 <p style="font-size: 14px;" v-for="tag in pokemon.tradeDetails.tags"
                    v-show="tag.selected !== 'None' && tag.selected !=='Lucky'"
-                   class="mb-0">
+                   class="mb-0 text-capitalize">
                   {{ tag.selected }}
                 </p>
               </div>

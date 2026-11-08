@@ -37,7 +37,7 @@ export default {
   },
   mounted() {
     this.pokemon.tradeDetails.addMoveTag(this.pokemon)
-    const moves = ['None']
+
     // const movesArray = Object.values(this.pokemon.pokemonDetails.specialChargedMoves);
     // movesArray.push = Object.values(this.pokemon.pokemonDetails.specialFastMoves);
     // movesArray.forEach(move => {
@@ -127,7 +127,7 @@ export default {
         <div class="d-flex flex-wrap gap-1" v-if="tag.optionsArray.length > 1">
           <div class="col-auto" v-for="option in tag.optionsArray" :key="option">
 
-            <input v-model="tag.selected" :value="option" type="radio" class="btn-check"
+            <input v-model="tag.selected" :value="option" type="radio" class="text-capitalize btn-check"
                    :name="pokemon.image + tag.title"
                    :id="pokemon.image + tag.title+option" autocomplete="off"
                    :checked="tag.selected === option">

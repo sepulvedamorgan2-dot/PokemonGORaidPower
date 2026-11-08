@@ -73,9 +73,9 @@ export default {
               <div class="col-12">
                 <label class="form-label w-100">
                   Fast Move
-                  <select class="form-select" v-model="pokemon.fastMove">
+                  <select class="form-select text-capitalize" v-model="pokemon.fastMove">
                     <option v-for="move in pokemon.pokemonDetails.fastMoves" :value="move">{{move.name}}</option>
-                    <option v-for="move in pokemon.pokemonDetails.specialFastMoves" :value="move">{{move.name}}*</option>
+
                   </select>
                 </label>
               </div>
@@ -86,7 +86,7 @@ export default {
               <div class="col-12 col-sm-6">
                 <label class="form-label w-100">
                   Charged Move 1
-                  <select class="form-select" id="chargedMoveSelect1edit"
+                  <select class="form-select text-capitalize" id="chargedMoveSelect1edit"
                           v-model="pokemon.chargedMoveOne">
                     <option v-for="move in pokemon.pokemonDetails.chargedMoves" :value="move">{{move.name}}</option>
                   </select>
@@ -95,7 +95,7 @@ export default {
               <div class="col-12 col-sm-6">
                 <label class="form-label w-100">
                   Charged Move 2
-                  <select class="form-select" id="chargedMoveSelect2edit"
+                  <select class="form-select text-capitalize" id="chargedMoveSelect2edit"
                           v-model="pokemon.chargedMoveTwo">
                     <option v-for="move in pokemon.pokemonDetails.chargedMoves" :value="move">{{move.name}}</option>
                   </select>

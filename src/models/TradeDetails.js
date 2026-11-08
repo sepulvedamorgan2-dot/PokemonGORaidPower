@@ -15,10 +15,14 @@ export function TradeDetails(data = {}) {
 
 
         this.addMoveTag = function (pokemon){
+            console.log(this.tags?.find(tag => tag.title === 'Size'))
+            if ((this.tags?.find(tag => tag.title === 'Elite TM Attacks'))) {
+                return;
+            }
             const moves = {
                     optionsArray: ['None'],
                     selected: 'None',
-                    title: 'Elite TM Move'
+                    title: 'Elite TM Attacks'
                 }
             if (pokemon.pokemonDetails.specialChargedMoves.length > 0) {
                 for (const move of Object.values(pokemon.pokemonDetails.specialChargedMoves)) {
@@ -32,7 +36,7 @@ export function TradeDetails(data = {}) {
             }
             console.log(moves)
             if(moves.optionsArray.length > 0) {
-                this.tags.push(moves);
+                this.tags.splice(3, 0, moves);
             }
 
         }
@@ -41,7 +45,9 @@ export function TradeDetails(data = {}) {
 TradeDetails.defaultTags = [
     new TagObject({title: 'Size', selected: 'None', optionsArray: ['None', 'XXL', 'XXS']}),
     new TagObject({title: 'Level', selected: 'None', optionsArray: ['None', 'Lvl 1', 'Lvl 40', 'Lvl 50']}),
-    new TagObject({title: 'Special Move', selected: 'None', optionsArray: ['None']}),
+    new TagObject({title: 'Registered', selected: 'None', optionsArray: ['None', 'Unreg', 'Reg']}),
     new TagObject({title: 'Priority', selected: 'None', optionsArray: ['None', 'Priority']}),
-    new TagObject({title: 'Registered', selected: 'None', optionsArray: ['None', 'Unreg', 'Reg']})
+    new TagObject({title: 'Multiple Accounts', selected: 'None', optionsArray: ['None', 'Alt', 'Main']}),
+    new TagObject({title: 'Pokeball Type', selected: 'None', optionsArray: ['None', 'Poke Ball', 'Ultra Ball', 'Great Ball', 'Premier Ball', 'Master Ball', 'Safari Ball']}),
+    new TagObject({title: 'Gender', selected: 'None', optionsArray: ['None', 'Male', 'Female']}),
 ]
