@@ -66,7 +66,7 @@ export default {
   <div :class="{'d-flex flex-wrap': cardStyle === 'WantList' || cardStyle === 'HaveList'}">
     <div style="height: 100px" class="w-100 text-center align-content-center"
          v-if='warning && cardStyle === "HaveList" && searchQuery === "" || !warning && arrayToDisplay.length < 1'>
-      <p><a href="@/pokelist.html">Add Pokemon to your Poke-List</a></p>
+      <p><a href="@/pokelist.html">Add Pokémon to your Poke-List</a></p>
       <p v-if='warning && cardStyle === "HaveList" && searchQuery === ""'>Non-Personal list below</p>
 
     </div>

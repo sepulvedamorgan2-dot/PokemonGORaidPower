@@ -57,7 +57,7 @@ export default {
 
 
     >
-      <!--        add pokemon Button-->
+
 
 
     </search-bar-container>
@@ -113,7 +113,7 @@ export default {
 
       </div>
 
-      <!-- Pokemon horitzonal card -->
+
       <vue-draggable :delay="100" :delay-on-touch-only="true"
                      :force-fallback="true" draggable=".draggable" v-model="fullPokemonList.items" class="alternateBg poke-list">
         <pokemonlist-item class="draggable" v-for="pokemon in matches" :key="pokemon.Id" :pokemon="pokemon"

@@ -72,7 +72,7 @@ export default {
     <div class="row pt-2 g-2 btn-group" role="group" aria-label="Pokemon Creature Power Buttons">
       <div class="col-12 ">
         <label class="form-label w-100">
-          Pokemon Type
+          Pokémon Type
           <select class="form-select" id="chargedMoveFilter"
                   v-model="filter.filterType">
             <option value="">None Selected</option>

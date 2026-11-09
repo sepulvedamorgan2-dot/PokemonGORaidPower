@@ -197,7 +197,7 @@ export default {
         </div>
         <div class="pb-0" id="want">
         </div>
-        <p v-if="validation" class="text-danger ms-1 pt-0">Must have one pokemon wanted</p>
+        <p v-if="validation" class="text-danger ms-1 pt-0">Must have one pokémon wanted</p>
         <vue-draggable :disabled="mode !== 1" :delay="100" :delay-on-touch-only="true"
                        :force-fallback="true" draggable=".draggable" v-model="tradeCard.wantList.items"
                        class="row pb-1 row-cols-md-1 mt-0 pt-0 row-cols-4 g-1 p-sm-1 ">
