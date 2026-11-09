@@ -1,5 +1,12 @@
 import {TagObject} from "@/models/Tag.js";
 
+/**
+ * Contains trade details for a Pokémon, including tags, trade quantity, and trade background.
+ * The tags are represented as an array of TagObjects,
+ * they are used to display information about the Pokémon in the trade card, not filter.
+ * @param data An object containing the properties of the TradeDetails.
+ * @constructor
+ */
 export function TradeDetails(data = {}) {
     this.tags = (data.tags && data.tags.length > 0)
         ? data.tags
@@ -13,8 +20,12 @@ export function TradeDetails(data = {}) {
     this.tradeQuantity = data.tradeQuantity ?? 1;
     this.tradeBackground = data.tradeBackground ?? '';
 
-
-        this.addMoveTag = function (pokemon){
+    /**
+     * Adds a move tag to the trade details if the Pokémon has special moves.
+     * The move tag is added only if it doesn't already exist in the tags array and if the Pokémon has special charged or fast moves.
+     * @param pokemon object
+     */
+    this.addMoveTag = function (pokemon){
             console.log(this.tags?.find(tag => tag.title === 'Size'))
             if ((this.tags?.find(tag => tag.title === 'Elite TM Attacks'))) {
                 return;
@@ -42,6 +53,11 @@ export function TradeDetails(data = {}) {
         }
 }
 
+/**
+ * Default tags for trade details, used when no tags are provided in the data.
+ * doesnt update existing pokemon tags, even when changed(maybe bad), only used when creating a new pokemon object
+ * @type {TagObject[]}
+ */
 TradeDetails.defaultTags = [
     new TagObject({title: 'Size', selected: 'None', optionsArray: ['None', 'XXL', 'XXS']}),
     new TagObject({title: 'Level', selected: 'None', optionsArray: ['None', 'Lvl 1', 'Lvl 40', 'Lvl 50']}),

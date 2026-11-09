@@ -1,10 +1,13 @@
-import {TagObject} from "@/models/Tag.js";
-import {PokemonDetails} from "@/models/PokemonDetails.js";
+import {TagObject} from "@/models/Tag.js"
 import {PokemonList} from "@/models/PokemonList.js";
 import GameDataFactory from "@/models/GameDataFactory.js";
-
+/**
+ * TradeCard represents a trade card that contains a list of Pokémon the user has and wants.
+ * It also contains options for both the have and want lists, which are represented as TagObjects.
+ * @param data An object containing the properties of the TradeCard.
+ */
 export function TradeCard(data = {}) {
-    this.id = null;
+    this.id = data.id ?? null;
     this.title = data.title ?? 'My Trade Card';
     this.haveList = data.haveList
         ? new PokemonList(data.haveList)

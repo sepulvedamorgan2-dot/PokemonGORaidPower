@@ -2,10 +2,11 @@
 
 import PokemonlistItem from "@/Components/PokeListComponents/PokemonlistItem.vue";
 import SearchBarContainer from "@/Components/Universal/SearchBarContainer.vue";
-
+import {VueDraggable} from "vue-draggable-plus";
 export default {
   name: "PokelistContainer",
   components: {
+    VueDraggable,
     PokemonlistItem,
     SearchBarContainer
   },
@@ -113,11 +114,12 @@ export default {
       </div>
 
       <!-- Pokemon horitzonal card -->
-      <div class="alternateBg poke-list">
-        <pokemonlist-item v-for="pokemon in matches" :key="pokemon.Id" :pokemon="pokemon"
+      <vue-draggable :delay="100" :delay-on-touch-only="true"
+                     :force-fallback="true" draggable=".draggable" v-model="fullPokemonList.items" class="alternateBg poke-list">
+        <pokemonlist-item class="draggable" v-for="pokemon in matches" :key="pokemon.Id" :pokemon="pokemon"
 
                           @delete-item="fullPokemonList.remove($event.id)"></pokemonlist-item>
-      </div>
+      </vue-draggable>
     </div>
   </div>
 </template>

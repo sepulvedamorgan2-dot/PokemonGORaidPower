@@ -67,7 +67,7 @@ export default {
 <template>
   <div>
 
-  <add-pokemon-off-canvas button="plus" @add-pokemon="pokemonList.add($event)" :filter=false  :pokemon-list-from-api="pokemonListApi" array-length=5 :card-style=1 > </add-pokemon-off-canvas>
+  <add-pokemon-off-canvas button="plus" @add-pokemon="pokemonList.add($event)" :filter=false  :pokemon-list-from-api="pokemonListApi" array-length=5 card-style="Horizontal" > </add-pokemon-off-canvas>
 
   <pokelist-container :searched-and-filtered-array="matches" :full-pokemon-list="pokemonList"
                       ref="pokelistContainer"></pokelist-container>

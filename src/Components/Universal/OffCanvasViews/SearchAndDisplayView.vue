@@ -2,7 +2,7 @@
 
 import OffCanvasContainer from "@/Components/Universal/OffCanvasContainer.vue";
 import SearchBarContainer from "@/Components/Universal/SearchBarContainer.vue";
-import HorizontalCardContainer from "@/Components/Universal/HorizontalCardContainer.vue";
+import HorizontalCardContainer from "@/Components/Universal/OffCanvasHorizontalCards/HorizontalCardContainer.vue";
 
 export default {
   name: "SearchAndDisplayOffCanvas",
@@ -25,7 +25,7 @@ export default {
     listToSearch: Array,
     filter: {Boolean, default: true},
     arrayLength: {type: Number, default: 5},
-    cardStyle: {type: Number, required: true},
+    cardStyle: {type: String, required: true},
     warning: { type: Boolean, default: false },
     listToHighlight: { type: Array, default: [] },
   },

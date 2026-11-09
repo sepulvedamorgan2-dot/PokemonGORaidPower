@@ -26,7 +26,7 @@ export default {
   },
 
   props: {
-    cardStyle: {Number, required: true},
+    cardStyle: {String, required: true},
     pokemonListFromApi: {type: Array, required: true},
     button: {type: String, required: true},
     warning: {type: Boolean, default: false},

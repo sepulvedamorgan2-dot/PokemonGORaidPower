@@ -1,14 +1,16 @@
 <script>
 
-import HorizontalCard from "@/Components/Universal/HorizontalCard.vue";
+import HorizontalCard from "@/Components/Universal/OffCanvasHorizontalCards/HorizontalCard.vue";
 import FilterView from "@/Components/Universal/OffCanvasViews/FilterView.vue";
 import SearchAndDisplayView from "@/Components/Universal/OffCanvasViews/SearchAndDisplayView.vue";
 import OffCanvasContainer from "@/Components/Universal/OffCanvasContainer.vue";
+import RaidTeamCard from "@/Components/Universal/OffCanvasHorizontalCards/RaidTeamCard.vue";
 
 
 export default {
   name: "RaidTeamsOffCanvas",
   components: {
+    RaidTeamCard,
     OffCanvasContainer,
     SearchAndDisplayView,
     FilterView,
@@ -72,12 +74,12 @@ export default {
           </div>
           <div v-for="pokemon in pokemonTeam.activeTeam"
                :key="pokemon">
-            <horizontal-card :pokemon-team="pokemonTeam" :card-style="3"
+            <raid-team-card :pokemon-team="pokemonTeam" card-style="RaidTeam"
                              :pokemon="pokemonList.findPokemonById(pokemon)"
                              @pokemon-removed="returnNewPokemon"
                              @remove-pokemon="pokemonTeam.removeFromTeam($event.id)"
                              @mega-pokemon="pokemonTeam.activeTeamMega($event.id)"
-            ></horizontal-card>
+            ></raid-team-card>
           </div>
           <div v-if="pokemonTeam.backupPokemon.length > 0">
             <div class=" ps-3">
@@ -85,11 +87,11 @@ export default {
             </div>
             <div v-for="pokemon in pokemonTeam.backupPokemon"
                  :key="pokemon.Id">
-              <horizontal-card :pokemon-team="pokemonTeam" :card-style="3"
+              <raid-team-card :pokemon-team="pokemonTeam" card-style="RaidTeam"
                                :pokemon="pokemonList.findPokemonById(pokemon)"
                                @remove-pokemon="pokemonTeam.removeFromTeam($event.id)"
 
-                              ></horizontal-card>
+                               ></raid-team-card>
             </div>
           </div>
 
@@ -105,7 +107,7 @@ export default {
 
 
         <template  v-slot:pageTwo>
-          <search-and-display-view :card-style="2"   :filter-object=filterObject @filter-clicked="$refs.RaidTeamOffCanvas.pageNumber++"
+          <search-and-display-view card-style="Existing"   :filter-object=filterObject @filter-clicked="$refs.RaidTeamOffCanvas.pageNumber++"
                                    @clicked-object="pokemonTeam.addToTeam($event.id); returnNewPokemon()" :list-to-search="onlyNewPokemon"
                                    title="Search Your Pokemon"></search-and-display-view>
         </template>

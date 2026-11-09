@@ -4,11 +4,13 @@ import ImageWithDetails from "@/Components/Universal/ImageWithDetails.vue";
 import CardContainer from "@/Components/Universal/CardContainer.vue";
 import PageTabs from "@/Components/TradePageComponents/PageTabs.vue";
 import TradeCard from "@/Components/TradePageComponents/TradeCard.vue";
+import {VueDraggable} from "vue-draggable-plus";
 
 export default {
   name: 'TradePage',
 
   components: {
+    VueDraggable,
     PageTabs,
     TradeCard,
     CardContainer,
@@ -37,9 +39,10 @@ export default {
   <page-tabs ref="pageTab" :tab-array="['Trade Cards', 'New Card']">
 
     <template #pageOne>
-      <div class="row  g-2">
+      <vue-draggable  :delay="100" :delay-on-touch-only="true"
+                     :force-fallback="true" draggable=".draggable" v-model="tradeCardList.items"  class="row  g-2">
         <div v-on:click="$refs.pageTab.tabNumber = 3; tradeCardToEdit = tradeCard "
-             v-for="tradeCard in tradeCardList.items" class="force-hover col-12  col-md-6">
+             v-for="tradeCard in tradeCardList.items" :key="tradeCard.id" class="force-hover col-12  draggable col-md-6">
           <card-container class="h-100" :card-title="tradeCard.title">
             <template v-slot:card-actions>
               <i class="bi bi-eye fs-3 "></i>
@@ -70,7 +73,7 @@ export default {
             </template>
           </card-container>
         </div>
-      </div>
+      </vue-draggable>
     </template>
     <template #pageTwo>
       <button class="btn btn-primary rounded-pill mb-2" v-on:click="$refs.pageTab.tabNumber = 1">Back</button>

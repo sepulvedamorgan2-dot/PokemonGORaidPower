@@ -198,7 +198,7 @@ export default {
         <div class="pb-0" id="want">
         </div>
         <p v-if="validation" class="text-danger ms-1 pt-0">Must have one pokemon wanted</p>
-        <vue-draggable :delay="100" :delay-on-touch-only="true"
+        <vue-draggable :disabled="mode !== 1" :delay="100" :delay-on-touch-only="true"
                        :force-fallback="true" draggable=".draggable" v-model="tradeCard.wantList.items"
                        class="row pb-1 row-cols-md-1 mt-0 pt-0 row-cols-4 g-1 p-sm-1 ">
 
@@ -212,7 +212,7 @@ export default {
                                       v-on:click="returnNewPokemon()"
                                       :pokemon-list-from-api="pokemonListApi"
                                       :list-to-highlight="tradeCard.wantList.items"
-                                      :card-style="4">
+                                      card-style="WantList">
               </add-pokemon-off-canvas>
 
             </div>
@@ -269,7 +269,7 @@ export default {
         </div>
         <div class="pb-0" id="have">
         </div>
-        <vue-draggable :delay="100" :delay-on-touch-only="true"
+        <vue-draggable :disabled="mode !== 1"  :delay="100" :delay-on-touch-only="true"
                        :force-fallback="true" draggable=".draggable" v-model="tradeCard.haveList.items"
                        class="row pb-1 row-cols-md-1 mt-0 pt-0 row-cols-4 g-1 p-sm-1 ">
 
@@ -284,7 +284,7 @@ export default {
                                       v-on:click="returnNewPokemon()"
                                       :pokemon-list-from-api="pokemonListFiltered.items"
                                       :list-to-highlight="tradeCard.haveList.items"
-                                      :card-style="5">
+                                      card-style="HaveList">
               </add-pokemon-off-canvas>
 
             </div>
