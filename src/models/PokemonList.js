@@ -22,22 +22,19 @@ export function PokemonList(initialList = []) {
     }
     /**
      * Adds a Pokémon to the list. If the second element of the pokemon parameter is provided, it adds that many copies of the Pokémon.
-     * @param [Pokemon, Number]
+     * @param [pokemon, Number]
      */
-    this.add = function(pokemon) {
-        if (!pokemon[1]) {
-            console.log(pokemon)
-            this.items.push(pokemon);
-        }
-        else {
 
-            for (let i = 0; i < pokemon[1]; i++) {
-                const lastPokemon = this.items.at(-1);
+    this.addSinglePokemon = function(pokemon) {
+        this.items.push(pokemon);
+    }
+    this.addAnyAmountOfPokemon = function([pokemon, amount = 1]) {
+        for (let i = 0; i < amount; i++) {
+            const lastPokemon = this.items.at(-1);
 
-                const newPokemon = {...pokemon[0]};
-                newPokemon.id = lastPokemon ? lastPokemon.id + 1 : 1;
-                this.items.push(newPokemon);
-            }
+            const newPokemon = {...pokemon};
+            newPokemon.id = lastPokemon ? lastPokemon.id + 1 : 1;
+            this.items.push(newPokemon);
         }
     }
     /**
@@ -53,7 +50,7 @@ export function PokemonList(initialList = []) {
      * @param image The image of the Pokémon to remove.
      */
     this.removeByImage = function(image) {
-        this.items = this.items.filter(pokemon => pokemon.image !== image);
+        this.items = this.items.filter(pokemon => pokemon.pokemon.image !== image);
     }
 
     this.findPokemonById = function(id) {

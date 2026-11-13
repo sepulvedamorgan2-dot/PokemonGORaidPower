@@ -2,6 +2,7 @@
 
 import PokemonImageName from "@/Components/Universal/PokemonImageName.vue";
 import ConfirmDeleteModal from "@/Components/Universal/Modal/ConfirmDeleteModal.vue";
+import {PokemonInstance} from "@/models/PokemonInstance.js";
 
 export default {
   name: "DetailsOffCanvas",
@@ -13,21 +14,21 @@ export default {
   },
 
   props: {
-    pokemon: {type: Object, required: true},
+    pokemonInstance: {type: PokemonInstance, required: true},
   },
 
 }
 </script>
 
 <template>
-  <pokemon-image-name :active-item="pokemon"></pokemon-image-name>
-  <div class="flex-grow-1 d-flex flex-column">
+  <pokemon-image-name :active-item="pokemonInstance"></pokemon-image-name>
+  <div  class="flex-grow-1 d-flex flex-column">
 
     <div class="text-center">
 
-      <span class="fs-5 text-dark mb-0">{{ pokemon.cp }}</span>
+      <span class="fs-5 text-dark mb-0">{{ pokemonInstance.cp }}</span>
       <span class="text-uppercase fw-bold text-tertiary fs-6 mt-2 mb-1 ms-1">RP</span>
-      <span class=" fs-5 text-dark mb-0 ms-2">{{ pokemon.cp }}</span>
+      <span class=" fs-5 text-dark mb-0 ms-2">{{ pokemonInstance.cp }}</span>
       <span class="text-uppercase fw-bold text-secondary fs-tiny   mt-2 mb-1 ms-1">CP</span>
     </div>
     <div>
@@ -48,9 +49,9 @@ export default {
           <h5>Fast Move</h5>
         </div>
         <div class="">
-                        <span v-if="pokemon.fastMove"
-                              :class="pokemon.getFastClass(`text-bg`, `rounded-pill p-2 px-3 fs-tiny text-capitalize`)">{{
-                            pokemon.fastMove.name
+                        <span v-if="pokemonInstance.fastMove"
+                              :class="pokemonInstance.getFastClass(`text-bg`, `rounded-pill p-2 px-3 fs-tiny text-capitalize`)">{{
+                            pokemonInstance.fastMove.name
                           }}</span>
           <span v-else
                 :class="`bg-secondary badge p-2 px-3 fs-tiny text-capitalize`">Not Added</span>
@@ -62,16 +63,16 @@ export default {
         </div>
         <div class="">
 
-                        <span v-if="pokemon.chargedMoveOne"
-                              :class="pokemon.getChargedClass(`text-bg`,1, `rounded-pill p-2 px-3 fs-tiny text-capitalize`)">{{
-                            pokemon.chargedMoveOne.name
+                        <span v-if="pokemonInstance.chargedMoveOne"
+                              :class="pokemonInstance.getChargedClass(`text-bg`,1, `rounded-pill p-2 px-3 fs-tiny text-capitalize`)">{{
+                            pokemonInstance.chargedMoveOne.name
                           }}</span>
           <span v-else
                 :class="`bg-secondary badge p-2 text-capitalize`">Not Added</span>
 
-          <span v-if="pokemon.chargedMoveTwo"
-                :class="pokemon.getChargedClass(`text-bg`,2, `badge p-2 px-3 fs-tiny ms-2 text-capitalize`)">{{
-              pokemon.chargedMoveTwo.name
+          <span v-if="pokemonInstance.chargedMoveTwo"
+                :class="pokemonInstance.getChargedClass(`text-bg`,2, `badge p-2 px-3 fs-tiny ms-2 text-capitalize`)">{{
+              pokemonInstance.chargedMoveTwo.name
             }}</span>
           <span v-else
                 :class="`bg-secondary badge p-2 text-capitalize`">Not Added</span>
@@ -86,7 +87,7 @@ export default {
       </div>
       <!--                delete button-->
       <div class="px-3">
-        <confirm-delete-modal :item="pokemon"
+        <confirm-delete-modal :item="pokemonInstance"
                               @delete-item="item => $emit('deleteItem', item)"></confirm-delete-modal>
       </div>
     </div>

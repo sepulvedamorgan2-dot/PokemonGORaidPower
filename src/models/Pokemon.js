@@ -18,5 +18,6 @@ export function Pokemon(data = {}) {
     this.image = data.image ?? '';
     this.type = data.type ?? 'normal';
     this.secondaryType = data.secondaryType ?? null;
+    this.uniquePokemonId = data.uniquePokemonId ?? null;
 
 }

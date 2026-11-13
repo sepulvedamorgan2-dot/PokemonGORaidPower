@@ -44,7 +44,7 @@ export default {
     <teleport to="#app">
       <OffCanvasContainer   :title-array="title" ref="PokemonDetailsOffCanvas">
         <template #pageOne>
-          <details-off-canvas @clicked="$refs.PokemonDetailsOffCanvas.pageNumber++" @delete-item="item => $emit('deleteItem', item)" :pokemon="pokemonInstance"></details-off-canvas>
+          <details-off-canvas @clicked="$refs.PokemonDetailsOffCanvas.pageNumber++" @delete-item="item => $emit('deleteItem', item)" :pokemon-instance="pokemonInstance"></details-off-canvas>
         </template>
         <template #pageTwo>
           <add-edit-view @clicked="$refs.PokemonDetailsOffCanvas.pageNumber--" :pokemon-instance="pokemonInstance"></add-edit-view>

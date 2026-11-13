@@ -1,7 +1,7 @@
 import {Pokemon} from "@/models/Pokemon.js";
 import {TradeDetails} from "@/models/TradeDetails.js";
 import {PokemonInstance} from '@/models/PokemonInstance.js';
-
+let uniquePokemonId = 1;
 export default class GameDataFactory {
 
 
@@ -79,6 +79,7 @@ export default class GameDataFactory {
                 pokemonId: pokemon1.dexNr,
                 name: pokemon1.id?.toLowerCase() || '',
                 image: image ? String(image) : null,
+                uniquePokemonId: uniquePokemonId++
             }
         };
     }
@@ -103,6 +104,7 @@ export default class GameDataFactory {
             image: pokemon?.image,
             type: data.primaryType?.names?.English?.toLowerCase() || null,
             secondaryType: data.secondaryType?.names?.English?.toLowerCase() || null,
+            uniquePokemonId: pokemon?.uniquePokemonId || null
         });
         console.log(pokemonDetailsData);
         const pokemonToAdd = new PokemonInstance({

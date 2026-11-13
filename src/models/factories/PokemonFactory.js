@@ -37,7 +37,7 @@ export default class PokemonFactory {
         if (!arr || arr.length === 0) return moistList;
 
         for (const pokemon of arr) {
-            moistList.add(PokemonFactory.hydratePokemon(pokemon));
+            moistList.addSinglePokemon(PokemonFactory.hydratePokemon(pokemon));
         }
         return moistList;
     }

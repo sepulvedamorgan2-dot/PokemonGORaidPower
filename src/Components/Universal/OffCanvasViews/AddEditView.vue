@@ -61,12 +61,16 @@ export default {
         </div>
 
         <div class="mt-2">
-          <button class="btn btn-primary w-100 rounded-0" type="button" data-bs-toggle="collapse"
+          <button class="btn btn-primary w-100 rounded-0 d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse"
                   data-bs-target="#collapseEX1" aria-expanded="false" aria-controls="collapseEX1">
-            Edit Move Types (optional)
+
+            <span style="visibility: hidden;"><i class="bi bi-chevron-down"></i></span>
+
+            <span>Edit Moves (optional)</span>
+
+            <i class="bi bi-chevron-down"></i>
           </button>
         </div>
-
         <div class="collapse" id="collapseEX1" data-bs-parent="#editTeamCollapse">
           <div class="card bg-light border-0 card-body py-2 pt-0 rounded-0">
             <!-- Fast type div -->

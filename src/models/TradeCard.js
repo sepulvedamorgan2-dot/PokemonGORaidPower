@@ -40,7 +40,7 @@ export function TradeCard(data = {}) {
             await GameDataFactory.fetchSinglePokemon(pokemon)
                 .then(fetchedPokemon => {
                     if (fetchedPokemon) {
-                        this.haveList.add(fetchedPokemon);
+                        this.haveList.addSinglePokemon(fetchedPokemon);
                     } else {
                         console.error('Failed to fetch pokemon for have list:', pokemon);
                     }
@@ -54,7 +54,7 @@ export function TradeCard(data = {}) {
         await GameDataFactory.fetchSinglePokemon(pokemon)
             .then(fetchedPokemon => {
             if (fetchedPokemon) {
-                this.wantList.add(fetchedPokemon);
+                this.wantList.addSinglePokemon(fetchedPokemon);
             } else {
                 console.error('Failed to fetch pokemon for want list:', pokemon);
             }
@@ -65,7 +65,7 @@ export function TradeCard(data = {}) {
         this.haveList.remove(pokemon.id);
     }
     this.removeFromWantedList = function (pokemon) {
-        this.wantList.removeByImage(pokemon.image);
+        this.wantList.removeByImage(pokemon.pokemon.image);
     }
     this.updateOptionClasses = function () {
         for (const option of this.wantOptions) {
