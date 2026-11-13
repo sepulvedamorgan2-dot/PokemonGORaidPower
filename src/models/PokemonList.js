@@ -1,21 +1,28 @@
-import {Pokemon} from './Pokemon.js';
 
 /**
  * Represents a list of Pokémon.
- * @param initialList An array of Pokémon(moisturized object) to initialize the list with.
+ * @param initialList {Array<Pokemon>} An array of Pokémon(moisturized object) to initialize the list with.
  */
 export function PokemonList(initialList = []) {
-        this.items = initialList ?? [];
     /**
-     * Sets the items of the Pokémon list to a new list.
+     *
+     * @type {Array<Pokemon>|*[]}
+     */
+    this.items = initialList ?? [];
+    // /**
+    //  * Sets the items of the Pokémon list to a new list.
+    //  * @param newList
+    //  */
+    /**
+     *
      * @param newList
      */
-    this.setItems = function(newList) {
+    this.setItems = function(newList = []) {
         this.items = newList;
     }
     /**
      * Adds a Pokémon to the list. If the second element of the pokemon parameter is provided, it adds that many copies of the Pokémon.
-     * @param pokemon
+     * @param [Pokemon, Number]
      */
     this.add = function(pokemon) {
         if (!pokemon[1]) {

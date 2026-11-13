@@ -1,6 +1,14 @@
 # PokemonGORaidPower [6.5.2(Nov 4th, 2026) - 6.6.2(Nov 8th, 2026)]
 
 ## [6.6.2 (Nov 8th, 2026)]
+
+## TODO
+#### Make `pokemonDetails` hold ALL static data for a pokemon, and have the pokemon object hold only the selected data
+ - rename `pokemonDetails` to `pokemon` to better reflect its purpose
+ - rename `pokemon` to `selected`
+#### Make `HorizontalCardContainer` take a component as a cardstyle component as opposed to a string
+#### HARD: make all `pokemon's` `pokemonDetails` reference a single `pokemonDetails` object, so that if a pokemon's details are updated, all pokemon with that same `pokemonDetails` object will be updated as well. (this will require a lot of work to implement, and will require a lot of refactoring)
+
 ### Added
 - Added `VueDraggable` to `PokelistContainer`, `RaidTeamContainer`, and `TradePage` components
 - Added `OffCanvasHorizontal` Folder containing the 6 different horizontal card styles. `HorizontalCard` is the base component, and the other 5 components extend it
