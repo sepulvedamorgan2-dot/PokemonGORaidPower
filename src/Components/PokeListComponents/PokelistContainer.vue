@@ -116,7 +116,7 @@ export default {
 
       <vue-draggable :delay="100" :delay-on-touch-only="true"
                      :force-fallback="true" draggable=".draggable" v-model="fullPokemonList.items" class="alternateBg poke-list">
-        <pokemonlist-item class="draggable" v-for="pokemon in matches" :key="pokemon.Id" :pokemon="pokemon"
+        <pokemonlist-item class="draggable" v-for="pokemonInstance in matches" :key="pokemonInstance.Id" :pokemon-instance="pokemonInstance"
 
                           @delete-item="fullPokemonList.remove($event.id)"></pokemonlist-item>
       </vue-draggable>

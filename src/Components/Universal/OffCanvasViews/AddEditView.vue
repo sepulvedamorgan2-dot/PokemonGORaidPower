@@ -1,7 +1,8 @@
 <script>
 
 import PokemonImageName from "@/Components/Universal/PokemonImageName.vue";
-import GameDataFactory from "@/models/GameDataFactory.js";
+import GameDataFactory from "@/models/factories/GameDataFactory.js";
+import {PokemonInstance} from "@/models/PokemonInstance.js";
 
 
 export default {
@@ -22,7 +23,7 @@ export default {
   },
 
   props: {
-    pokemon: {type: Object, required: true},
+    pokemonInstance: {type: PokemonInstance, required: true},
     isNew: {type: Boolean, default: false},
   },
   // async mounted() {
@@ -33,7 +34,7 @@ export default {
     openOffCanvas() {
       this.bsOffCanvas.show();
     }, updateCpNumber(number){
-      this.pokemon.cp = Math.round(number.target.value * this.pokemon.pokemonDetails.maxCp / 100);
+      this.pokemonInstance.cp = Math.round(number.target.value * this.pokemonInstance.pokemon.maxCp / 100);
     }, submitPokemon(pokemon, quantity) {
       if(!pokemon.cp){
         pokemon.cp = 50;
@@ -45,18 +46,18 @@ export default {
 </script>
 
 <template>
-  <div v-if="pokemon">
-    <pokemon-image-name :active-item="pokemon"></pokemon-image-name>
+  <div v-if="pokemonInstance">
+    <pokemon-image-name :active-item="pokemonInstance"></pokemon-image-name>
     <div class="flex-grow-1 d-flex flex-column">
 
       <!--              <confirm-added-modal item="{{ pokemon.name }}"></confirm-added-modal>-->
       <form class="container-fluid d-flex flex-column flex-grow-1 needs-validation"
 
-            v-on:submit.prevent="submitPokemon(pokemon, quantity); " >
+            v-on:submit.prevent="submitPokemon(pokemonInstance, quantity); " >
 
         <div>
-          <label :for="'range' + pokemon.Id" class="form-label">Creature Power (CP): {{ pokemon.cp }}</label>
-          <input required type="range" class="form-range" min="1" :max="100" v-on:input="updateCpNumber($event)"  :id="'range' + pokemon.Id">
+          <label :for="'range' + pokemonInstance.Id" class="form-label">Creature Power (CP): {{ pokemonInstance.cp }}</label>
+          <input required type="range" class="form-range" min="1" :max="100" v-on:input="updateCpNumber($event)"  :id="'range' + pokemonInstance.Id">
         </div>
 
         <div class="mt-2">
@@ -73,8 +74,8 @@ export default {
               <div class="col-12">
                 <label class="form-label w-100">
                   Fast Move
-                  <select class="form-select text-capitalize" v-model="pokemon.fastMove">
-                    <option v-for="move in pokemon.pokemonDetails.fastMoves" :value="move">{{move.name}}</option>
+                  <select class="form-select text-capitalize" v-model="pokemonInstance.fastMove">
+                    <option v-for="move in pokemonInstance.pokemon.fastMoves" :value="move">{{move.name}}</option>
 
                   </select>
                 </label>
@@ -87,8 +88,8 @@ export default {
                 <label class="form-label w-100">
                   Charged Move 1
                   <select class="form-select text-capitalize" id="chargedMoveSelect1edit"
-                          v-model="pokemon.chargedMoveOne">
-                    <option v-for="move in pokemon.pokemonDetails.chargedMoves" :value="move">{{move.name}}</option>
+                          v-model="pokemonInstance.chargedMoveOne">
+                    <option v-for="move in pokemonInstance.pokemon.chargedMoves" :value="move">{{move.name}}</option>
                   </select>
                 </label>
               </div>
@@ -96,8 +97,8 @@ export default {
                 <label class="form-label w-100">
                   Charged Move 2
                   <select class="form-select text-capitalize" id="chargedMoveSelect2edit"
-                          v-model="pokemon.chargedMoveTwo">
-                    <option v-for="move in pokemon.pokemonDetails.chargedMoves" :value="move">{{move.name}}</option>
+                          v-model="pokemonInstance.chargedMoveTwo">
+                    <option v-for="move in pokemonInstance.pokemon.chargedMoves" :value="move">{{move.name}}</option>
                   </select>
                 </label>
               </div>
@@ -109,14 +110,14 @@ export default {
         <div class="row g-2 my-2">
           <div>
             <label class="form-check-label">
-              <input type="checkbox" id="isShadowedit" v-model="pokemon.isShadow"
+              <input type="checkbox" id="isShadowedit" v-model="pokemonInstance.isShadow"
                      class="border-dark-subtle form-check-input">
               Shadow
             </label>
           </div>
-          <div v-show="pokemon.pokemonDetails.megaCapable">
+          <div v-show="pokemonInstance.pokemon.megaCapable">
             <label class="form-check-label">
-              <input type="checkbox" v-model="pokemon.canMegaEvolve"
+              <input type="checkbox" v-model="pokemonInstance.canMegaEvolve"
                      class="border-dark-subtle form-check-input">
               Can Mega Evolve
             </label>

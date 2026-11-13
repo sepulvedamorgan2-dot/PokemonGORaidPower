@@ -1,5 +1,5 @@
+import { PokemonInstance } from "@/models/PokemonInstance.js";
 import { Pokemon } from "@/models/Pokemon.js";
-import { PokemonDetails } from "@/models/PokemonDetails.js";
 import { TradeDetails } from "@/models/TradeDetails.js";
 import { PokemonList } from "@/models/PokemonList.js";
 import { TradeCard } from "@/models/TradeCard.js";
@@ -45,10 +45,10 @@ export default class PokemonFactory {
     /**
      * Hydrates a single pokemon object into a Pokemon object
      * @param pokemon
-     * @returns {Pokemon}
+     * @returns {PokemonInstance}
      */
     static hydratePokemon(pokemon = {}) {
-        return new Pokemon(pokemon);
+        return new PokemonInstance(pokemon);
     }
 
     /**

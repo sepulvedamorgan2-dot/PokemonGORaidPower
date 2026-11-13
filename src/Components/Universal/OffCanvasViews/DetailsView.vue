@@ -32,16 +32,16 @@ export default {
     </div>
     <div>
       <div class="px-3">
-        <div class="mt-3">
-          <h5>Details</h5>
-        </div>
-        <div class="">
-          <span v-if="pokemon.isShadow" class="badge p-2 px-3 fs-tiny  typeghost">Shadow</span>
-          <span v-if="pokemon.canMegaEvolve" class="badge p-2 px-3 fs-tiny  typefire">Can Mega</span>
-          <span v-if="!pokemon.canMegaEvolve && !pokemon.isShadow"
-                class="badge p-2 px-3 fs-6  typefire">Cannot Mega/Isnt Shadow</span>
+<!--        <div class="mt-3">-->
+<!--          <h5>Details</h5>-->
+<!--        </div>-->
+<!--        <div class="">-->
+<!--          <span v-if="pokemon.isShadow" class="badge p-2 px-3 fs-tiny  typeghost">Shadow</span>-->
+<!--          <span v-if="pokemon.canMegaEvolve" class="badge p-2 px-3 fs-tiny  typefire">Can Mega</span>-->
+<!--          <span v-if="!pokemon.canMegaEvolve && !pokemon.isShadow"-->
+<!--                class="badge p-2 px-3 fs-6  typefire">Cannot Mega/Isnt Shadow</span>-->
 
-        </div>
+<!--        </div>-->
 
 
         <div class="mt-2">

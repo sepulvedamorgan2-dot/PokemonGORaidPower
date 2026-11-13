@@ -4,7 +4,7 @@ import SearchAndDisplayOffCanvas from "@/Components/Universal/OffCanvasViews/Sea
 import OffCanvasContainer from "@/Components/Universal/OffCanvasContainer.vue";
 import AddEditView from "@/Components/Universal/OffCanvasViews/AddEditView.vue";
 import AddEditOffCanvas from "@/Components/Universal/OffCanvasViews/AddEditView.vue";
-import GameDataFactory from "@/models/GameDataFactory.js";
+import GameDataFactory from "@/models/factories/GameDataFactory.js";
 
 export default {
   name: "AddPokemonOffCanvas",
@@ -52,13 +52,13 @@ export default {
 
                   "Add Pokemon",
 
-                  this.pokemonToAdd?.name]
+                  this.pokemonToAdd?.pokemon.name]
 
               }
           )
     },
     async initPokemon(pokemon) {
-      if (this.pokemon?.pokemonDetails) {
+      if (this.pokemon?.pokemon) {
         return this.pokemon;
       } else {
         console.log(await GameDataFactory.fetchSinglePokemon(pokemon))
@@ -104,7 +104,7 @@ export default {
         </SearchAndDisplayOffCanvas>
       </template>
       <template v-slot:pageTwo>
-        <add-edit-view :pokemon="pokemonToAdd"
+        <add-edit-view :pokemon-instance="pokemonToAdd"
                        @add-pokemon="$emit('addPokemon', $event); $refs.AddPokemonOffCanvas.hideOffCanvas();"
                        :isNew=true></add-edit-view>
       </template>

@@ -22,14 +22,14 @@ export default {
   <div>
     <div class="d-flex justify-content-center pt-3 pb-2">
       <div class="" style="width: 50%">
-        <image-with-details :pokemon="activeItem"
+        <image-with-details :pokemon-instance="activeItem"
                             :noPresetSize="true" class="bg-white img-fluid details-img w-100 border border-dark-subtle rounded" :alt="activeItem.name"></image-with-details>
       </div>
     </div>
 
-    <div v-if="activeItem.name" class="">
+    <div v-if="activeItem.pokemon.name" class="">
 
-      <h3 class="text-center text-capitalize">{{ activeItem.name }}</h3>
+      <h3 class="text-center text-capitalize">{{ activeItem.pokemon.name }}</h3>
 
     </div>
   </div>

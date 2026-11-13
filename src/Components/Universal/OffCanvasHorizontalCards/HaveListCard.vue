@@ -21,7 +21,7 @@ export default {
        :class="{ 'col-auto position-relative' : true, 'bg-light' : listToHighlight && listToHighlight.some((p) => p.id === pokemon.id)}">
     <image-with-details
         v-on:click="listToHighlight && listToHighlight.some((p) => p.id === pokemon.id) ? $emit('clickedObjectExisting', [pokemon, true]) : $emit('clickedObjectExisting', [pokemon, false])"
-        :pokemon="pokemon"></image-with-details>
+        :pokemon-instance="pokemon"></image-with-details>
   </div>
 </template>
 

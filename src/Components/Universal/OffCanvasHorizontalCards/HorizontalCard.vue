@@ -29,11 +29,11 @@ export default {
 <template>
   <div class="row g-0 align-items-center">
     <div class="col-auto">
-      <image-with-details :pokemon="pokemon"></image-with-details>
+      <image-with-details :pokemon-instance="pokemon"></image-with-details>
     </div>
     <div class="col">
       <div class="ms-0 ms-sm-0">
-        <p class="fs-5 mb-0 text-capitalize">{{ pokemon.name }} </p>
+        <p class="fs-5 mb-0 text-capitalize">{{ pokemon?.pokemon?.name }} </p>
 
       </div>
     </div>

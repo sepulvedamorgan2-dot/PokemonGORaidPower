@@ -24,7 +24,7 @@ export default {
          listToHighlight && listToHighlight.some((p) => p.image === pokemon.image) ?
          $emit('clickedObjectExisting', [pokemon, true]) :
           $emit('clickedObjectExisting', [pokemon, false]) "
-        :pokemon="pokemon"></image-with-details>
+        :pokemon-instance="pokemon"></image-with-details>
   </div>
 </template>
 

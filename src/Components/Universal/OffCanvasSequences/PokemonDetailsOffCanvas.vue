@@ -4,6 +4,7 @@ import OffCanvasContainer from "@/Components/Universal/OffCanvasContainer.vue";
 
 import DetailsOffCanvas from "@/Components/Universal/OffCanvasViews/DetailsView.vue";
 import AddEditView from "@/Components/Universal/OffCanvasViews/AddEditView.vue";
+import {PokemonInstance} from "@/models/PokemonInstance.js";
 
 export default {
   name: "PokemonDetailsOffCanvas",
@@ -16,7 +17,7 @@ export default {
   data: function () {
     return {
       title: [
-        this.pokemon.name,
+        this.pokemon.pokemon.name,
         'edit'
       ],
 
@@ -24,7 +25,7 @@ export default {
   },
 
   props: {
-    pokemon: {type: Object, required: true}
+    pokemon: {type: PokemonInstance, required: true}
   },
 
 
@@ -46,7 +47,7 @@ export default {
           <details-off-canvas @clicked="$refs.PokemonDetailsOffCanvas.pageNumber++" @delete-item="item => $emit('deleteItem', item)" :pokemon="pokemon"></details-off-canvas>
         </template>
         <template #pageTwo>
-          <add-edit-view @clicked="$refs.PokemonDetailsOffCanvas.pageNumber--" :pokemon="pokemon"></add-edit-view>
+          <add-edit-view @clicked="$refs.PokemonDetailsOffCanvas.pageNumber--" :pokemon-instance="pokemon"></add-edit-view>
         </template>
       </OffCanvasContainer>
     </teleport>

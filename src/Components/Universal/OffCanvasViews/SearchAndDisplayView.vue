@@ -45,12 +45,12 @@ export default {
         try{
           if (pokemonQueried.includes(query.toLowerCase())) {
             let pokemonObject = {};
-            pokemonObject.name = pokemonQueried;
-            pokemonObject.pokemonId = this.listToSearch.indexOf(pokemonQueried) + 1;
+            pokemonObject.pokemon.name = pokemonQueried;
+            pokemonObject.pokemon.pokemonId = this.listToSearch.indexOf(pokemonQueried) + 1;
             resultObjects.push(pokemonObject);
           } } catch(e) {
 
-          if (pokemonQueried.name.includes(query.toLowerCase()) && pokemonQueried.name.includes("-mega") === false) {
+          if (pokemonQueried.pokemon.name.includes(query.toLowerCase()) && pokemonQueried.pokemon.name.includes("-mega") === false) {
 
             resultObjects.push(pokemonQueried);
           }}

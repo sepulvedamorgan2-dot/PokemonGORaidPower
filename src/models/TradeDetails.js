@@ -35,13 +35,13 @@ export function TradeDetails(data = {}) {
                     selected: 'None',
                     title: 'Elite TM Attacks'
                 }
-            if (pokemon.pokemonDetails.specialChargedMoves.length > 0) {
-                for (const move of Object.values(pokemon.pokemonDetails.specialChargedMoves)) {
+            if (pokemon.pokemon.specialChargedMoves.length > 0) {
+                for (const move of Object.values(pokemon.pokemon.specialChargedMoves)) {
                     moves.optionsArray.push(move.name);
                 }
             }
-            if(pokemon.pokemonDetails.specialFastMoves.length > 0){
-            for (const move of Object.values(pokemon.pokemonDetails.specialFastMoves)) {
+            if(pokemon.pokemon.specialFastMoves.length > 0){
+            for (const move of Object.values(pokemon.pokemon.specialFastMoves)) {
                 moves.optionsArray.push(move.name);
             }
             }

@@ -1,6 +1,6 @@
-import {PokemonDetails} from "@/models/PokemonDetails.js";
+import {Pokemon} from "@/models/Pokemon.js";
 import {TradeDetails} from "@/models/TradeDetails.js";
-import {Pokemon} from '@/models/Pokemon.js';
+import {PokemonInstance} from '@/models/PokemonInstance.js';
 
 export default class GameDataFactory {
 
@@ -75,9 +75,11 @@ export default class GameDataFactory {
         else if (version === 3) image = assetForm?.image;
         else if (version === 4) image = assetForm?.shinyImage;
         return {
-            pokemonId: pokemon1.dexNr,
-            name: pokemon1.id?.toLowerCase() || '',
-            image: image ? String(image) : null,
+            pokemon: {
+                pokemonId: pokemon1.dexNr,
+                name: pokemon1.id?.toLowerCase() || '',
+                image: image ? String(image) : null,
+            }
         };
     }
 
@@ -85,26 +87,26 @@ export default class GameDataFactory {
      * Creates a fully hydrated Pokemon object with details and tradeDetails properties.
      * @param data The raw Pokemon data from the API.
      * @param pokemon The simple Pokemon object, used to get the name, image, and pokemonId properties.
-     * @returns {Pokemon}
+     * @returns {PokemonInstance}
      */
     static createPokemonObject(data, pokemon) {
 
-        const pokemonDetailsData = new PokemonDetails({
+        const pokemonDetailsData = new Pokemon({
             maxCp: GameDataFactory.calculateCP(data.stats?.attack || 0, data.stats?.defense || 0, data.stats?.stamina || 0),
             fastMoves: GameDataFactory.simpleMoves(data.quickMoves, 1) || [],
             chargedMoves: GameDataFactory.simpleMoves(data.cinematicMoves, 1) || [],
             specialFastMoves: GameDataFactory.simpleMoves(data.eliteQuickMoves, 2) || [],
             specialChargedMoves: GameDataFactory.simpleMoves(data.eliteCinematicMoves, 2) || [],
-            megaCapable: data.hasMegaEvolution || false
+            megaCapable: data.hasMegaEvolution || false,
+            pokemonId: pokemon?.pokemonId,
+            name: pokemon?.name,
+            image: pokemon?.image,
+            type: data.primaryType?.names?.English?.toLowerCase() || null,
+            secondaryType: data.secondaryType?.names?.English?.toLowerCase() || null,
         });
         console.log(pokemonDetailsData);
-        const pokemonToAdd = new Pokemon({
-                pokemonId: pokemon?.pokemonId,
-                name: pokemon?.name,
-                image: pokemon?.image,
-                type: data.primaryType?.names?.English?.toLowerCase() || null,
-                secondaryType: data.secondaryType?.names?.English?.toLowerCase() || null,
-                pokemonDetails: pokemonDetailsData,
+        const pokemonToAdd = new PokemonInstance({
+                pokemon: pokemonDetailsData,
                 tradeDetails: new TradeDetails(),
             }
         )
@@ -116,16 +118,16 @@ export default class GameDataFactory {
      * Fetches a single Pokemon's data from the API using its pokemonId, hydrates it,
      * and returns a promise that resolves to the fully hydrated Pokemon object.
      * (i made it return only the object at first until i realized i needed to use it in a promise)
-     * @param pokemon The simple Pokemon object containing the pokemonId, image, and name.
-     * @returns {Promise<Pokemon>}
+     * @param pokemonInstance The simple Pokemon object containing the pokemonId, image, and name.
+     * @returns {Promise<PokemonInstance>}
      */
-    static async fetchSinglePokemon(pokemon){
+    static async fetchSinglePokemon(pokemonInstance){
         try {
-            if (pokemon?.pokemonId) {
-                return fetch(`https://pokemon-go-api.github.io/pokemon-go-api/api/pokedex/id/${pokemon.pokemonId}.json`)
+            if (pokemonInstance?.pokemon?.pokemonId) {
+                return fetch(`https://pokemon-go-api.github.io/pokemon-go-api/api/pokedex/id/${pokemonInstance.pokemon.pokemonId}.json`)
                     .then(response => response.json())
                     .then(data => {
-                        const pokemonObject = GameDataFactory.createPokemonObject(data, pokemon);
+                        const pokemonObject = GameDataFactory.createPokemonObject(data, pokemonInstance.pokemon);
                         console.log('Fetched single pokemon data:', pokemonObject);
                         return pokemonObject;
                     })

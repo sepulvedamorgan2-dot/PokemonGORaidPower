@@ -19,7 +19,7 @@ export default {
   <!--i need to be shot batmans parents style for this bit of code-->
   <div class="row g-0 border-bottom">
     <div class="col-auto ">
-      <image-with-details :pokemon="pokemon"></image-with-details>
+      <image-with-details :pokemon-instance="pokemon"></image-with-details>
     </div>
     <div class="col">
       <div class="p-1 ms-1">

@@ -1,12 +1,12 @@
 
 /**
  * Represents a list of Pokémon.
- * @param initialList {Array<Pokemon>} An array of Pokémon(moisturized object) to initialize the list with.
+ * @param initialList {Array<PokemonInstance>} An array of Pokémon(moisturized object) to initialize the list with.
  */
 export function PokemonList(initialList = []) {
     /**
      *
-     * @type {Array<Pokemon>|*[]}
+     * @type {Array<PokemonInstance>|*[]}
      */
     this.items = initialList ?? [];
     // /**

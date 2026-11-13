@@ -38,7 +38,7 @@ export default {
         // filter name
 
         if (
-            eachItem.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
+            eachItem.pokemon.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
             (this.filterObject.filterType === '' || eachItem.type === this.filterObject.filterType) &&
             (this.filterObject.filterShadow === '' || Boolean(eachItem.isShadow) === (this.filterObject.filterShadow === true || this.filterObject.filterShadow === 'true')) &&
             (this.filterObject.filterMega === '' || Boolean(eachItem.canMegaEvolve) === (this.filterObject.filterMega === true || this.filterObject.filterMega === 'true')) &&

@@ -4,8 +4,8 @@ import NavbarMain from "@/Components/Universal/NavbarMain.vue";
 import {shallowRef} from "vue"
 import {PokemonList} from "@/models/PokemonList.js"
 import {TradeCardList} from "@/models/TradeCardList.js";
-import DataFactory from "@/models/DataFactory.js";
-import GameDataFactory from "@/models/GameDataFactory.js";
+import DataFactory from "@/models/factories/DataFactory.js";
+import GameDataFactory from "@/models/factories/GameDataFactory.js";
 
 export default {
   name: "App",

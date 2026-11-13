@@ -1,11 +1,13 @@
 <script>
+import {PokemonInstance} from "@/models/PokemonInstance.js";
+
 export default {
   name: "ImageWithDetails",
   data: function () {
     return {}
   },
   props: {
-    pokemon: {type: Object, required: true},
+    pokemonInstance: {type: PokemonInstance, required: true},
     noShiny: {type: Boolean, required: false, default: false},
     noShadow: {type: Boolean, required: false, default: false},
     noLucky: {type: Boolean, required: false, default: false},
@@ -16,23 +18,24 @@ export default {
     testLucky(){
       try{
 
-        return this.pokemon.tradeDetails.tags[2].selected === 'Lucky';
+        return this.pokemonInstance.tradeDetails.tags[2].selected === 'Lucky';
       } catch (error){
         return false
       }
     }
-  }
+  },
+
 
 }
 </script>
 
 <template>
   <div style="user-select: none;" class="position-relative">
-    <img :src="pokemon.image"
+    <img :src="pokemonInstance?.image ? pokemonInstance.image : pokemonInstance?.pokemon?.image"
          onerror="this.remove()" :class="{'img-fluid ': true, 'horz-card-img': !noPresetSize, 'lucky': testLucky()}">
-    <p  v-if="pokemon?.tradeDetails?.tradeQuantity > 1 && noQuantity" class="corner-tl-text"> {{ pokemon.tradeDetails.tradeQuantity }}x</p>
-    <img v-if="pokemon.isShadow" src="@/Images/shadow.png" alt="Shadow" class="corner-bl-img">
-    <img v-if="pokemon.image.includes('.s.')" src="@/Images/shiny.png" alt="Shadow" class="corner-tl-img">
+    <p  v-if="pokemonInstance?.tradeDetails?.tradeQuantity > 1 && noQuantity" class="corner-tl-text"> {{ pokemon.tradeDetails.tradeQuantity }}x</p>
+    <img v-if="pokemonInstance?.isShadow" src="@/Images/shadow.png" alt="Shadow" class="corner-bl-img">
+    <img v-if="pokemonInstance?.pokemon?.image?.includes('.s.')" src="@/Images/shiny.png" alt="Shadow" class="corner-tl-img">
     <slot>
 
     </slot>

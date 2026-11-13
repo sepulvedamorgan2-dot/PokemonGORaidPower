@@ -1,6 +1,6 @@
 import {PokemonList} from "@/models/PokemonList.js";
 import {TradeCardList} from "@/models/TradeCardList.js";
-import PokemonFactory from "@/models/PokemonFactory.js";
+import PokemonFactory from "@/models/factories/PokemonFactory.js";
 
 /**
  * Data factory handles the saving and loading of data to and from local storage.
