@@ -2,6 +2,7 @@
 
 import OffCanvasContainer from "@/Components/Universal/OffCanvasContainer.vue";
 import TagsOffCanvas from "@/Components/Universal/OffCanvasViews/TagsOffCanvasView.vue";
+import {PokemonInstance} from "@/models/PokemonInstance.js";
 
 export default {
   name: "PokemonTagsOffCanvas",
@@ -14,7 +15,7 @@ export default {
   data: function () {
     return {
       title: [
-        this.pokemon.name,
+        this.pokemonInstance?.pokemon?.name,
         'edit'
       ],
 
@@ -23,7 +24,7 @@ export default {
   },
 
   props: {
-    pokemon: {type: Object, required: true}
+    pokemonInstance: {type: PokemonInstance, required: true}
   },
 }
 </script>
@@ -38,7 +39,7 @@ export default {
   <teleport to="#app">
     <OffCanvasContainer   :title-array="title" ref="PokemonTagsOffCanvas">
       <template #pageOne>
-        <TagsOffCanvas :pokemon="pokemon"></TagsOffCanvas>
+        <TagsOffCanvas :pokemon-instance="pokemonInstance"></TagsOffCanvas>
       </template>
     </OffCanvasContainer>
   </teleport>

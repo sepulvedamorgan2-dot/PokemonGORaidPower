@@ -17,7 +17,7 @@ export default {
   data: function () {
     return {
       title: [
-        this.pokemon.pokemon.name,
+        this.pokemonInstance?.pokemon?.name,
         'edit'
       ],
 
@@ -25,7 +25,7 @@ export default {
   },
 
   props: {
-    pokemon: {type: PokemonInstance, required: true}
+    pokemonInstance: {type: PokemonInstance, required: true}
   },
 
 
@@ -44,10 +44,10 @@ export default {
     <teleport to="#app">
       <OffCanvasContainer   :title-array="title" ref="PokemonDetailsOffCanvas">
         <template #pageOne>
-          <details-off-canvas @clicked="$refs.PokemonDetailsOffCanvas.pageNumber++" @delete-item="item => $emit('deleteItem', item)" :pokemon="pokemon"></details-off-canvas>
+          <details-off-canvas @clicked="$refs.PokemonDetailsOffCanvas.pageNumber++" @delete-item="item => $emit('deleteItem', item)" :pokemon="pokemonInstance"></details-off-canvas>
         </template>
         <template #pageTwo>
-          <add-edit-view @clicked="$refs.PokemonDetailsOffCanvas.pageNumber--" :pokemon-instance="pokemon"></add-edit-view>
+          <add-edit-view @clicked="$refs.PokemonDetailsOffCanvas.pageNumber--" :pokemon-instance="pokemonInstance"></add-edit-view>
         </template>
       </OffCanvasContainer>
     </teleport>

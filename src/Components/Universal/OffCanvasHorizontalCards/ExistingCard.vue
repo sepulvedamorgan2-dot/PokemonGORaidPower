@@ -19,27 +19,27 @@ export default {
   <!--i need to be shot batmans parents style for this bit of code-->
   <div class="row g-0 border-bottom">
     <div class="col-auto ">
-      <image-with-details :pokemon-instance="pokemon"></image-with-details>
+      <image-with-details :pokemon-instance="pokemonInstance"></image-with-details>
     </div>
     <div class="col">
       <div class="p-1 ms-1">
-        <p class="fs-5 mb-0 text-capitalize">{{ pokemon.name }} </p>
+        <p class="fs-5 mb-0 text-capitalize">{{ pokemonInstance.pokemon.name }} </p>
         <div class="d-flex mt-0">
-          <p class="me-2 fs-6 mb-0">RP:{{ pokemon.cp }}</p>
-          <p class="fs-6 mb-0">CP:{{ pokemon.cp }}</p>
+          <p class="me-2 fs-6 mb-0">RP:{{ pokemonInstance.cp }}</p>
+          <p class="fs-6 mb-0">CP:{{ pokemonInstance.cp }}</p>
         </div>
       </div>
     </div>
     <div class="col-3">
       <div class="d-flex justify-content-end me-4 align-items-center h-100">
-        <i v-if="pokemon.fastMove"
-           :class="pokemon.getFastClass('text-bg', `rounded mb-1 p-1  fs-tinyer bi bi-lightning-charge`)"></i>
-        <i v-if="pokemon.chargedMoveOne"
-           :class="pokemon.getChargedClass('text-bg', 1, `rounded mb-1 ms-1 fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
-        <i v-if="pokemon.chargedMoveTwo"
-           :class="pokemon.getChargedClass('text-bg', 2, `rounded mb-1 ms-1   fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
+        <i v-if="pokemonInstance.fastMove"
+           :class="pokemonInstance.getFastClass('text-bg', `rounded mb-1 p-1  fs-tinyer bi bi-lightning-charge`)"></i>
+        <i v-if="pokemonInstance.chargedMoveOne"
+           :class="pokemonInstance.getChargedClass('text-bg', 1, `rounded mb-1 ms-1 fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
+        <i v-if="pokemonInstance.chargedMoveTwo"
+           :class="pokemonInstance.getChargedClass('text-bg', 2, `rounded mb-1 ms-1   fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
         <i type="button"
-           class="bi bi-plus ms-2 fs-5 ms-sm-4" v-on:click="$emit('clickedObject', pokemon)"></i>
+           class="bi bi-plus ms-2 fs-5 ms-sm-4" v-on:click="$emit('clickedObject', pokemonInstance)"></i>
 
       </div>
     </div>

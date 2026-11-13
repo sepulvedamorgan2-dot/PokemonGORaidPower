@@ -45,9 +45,9 @@ export default {
 
      returnNewPokemon() {
       this.onlyNewPokemon = []
-      for (const pokemonObject of this.pokemonList.items) {
-        if (!this.pokemonTeam.activeTeam.includes(pokemonObject.id) && !this.pokemonTeam.backupPokemon.includes(pokemonObject.id)) {
-          this.onlyNewPokemon.push(pokemonObject);
+      for (const pokemonInstance of this.pokemonList.items) {
+        if (!this.pokemonTeam.activeTeam.includes(pokemonInstance.id) && !this.pokemonTeam.backupPokemon.includes(pokemonInstance.id)) {
+          this.onlyNewPokemon.push(pokemonInstance);
         }
       }
 
@@ -72,10 +72,10 @@ export default {
           <div class=" ps-3">
             <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize">Active Team</p>
           </div>
-          <div v-for="pokemon in pokemonTeam.activeTeam"
-               :key="pokemon">
+          <div v-for="pokemonInstance in pokemonTeam.activeTeam"
+               :key="pokemonInstance">
             <raid-team-card :pokemon-team="pokemonTeam" card-style="RaidTeam"
-                             :pokemon="pokemonList.findPokemonById(pokemon)"
+                             :pokemon-instance="pokemonList.findPokemonById(pokemonInstance)"
                              @pokemon-removed="returnNewPokemon"
                              @remove-pokemon="pokemonTeam.removeFromTeam($event.id)"
                              @mega-pokemon="pokemonTeam.activeTeamMega($event.id)"
@@ -85,10 +85,10 @@ export default {
             <div class=" ps-3">
               <p class="fs-4 fw-medium mt-2 details-add-name text-capitalize">Backup Team</p>
             </div>
-            <div v-for="pokemon in pokemonTeam.backupPokemon"
-                 :key="pokemon.Id">
+            <div v-for="pokemonInstance in pokemonTeam.backupPokemon"
+                 :key="pokemonInstance.Id">
               <raid-team-card :pokemon-team="pokemonTeam" card-style="RaidTeam"
-                               :pokemon="pokemonList.findPokemonById(pokemon)"
+                               :pokemon-instance="pokemonList.findPokemonById(pokemonInstance)"
                                @remove-pokemon="pokemonTeam.removeFromTeam($event.id)"
 
                                ></raid-team-card>

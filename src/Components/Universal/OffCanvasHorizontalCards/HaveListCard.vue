@@ -18,10 +18,10 @@ export default {
 <template>
   <!--i need to be shot batmans parents style for this bit of code-->
   <div
-       :class="{ 'col-auto position-relative' : true, 'bg-light' : listToHighlight && listToHighlight.some((p) => p.id === pokemon.id)}">
+       :class="{ 'col-auto position-relative' : true, 'bg-light' : listToHighlight && listToHighlight.some((p) => p.id === pokemonInstance.id)}">
     <image-with-details
-        v-on:click="listToHighlight && listToHighlight.some((p) => p.id === pokemon.id) ? $emit('clickedObjectExisting', [pokemon, true]) : $emit('clickedObjectExisting', [pokemon, false])"
-        :pokemon-instance="pokemon"></image-with-details>
+        v-on:click="listToHighlight && listToHighlight.some((p) => p.id === pokemonInstance.id) ? $emit('clickedObjectExisting', [pokemonInstance, true]) : $emit('clickedObjectExisting', [pokemonInstance, false])"
+        :pokemon-instance="pokemonInstance"></image-with-details>
   </div>
 </template>
 

@@ -75,7 +75,7 @@ export default {
                @clicked-object-existing="pokemon => $emit('clickedObjectExisting', pokemon)"
                @clicked-object="pokemon => $emit('clickedObject', pokemon)"
                @pokemon-removed="$emit('pokemonRemoved')"
-               :pokemon="card"
+               :pokemon-instance="card"
 
                :list-to-highlight="listToHighlight" :is="cardStyle + 'Card'"></component>
   </div>

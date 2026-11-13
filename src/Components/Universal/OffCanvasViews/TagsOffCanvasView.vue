@@ -1,6 +1,7 @@
 <script>
 
 import PokemonImageName from "@/Components/Universal/PokemonImageName.vue";
+import {PokemonInstance} from "@/models/PokemonInstance.js";
 
 export default {
   name: "TagsOffCanvas",
@@ -21,7 +22,7 @@ export default {
   },
 
   props: {
-    pokemon: {type: Object, required: true},
+    pokemonInstance: {type: PokemonInstance, required: true},
     haveQuantity: {type: Boolean, default: true},
   },
 
@@ -36,16 +37,7 @@ export default {
 
   },
   mounted() {
-    this.pokemon.tradeDetails.addMoveTag(this.pokemon)
-
-    // const movesArray = Object.values(this.pokemon.pokemonDetails.specialChargedMoves);
-    // movesArray.push = Object.values(this.pokemon.pokemonDetails.specialFastMoves);
-    // movesArray.forEach(move => {
-    //   moves.push(move.names.English);
-    // });
-    //
-    // this.pokemon.tradeDetails.tags[4].Options = moves
-
+    this.pokemonInstance.tradeDetails.addMoveTag(this.pokemonInstance)
 
   },
 
@@ -57,7 +49,7 @@ export default {
     <div v-if="true" class="px-3">
       <div class="mt-3">
         <h5 >Background</h5>
-        <select style="width: 200px" type="text"  class="form-control" v-model="pokemon.tradeDetails.tradeBackground">
+        <select style="width: 200px" type="text"  class="form-control" v-model="pokemonInstance.tradeDetails.tradeBackground">
           <option :value="{ shorthandName: '', color: 'normal' }">None</option>
 
           <!-- Special Event / In-Game Backgrounds -->
@@ -115,12 +107,12 @@ export default {
     <div v-if="haveQuantity" class="px-3">
       <div class="mt-3">
         <h5 >Quantity</h5>
-        <input style="width: 100px" type="number" min="1" max="100" class="form-control" v-model="pokemon.tradeDetails.tradeQuantity">
+        <input style="width: 100px" type="number" min="1" max="100" class="form-control" v-model="pokemonInstance.tradeDetails.tradeQuantity">
       </div>
     </div>
     <!--                delete button-->
 
-    <div class="px-3 d-flex flex-column w-100" v-for="tag in pokemon.tradeDetails.tags" :key="tag.title">
+    <div class="px-3 d-flex flex-column w-100" v-for="tag in pokemonInstance.tradeDetails.tags" :key="tag.title">
       <div class="mt-2" v-if="tag.optionsArray.length > 1">
         <h5>{{ tag.title }}</h5>
 
@@ -128,11 +120,11 @@ export default {
           <div class="col-auto" v-for="option in tag.optionsArray" :key="option">
 
             <input v-model="tag.selected" :value="option" type="radio" class="text-capitalize btn-check"
-                   :name="pokemon.image + tag.title"
-                   :id="pokemon.image + tag.title+option" autocomplete="off"
+                   :name="pokemonInstance.pokemon.image + tag.title"
+                   :id="pokemonInstance.pokemon.image + tag.title+option" autocomplete="off"
                    :checked="tag.selected === option">
             <label class="btn rounded-pill btn-outline-success text-capitalize"
-                   :for="pokemon.image + tag.title+option">{{ option }}</label>
+                   :for="pokemonInstance.pokemon.image + tag.title+option">{{ option }}</label>
 
           </div>
         </div>

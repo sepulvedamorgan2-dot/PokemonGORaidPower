@@ -34,17 +34,17 @@ export default {
   },
 
   methods: {
-    async handleClick(object) {
+    async handleClick(pokemonInstance) {
 
-      console.log(object);
+      console.log(pokemonInstance);
 
-      await this.initPokemon(object)
+      await this.initPokemon(pokemonInstance)
           .then
-          ((pokemon) => {
+          ((pokemonInstance) => {
 
-                this.pokemonToAdd = pokemon;
+                this.pokemonToAdd = pokemonInstance;
 
-                console.log(pokemon);
+                console.log(pokemonInstance);
 
                 this.$refs.AddPokemonOffCanvas.pageNumber++
 
@@ -57,12 +57,12 @@ export default {
               }
           )
     },
-    async initPokemon(pokemon) {
+    async initPokemon(pokemonInstance) {
       if (this.pokemon?.pokemon) {
         return this.pokemon;
       } else {
-        console.log(await GameDataFactory.fetchSinglePokemon(pokemon))
-        return GameDataFactory.fetchSinglePokemon(pokemon);
+        console.log(await GameDataFactory.fetchSinglePokemon(pokemonInstance))
+        return GameDataFactory.fetchSinglePokemon(pokemonInstance);
       }}
     },
   watch: {

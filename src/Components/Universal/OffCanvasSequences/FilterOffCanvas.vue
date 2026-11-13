@@ -34,20 +34,20 @@ export default {
 
       this.matches = [];
 
-      for (let eachItem of this.listToFilter) {
+      for (let pokemonInstance of this.listToFilter) {
         // filter name
 
         if (
-            eachItem.pokemon.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
-            (this.filterObject.filterType === '' || eachItem.type === this.filterObject.filterType) &&
-            (this.filterObject.filterShadow === '' || Boolean(eachItem.isShadow) === (this.filterObject.filterShadow === true || this.filterObject.filterShadow === 'true')) &&
-            (this.filterObject.filterMega === '' || Boolean(eachItem.canMegaEvolve) === (this.filterObject.filterMega === true || this.filterObject.filterMega === 'true')) &&
-            (this.filterObject.filterCP <= eachItem.cp)
+            pokemonInstance.pokemon.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
+            (this.filterObject.filterType === '' || pokemonInstance.pokemon.type === this.filterObject.filterType) &&
+            (this.filterObject.filterShadow === '' || Boolean(pokemonInstance.isShadow) === (this.filterObject.filterShadow === true || this.filterObject.filterShadow === 'true')) &&
+            (this.filterObject.filterMega === '' || Boolean(pokemonInstance.canMegaEvolve) === (this.filterObject.filterMega === true || this.filterObject.filterMega === 'true')) &&
+            (this.filterObject.filterCP <= pokemonInstance.cp)
 
 
         ) {
 
-          this.matches.push(eachItem);
+          this.matches.push(pokemonInstance);
 
 
         }

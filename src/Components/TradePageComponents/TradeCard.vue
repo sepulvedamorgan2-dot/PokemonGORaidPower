@@ -102,8 +102,8 @@ export default {
       this.pokemonListFiltered = Object.assign(new PokemonList(), this.pokemonList, {
         items: [...this.pokemonList.items]
       });
-      for (let pokemon of this.tradeCard.haveList.items) {
-        this.pokemonListFiltered.remove(pokemon.id);
+      for (let pokemonInstance of this.tradeCard.haveList.items) {
+        this.pokemonListFiltered.remove(pokemonInstance.id);
       }
       if (this.pokemonListFiltered.items.length === 0) {
         this.warning = true;
@@ -206,7 +206,6 @@ export default {
             <div
                 class="d-flex horz-card-img img-fluid w-100 text-center align-items-center   justify-content-center border rounded-4 ">
 
-              <!-- AFTER (Fixed) -->
               <add-pokemon-off-canvas @clicked-object-existing="addWantedList"
                                       button="pencil"
                                       v-on:click="returnNewPokemon()"
@@ -220,22 +219,22 @@ export default {
             </div>
 
           </div>
-          <div class="col col-md-2 draggable" v-for="pokemon in tradeCard.wantList.items">
+          <div class="col col-md-2 draggable" v-for="pokemonInstance in tradeCard.wantList.items">
             <div class="text-center border rounded-4 ">
               <div class="position-relative">
-                <image-with-details @dblclick="mode === 1 ? tradeCard.removeFromWantedList(pokemon) : null" :no-quantity="true"
-                                    :noPresetSize="true" :pokemon="pokemon">
-                  <pokemon-tags-off-canvas v-if="mode === 1" :pokemon="pokemon"></pokemon-tags-off-canvas>
+                <image-with-details @dblclick="mode === 1 ? tradeCard.removeFromWantedList(pokemonInstance) : null" :no-quantity="true"
+                                    :noPresetSize="true" :pokemon-instance="pokemonInstance">
+                  <pokemon-tags-off-canvas v-if="mode === 1" :pokemon-instance="pokemonInstance"></pokemon-tags-off-canvas>
                 </image-with-details>
               </div>
               <div class="pb-1">
                 <p style="font-size: 13px; font-weight: 500"
-                   v-if="pokemon.tradeDetails.tradeBackground.shorthandName"
-                   v-show="pokemon.tradeDetails.tradeBackground !== ''"
-                   :class="{'mb-0': true, ['text-type' + pokemon.tradeDetails.tradeBackground.color]: true}">
-                  {{ pokemon.tradeDetails.tradeBackground.shorthandName }}
+                   v-if="pokemonInstance.tradeDetails.tradeBackground.shorthandName"
+                   v-show="pokemonInstance.tradeDetails.tradeBackground !== ''"
+                   :class="{'mb-0': true, ['text-type' + pokemonInstance.tradeDetails.tradeBackground.color]: true}">
+                  {{ pokemonInstance.tradeDetails.tradeBackground.shorthandName }}
                 </p>
-                <p style="font-size: 14px;" v-for="tag in pokemon.tradeDetails.tags"
+                <p style="font-size: 14px;" v-for="tag in pokemonInstance.tradeDetails.tags"
                    v-show="tag.selected !== 'None' && tag.selected !=='Lucky'"
                    class="mb-0 text-capitalize">
                   {{ tag.selected }}
@@ -292,22 +291,22 @@ export default {
             </div>
 
           </div>
-          <div class="col col-md-2 draggable" v-for="pokemon in tradeCard.haveList.items">
+          <div class="col col-md-2 draggable" v-for="pokemonInstance in tradeCard.haveList.items">
             <div class="text-center border rounded-4 ">
               <div class="position-relative">
-                <image-with-details @dblclick="mode === 1 ? manageHaveRemove(pokemon) : null" :no-quantity="true"
-                                    :noPresetSize="true" :pokemon="pokemon">
-                  <pokemon-tags-off-canvas v-if="mode === 1" :pokemon="pokemon"></pokemon-tags-off-canvas>
+                <image-with-details @dblclick="mode === 1 ? manageHaveRemove(pokemonInstance) : null" :no-quantity="true"
+                                    :noPresetSize="true" :pokemon-instance="pokemonInstance">
+                  <pokemon-tags-off-canvas v-if="mode === 1" :pokemon-instance="pokemonInstance"></pokemon-tags-off-canvas>
                 </image-with-details>
               </div>
               <div class="pb-1">
                 <p style="font-size: 13px; font-weight: 500"
-                   v-if="pokemon.tradeDetails.tradeBackground.shorthandName"
-                   v-show="pokemon.tradeDetails.tradeBackground !== ''"
-                   :class="{'mb-0': true, ['text-type' + pokemon.tradeDetails.tradeBackground.color]: true}">
-                  {{ pokemon.tradeDetails.tradeBackground.shorthandName }}
+                   v-if="pokemonInstance.tradeDetails.tradeBackground.shorthandName"
+                   v-show="pokemonInstance.tradeDetails.tradeBackground !== ''"
+                   :class="{'mb-0': true, ['text-type' + pokemonInstance.tradeDetails.tradeBackground.color]: true}">
+                  {{ pokemonInstance.tradeDetails.tradeBackground.shorthandName }}
                 </p>
-                <p style="font-size: 14px;" v-for="tag in pokemon.tradeDetails.tags"
+                <p style="font-size: 14px;" v-for="tag in pokemonInstance.tradeDetails.tags"
                    v-show="tag.selected !== 'None' && tag.selected !=='Lucky'"
                    class="mb-0 text-capitalize">
                   {{ tag.selected }}
