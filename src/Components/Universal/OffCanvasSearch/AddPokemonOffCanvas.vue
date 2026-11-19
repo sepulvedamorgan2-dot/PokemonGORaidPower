@@ -1,6 +1,6 @@
 <script>
 
-import SearchAndDisplayOffCanvas from "@/Components/Universal/OffCanvasViews/SearchAndDisplayView.vue";
+import SearchAndDisplayOffCanvas from "@/Components/Universal/OffCanvasSearch/SearchAndDisplayView.vue";
 import OffCanvasContainer from "@/Components/Universal/OffCanvasContainer.vue";
 import AddEditView from "@/Components/Universal/OffCanvasViews/AddEditView.vue";
 import AddEditOffCanvas from "@/Components/Universal/OffCanvasViews/AddEditView.vue";

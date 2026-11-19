@@ -36,7 +36,7 @@ export default {
 </script>
 
 <template>
-  <page-tabs ref="pageTab" :tab-array="['Trade Cards', 'New Card']">
+  <page-tabs ref="pageTab" :tab-array="['My Trade Cards', 'Search All Trade Cards']">
 
     <template #pageOne>
       <vue-draggable  :delay="100" :delay-on-touch-only="true"

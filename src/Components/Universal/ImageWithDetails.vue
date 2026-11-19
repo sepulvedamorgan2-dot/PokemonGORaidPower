@@ -33,7 +33,7 @@ export default {
   <div style="user-select: none;" class="position-relative">
     <img :src="pokemonInstance?.image ? pokemonInstance.image : pokemonInstance?.pokemon?.image"
          onerror="this.remove()" :class="{'img-fluid ': true, 'horz-card-img': !noPresetSize, 'lucky': testLucky()}">
-    <p  v-if="pokemonInstance?.tradeDetails?.tradeQuantity > 1 && noQuantity" class="corner-tl-text"> {{ pokemon.tradeDetails.tradeQuantity }}x</p>
+    <p  v-if="pokemonInstance?.tradeDetails?.tradeQuantity > 1" class="corner-tl-text"> {{ pokemonInstance.tradeDetails.tradeQuantity }}x</p>
     <img v-if="pokemonInstance?.isShadow" src="@/Images/shadow.png" alt="Shadow" class="corner-bl-img">
     <img v-if="pokemonInstance?.pokemon?.image?.includes('.s.')" src="@/Images/shiny.png" alt="Shadow" class="corner-tl-img">
     <slot>

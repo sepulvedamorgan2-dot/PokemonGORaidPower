@@ -35,7 +35,7 @@ export function TradeCard(data = {}) {
         }));
     this.addHaveList = async function (pokemon) {
         if (pokemon?.tradeDetails?.tags){
-            this.haveList.add(pokemon);
+            this.haveList.addSinglePokemon(pokemon);
         } else {
             await GameDataFactory.fetchSinglePokemon(pokemon)
                 .then(fetchedPokemon => {
@@ -84,11 +84,8 @@ export function TradeCard(data = {}) {
                 }
             }
         }
-
     }
-
 }
-
 TradeCard.defaultHaveOptions = [
     new TagObject({
         title: 'Flying Capability',

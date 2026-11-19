@@ -2,7 +2,7 @@
 
 import HorizontalCard from "@/Components/Universal/OffCanvasHorizontalCards/HorizontalCard.vue";
 import FilterView from "@/Components/Universal/OffCanvasViews/FilterView.vue";
-import SearchAndDisplayView from "@/Components/Universal/OffCanvasViews/SearchAndDisplayView.vue";
+import SearchAndDisplayView from "@/Components/Universal/OffCanvasSearch/SearchAndDisplayView.vue";
 import OffCanvasContainer from "@/Components/Universal/OffCanvasContainer.vue";
 import RaidTeamCard from "@/Components/Universal/OffCanvasHorizontalCards/RaidTeamCard.vue";
 

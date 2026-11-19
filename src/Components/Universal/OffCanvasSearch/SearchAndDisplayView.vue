@@ -2,7 +2,7 @@
 
 import OffCanvasContainer from "@/Components/Universal/OffCanvasContainer.vue";
 import SearchBarContainer from "@/Components/Universal/SearchBarContainer.vue";
-import HorizontalCardContainer from "@/Components/Universal/OffCanvasHorizontalCards/HorizontalCardContainer.vue";
+import HorizontalCardContainer from "@/Components/Universal/OffCanvasSearch/HorizontalCardContainer.vue";
 
 export default {
   name: "SearchAndDisplayOffCanvas",
@@ -80,7 +80,9 @@ export default {
   <div class=" mt-2 ">
     <search-bar-container  class="px-2" @search-query="updateSearchResults" @filter-clicked="console.log('filterclicked')" :list-to-search="listToSearch"  title="Search Pokemon"></search-bar-container>
 
-    <horizontal-card-container :warning="warning" :search-query="query" :array-to-display="searchResults"  :card-style="cardStyle" :list-to-highlight="listToHighlight" :array-length="arrayLength"
+    <horizontal-card-container :warning="warning" :search-query="query" :array-to-display="searchResults"
+                               :card-style="cardStyle" :list-to-highlight="listToHighlight"
+                               :array-length="arrayLength"
                                @clicked-object="object => $emit('clickedObject', object)"
                                @clicked-object-existing="object => $emit('clickedObjectExisting', object)"
     >

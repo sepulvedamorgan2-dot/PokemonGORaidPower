@@ -19,15 +19,11 @@ export default {
   props: {
     placeHolder: {String, required: false},
     title: {String, required: false},
-    filter: {Boolean, default: false},
-    filterOffCanvas: {Boolean, default: false},
-    filterOffCanvasList: {Array, default: null},
   },
 
   watch: {
     searchQuery: {
       handler: function () {
-
         this.$emit('searchQuery', this.searchQuery);
       }
     }
@@ -45,22 +41,11 @@ export default {
 
 
       <div class="col">
-
         <label aria-label="Search Bar" class="w-100">
           <input type="text" class="form-control" id="searchBar" :placeholder="placeHolder"
                  v-model="searchQuery">
         </label>
       </div>
-      <div class="col-auto" v-if="filter">
-        <div class="btn btn-outline-secondary  w-100" type="button" id="filterButton "
-             v-on:click="$emit('filterClicked')">
-          <i class="bi bi-filter"></i>
-        </div>
-      </div>
-      <div class="col-auto" v-if="filterOffCanvas">
-        <filter-off-canvas @search-results="matches => $emit('matches', matches)" :list-to-filter="filterOffCanvasList" :search-query="searchQuery"></filter-off-canvas>
-      </div>
-
     </div>
   </div>
 

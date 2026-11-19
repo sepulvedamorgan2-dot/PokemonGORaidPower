@@ -1,6 +1,6 @@
 <script>
 import {VueDraggable} from 'vue-draggable-plus'
-import AddPokemonOffCanvas from "@/Components/Universal/OffCanvasSequences/AddPokemonOffCanvas.vue";
+import AddPokemonOffCanvas from "@/Components/Universal/OffCanvasSearch/AddPokemonOffCanvas.vue";
 import CardContainer from "@/Components/Universal/CardContainer.vue";
 import PokemonTagsOffCanvas from "@/Components/Universal/OffCanvasSequences/PokemonTagsOffCanvas.vue";
 import CollapseArea from "@/Components/TradePageComponents/CollapseArea.vue";

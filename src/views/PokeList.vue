@@ -3,7 +3,7 @@ import PokelistContainer from "@/Components/PokeListComponents/PokelistContainer
 import OffCanvasContainer from "@/Components/Universal/OffCanvasContainer.vue";
 import FilterOffCanvas from "@/Components/Universal/OffCanvasSequences/FilterOffCanvas.vue";
 import SearchBarContainer from "@/Components/Universal/SearchBarContainer.vue";
-import AddPokemonOffCanvas from "@/Components/Universal/OffCanvasSequences/AddPokemonOffCanvas.vue";
+import AddPokemonOffCanvas from "@/Components/Universal/OffCanvasSearch/AddPokemonOffCanvas.vue";
 import NavbarMain from "@/Components/Universal/NavbarMain.vue";
 
 
