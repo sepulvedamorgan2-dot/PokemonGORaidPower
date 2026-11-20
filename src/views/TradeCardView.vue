@@ -47,9 +47,11 @@
 <template>
 
   <!-- ee-->
+
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-lg-8 mt-3">
+
         <trade-page @add-trade-card="addTradeCard" :pokemon-list-api="pokemonListApi" :pokemon-list="pokemonList" :trade-card-list="tradeCardList" ></trade-page>
         <!--                <trade-card class="mb-2" :options="selectedOptions" :have-list="haveList"  :wanted-list="wantList" :pokemon-list-api="pokemonListAPI" :pokemon-list="pokemonList" :></trade-card>-->
       </div>

@@ -11,11 +11,31 @@ import SelectList from "@/Components/TradePageComponents/SelectList.vue";
 import {TradeCard} from "@/models/TradeCard.js";
 import {shallowRef} from "vue";
 import {PokemonList} from "@/models/PokemonList.js";
+import AddPokemonTradeOffCanvas from "@/Components/Universal/OffCanvasSearch/AddPokemonTradeOffCanvas.vue";
+import wantListCard from "@/Components/Universal/OffCanvasHorizontalCards/WantListCard.vue";
+import haveListCard from "@/Components/Universal/OffCanvasHorizontalCards/HaveListCard.vue";
+import DualSearchAndDisplay from "@/Components/Universal/OffCanvasSearch/DualSearchAndDisplay.vue";
+import SearchAndDisplayView from "@/Components/Universal/OffCanvasSearch/SearchAndDisplayView.vue";
 
 
 export default {
   name: 'TradeCard',
+  computed: {
+    SearchAndDisplayView() {
+      return SearchAndDisplayView
+    },
+    DualSearchAndDisplay() {
+      return DualSearchAndDisplay
+    },
+    haveListCard() {
+      return haveListCard
+    },
+    wantListCard() {
+      return wantListCard
+    }
+  },
   components: {
+    AddPokemonTradeOffCanvas,
     VueDraggable,
     AddPokemonOffCanvas,
     CardContainer,
@@ -87,6 +107,7 @@ export default {
     }
     ,
     addWantedList(pokemon) {
+      console.log(pokemon)
       if (pokemon[1]) {
         console.log(pokemon);
         this.tradeCard.removeFromWantedList(pokemon[0])
@@ -206,13 +227,21 @@ export default {
             <div
                 class="d-flex horz-card-img img-fluid w-100 text-center align-items-center   justify-content-center border rounded-4 ">
 
-              <add-pokemon-off-canvas @clicked-object-existing="addWantedList"
-                                      button="pencil"
-                                      v-on:click="returnNewPokemon()"
-                                      :pokemon-list-from-api="pokemonListApi"
-                                      :list-to-highlight="tradeCard.wantList.items"
-                                      card-style="WantList">
-              </add-pokemon-off-canvas>
+<!--              <add-pokemon-off-canvas @clicked-object-existing="addWantedList"-->
+<!--                                      button="pencil"-->
+<!--                                      v-on:click="returnNewPokemon()"-->
+<!--                                      :pokemon-list-from-api="pokemonListApi"-->
+<!--                                      :list-to-highlight="tradeCard.wantList.items"-->
+<!--                                      card-style="WantList">-->
+<!--              </add-pokemon-off-canvas>-->
+              <add-pokemon-trade-off-canvas
+                  @add-pokemon="addWantedList"
+                  :card-style="wantListCard"
+                  :pokemon-list-to-search="pokemonListApi"
+                  :list-to-highlight="tradeCard.wantList.items"
+                  :card-container-style="SearchAndDisplayView"
+                  :seccondary-pokemon-list-to-search="pokemonListApi"
+              ></add-pokemon-trade-off-canvas>
 
             </div>
             <div class="pb-1">
@@ -277,14 +306,22 @@ export default {
                 class="d-flex horz-card-img img-fluid w-100 text-center align-items-center   justify-content-center border rounded-4 ">
 
               <!-- AFTER (Fixed) -->
-              <add-pokemon-off-canvas @clicked-object-existing="addHaveList"
-                                      button="pencil"
-                                      :warning="warning"
-                                      v-on:click="returnNewPokemon()"
-                                      :pokemon-list-from-api="pokemonListFiltered.items"
-                                      :list-to-highlight="tradeCard.haveList.items"
-                                      card-style="HaveList">
-              </add-pokemon-off-canvas>
+<!--              <add-pokemon-off-canvas @clicked-object-existing="addHaveList"-->
+<!--                                      button="pencil"-->
+<!--                                      :warning="warning"-->
+<!--                                      v-on:click="returnNewPokemon()"-->
+<!--                                      :pokemon-list-from-api="pokemonListFiltered.items"-->
+<!--                                      :list-to-highlight="tradeCard.haveList.items"-->
+<!--                                      card-style="HaveList">-->
+<!--              </add-pokemon-off-canvas>-->
+              <add-pokemon-trade-off-canvas
+                  @add-pokemon="addHaveList"
+                  :card-style="haveListCard"
+                  :pokemon-list-to-search="pokemonList.items"
+                  :list-to-highlight="tradeCard.haveList.items"
+                  :card-container-style="DualSearchAndDisplay"
+                  :secondary-pokemon-list-to-search="pokemonListApi"
+              ></add-pokemon-trade-off-canvas>
 
             </div>
             <div class="pb-1">

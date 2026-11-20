@@ -123,7 +123,8 @@ export default class GameDataFactory {
      * @param pokemonInstance The simple Pokemon object containing the pokemonId, image, and name.
      * @returns {Promise<PokemonInstance>}
      */
-    static async fetchSinglePokemon(pokemonInstance){
+    static async fetchSinglePokemon(pokemonInstance) {
+        console.log(pokemonInstance);
         try {
             if (pokemonInstance?.pokemon?.pokemonId) {
                 return fetch(`https://pokemon-go-api.github.io/pokemon-go-api/api/pokedex/id/${pokemonInstance.pokemon.pokemonId}.json`)

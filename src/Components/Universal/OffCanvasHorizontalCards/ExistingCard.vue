@@ -16,7 +16,7 @@ export default {
 </script>
 
 <template>
-  <!--i need to be shot batmans parents style for this bit of code-->
+
   <div class="row g-0 border-bottom">
     <div class="col-auto ">
       <image-with-details :pokemon-instance="pokemonInstance"></image-with-details>
@@ -39,7 +39,7 @@ export default {
         <i v-if="pokemonInstance.chargedMoveTwo"
            :class="pokemonInstance.getChargedClass('text-bg', 2, `rounded mb-1 ms-1   fs-tinyer p-1 bi bi-lightning-charge-fill`)"></i>
         <i type="button"
-           class="bi bi-plus ms-2 fs-5 ms-sm-4" v-on:click="$emit('clickedObject', pokemonInstance)"></i>
+           class="bi bi-plus ms-2 fs-5 ms-sm-4" v-on:click="$emit('clickedPokemon', pokemonInstance)"></i>
 
       </div>
     </div>

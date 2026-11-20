@@ -51,18 +51,17 @@ export function TradeCard(data = {}) {
 
     }
     this.addWantedList = async function(pokemon) {
-        await GameDataFactory.fetchSinglePokemon(pokemon)
-            .then(fetchedPokemon => {
-            if (fetchedPokemon) {
-                this.wantList.addSinglePokemon(fetchedPokemon);
-            } else {
-                console.error('Failed to fetch pokemon for want list:', pokemon);
-            }
-        });
+
+                this.wantList.addSinglePokemon(pokemon);
+
 
     }
     this.removeFromHaveList = function (pokemon) {
-        this.haveList.remove(pokemon.id);
+        if (pokemon?.id) {
+            this.haveList.remove(pokemon.id);
+        } else {
+            this.haveList.removeByUID(pokemon?.pokemon?.uniquePokemonId);
+        }
     }
     this.removeFromWantedList = function (pokemon) {
         this.wantList.removeByImage(pokemon.pokemon.image);

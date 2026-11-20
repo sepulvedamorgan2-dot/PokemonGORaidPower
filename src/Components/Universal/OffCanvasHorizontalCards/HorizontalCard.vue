@@ -6,7 +6,6 @@ import {PokemonInstance} from "@/models/PokemonInstance.js";
 export default {
   name: "HorizontalCard",
   components: {
-
     AddEditOffCanvas: AddEditOffCanvas,
     ImageWithDetails: ImageWithDetails,
   },
@@ -17,12 +16,16 @@ export default {
 
   props: {
     pokemonInstance: {PokemonInstance, required: true},
-    cardStyle: {String, required: true},
+
     pokemonTeam: {Object, required: false},
     listToHighlight: {Array, required: false},
   },
 
-  methods: {},
+  methods: {
+    handleClick() {
+      this.$emit('clickedPokemon', this.pokemonInstance);
+    },
+  },
 
 }
 </script>
@@ -39,7 +42,7 @@ export default {
       </div>
     </div>
     <div class="col-3 pe-2">
-      <button v-on:click="$emit('clickedObject', pokemonInstance)" class=" btn btn-sm btn-primary w-100 searchedPokemonBtn">
+      <button v-on:click="handleClick" class=" btn btn-sm btn-primary w-100 searchedPokemonBtn">
         Select
       </button>
     </div>

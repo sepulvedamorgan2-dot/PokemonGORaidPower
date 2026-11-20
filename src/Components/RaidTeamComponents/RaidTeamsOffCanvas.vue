@@ -5,10 +5,19 @@ import FilterView from "@/Components/Universal/OffCanvasViews/FilterView.vue";
 import SearchAndDisplayView from "@/Components/Universal/OffCanvasSearch/SearchAndDisplayView.vue";
 import OffCanvasContainer from "@/Components/Universal/OffCanvasContainer.vue";
 import RaidTeamCard from "@/Components/Universal/OffCanvasHorizontalCards/RaidTeamCard.vue";
+import ExistingCard from "@/Components/Universal/OffCanvasHorizontalCards/ExistingCard.vue";
 
 
 export default {
   name: "RaidTeamsOffCanvas",
+  computed: {
+    ExistingCard() {
+      return ExistingCard
+    },
+    RaidTeamCard() {
+      return RaidTeamCard
+    }
+  },
   components: {
     RaidTeamCard,
     OffCanvasContainer,
@@ -107,9 +116,11 @@ export default {
 
 
         <template  v-slot:pageTwo>
-          <search-and-display-view card-style="Existing"   :filter-object=filterObject @filter-clicked="$refs.RaidTeamOffCanvas.pageNumber++"
-                                   @clicked-object="pokemonTeam.addToTeam($event.id); returnNewPokemon()" :list-to-search="onlyNewPokemon"
-                                   title="Search Your Pokemon"></search-and-display-view>
+          <search-and-display-view :card-style="ExistingCard"
+                                   @clicked-pokemon="pokemonTeam.addToTeam($event.id); returnNewPokemon()"
+                                   :list-to-search="onlyNewPokemon"
+                                   :list-to-highlight="pokemonTeam"
+                                  ></search-and-display-view>
         </template>
 
         <template v-slot:pageThree>

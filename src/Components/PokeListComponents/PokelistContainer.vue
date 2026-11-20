@@ -1,14 +1,15 @@
 <script>
 
 import PokemonlistItem from "@/Components/PokeListComponents/PokemonlistItem.vue";
-import SearchBarContainer from "@/Components/Universal/SearchBarContainer.vue";
+import SearchBar from "@/Components/Universal/SearchBar.vue";
 import {VueDraggable} from "vue-draggable-plus";
+import {PokemonList} from "@/models/PokemonList.js";
 export default {
   name: "PokelistContainer",
   components: {
     VueDraggable,
     PokemonlistItem,
-    SearchBarContainer
+    SearchBarContainer: SearchBar
   },
 
   data: function () {
@@ -21,7 +22,7 @@ export default {
 
   props: {
     searchedAndFilteredArray: Object,
-    fullPokemonList: Array,
+    fullPokemonList: PokemonList,
   },
 
   methods: {
@@ -29,7 +30,9 @@ export default {
       this.matches = matches;
     },
   },
-
+  mounted(){
+    this.updateMatches(this.fullPokemonList.items);
+  },
 
   watch: {
     fullPokemonList: {

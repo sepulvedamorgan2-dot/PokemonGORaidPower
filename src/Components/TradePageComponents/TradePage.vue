@@ -36,9 +36,18 @@ export default {
 </script>
 
 <template>
-  <page-tabs ref="pageTab" :tab-array="['My Trade Cards', 'Search All Trade Cards']">
+
+  <page-tabs ref="pageTab" >
 
     <template #pageOne>
+      <div @click="$refs.pageTab.tabNumber = 2" class="position-fixed bottom-0 end-0 m-4" style="z-index: 1030;">
+        <button
+            type="button"
+            class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center shadow-lg"
+            style="width: 56px; height: 56px;">
+          <i class="bi bi-plus-lg fs-4"></i>
+        </button>
+      </div>
       <vue-draggable  :delay="100" :delay-on-touch-only="true"
                      :force-fallback="true" draggable=".draggable" v-model="tradeCardList.items"  class="row  g-2">
         <div v-on:click="$refs.pageTab.tabNumber = 3; tradeCardToEdit = tradeCard "
@@ -77,10 +86,11 @@ export default {
     </template>
     <template #pageTwo>
       <button class="btn btn-primary rounded-pill mb-2" v-on:click="$refs.pageTab.tabNumber = 1">Back</button>
-
+    <keep-alive>
       <trade-card
           @add-trade-card="tradeCardList.add($event); tradeCardToEdit = tradeCardList.items[tradeCardList.items.length - 1]; $refs.pageTab.tabNumber = 3; console.log('clicked page')"
           :pokemon-list="pokemonList" :pokemon-list-api="pokemonListApi" :is-new=true></trade-card>
+    </keep-alive>
     </template>
     <template #pageThree>
       <div v-if="tradeCardToEdit">

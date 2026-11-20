@@ -1,7 +1,6 @@
 <script>
 
 import PokemonImageName from "@/Components/Universal/PokemonImageName.vue";
-import GameDataFactory from "@/models/factories/GameDataFactory.js";
 import {PokemonInstance} from "@/models/PokemonInstance.js";
 
 
@@ -9,16 +8,11 @@ export default {
   name: "AddEditOffCanvas",
   components: {
     PokemonImageName,
-
-
   },
 
   data: function () {
     return {
-
       quantity: 1,
-
-
     }
   },
 
@@ -26,14 +20,9 @@ export default {
     pokemonInstance: {type: PokemonInstance, required: true},
     isNew: {type: Boolean, default: false},
   },
-  // async mounted() {
-  //   await this.initPokemon();
-  // },
-  methods: {
 
-    openOffCanvas() {
-      this.bsOffCanvas.show();
-    }, updateCpNumber(number){
+  methods: {
+     updateCpNumber(number){
       this.pokemonInstance.cp = Math.round(number.target.value * this.pokemonInstance.pokemon.maxCp / 100);
     }, submitPokemon(pokemon, quantity) {
       if(!pokemon.cp){
@@ -136,7 +125,7 @@ export default {
           </label>
         </div>
         <!-- done button -->
-        <div v-if="isNew" class="row g-2 mt-auto">
+        <div v-if="pokemonInstance.id === null" class="row g-2 mt-auto">
           <div class="col-12">
             <button type="submit"
                     class="btn btn-primary mb-2 py-2 fs-4 w-100">Add Pokemon

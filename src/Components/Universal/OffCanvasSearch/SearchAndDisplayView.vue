@@ -1,14 +1,14 @@
 <script>
 
 import OffCanvasContainer from "@/Components/Universal/OffCanvasContainer.vue";
-import SearchBarContainer from "@/Components/Universal/SearchBarContainer.vue";
+import SearchBar from "@/Components/Universal/SearchBar.vue";
 import HorizontalCardContainer from "@/Components/Universal/OffCanvasSearch/HorizontalCardContainer.vue";
 
 export default {
-  name: "SearchAndDisplayOffCanvas",
+  name: "SearchAndDisplayView",
   components: {
     OffCanvasContainer,
-    SearchBarContainer,
+    SearchBar,
     HorizontalCardContainer,
   },
 
@@ -16,78 +16,60 @@ export default {
     return {
       searchResults: [],
       query: '',
-      resultsLength: 50,
 
     }
   },
 
   props: {
-    listToSearch: Array,
-    filter: {Boolean, default: true},
-    arrayLength: {type: Number, default: 5},
-    cardStyle: {type: String, required: true},
-    warning: { type: Boolean, default: false },
-    listToHighlight: { type: Array, default: [] },
+    listToSearch: {type: Array, required: true},
+    cardStyle: {type: Object, required: true},
+    cardContainerStyle: {type: Object, default: HorizontalCardContainer},
+    listToHighlight: {type: Array, default: []},
+  },
+  computed: {
+    HorizontalCardContainer() {
+      return HorizontalCardContainer
+    },
+    getResults() {
+
+        let resultObjects = [];
+        for (let pokemonQueried of this.listToSearch) {
+          if (resultObjects.length > 50) {
+            return resultObjects;
+          }
+
+          if (pokemonQueried.pokemon.name.includes(this.query.toLowerCase()) || this.query === "") {
+            resultObjects.push(pokemonQueried);
+          }
+        }
+        return resultObjects;
+      
+    },
+
   },
 
   methods: {
-    updateSearchResults(query) {
-      this.query = query;
-      let resultObjects = [];
-      for (let pokemonQueried of this.listToSearch) {
-        if(query.length < 4){
-          if (resultObjects.length >= this.resultsLength) {
 
-            break;
-
-          }}
-
-        try{
-          if (pokemonQueried.includes(query.toLowerCase())) {
-            let pokemonObject = {};
-            pokemonObject.pokemon.name = pokemonQueried;
-            pokemonObject.pokemon.pokemonId = this.listToSearch.indexOf(pokemonQueried) + 1;
-            resultObjects.push(pokemonObject);
-          } } catch(e) {
-
-          if (pokemonQueried.pokemon.name.includes(query.toLowerCase()) && pokemonQueried.pokemon.name.includes("-mega") === false) {
-
-            resultObjects.push(pokemonQueried);
-          }}
-      }
-
-      this.searchResults = resultObjects;
-
-
-    }
-    ,
   },
-  watch: {
-    listToSearch: {
-      handler: function () {
-        this.updateSearchResults(this.query);
-      }
-    }, deep: true,
-  },
-  mounted() {
-    this.updateSearchResults('');
-  },
+  mounted(){
+
+  }
+
 
 }
 </script>
 
 <template>
   <div class=" mt-2 ">
-    <search-bar-container  class="px-2" @search-query="updateSearchResults" @filter-clicked="console.log('filterclicked')" :list-to-search="listToSearch"  title="Search Pokemon"></search-bar-container>
+    <search-bar  class="px-2" @search-query="query = $event" place-holder="Ex: Bidoof" title="Search Pokemon"></search-bar>
+    <component :is="cardContainerStyle"
+               :array-to-display="getResults"
+               :card-style="cardStyle"
+               :list-to-highlight="listToHighlight"
+               @clicked-pokemon="$emit('clickedPokemon', $event); console.log($event)">
+    </component>
 
-    <horizontal-card-container :warning="warning" :search-query="query" :array-to-display="searchResults"
-                               :card-style="cardStyle" :list-to-highlight="listToHighlight"
-                               :array-length="arrayLength"
-                               @clicked-object="object => $emit('clickedObject', object)"
-                               @clicked-object-existing="object => $emit('clickedObjectExisting', object)"
-    >
 
-    </horizontal-card-container>
   </div>
 </template>
 

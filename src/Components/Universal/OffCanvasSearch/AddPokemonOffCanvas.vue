@@ -26,7 +26,6 @@ export default {
   },
 
   props: {
-    cardStyle: {String, required: true},
     pokemonListFromApi: {type: Array, required: true},
     button: {type: String, required: true},
     warning: {type: Boolean, default: false},
@@ -34,24 +33,17 @@ export default {
   },
 
   methods: {
+    // handles adding pokemon to pokelist click
     async handleClick(pokemonInstance) {
-
       console.log(pokemonInstance);
-
       await this.initPokemon(pokemonInstance)
           .then
           ((pokemonInstance) => {
-
                 this.pokemonToAdd = pokemonInstance;
-
                 console.log(pokemonInstance);
-
                 this.$refs.AddPokemonOffCanvas.pageNumber++
-
                 this.titleArray = [
-
                   "Add Pokemon",
-
                   this.pokemonToAdd?.pokemon.name]
 
               }
@@ -83,7 +75,6 @@ export default {
 <template>
   <div v-if="button==='plus'" class="position-fixed bottom-0 end-0 m-4" style="z-index: 1030;">
     <button
-        v-on:click="console.log('eee');$refs.AddPokemonOffCanvas.openOffCanvas(); $refs.AddPokemonOffCanvas.pageNumber = 1"
         type="button" class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center shadow-lg"
         style="width: 56px; height: 56px;">
       <i class="bi bi-plus-lg fs-4"></i>

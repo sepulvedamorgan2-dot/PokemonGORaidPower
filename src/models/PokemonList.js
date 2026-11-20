@@ -52,6 +52,9 @@ export function PokemonList(initialList = []) {
     this.removeByImage = function(image) {
         this.items = this.items.filter(pokemon => pokemon.pokemon.image !== image);
     }
+    this.removeByUID = function(uid) {
+        this.items = this.items.filter(pokemon => pokemon.pokemon.uniquePokemonId !== uid);
+    }
 
     this.findPokemonById = function(id) {
         return this.items.find(pokemon => pokemon.id === id) ?? false;

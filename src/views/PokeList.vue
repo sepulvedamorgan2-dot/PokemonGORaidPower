@@ -2,20 +2,22 @@
 import PokelistContainer from "@/Components/PokeListComponents/PokelistContainer.vue";
 import OffCanvasContainer from "@/Components/Universal/OffCanvasContainer.vue";
 import FilterOffCanvas from "@/Components/Universal/OffCanvasSequences/FilterOffCanvas.vue";
-import SearchBarContainer from "@/Components/Universal/SearchBarContainer.vue";
-import AddPokemonOffCanvas from "@/Components/Universal/OffCanvasSearch/AddPokemonOffCanvas.vue";
+import SearchBar from "@/Components/Universal/SearchBar.vue";
+
 import NavbarMain from "@/Components/Universal/NavbarMain.vue";
+import AddPokemonOffCanavss from "@/Components/Universal/OffCanvasSearch/AddPokemonOffCanavss.vue";
+
 
 
 export default {
 
   components: {
-        PokelistContainer,
-        OffCanvasContainer,
-        NavbarMain,
-        FilterOffCanvas,
-        SearchBarContainer,
-        AddPokemonOffCanvas,
+    PokelistContainer,
+    OffCanvasContainer,
+    NavbarMain,
+    FilterOffCanvas,
+    SearchBarContainer: SearchBar,
+    AddPokemonOffCanavss
 
   },
   props: {
@@ -32,11 +34,11 @@ export default {
   },
 
   methods: {
-    updateMatches(newList){
+    updateMatches(newList) {
       this.matches = newList;
     },
 
-        addPokemon(activeItem) {
+    addPokemon(activeItem) {
       this.pokemon = activeItem[0];
       this.qty = activeItem[1];
 
@@ -50,8 +52,7 @@ export default {
 
 
     }
-  ,
-
+    ,
 
 
   },
@@ -67,10 +68,10 @@ export default {
 <template>
   <div>
 
-  <add-pokemon-off-canvas button="plus" @add-pokemon="pokemonList.addAnyAmountOfPokemon($event)" :filter=false  :pokemon-list-from-api="pokemonListApi" array-length=5 card-style="Horizontal" > </add-pokemon-off-canvas>
+    <add-pokemon-off-canavss :pokemon-list-to-search="pokemonListApi" @add-pokemon="pokemonList.addAnyAmountOfPokemon($event)"></add-pokemon-off-canavss>
 
-  <pokelist-container :searched-and-filtered-array="matches" :full-pokemon-list="pokemonList"
-                      ref="pokelistContainer"></pokelist-container>
+    <pokelist-container :searched-and-filtered-array="matches" :full-pokemon-list="pokemonList"
+                        ref="pokelistContainer"></pokelist-container>
   </div>
 
 </template>

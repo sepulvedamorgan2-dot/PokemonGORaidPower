@@ -4,7 +4,7 @@ import ImageWithDetails from "@/Components/Universal/ImageWithDetails.vue";
 import HorizontalCard from "@/Components/Universal/OffCanvasHorizontalCards/HorizontalCard.vue";
 
 export default {
-  name: "ImageOnlyCard",
+  name: "HaveListCard",
   extends: HorizontalCard,
   components: {
     AddEditOffCanvas: AddEditOffCanvas,
@@ -20,7 +20,7 @@ export default {
   <div
        :class="{ 'col-auto position-relative' : true, 'bg-light' : listToHighlight && listToHighlight.some((p) => p.id === pokemonInstance.id)}">
     <image-with-details
-        v-on:click="listToHighlight && listToHighlight.some((p) => p.id === pokemonInstance.id) ? $emit('clickedObjectExisting', [pokemonInstance, true]) : $emit('clickedObjectExisting', [pokemonInstance, false])"
+        v-on:click="listToHighlight && listToHighlight.some((p) => p.id === pokemonInstance.id) ? $emit('clickedPokemon', [pokemonInstance, true]) : $emit('clickedPokemon', [pokemonInstance, false])"
         :pokemon-instance="pokemonInstance"></image-with-details>
   </div>
 </template>

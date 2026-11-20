@@ -16,7 +16,7 @@ export default {
 </script>
 
 <template>
-  <div class="row g-0 border-bottom">
+  <div v-if="pokemonInstance && listToHighlight" class="row g-0 border-bottom">
     <div class="col-auto">
       <image-with-details :pokemon-instance="pokemonInstance"></image-with-details>
     </div>
@@ -26,8 +26,8 @@ export default {
         </p>
 
         <div class="d-flex mt-0">
-          <p class="me-2 fs-6 mb-0">RP:{{ pokemonTeam.updateIfMega(pokemonInstance) }}</p>
-          <p class="fs-6 mb-0">CP:{{ pokemonTeam.updateIfMega(pokemonInstance) }}</p>
+          <p class="me-2 fs-6 mb-0">RP:{{ listToHighlight.updateIfMega(pokemonInstance) }}</p>
+          <p class="fs-6 mb-0">CP:{{ listToHighlight.updateIfMega(pokemonInstance) }}</p>
 
         </div>
 
@@ -46,7 +46,7 @@ export default {
            class="bi bi-pencil ms-2 ms-sm-4"></i>
       </div>
     </div>
-    <div class="collapse" :data-bs-parent="'#'+pokemonTeam.type" :id="pokemonInstance.id">
+    <div class="collapse" :data-bs-parent="'#'+listToHighlight.type" :id="pokemonInstance.id">
       <div class="card border-0 card-body py-2 pt-0">
         <div class="row g-1">
 
