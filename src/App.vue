@@ -5,7 +5,7 @@ import {shallowRef} from "vue"
 import {PokemonList} from "@/models/PokemonList.js"
 import {TradeCardList} from "@/models/TradeCardList.js";
 import DataFactory from "@/models/factories/DataFactory.js";
-import GameDataFactory from "@/models/factories/GameDataFactory.js";
+import GameDataApi from "@/models/factories/GameDataApi.js";
 
 export default {
   name: "App",
@@ -22,9 +22,9 @@ export default {
     }
   },
   mounted: async function () {
-    this.pokemonListAPI = await GameDataFactory.fetchPokemonListApi();
-    this.pokemonList = DataFactory.fetchPokemonList();
-    this.pokemonTeamList = DataFactory.fetchPokemonTeamList(this.pokemonList);
+    this.pokemonListAPI = await GameDataApi.fetchPokemonListApi();
+    // this.pokemonList = DataFactory.fetchPokemonList();
+    // this.pokemonTeamList = DataFactory.fetchPokemonTeamList(this.pokemonList);
     this.tradeCardList = DataFactory.fetchTradeCardList()
 
   },
@@ -33,7 +33,7 @@ export default {
     pokemonList: {
       handler: function () {
         DataFactory.savePokemonList(this.pokemonList)
-        GameDataFactory.fetchSinglePokemon({
+        GameDataApi.fetchSinglePokemon({
           pokemonId: 1,
           image: `https://raw.githubusercontent.com/pokemon-go-api/assets/main/Pokemon/pm1.cJAN_2020_NOEVOLVE.s.icon.png`,
           name: 'Bulbasaur',

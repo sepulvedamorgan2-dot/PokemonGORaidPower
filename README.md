@@ -46,16 +46,16 @@
 
 ## [6.5.8 (again... )(Nov 7th, 2026)]
 ### Changed
-- Updated `GameDataFactory`'s  `fetchAllPokemon` to return only 3 properties for each pokemon, massive performance improvements from the reducition.
+- Updated `GameDataApi`'s  `fetchAllPokemon` to return only 3 properties for each pokemon, massive performance improvements from the reducition.
 - Changed `AddPokemonOffCanvas` and `TradeCard` components to utilize the new `fetchSinglePokemon` method to fetch a single pokemon's full game data.
 - Changed `ImageWithDetails` and other components to account for missing properties in the new `fetchAllPokemon` method
 
 ### Added
-- Added `fetchSinglePokemon` method to `GameDataFactory` to fetch a single pokemon's full game data, and return a hydrated `Pokemon` object
+- Added `fetchSinglePokemon` method to `GameDataApi` to fetch a single pokemon's full game data, and return a hydrated `Pokemon` object
 
 ## [6.5.8(Nov 7th, 2026)]
 ### Added
-- Moved `helper.js` logic to new `GameDataFactory` factory.
+- Moved `helper.js` logic to new `GameDataApi` factory.
 
 ## [6.5.7.1 & 6.5.7.2 (Nov 7th, 2026)]
 ### Removed

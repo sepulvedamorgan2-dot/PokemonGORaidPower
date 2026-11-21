@@ -2,6 +2,7 @@
 
 import PokemonImageName from "@/Components/Universal/PokemonImageName.vue";
 import {PokemonInstance} from "@/models/PokemonInstance.js";
+import {tagOptions} from "@/models/TradeDetails.js";
 
 export default {
   name: "TagsOffCanvas",
@@ -12,11 +13,7 @@ export default {
   },
   data: function () {
     return {
-      tag: {
-        text: 'Size',
-        Options: ['XXL', 'None', 'XXS'],
-        selected: 'XXL'
-      },
+      tagOptions: [...tagOptions],
 
     }
   },
@@ -30,15 +27,15 @@ export default {
     getClass(type, otherClasses) {
       return ` type${type} ${otherClasses}`;
     },
-    specialMoves() {
 
-    }
 
 
   },
   mounted() {
-    this.pokemonInstance.tradeDetails.addMoveTag(this.pokemonInstance)
-
+    const indexOfEliteTmTag = (this.tagOptions.findIndex(tag => tag.key === 'eliteTmMoves'));
+    console.log(indexOfEliteTmTag);
+    this.tagOptions[indexOfEliteTmTag].optionsArray = [...this.pokemonInstance.getEliteTmMoves()];
+    console.log(this.tagOptions);
   },
 
 }
@@ -112,17 +109,17 @@ export default {
     </div>
     <!--                delete button-->
 
-    <div class="px-3 d-flex flex-column w-100" v-for="tag in pokemonInstance.tradeDetails.tags" :key="tag.title">
+    <div class="px-3 d-flex flex-column w-100" v-for="tag in tagOptions" :key="tag.key">
       <div class="mt-2" v-if="tag.optionsArray.length > 1">
         <h5>{{ tag.title }}</h5>
 
         <div class="d-flex flex-wrap gap-1" v-if="tag.optionsArray.length > 1">
           <div class="col-auto" v-for="option in tag.optionsArray" :key="option">
 
-            <input v-model="tag.selected" :value="option" type="radio" class="text-capitalize btn-check"
+            <input v-model="pokemonInstance.tradeDetails[tag.key]" :value="option" type="radio" class="text-capitalize btn-check"
                    :name="pokemonInstance.pokemon.image + tag.title"
                    :id="pokemonInstance.pokemon.image + tag.title+option" autocomplete="off"
-                   :checked="tag.selected === option">
+                   :checked="pokemonInstance.tradeDetails[tag.key] === option">
             <label class="btn rounded-pill btn-outline-success text-capitalize"
                    :for="pokemonInstance.pokemon.image + tag.title+option">{{ option }}</label>
 

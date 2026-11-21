@@ -1,5 +1,5 @@
 import { Pokemon } from "./Pokemon.js";
-import { TradeDetails} from "./TradeDetails.js";
+
 
 /**
  * Represents a Pokémon with its basic information, details, and trade details.
@@ -15,9 +15,39 @@ export function PokemonInstance(data = {}) {
     this.pokemon = data.pokemon
         ? new Pokemon(data.pokemon)
         : new Pokemon();
-    this.tradeDetails = data.tradeDetails
-        ? new TradeDetails(data.tradeDetails)
-        : new TradeDetails();
+    // this.tradeDetails = data.tradeDetails
+    //     ? new TradeDetails(data.tradeDetails)
+    //     : new TradeDetails();
+    this.tradeDetails = {
+        tradeQuantity: data.tradeDetails?.tradeQuantity ?? 1,
+        tradeBackground: data.tradeDetails?.tradeBackground ?? 'None',
+        size: data.tradeDetails?.size ?? 'None',
+        lucky: data.tradeDetails?.lucky ?? 'None',
+        level: data.tradeDetails?.level ?? 'None',
+        priority: data.tradeDetails?.priority ?? 'None',
+        registered: data.tradeDetails?.registered ?? 'None',
+        multiAccount: data.tradeDetails?.multiAccount ?? 'None',
+        pokeball: data.tradeDetails?.pokeball ?? 'None',
+        gender: data.tradeDetails?.gender ?? 'None',
+        eliteTmMoves: data.tradeDetails?.eliteTmMoves ?? 'None'
+    };
+
+    this.getEliteTmMoves = function () {
+        const moves = ['None']
+
+        if (this.pokemon.specialChargedMoves.length > 0) {
+            for (const move of Object.values(this.pokemon.specialChargedMoves)) {
+                moves.push(move.name);
+            }
+        }
+        if (this.pokemon.specialFastMoves.length > 0) {
+            for (const move of Object.values(this.pokemon.specialFastMoves)) {
+                moves.push(move.name);
+            }
+        }
+        return moves;
+
+    }
 
     /**
      * Returns a string representing the CSS class for the Pokémon's fast move type.

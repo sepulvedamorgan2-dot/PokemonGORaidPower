@@ -4,7 +4,7 @@ import SearchAndDisplayOffCanvas from "@/Components/Universal/OffCanvasSearch/Se
 import OffCanvasContainer from "@/Components/Universal/OffCanvasContainer.vue";
 import AddEditView from "@/Components/Universal/OffCanvasViews/AddEditView.vue";
 import AddEditOffCanvas from "@/Components/Universal/OffCanvasViews/AddEditView.vue";
-import GameDataFactory from "@/models/factories/GameDataFactory.js";
+import GameDataApi from "@/models/factories/GameDataApi.js";
 
 export default {
   name: "AddPokemonOffCanvas",
@@ -53,8 +53,8 @@ export default {
       if (this.pokemon?.pokemon) {
         return this.pokemon;
       } else {
-        console.log(await GameDataFactory.fetchSinglePokemon(pokemonInstance))
-        return GameDataFactory.fetchSinglePokemon(pokemonInstance);
+        console.log(await GameDataApi.fetchSinglePokemon(pokemonInstance))
+        return GameDataApi.fetchSinglePokemon(pokemonInstance);
       }}
     },
   watch: {

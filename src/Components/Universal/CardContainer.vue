@@ -17,13 +17,13 @@ export default {
   <div class="card ">
     <div class="card-body p-2  p-sm-2 p-md-2">
       <div v-if="cardTitle || customTitle" class="row p-2 py-0  mb-1">
-        <div class="col-10 ps-2 ps-sm-2">
+        <div class="col-10 ps-2 ps-sm-1">
           <div class="ms-0 ms-sm-1">
             <div v-if="!customTitle">
-              <h4 class="fs-3 fw-bold pt-2 mb-0 text-capitalize text-start pb-0">
+              <h4 class="fs-3 fw-bold  mb-0 text-capitalize text-start pb-0">
                 {{ cardTitle }}</h4>
             </div>
-            <div v-if="customTitle">
+            <div class="d-flex" v-if="customTitle">
               <slot name="card-header-manuel">
               </slot>
             </div>

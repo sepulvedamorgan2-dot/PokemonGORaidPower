@@ -8,14 +8,16 @@ import ConfirmDeleteModal from "@/Components/Universal/Modal/ConfirmDeleteModal.
 import ImageWithDetails from "@/Components/Universal/ImageWithDetails.vue";
 import AlertWithClose from "@/Components/Universal/AlertWithClose.vue";
 import SelectList from "@/Components/TradePageComponents/SelectList.vue";
-import {TradeCard} from "@/models/TradeCard.js";
-import {shallowRef} from "vue";
+import {defaultHaveOptions, defaultWantOptions, TradeCard} from "@/models/TradeCard.js";
 import {PokemonList} from "@/models/PokemonList.js";
 import AddPokemonTradeOffCanvas from "@/Components/Universal/OffCanvasSearch/AddPokemonTradeOffCanvas.vue";
 import wantListCard from "@/Components/Universal/OffCanvasHorizontalCards/WantListCard.vue";
 import haveListCard from "@/Components/Universal/OffCanvasHorizontalCards/HaveListCard.vue";
 import DualSearchAndDisplay from "@/Components/Universal/OffCanvasSearch/DualSearchAndDisplay.vue";
 import SearchAndDisplayView from "@/Components/Universal/OffCanvasSearch/SearchAndDisplayView.vue";
+import PokemonTradeImage from "@/Components/TradePageComponents/PokemonTradeImage.vue";
+import {TAG_KEYS} from "@/models/TradeDetails.js";
+import FlyToggle from "@/Components/TradePageComponents/FlyToggle.vue";
 
 
 export default {
@@ -35,6 +37,8 @@ export default {
     }
   },
   components: {
+    FlyToggle,
+    PokemonTradeImage,
     AddPokemonTradeOffCanvas,
     VueDraggable,
     AddPokemonOffCanvas,
@@ -86,6 +90,12 @@ export default {
   ,
 
   methods: {
+    defaultHaveOptions() {
+      return defaultHaveOptions
+    },
+    defaultWantOptions() {
+      return defaultWantOptions
+    },
     manageHaveRemove(pokemon) {
       if (this.pokemonList.items.some(p => p.id === pokemon.id) && this.warning === true) {
         console.log('eeee')
@@ -93,6 +103,7 @@ export default {
       }
       this.tradeCard.removeFromHaveList(pokemon)
       this.returnNewPokemon()
+
     }
     ,
     addHaveList(pokemon) {
@@ -104,6 +115,7 @@ export default {
       }
 
       this.returnNewPokemon();
+
     }
     ,
     addWantedList(pokemon) {
@@ -167,6 +179,7 @@ export default {
     <CardContainer :custom-title="true">
       <template v-slot:card-actions>
         <div class="d-flex  py-0  mb-1">
+
           <i v-show="mode === 0" v-on:click="mode = 1; returnNewPokemon()"
              class="bi bi-pencil-fill fs-3 p-2 force-hover mt-1"></i>
           <!--            <i v-show="mode === 1" v-on:click="mode = 0" class="bi bi-eye me-3 fs-5 mt-1"></i>-->
@@ -181,15 +194,18 @@ export default {
         </div>
 
       </template>
-      <template v-slot:card-header-manuel>
-        <h4 v-if="mode===0" class="fs-1 fw-bold pt-2 mb-0 text-capitalize text-start pb-0">
+      <template  v-slot:card-header-manuel>
+        <div class="d-flex pt-1">
+        <fly-toggle :is-enabled="mode === 1" @emit-value="tradeCard.flyingOrRemote = $event" :image-array="[{src: '/Images/CanFlyImage.png', value: 'Can Fly'}, {src: '/Images/CantFlyImageTwo.png', value: 'Cant Fly'}, {src: '/Images/RemoteTradeImage.webp', value: 'Remote Trade'}]" :property="tradeCard.flyingOrRemote"></fly-toggle>
+        <h4 v-if="mode===0" class="fs-1 fw-bold pt-0 mb-0 text-capitalize text-start pb-0">
           {{ tradeCard.title }}</h4>
         <label v-if="mode===1" class="form-label">
           Trade Card Title
           <input type="text" v-if="mode===1" style="border-width: 2px !important;"
-                 class="fs-3 form-control border-primary bg-light-subtle border-0 border-bottom rounded-0"
+                 class="fs-5 form-control border-primary bg-light-subtle border-0 border-bottom rounded-0"
                  v-model="tradeCard.title">
         </label>
+        </div>
       </template>
       <template v-slot:card-body>
         <div class="row ">
@@ -212,7 +228,7 @@ export default {
         </div>
         <div class="row ps-0 pt-0 pb-0" v-if="mode === 1">
           <collapse-area teleport-id="want">
-            <select-list :options="tradeCard.wantOptions">
+            <select-list :options="defaultWantOptions()" :selected-options=" tradeCard.wantOptions">
             </select-list>
           </collapse-area>
         </div>
@@ -227,13 +243,7 @@ export default {
             <div
                 class="d-flex horz-card-img img-fluid w-100 text-center align-items-center   justify-content-center border rounded-4 ">
 
-<!--              <add-pokemon-off-canvas @clicked-object-existing="addWantedList"-->
-<!--                                      button="pencil"-->
-<!--                                      v-on:click="returnNewPokemon()"-->
-<!--                                      :pokemon-list-from-api="pokemonListApi"-->
-<!--                                      :list-to-highlight="tradeCard.wantList.items"-->
-<!--                                      card-style="WantList">-->
-<!--              </add-pokemon-off-canvas>-->
+
               <add-pokemon-trade-off-canvas
                   @add-pokemon="addWantedList"
                   :card-style="wantListCard"
@@ -248,29 +258,10 @@ export default {
             </div>
 
           </div>
-          <div class="col col-md-2 draggable" v-for="pokemonInstance in tradeCard.wantList.items">
-            <div class="text-center border rounded-4 ">
-              <div class="position-relative">
-                <image-with-details @dblclick="mode === 1 ? tradeCard.removeFromWantedList(pokemonInstance) : null" :no-quantity="true"
-                                    :noPresetSize="true" :pokemon-instance="pokemonInstance">
-                  <pokemon-tags-off-canvas v-if="mode === 1" :pokemon-instance="pokemonInstance"></pokemon-tags-off-canvas>
-                </image-with-details>
-              </div>
-              <div class="pb-1">
-                <p style="font-size: 13px; font-weight: 500"
-                   v-if="pokemonInstance.tradeDetails.tradeBackground.shorthandName"
-                   v-show="pokemonInstance.tradeDetails.tradeBackground !== ''"
-                   :class="{'mb-0': true, ['text-type' + pokemonInstance.tradeDetails.tradeBackground.color]: true}">
-                  {{ pokemonInstance.tradeDetails.tradeBackground.shorthandName }}
-                </p>
-                <p style="font-size: 14px;" v-for="tag in pokemonInstance.tradeDetails.tags"
-                   v-show="tag.selected !== 'None' && tag.selected !=='Lucky'"
-                   class="mb-0 text-capitalize">
-                  {{ tag.selected }}
-                </p>
-              </div>
-            </div>
-          </div>
+          <pokemon-trade-image :edit-mode="mode === 1" :pokemon-instance="pokemonInstance" v-for="pokemonInstance in tradeCard.wantList.items" :key="pokemonInstance.pokemon.image"
+            @dblclick="mode === 1 ? tradeCard.removeFromWantedList(pokemonInstance) : null"></pokemon-trade-image>
+
+
         </vue-draggable>
 
 
@@ -291,7 +282,7 @@ export default {
         </div>
         <div class="row ps-0 pt-0 pb-0" v-if="mode === 1">
           <collapse-area teleport-id="have">
-            <select-list :options="tradeCard.haveOptions">
+            <select-list :options="defaultHaveOptions()" :selected-options="tradeCard.haveOptions">
             </select-list>
           </collapse-area>
         </div>
@@ -328,29 +319,9 @@ export default {
             </div>
 
           </div>
-          <div class="col col-md-2 draggable" v-for="pokemonInstance in tradeCard.haveList.items">
-            <div class="text-center border rounded-4 ">
-              <div class="position-relative">
-                <image-with-details @dblclick="mode === 1 ? manageHaveRemove(pokemonInstance) : null" :no-quantity="true"
-                                    :noPresetSize="true" :pokemon-instance="pokemonInstance">
-                  <pokemon-tags-off-canvas v-if="mode === 1" :pokemon-instance="pokemonInstance"></pokemon-tags-off-canvas>
-                </image-with-details>
-              </div>
-              <div class="pb-1">
-                <p style="font-size: 13px; font-weight: 500"
-                   v-if="pokemonInstance.tradeDetails.tradeBackground.shorthandName"
-                   v-show="pokemonInstance.tradeDetails.tradeBackground !== ''"
-                   :class="{'mb-0': true, ['text-type' + pokemonInstance.tradeDetails.tradeBackground.color]: true}">
-                  {{ pokemonInstance.tradeDetails.tradeBackground.shorthandName }}
-                </p>
-                <p style="font-size: 14px;" v-for="tag in pokemonInstance.tradeDetails.tags"
-                   v-show="tag.selected !== 'None' && tag.selected !=='Lucky'"
-                   class="mb-0 text-capitalize">
-                  {{ tag.selected }}
-                </p>
-              </div>
-            </div>
-          </div>
+          <pokemon-trade-image :pokemon-instance="pokemonInstance" v-for="pokemonInstance in tradeCard.haveList.items" :key="pokemonInstance.pokemon.image"
+            @dblclick="mode === 1 ? manageHaveRemove(pokemonInstance) : null"></pokemon-trade-image>
+
         </vue-draggable>
         <button v-if="isNew" type="button" class="btn btn-primary w-100 rounded-4" @click="manageAdd(tradeCard)">Save
           New

@@ -1,6 +1,6 @@
 import { PokemonInstance } from "@/models/PokemonInstance.js";
 import { Pokemon } from "@/models/Pokemon.js";
-import { TradeDetails } from "@/models/TradeDetails.js";
+
 import { PokemonList } from "@/models/PokemonList.js";
 import { TradeCard } from "@/models/TradeCard.js";
 import { TradeCardList } from "@/models/TradeCardList.js";

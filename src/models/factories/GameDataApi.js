@@ -1,8 +1,8 @@
 import {Pokemon} from "@/models/Pokemon.js";
-import {TradeDetails} from "@/models/TradeDetails.js";
+
 import {PokemonInstance} from '@/models/PokemonInstance.js';
 let uniquePokemonId = 1;
-export default class GameDataFactory {
+export default class GameDataApi {
 
 
     static CPM_SQUARED = 0.840300 ** 2;
@@ -19,7 +19,7 @@ export default class GameDataFactory {
         const attackFactor = baseAtk + 15;
         const defenseFactor = Math.sqrt(baseDef + 15);
         const staminaFactor = Math.sqrt(baseSta + 15);
-        const calculatedCP = Math.floor((attackFactor * defenseFactor * staminaFactor * GameDataFactory.CPM_SQUARED) / 10);
+        const calculatedCP = Math.floor((attackFactor * defenseFactor * staminaFactor * GameDataApi.CPM_SQUARED) / 10);
         // CP cannot be lower than 10
         return Math.max(10, calculatedCP);
     }
@@ -93,11 +93,11 @@ export default class GameDataFactory {
     static createPokemonObject(data, pokemon) {
 
         const pokemonDetailsData = new Pokemon({
-            maxCp: GameDataFactory.calculateCP(data.stats?.attack || 0, data.stats?.defense || 0, data.stats?.stamina || 0),
-            fastMoves: GameDataFactory.simpleMoves(data.quickMoves, 1) || [],
-            chargedMoves: GameDataFactory.simpleMoves(data.cinematicMoves, 1) || [],
-            specialFastMoves: GameDataFactory.simpleMoves(data.eliteQuickMoves, 2) || [],
-            specialChargedMoves: GameDataFactory.simpleMoves(data.eliteCinematicMoves, 2) || [],
+            maxCp: GameDataApi.calculateCP(data.stats?.attack || 0, data.stats?.defense || 0, data.stats?.stamina || 0),
+            fastMoves: GameDataApi.simpleMoves(data.quickMoves, 1) || [],
+            chargedMoves: GameDataApi.simpleMoves(data.cinematicMoves, 1) || [],
+            specialFastMoves: GameDataApi.simpleMoves(data.eliteQuickMoves, 2) || [],
+            specialChargedMoves: GameDataApi.simpleMoves(data.eliteCinematicMoves, 2) || [],
             megaCapable: data.hasMegaEvolution || false,
             pokemonId: pokemon?.pokemonId,
             name: pokemon?.name,
@@ -109,7 +109,6 @@ export default class GameDataFactory {
         console.log(pokemonDetailsData);
         const pokemonToAdd = new PokemonInstance({
                 pokemon: pokemonDetailsData,
-                tradeDetails: new TradeDetails(),
             }
         )
         // console.log(pokemonToAdd)
@@ -130,7 +129,7 @@ export default class GameDataFactory {
                 return fetch(`https://pokemon-go-api.github.io/pokemon-go-api/api/pokedex/id/${pokemonInstance.pokemon.pokemonId}.json`)
                     .then(response => response.json())
                     .then(data => {
-                        const pokemonObject = GameDataFactory.createPokemonObject(data, pokemonInstance.pokemon);
+                        const pokemonObject = GameDataApi.createPokemonObject(data, pokemonInstance.pokemon);
                         console.log('Fetched single pokemon data:', pokemonObject);
                         return pokemonObject;
                     })
@@ -164,12 +163,12 @@ export default class GameDataFactory {
             for (const pokemon of data) {
                 // Version 1: Standard image
                 if (pokemon.assets?.image) {
-                    pokemonListApi.push(GameDataFactory.createSimplePokemonObject(pokemon, 1));
+                    pokemonListApi.push(GameDataApi.createSimplePokemonObject(pokemon, 1));
                 }
 
                 // Version 2: Shiny image
                 if (pokemon.assets?.shinyImage) {
-                    pokemonListApi.push(GameDataFactory.createSimplePokemonObject(pokemon, 2));
+                    pokemonListApi.push(GameDataApi.createSimplePokemonObject(pokemon, 2));
                 }
 
                 // Version 3 & 4: Asset forms
@@ -179,10 +178,10 @@ export default class GameDataFactory {
 
                         if (isFormValid) {
                             if (form.image) {
-                                pokemonListApi.push(GameDataFactory.createSimplePokemonObject(pokemon, 3, i));
+                                pokemonListApi.push(GameDataApi.createSimplePokemonObject(pokemon, 3, i));
                             }
                             if (form.shinyImage) {
-                                pokemonListApi.push(GameDataFactory.createSimplePokemonObject(pokemon, 4, i));
+                                pokemonListApi.push(GameDataApi.createSimplePokemonObject(pokemon, 4, i));
                             }
                         }
                     });

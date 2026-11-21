@@ -1,69 +1,95 @@
-import {TagObject} from "@/models/Tag.js";
+export const TAG_KEYS = Object.freeze({
+    SIZE: 'size',
+    LEVEL: 'level',
+    REGISTERED: 'registered',
+    ELITE_TM_MOVES: 'eliteTmMoves',
+    PRIORITY: 'priority',
+    LUCKY: 'lucky',
+    MULTI_ACCOUNT: 'multiAccount',
+    POKEBALL: 'pokeball',
+    GENDER: 'gender',
+    TRADE_BACKGROUND: 'tradeBackground',
+    QUANTITY: 'tradeQuantity',
+});
+//software architecture go brr
+export const DEFAULT_HIDE_VALUE = 'None';
 
-/**
- * Contains trade details for a Pokémon, including tags, trade quantity, and trade background.
- * The tags are represented as an array of TagObjects,
- * they are used to display information about the Pokémon in the trade card, not filter.
- * @param data An object containing the properties of the TradeDetails.
- * @constructor
- */
-export function TradeDetails(data = {}) {
-    this.tags = (data.tags && data.tags.length > 0)
-        ? data.tags
-        : TradeDetails.defaultTags.map(tag => new TagObject({
-            title: tag.title,
-            selected: tag.selected,
-            optionsArray: [...tag.optionsArray],
-
-        }));
-
-    this.tradeQuantity = data.tradeQuantity ?? 1;
-    this.tradeBackground = data.tradeBackground ?? '';
-
-    /**
-     * Adds a move tag to the trade details if the Pokémon has special moves.
-     * The move tag is added only if it doesn't already exist in the tags array and if the Pokémon has special charged or fast moves.
-     * @param pokemon object
-     */
-    this.addMoveTag = function (pokemon){
-            console.log(this.tags?.find(tag => tag.title === 'Size'))
-            if ((this.tags?.find(tag => tag.title === 'Elite TM Attacks'))) {
-                return;
+export const excludedTradeDetailsKeys = [TAG_KEYS.LUCKY, TAG_KEYS.TRADE_BACKGROUND, TAG_KEYS.QUANTITY];
+export function TestToExludeTag(tag ) {
+    console.log(tag);
+        if (tag.tag !== DEFAULT_HIDE_VALUE ) {
+            if (!excludedTradeDetailsKeys.includes(tag.key)) {
+                return true
             }
-            const moves = {
-                    optionsArray: ['None'],
-                    selected: 'None',
-                    title: 'Elite TM Attacks'
-                }
-            if (pokemon.pokemon.specialChargedMoves.length > 0) {
-                for (const move of Object.values(pokemon.pokemon.specialChargedMoves)) {
-                    moves.optionsArray.push(move.name);
-                }
-            }
-            if(pokemon.pokemon.specialFastMoves.length > 0){
-            for (const move of Object.values(pokemon.pokemon.specialFastMoves)) {
-                moves.optionsArray.push(move.name);
-            }
-            }
-            console.log(moves)
-            if(moves.optionsArray.length > 0) {
-                this.tags.splice(3, 0, moves);
-            }
-
         }
+
+    return false
+
+
 }
 
-/**
- * Default tags for trade details, used when no tags are provided in the data.
- * doesnt update existing pokemon tags, even when changed(maybe bad), only used when creating a new pokemon object
- * @type {TagObject[]}
- */
-TradeDetails.defaultTags = [
-    new TagObject({title: 'Size', selected: 'None', optionsArray: ['None', 'XXL', 'XXS']}),
-    new TagObject({title: 'Level', selected: 'None', optionsArray: ['None', 'Lvl 1', 'Lvl 40', 'Lvl 50']}),
-    new TagObject({title: 'Registered', selected: 'None', optionsArray: ['None', 'Unreg', 'Reg']}),
-    new TagObject({title: 'Priority', selected: 'None', optionsArray: ['None', 'Priority']}),
-    new TagObject({title: 'Multiple Accounts', selected: 'None', optionsArray: ['None', 'Alt', 'Main']}),
-    new TagObject({title: 'Pokeball Type', selected: 'None', optionsArray: ['None', 'Poke Ball', 'Ultra Ball', 'Great Ball', 'Premier Ball', 'Master Ball', 'Safari Ball']}),
-    new TagObject({title: 'Gender', selected: 'None', optionsArray: ['None', 'Male', 'Female']}),
-]
+export const tagOptions = [
+    {
+        title: 'Size',
+        key: TAG_KEYS.SIZE,
+        optionsArray: [DEFAULT_HIDE_VALUE, 'XXL', 'XXS'],
+    },
+    {
+        title: 'Level',
+        key: TAG_KEYS.LEVEL,
+        optionsArray: [DEFAULT_HIDE_VALUE, 'Lvl 1', 'Lvl 40', 'Lvl 50'],
+    },
+    {
+        title: 'Registered',
+        key: TAG_KEYS.REGISTERED,
+        optionsArray: [DEFAULT_HIDE_VALUE, 'Unreg', 'Reg'],
+    },
+    {
+        title: 'Elite TM Attacks',
+        key: TAG_KEYS.ELITE_TM_MOVES,
+        optionsArray: [DEFAULT_HIDE_VALUE],
+    },
+    {
+        title: 'Quantity',
+        key: TAG_KEYS.QUANTITY,
+        optionsArray: [DEFAULT_HIDE_VALUE],
+    },
+    {
+        title: 'Trade Background',
+        key: TAG_KEYS.TRADE_BACKGROUND,
+        optionsArray: [DEFAULT_HIDE_VALUE],
+    },
+    {
+        title: 'Priority',
+        key: TAG_KEYS.PRIORITY,
+        optionsArray: [DEFAULT_HIDE_VALUE, 'Priority'],
+    },
+    {
+        title: 'Guaranteed Lucky',
+        key: TAG_KEYS.LUCKY,
+        optionsArray: [DEFAULT_HIDE_VALUE, 'Lucky'],
+    },
+    {
+        title: 'Multiple Accounts',
+        key: TAG_KEYS.MULTI_ACCOUNT,
+        optionsArray: [DEFAULT_HIDE_VALUE, 'Alt', 'Main'],
+    },
+    {
+        title: 'Pokeball Type',
+        key: TAG_KEYS.POKEBALL,
+        optionsArray: [
+            DEFAULT_HIDE_VALUE,
+            'Poke Ball',
+            'Ultra Ball',
+            'Great Ball',
+            'Premier Ball',
+            'Master Ball',
+            'Safari Ball',
+        ],
+    },
+    {
+        title: 'Gender',
+        key: TAG_KEYS.GENDER,
+        optionsArray: [DEFAULT_HIDE_VALUE, 'Male', 'Female'],
+    },
+];

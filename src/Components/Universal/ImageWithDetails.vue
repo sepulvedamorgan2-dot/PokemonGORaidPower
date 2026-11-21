@@ -1,6 +1,6 @@
 <script>
 import {PokemonInstance} from "@/models/PokemonInstance.js";
-
+import {TAG_KEYS, DEFAULT_HIDE_VALUE} from "@/models/TradeDetails.js";
 export default {
   name: "ImageWithDetails",
   data: function () {
@@ -17,8 +17,15 @@ export default {
   methods: {
     testLucky(){
       try{
+        for (const [key, value] of Object.entries(this.pokemonInstance.tradeDetails)) {
+          if (value !== DEFAULT_HIDE_VALUE && value !== null) {
+            if (key === TAG_KEYS.LUCKY && value === 'Lucky') {
+              return true;
+            }
+          }
+        }
+        return false;
 
-        return this.pokemonInstance.tradeDetails.tags[2].selected === 'Lucky';
       } catch (error){
         return false
       }
