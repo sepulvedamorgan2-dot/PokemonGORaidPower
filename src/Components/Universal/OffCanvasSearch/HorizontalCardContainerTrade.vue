@@ -11,9 +11,10 @@ export default {
 </script>
 
 <template>
-  <div class="d-flex flex-wrap gap-0">
+  <div class="d-flex row-cols-5 flex-wrap gap-0">
 
     <component
+        class="col"
         v-if="isHaveList"
         :list-to-highlight="listToHighlight"
         v-for="pokemon in listToHighlight"
@@ -21,8 +22,9 @@ export default {
         :pokemon-instance="pokemon"
         @clicked-pokemon="$emit('clickedPokemon', $event)"
     ></component>
-    <p v-if="isHaveList">eee</p>
+    <p class="col-12" v-if="isHaveList">eee</p>
     <component
+        class="col"
         :list-to-highlight="listToHighlight"
         v-for="pokemon in arrayToDisplay"
         :is="cardStyle"

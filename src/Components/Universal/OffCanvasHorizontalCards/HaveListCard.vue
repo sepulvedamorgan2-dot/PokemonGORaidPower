@@ -20,6 +20,7 @@ export default {
   <div
        :class="{ 'col-auto position-relative' : true, 'bg-light' : listToHighlight && listToHighlight.some((p) => p.id === pokemonInstance.id)}">
     <image-with-details
+        :noPresetSize="true"
         v-on:click="listToHighlight && listToHighlight.some((p) => p.id === pokemonInstance.id) ? $emit('clickedPokemon', [pokemonInstance, true]) : $emit('clickedPokemon', [pokemonInstance, false])"
         :pokemon-instance="pokemonInstance"></image-with-details>
   </div>

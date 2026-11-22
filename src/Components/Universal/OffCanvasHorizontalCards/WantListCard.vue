@@ -18,8 +18,9 @@ export default {
 <template>
   <!--i need to be shot batmans parents style for this bit of code-->
   <div
-       :class="{ 'col-auto position-relative' : true, 'bg-light' : listToHighlight && listToHighlight.some((p) => p.pokemon?.uniquePokemonId === pokemonInstance?.pokemon?.uniquePokemonId)}">
+       :class="{ 'position-relative' : true, 'bg-light' : listToHighlight && listToHighlight.some((p) => p.pokemon?.uniquePokemonId === pokemonInstance?.pokemon?.uniquePokemonId)}">
     <image-with-details
+        :no-preset-size="true"
         v-on:click="
          listToHighlight && listToHighlight.some((p) => p.pokemon.uniquePokemonId === pokemonInstance?.pokemon?.uniquePokemonId) ?
          $emit('clickedPokemon', [pokemonInstance, true]) :

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import PokeList from "@/views/PokeList.vue";
 import RaidTeams from "@/views/RaidTeams.vue";
 import TradeCardView from "@/views/TradeCardView.vue";
+import SearchTradesView from "@/views/SearchTradesView.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -32,6 +33,17 @@ const router = createRouter({
         tradeCardList: {Type: Array, required: true},
       }
     },
+    {
+      path: '/search-trades',
+      name: 'Search Trades',
+      component: SearchTradesView,
+      props: {
+        pokeList: {Type: Array, required: true},
+        pokemonListApi: {Type: Array, required: true},
+        tradeCardList: {Type: Array, required: true},
+      }
+    },
+
   ],
 })
 

@@ -16,10 +16,9 @@ import haveListCard from "@/Components/Universal/OffCanvasHorizontalCards/HaveLi
 import DualSearchAndDisplay from "@/Components/Universal/OffCanvasSearch/DualSearchAndDisplay.vue";
 import SearchAndDisplayView from "@/Components/Universal/OffCanvasSearch/SearchAndDisplayView.vue";
 import PokemonTradeImage from "@/Components/TradePageComponents/PokemonTradeImage.vue";
-import {TAG_KEYS} from "@/models/TradeDetails.js";
+
 import ToggleButton from "@/Components/TradePageComponents/ToggleButton.vue";
 import {FLY_TOGGLE_IMAGE_ARRAY} from "@/models/ImageToggleArrays.js";
-import {toRaw, unref} from "vue";
 
 
 export default {
@@ -221,7 +220,7 @@ export default {
       </template>
       <template v-slot:card-header-manuel>
         <div class="d-flex pt-1">
-          <fly-toggle :is-enabled="mode === 1" @emit-value="tradeCard.flyingOrRemote = $event"
+          <fly-toggle style="max-width: 70px" :is-enabled="mode === 1" @emit-value="tradeCard.flyingOrRemote = $event"
                       :image-array="FLY_TOGGLE_IMAGE_ARRAY()" :property="tradeCard.flyingOrRemote"></fly-toggle>
           <h4 v-if="mode===0" class="fs-1 fw-bold pt-0 mb-0 text-capitalize text-start pb-0">
             {{ tradeCard.title }}</h4>
@@ -323,16 +322,6 @@ export default {
           <div v-if="mode ===1" class=" col col-md-2">
             <div
                 class="d-flex horz-card-img img-fluid w-100 text-center align-items-center   justify-content-center border rounded-4 ">
-
-              <!-- AFTER (Fixed) -->
-              <!--              <add-pokemon-off-canvas @clicked-object-existing="addHaveList"-->
-              <!--                                      button="pencil"-->
-              <!--                                      :warning="warning"-->
-              <!--                                      v-on:click="returnNewPokemon()"-->
-              <!--                                      :pokemon-list-from-api="pokemonListFiltered.items"-->
-              <!--                                      :list-to-highlight="tradeCard.haveList.items"-->
-              <!--                                      card-style="HaveList">-->
-              <!--              </add-pokemon-off-canvas>-->
               <add-pokemon-trade-off-canvas
                   @add-pokemon="addHaveList"
                   :card-style="haveListCard"

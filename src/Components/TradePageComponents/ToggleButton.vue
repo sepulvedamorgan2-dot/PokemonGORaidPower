@@ -32,13 +32,18 @@ export default {
     if (this.property) {
       this.toggleIndex = this.imageArray.findIndex(image => image.value === this.property);
     }
+  },
+  watch: {
+    property(newValue) {
+      this.toggleIndex = this.imageArray.findIndex(image => image.value === newValue);
+    }
   }
 
 }
 </script>
 
 <template>
-  <div @click="isEnabled ? toggleIndex = (toggleIndex + 1) % toggleQuantity : null; isEnabled ? $emit('emitValue', imageArray[toggleIndex].value): null" style="max-width: 60px" class="me-2">
+  <div @click="isEnabled ? toggleIndex = (toggleIndex + 1) % toggleQuantity : null; isEnabled ? $emit('emitValue', imageArray[toggleIndex].value): null"  class="me-2">
     <div class="text-center" v-for="image in imageArray"  :key="image.src">
     <img
 

@@ -42,11 +42,11 @@ export default {
 
   <card-container :custom-title="true" class="h-100"  >
     <template v-slot:card-actions>
-      <i class="bi bi-eye fs-3 "></i>
+<!--      <i class="bi bi-eye fs-3 "></i>-->
     </template>
     <template #card-header-manuel>
       <div class="d-flex pt-1">
-        <toggle-button v-if="haveFlightInfo" :image-array="FLY_TOGGLE_IMAGE_ARRAY()" :is-enabled="false" :property="tradeCard.flyingOrRemote"></toggle-button>
+        <toggle-button style="max-width: 60px" v-if="haveFlightInfo" :image-array="FLY_TOGGLE_IMAGE_ARRAY()" :is-enabled="false" :property="tradeCard.flyingOrRemote"></toggle-button>
         <h4 class="fs-3 fw-bold  mb-0 text-capitalize text-start pb-0 pt-1">{{tradeCard?.title}}</h4>
       </div>
     </template>
@@ -57,13 +57,23 @@ export default {
         {{ option.selected }}
       </h4>
 <!--      undecided on this:-->
-      <h5 class="pb-0 mb-0 ms-1 pt-1">Offering:</h5>
+      <h5 class="pb-0 mb-0 ms-1 pt-1">Featured Offerings:</h5>
       <div class="row g-2 g-sm-2 g-md-2 pt-2 ms-0 me-0 ">
         <div class="col-4"
              v-for="pokemonInstance in tradeCard?.featuredPokemon">
           <pokemon-trade-image  :noPresetSize="true" :no-quantity="true" :pokemon-instance="pokemonInstance">
           </pokemon-trade-image>
         </div>
+      </div>
+      <div>
+        <slot name="card-body-button">
+          <div class="row pt-2">
+            <div class="col-12">
+              <button class="btn btn-primary w-100 rounded-4">See Full Trade</button>
+            </div>
+
+          </div>
+        </slot>
       </div>
     </template>
 

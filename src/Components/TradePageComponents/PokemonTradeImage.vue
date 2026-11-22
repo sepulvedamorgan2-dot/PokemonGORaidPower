@@ -12,6 +12,7 @@ export default {
     noQuantity: {type: Boolean, default: true},
     noPresetSize: {type: Boolean, default: true},
     editMode: {type: Boolean, default: false},
+    highlight: {type: Boolean, default: false},
     },
   methods: {
     TestToExludeTag
@@ -21,8 +22,13 @@ export default {
 </script>
 
 <template>
-  <div >
-    <div class="text-center border rounded-4 ">
+  <div class="h-100 " >
+    <div :class="
+    {
+      'text-center border rounded-4': true,
+      'bg-light border-dark-subtle': highlight
+
+    } ">
       <div class="position-relative">
         <image-with-details
 

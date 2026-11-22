@@ -37,12 +37,12 @@
 
       </slot>
     </div>
-    <div v-show="tabNumber === 3">
+    <div v-if="tabNumber === 3">
       <slot name="pageThree">
 
       </slot>
     </div>
-    <div v-show="tabNumber === 4">
+    <div v-if="tabNumber === 4">
       <slot name="pageFour">
 
       </slot>

@@ -14,8 +14,8 @@ export function TradeCard(data = {}) {
     this.featuredPokemon = data.featuredPokemon ?? [];
     this.allBackgrounds = data.allBackgrounds ?? [];
     this.allTags = data.allTags ?? [];
-    this.allHaveNames = data.allHaveNames ?? [];
-    this.allWantNames = data.allWantNames ?? [];
+    this.allHaveImages = data.allHaveImages ?? [];
+    this.allWantImages = data.allWantImages ?? [];
     this.flyingOrRemote = data.flyingOrRemote ?? 'Cant Fly';
     this.haveList = data.haveList
         ? new PokemonList(data.haveList)
@@ -64,13 +64,13 @@ export function TradeCard(data = {}) {
         const backgrounds = new Set();
         const tags = new Set();
         for (const item of haveItems) {
-            const name = item?.pokemon?.name?.trim().toLowerCase();
-            if (name) haveNames.add(name);
+            const pokemonImage = item?.pokemon?.image?.trim().toLowerCase();
+            if (pokemonImage) haveNames.add(pokemonImage);
         }
 
         for (const item of wantItems) {
-            const name = item?.pokemon?.name?.trim().toLowerCase();
-            if (name) wantNames.add(name);
+            const pokemonImage = item?.pokemon?.image?.trim().toLowerCase();
+            if (pokemonImage) wantNames.add(pokemonImage);
         }
         for (const item of allPokemon) {
 
@@ -90,8 +90,8 @@ export function TradeCard(data = {}) {
         }
         this.allBackgrounds = Array.from(backgrounds);
         this.allTags = Array.from(tags);
-        this.allHaveNames = Array.from(haveNames);
-        this.allWantNames = Array.from(wantNames);
+        this.allHaveImages = Array.from(haveNames);
+        this.allWantImages = Array.from(wantNames);
 
     }
     this.getUnreffedClone = function () {
@@ -106,8 +106,8 @@ export function TradeCard(data = {}) {
         this.featuredPokemon = sourceCard.featuredPokemon ?? this.featuredPokemon;
         this.allBackgrounds = sourceCard.allBackgrounds ?? this.allBackgrounds;
         this.allTags = sourceCard.allTags ?? this.allTags;
-        this.allHaveNames = sourceCard.allHaveNames ?? this.allHaveNames;
-        this.allWantNames = sourceCard.allWantNames ?? this.allWantNames;
+        this.allHaveImages = sourceCard.allHaveImages ?? this.allHaveImages;
+        this.allWantImages = sourceCard.allWantImages ?? this.allWantImages;
         this.wantList = sourceCard.wantList ?? this.wantList;
         this.haveList = sourceCard.haveList ?? this.haveList;
         this.haveOptions = sourceCard.haveOptions ?? this.haveOptions;
@@ -175,7 +175,7 @@ export const defaultHaveOptions = [
         title: 'Trinket Usage',
         key: 'trinketUsage',
         optionsArray: [
-            {selected: 'No Trinket', tagClass: 'd-none'},
+            {selected: 'Any Trinket Usage', tagClass: 'd-none'},
             {selected: 'My Trinket', tagClass: 'tertiary'}
         ],
     },
@@ -193,7 +193,7 @@ export const defaultWantOptions = [
         title: 'Trinket Usage',
         key: 'trinketUsage',
         optionsArray: [
-            {selected: 'No Trinket', tagClass: 'd-none'},
+            {selected: 'Any Trinket Usage', tagClass: 'd-none'},
             {selected: 'Your Trinket', tagClass: 'tertiary'}
         ],
     },
@@ -212,8 +212,8 @@ export const defaultWantOptions = [
         title: 'Mirror Trade(s)',
         key: 'mirrorTrades',
         optionsArray: [
-            {selected: 'N/A', tagClass: 'd-none'},
-            {selected: 'Mirror Trade(s)', tagClass: 'typepoison'}
+            {selected: 'Not Mirror Trades', tagClass: 'd-none'},
+            {selected: 'Mirror Trades', tagClass: 'typepoison'}
         ],
 
     }
