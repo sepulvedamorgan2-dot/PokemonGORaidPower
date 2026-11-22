@@ -28,7 +28,7 @@ export default {
       this.$refs.AddPokemonOffCanvas.pageNumber = 2
     },
     async handleUninstantiatedClick(pokemonInstance) {
-      console.log(pokemonInstance);
+
        return await this.initPokemon(pokemonInstance)
           .then
           ((pokemonInstance) => {
@@ -42,7 +42,7 @@ export default {
       if (this.pokemon?.pokemon) {
         return this.pokemon;
       } else {
-        console.log(await GameDataApi.fetchSinglePokemon(pokemonInstance))
+
         return GameDataApi.fetchSinglePokemon(pokemonInstance);
       }}
   },

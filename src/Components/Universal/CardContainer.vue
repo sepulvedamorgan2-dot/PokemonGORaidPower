@@ -15,7 +15,7 @@ export default {
 
 <template>
   <div class="card ">
-    <div class="card-body p-2  p-sm-2 p-md-2">
+    <div class="card-body p-2 ps-md-1 ps-1  p-sm-2 p-md-2">
       <div v-if="cardTitle || customTitle" class="row p-2 py-0  mb-1">
         <div class="col-10 ps-2 ps-sm-1">
           <div class="ms-0 ms-sm-1">

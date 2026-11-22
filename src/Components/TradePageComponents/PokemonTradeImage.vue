@@ -11,7 +11,7 @@ export default {
     pokemonInstance: {type: PokemonInstance, required: true},
     noQuantity: {type: Boolean, default: true},
     noPresetSize: {type: Boolean, default: true},
-    editMode: {type: Boolean, default: true},
+    editMode: {type: Boolean, default: false},
     },
   methods: {
     TestToExludeTag
@@ -21,10 +21,11 @@ export default {
 </script>
 
 <template>
-  <div class="col col-md-2 draggable">
+  <div >
     <div class="text-center border rounded-4 ">
       <div class="position-relative">
         <image-with-details
+
                             :no-quantity="true"
                             :noPresetSize="true" :pokemon-instance="pokemonInstance">
           <pokemon-tags-off-canvas v-if="editMode" :pokemon-instance="pokemonInstance"></pokemon-tags-off-canvas>
@@ -32,12 +33,23 @@ export default {
       </div>
       <div class="pb-1">
         <p style="font-size: 13px; font-weight: 500"
-           v-if="pokemonInstance.tradeDetails.tradeBackground.shorthandName"
+           v-if="pokemonInstance?.tradeDetails?.tradeBackground?.shorthandName"
            v-show="pokemonInstance.tradeDetails.tradeBackground !== ''"
            :class="{'mb-0': true, ['text-type' + pokemonInstance.tradeDetails.tradeBackground.color]: true}">
           {{ pokemonInstance.tradeDetails.tradeBackground.shorthandName }}
         </p>
+        <p  style="font-size: 13px; font-weight: 500"
+           v-if="pokemonInstance?.tradeBackground?.shorthandName"
+           v-show="pokemonInstance.tradeBackground !== ''"
+           :class="{'mb-0': true, ['text-type' + pokemonInstance.tradeBackground.color]: true}">
+          {{ pokemonInstance.tradeBackground.shorthandName }}
+        </p>
         <p style="font-size: 14px;" v-for="(tag, key) in pokemonInstance.tradeDetails"
+           v-show="TestToExludeTag({key, tag})"
+           class="mb-0 text-capitalize">
+          {{ tag }}
+        </p>
+        <p v-if="!pokemonInstance.tradeDetails" style="font-size: 14px;" v-for="(tag, key) in pokemonInstance"
            v-show="TestToExludeTag({key, tag})"
            class="mb-0 text-capitalize">
           {{ tag }}

@@ -25,10 +25,10 @@ export default {
      * @param [pokemonInstance, Boolean] is either a Pokemon instance or an uninstantiated Pokemon object. If it's uninstantiated, the method will fetch and initialize the Pokemon data.
      */
     async handleClick(pokemonInstance) {
-      console.log(pokemonInstance);
+
       if (!pokemonInstance[0]?.id) {
         const pokemonToAdd = await this.handleUninstantiatedClick(pokemonInstance[0]);
-        console.log(pokemonToAdd);
+
         this.$emit('addPokemon', [pokemonToAdd,  pokemonInstance[1]]);
       } else{
         this.$emit('addPokemon', pokemonInstance);

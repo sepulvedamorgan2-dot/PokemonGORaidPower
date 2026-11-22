@@ -1,10 +1,11 @@
-import {TagObject} from "@/models/Tag.js"
+import cloneDeep from "lodash.clonedeep";
 import {PokemonList} from "@/models/PokemonList.js";
 import GameDataApi from "@/models/factories/GameDataApi.js";
 
+
 /**
  * TradeCard represents a trade card that contains a list of Pokémon the user has and wants.
- * It also contains options for both the have and want lists, which are represented as TagObjects.
+ * It also contains options for both have and want lists, which are represented as TagObjects.
  * @param data An object containing the properties of the TradeCard.
  */
 export function TradeCard(data = {}) {
@@ -38,10 +39,10 @@ export function TradeCard(data = {}) {
 
     this.assignFeaturedPokemon = function () {
         this.featuredPokemon = []
-        console.log('Assigning featured pokemon for trade card:', this.title);
+
         if (this.haveList?.items?.length > 0) {
-            for (let i = 0; i < this.haveList.items.length && i < 4; i++) {
-                console.log(this.haveList.items[i]);
+            for (let i = 0; i < this.haveList.items.length && i < 3; i++) {
+
                 this.featuredPokemon.push({
                     image: this.haveList.items[i].pokemon.image,
                     name: this.haveList.items[i].pokemon.name,
@@ -72,7 +73,7 @@ export function TradeCard(data = {}) {
             if (name) wantNames.add(name);
         }
         for (const item of allPokemon) {
-            console.log('ITEM:', item)
+
             const details = item?.tradeDetails ?? {};
 
             for (const [key, value] of Object.entries(details)) {
@@ -93,7 +94,27 @@ export function TradeCard(data = {}) {
         this.allWantNames = Array.from(wantNames);
 
     }
+    this.getUnreffedClone = function () {
+        return cloneDeep(this);
+    }
 
+    this.saveCardChanges = function(sourceCard) {
+        if (!sourceCard) return;
+
+        this.title = sourceCard.title ?? this.title;
+        this.flyingOrRemote = sourceCard.flyingOrRemote ?? this.flyingOrRemote;
+        this.featuredPokemon = sourceCard.featuredPokemon ?? this.featuredPokemon;
+        this.allBackgrounds = sourceCard.allBackgrounds ?? this.allBackgrounds;
+        this.allTags = sourceCard.allTags ?? this.allTags;
+        this.allHaveNames = sourceCard.allHaveNames ?? this.allHaveNames;
+        this.allWantNames = sourceCard.allWantNames ?? this.allWantNames;
+        this.wantList = sourceCard.wantList ?? this.wantList;
+        this.haveList = sourceCard.haveList ?? this.haveList;
+        this.haveOptions = sourceCard.haveOptions ?? this.haveOptions;
+        this.wantOptions = sourceCard.wantOptions ?? this.wantOptions;
+
+        this.assignFeaturedPokemon();
+    }
     this.addHaveList = async function (pokemon) {
         if (pokemon?.tradeDetails?.tags) {
             this.haveList.addSinglePokemon(pokemon);
@@ -119,6 +140,7 @@ export function TradeCard(data = {}) {
 
 
     }
+
     this.removeFromHaveList = function (pokemon) {
         if (pokemon?.id) {
             this.haveList.remove(pokemon.id);
@@ -133,7 +155,6 @@ export function TradeCard(data = {}) {
     }
     this.updateOptionClasses = function () {
         for (let i = 0; i < defaultWantOptions.length; i++) {
-            console.log(defaultWantOptions[i]);
             for (const [key, value] of Object.entries(this.wantOptions)) {
                 if (key === defaultWantOptions[i].key) {
                     for (const option of defaultWantOptions[i].optionsArray) {
@@ -145,23 +166,6 @@ export function TradeCard(data = {}) {
                 }
             }
         }
-        // for (const [key, value] of Object.entries(this.wantOptions)) {
-        //     for (const option of defaultWantOptions) {
-        //         if (key === subOption.key) {
-        //             option.tagClass = subOption.tagClass;
-        //             break;
-        //         }
-        //     }
-        // }
-        // for (const option of this.haveOptions) {
-        //     for (const subOption of option.optionsArray) {
-        //         if (subOption.selected === option.selected) {
-        //             option.tagClass = subOption.tagClass;
-        //             break;
-        //         }
-        //     }
-        // }
-
     }
 }
 

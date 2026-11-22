@@ -33,9 +33,9 @@ export default {
   },
   mounted() {
     const indexOfEliteTmTag = (this.tagOptions.findIndex(tag => tag.key === 'eliteTmMoves'));
-    console.log(indexOfEliteTmTag);
+
     this.tagOptions[indexOfEliteTmTag].optionsArray = [...this.pokemonInstance.getEliteTmMoves()];
-    console.log(this.tagOptions);
+
   },
 
 }

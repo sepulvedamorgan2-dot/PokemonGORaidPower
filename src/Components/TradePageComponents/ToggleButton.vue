@@ -1,62 +1,63 @@
 <script>
-  export default {
-    name: 'ToggleButton',
+export default {
+  name: "ToggleButton",
+  props: {
+    /**
+     * images array contains an array of {src: string, value: string} objects that represent the images to be displayed in the toggle.
+     * The value property is used to identify the selected image when the toggle is clicked.
+     */
+    imageArray: {type: Array, required: true},
+    property: {type: Object, required: true},
+    isEnabled: {type: Boolean, default: true},
+  },
+  data: function () {
+    return{
+      toggleIndex: 0,
+      toggleQuantity: this.imageArray?.length
 
-    data: function () {
-      return {
-        index: 0,
-      }
-    },
-    props: {
-      savedValue: {type: Object, required: true},
-    },
-    methods: {
-      nextOption(){
-        if (this.index >= this.savedValue.optionsArray.length - 1) {
-          this.index = 0;
-        } else {
-          this.index++;
-        }
-        // this.$emit('updateOption', [this.savedValue, this.index]);
-        this.savedValue.text = this.savedValue.optionsArray[this.index].text;
-        this.savedValue.tagClass = this.savedValue.optionsArray[this.index].tagClass
-
-      },
-    },
-    mounted() {
-
-      console.log(this.savedValue.optionsArray)
-      for(let i = 0; i < this.savedValue.optionsArray.length; i++){
-
-
-        if(this.savedValue.optionsArray[i].text === this.savedValue.text) {
-          console.log(this.savedValue.text +'ee' + this.savedValue.optionsArray[i].text + i)
-          this.index = i;
-
-          break;
-        }
-      }
-
-    },
+    }
+  },
+  methods: {
+    // getImage(src) {
+    //   try {
+    //
+    //     return new URL(`${src}`);
+    //   } catch (error) {
+    //     console.error(`Error loading image: ${src}`, error);
+    //     return ''; // Return a fallback image or an empty string if the image fails to load
+    //   }
+    // }
+  },
+  mounted() {
+    if (this.property) {
+      this.toggleIndex = this.imageArray.findIndex(image => image.value === this.property);
+    }
   }
+
+}
 </script>
 
 <template>
-  <div>
-    <label class="ms-1 mb-1  d-block"> {{ this.savedValue.title }}</label>
-    <div :class="
-        {'w-100 rounded-pill btn fs-6 border p-1  text-center': true,
-        'border': savedValue.optionsArray[index].tagClass  === 'd-none',
-         ['border-light  btn-' + savedValue.optionsArray[index].tagClass]: (savedValue.optionsArray[index].tagClass !== 'd-none'),
-        }
-            " style="min-width: 80px"  v-on:click="nextOption">
-      {{ savedValue.optionsArray[index].text }}
-    </div>
+  <div @click="isEnabled ? toggleIndex = (toggleIndex + 1) % toggleQuantity : null; isEnabled ? $emit('emitValue', imageArray[toggleIndex].value): null" style="max-width: 60px" class="me-2">
+    <div class="text-center" v-for="image in imageArray"  :key="image.src">
+    <img
 
+         @click="isEnabled ? $emit('emitValue', image.value) : null"
+         v-show="toggleIndex === imageArray.indexOf(image)"
+         class="img-fluid rounded-4  border-width-togglee border-dark "
+         :src="image.src"
+         alt="">
+    <p style="font-size: 10px" v-show="toggleIndex === imageArray.indexOf(image) && isEnabled">{{ image.value }}</p>
+    </div>
 
   </div>
 </template>
 
-<style scoped>
+<style lang="css" scoped>
+  .border-width-togglee {
+
+    border: solid black;
+    border-width: .125rem;
+  }
 
 </style>

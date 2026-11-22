@@ -14,9 +14,9 @@ export const TAG_KEYS = Object.freeze({
 //software architecture go brr
 export const DEFAULT_HIDE_VALUE = 'None';
 
-export const excludedTradeDetailsKeys = [TAG_KEYS.LUCKY, TAG_KEYS.TRADE_BACKGROUND, TAG_KEYS.QUANTITY];
+export const excludedTradeDetailsKeys = [TAG_KEYS.LUCKY, TAG_KEYS.TRADE_BACKGROUND, TAG_KEYS.QUANTITY, "image", "name"];
 export function TestToExludeTag(tag ) {
-    console.log(tag);
+
         if (tag.tag !== DEFAULT_HIDE_VALUE ) {
             if (!excludedTradeDetailsKeys.includes(tag.key)) {
                 return true

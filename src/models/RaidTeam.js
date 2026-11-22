@@ -14,7 +14,7 @@ export function RaidTeam(data = {}) {
      * @param pokemon The Pokémon to add.
      */
     this.addToTeam = function (pokemon)  {
-        console.log(pokemon);
+
         if (this.activeTeam.length < 6) {
             this.activeTeam.push(pokemon);
         } else {
@@ -27,7 +27,7 @@ export function RaidTeam(data = {}) {
      * @param pokemon
      */
     this.removeFromTeam = function (pokemon) {
-        console.log(pokemon);
+
         if (this.activeTeam.includes(pokemon)) {
             this.activeTeam = this.activeTeam.filter(poke => poke !== pokemon);
             if(this.activeTeam.length < 6 && this.backupPokemon.length > 0) {

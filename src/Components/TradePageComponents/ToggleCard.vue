@@ -1,13 +1,13 @@
 <script>
 import CardContainer from '@/Components/Universal/CardContainer.vue'
-import ToggleButton from "@/Components/TradePageComponents/ToggleButton.vue";
+import ToggleButtonDepricated from "@/Components/TradePageComponents/ToggleButtonDepricated.vue";
 import CollapseArea from "@/Components/TradePageComponents/CollapseArea.vue";
 
 export default {
   name: 'ToggleCard',
   components: {
     CardContainer,
-    ToggleButton,
+    ToggleButton: ToggleButtonDepricated,
     CollapseArea,
 
   },

@@ -17,7 +17,9 @@ import DualSearchAndDisplay from "@/Components/Universal/OffCanvasSearch/DualSea
 import SearchAndDisplayView from "@/Components/Universal/OffCanvasSearch/SearchAndDisplayView.vue";
 import PokemonTradeImage from "@/Components/TradePageComponents/PokemonTradeImage.vue";
 import {TAG_KEYS} from "@/models/TradeDetails.js";
-import FlyToggle from "@/Components/TradePageComponents/FlyToggle.vue";
+import ToggleButton from "@/Components/TradePageComponents/ToggleButton.vue";
+import {FLY_TOGGLE_IMAGE_ARRAY} from "@/models/ImageToggleArrays.js";
+import {toRaw, unref} from "vue";
 
 
 export default {
@@ -37,7 +39,7 @@ export default {
     }
   },
   components: {
-    FlyToggle,
+    FlyToggle: ToggleButton,
     PokemonTradeImage,
     AddPokemonTradeOffCanvas,
     VueDraggable,
@@ -55,7 +57,7 @@ export default {
 
       pokemonListFiltered: [],
       mode: 0,
-      tradeCard: this.existingTradeCard || new TradeCard(),
+      tradeCard: null,
       validation: false,
       warning: false,
     }
@@ -63,18 +65,19 @@ export default {
   props: {
     pokemonList: {Type: Array, required: true},
     pokemonListApi: {Type: Array, required: true},
-    existingTradeCard: {type: Object},
+    existingTradeCard: {type: TradeCard},
     isNew: {type: Boolean, default: false},
   },
   watch: {
-    existingTradeCard: {
-      handler: function (newVal) {
-        if (newVal) {
-          this.tradeCard = newVal;
-        }
-      },
-      immediate: true
-    }, tradeCard: {
+    // existingTradeCard: {
+    //   handler: function (newVal) {
+    //     if (newVal) {``
+    //       this.tradeCard = newVal;
+    //     }
+    //   },
+    //   immediate: true
+    // },
+    tradeCard: {
       handler: function (newVal) {
         this.tradeCard.updateOptionClasses();
       }, deep: true
@@ -90,6 +93,9 @@ export default {
   ,
 
   methods: {
+    FLY_TOGGLE_IMAGE_ARRAY() {
+      return FLY_TOGGLE_IMAGE_ARRAY
+    },
     defaultHaveOptions() {
       return defaultHaveOptions
     },
@@ -98,7 +104,7 @@ export default {
     },
     manageHaveRemove(pokemon) {
       if (this.pokemonList.items.some(p => p.id === pokemon.id) && this.warning === true) {
-        console.log('eeee')
+
         this.warning = false;
       }
       this.tradeCard.removeFromHaveList(pokemon)
@@ -107,7 +113,7 @@ export default {
     }
     ,
     addHaveList(pokemon) {
-      console.log(pokemon);
+
       if (pokemon[1]) {
         this.tradeCard.removeFromHaveList(pokemon[0])
       } else {
@@ -119,9 +125,8 @@ export default {
     }
     ,
     addWantedList(pokemon) {
-      console.log(pokemon)
+
       if (pokemon[1]) {
-        console.log(pokemon);
         this.tradeCard.removeFromWantedList(pokemon[0])
       } else {
         this.validation = false;
@@ -131,6 +136,22 @@ export default {
       this.returnNewPokemon();
     }
     ,
+    validate() {
+      if (!(this.tradeCard.wantList.items.length > 0 && this.tradeCard.haveList.items.length > 0)) {
+        this.validation = true
+        return false;
+      }
+      this.validation = false
+      return true;
+    },
+    saveTradeCard() {
+      if (!this.validate()) {
+        this.validation = true
+        return false;
+      }
+      this.existingTradeCard.saveCardChanges(this.tradeCard.getUnreffedClone());
+      this.mode = 0;
+    },
     returnNewPokemon() {
       this.pokemonListFiltered = Object.assign(new PokemonList(), this.pokemonList, {
         items: [...this.pokemonList.items]
@@ -158,7 +179,11 @@ export default {
   mounted() {
     if (this.isNew) {
       this.mode = 1
+    } else {
+      this.mode = 0
     }
+
+    this.tradeCard = this.existingTradeCard ? this.existingTradeCard.getUnreffedClone() : new TradeCard();
     this.returnNewPokemon()
   }
   ,
@@ -176,7 +201,7 @@ export default {
 
       </alert-with-close>
     </div>
-    <CardContainer :custom-title="true">
+    <CardContainer class="ps-1" :custom-title="true">
       <template v-slot:card-actions>
         <div class="d-flex  py-0  mb-1">
 
@@ -194,17 +219,18 @@ export default {
         </div>
 
       </template>
-      <template  v-slot:card-header-manuel>
+      <template v-slot:card-header-manuel>
         <div class="d-flex pt-1">
-        <fly-toggle :is-enabled="mode === 1" @emit-value="tradeCard.flyingOrRemote = $event" :image-array="[{src: '/Images/CanFlyImage.png', value: 'Can Fly'}, {src: '/Images/CantFlyImageTwo.png', value: 'Cant Fly'}, {src: '/Images/RemoteTradeImage.webp', value: 'Remote Trade'}]" :property="tradeCard.flyingOrRemote"></fly-toggle>
-        <h4 v-if="mode===0" class="fs-1 fw-bold pt-0 mb-0 text-capitalize text-start pb-0">
-          {{ tradeCard.title }}</h4>
-        <label v-if="mode===1" class="form-label">
-          Trade Card Title
-          <input type="text" v-if="mode===1" style="border-width: 2px !important;"
-                 class="fs-5 form-control border-primary bg-light-subtle border-0 border-bottom rounded-0"
-                 v-model="tradeCard.title">
-        </label>
+          <fly-toggle :is-enabled="mode === 1" @emit-value="tradeCard.flyingOrRemote = $event"
+                      :image-array="FLY_TOGGLE_IMAGE_ARRAY()" :property="tradeCard.flyingOrRemote"></fly-toggle>
+          <h4 v-if="mode===0" class="fs-1 fw-bold pt-0 mb-0 text-capitalize text-start pb-0">
+            {{ tradeCard.title }}</h4>
+          <label v-if="mode===1" class="form-label">
+            Trade Card Title
+            <input type="text" v-if="mode===1" style="border-width: 2px !important;"
+                   class="fs-5 form-control border-primary bg-light-subtle border-0 border-bottom rounded-0"
+                   v-model="tradeCard.title">
+          </label>
         </div>
       </template>
       <template v-slot:card-body>
@@ -258,8 +284,9 @@ export default {
             </div>
 
           </div>
-          <pokemon-trade-image :edit-mode="mode === 1" :pokemon-instance="pokemonInstance" v-for="pokemonInstance in tradeCard.wantList.items" :key="pokemonInstance.pokemon.image"
-            @dblclick="mode === 1 ? tradeCard.removeFromWantedList(pokemonInstance) : null"></pokemon-trade-image>
+          <pokemon-trade-image class="col col-md-2 draggable" :edit-mode="mode === 1" :pokemon-instance="pokemonInstance"
+                               v-for="pokemonInstance in tradeCard.wantList.items" :key="pokemonInstance.pokemon.image"
+                               @dblclick="mode === 1 ? tradeCard.removeFromWantedList(pokemonInstance) : null"></pokemon-trade-image>
 
 
         </vue-draggable>
@@ -288,7 +315,8 @@ export default {
         </div>
         <div class="pb-0" id="have">
         </div>
-        <vue-draggable :disabled="mode !== 1"  :delay="100" :delay-on-touch-only="true"
+        <p v-if="validation" class="text-danger ms-1 pt-0">Must have one offered pokémon </p>
+        <vue-draggable :disabled="mode !== 1" :delay="100" :delay-on-touch-only="true"
                        :force-fallback="true" draggable=".draggable" v-model="tradeCard.haveList.items"
                        class="row pb-1 row-cols-md-1 mt-0 pt-0 row-cols-4 g-1 p-sm-1 ">
 
@@ -297,14 +325,14 @@ export default {
                 class="d-flex horz-card-img img-fluid w-100 text-center align-items-center   justify-content-center border rounded-4 ">
 
               <!-- AFTER (Fixed) -->
-<!--              <add-pokemon-off-canvas @clicked-object-existing="addHaveList"-->
-<!--                                      button="pencil"-->
-<!--                                      :warning="warning"-->
-<!--                                      v-on:click="returnNewPokemon()"-->
-<!--                                      :pokemon-list-from-api="pokemonListFiltered.items"-->
-<!--                                      :list-to-highlight="tradeCard.haveList.items"-->
-<!--                                      card-style="HaveList">-->
-<!--              </add-pokemon-off-canvas>-->
+              <!--              <add-pokemon-off-canvas @clicked-object-existing="addHaveList"-->
+              <!--                                      button="pencil"-->
+              <!--                                      :warning="warning"-->
+              <!--                                      v-on:click="returnNewPokemon()"-->
+              <!--                                      :pokemon-list-from-api="pokemonListFiltered.items"-->
+              <!--                                      :list-to-highlight="tradeCard.haveList.items"-->
+              <!--                                      card-style="HaveList">-->
+              <!--              </add-pokemon-off-canvas>-->
               <add-pokemon-trade-off-canvas
                   @add-pokemon="addHaveList"
                   :card-style="haveListCard"
@@ -319,16 +347,18 @@ export default {
             </div>
 
           </div>
-          <pokemon-trade-image :pokemon-instance="pokemonInstance" v-for="pokemonInstance in tradeCard.haveList.items" :key="pokemonInstance.pokemon.image"
-            @dblclick="mode === 1 ? manageHaveRemove(pokemonInstance) : null"></pokemon-trade-image>
+          <pokemon-trade-image class="col col-md-2 draggable" :pokemon-instance="pokemonInstance" v-for="pokemonInstance in tradeCard.haveList.items"
+                               :key="pokemonInstance.pokemon.image"
+                               :edit-mode="mode === 1"
+                               @dblclick="mode === 1 ? manageHaveRemove(pokemonInstance) : null"></pokemon-trade-image>
 
         </vue-draggable>
         <button v-if="isNew" type="button" class="btn btn-primary w-100 rounded-4" @click="manageAdd(tradeCard)">Save
           New
           Trade Card
         </button>
-        <button v-if="!isNew && mode === 1" type="button" class="btn btn-primary w-100 rounded-4" @click="mode = 0">Save
-          Trade Card
+        <button v-if="!isNew && mode === 1" type="button" class="btn btn-primary w-100 rounded-4" @click="saveTradeCard()">Save
+          Changes
         </button>
       </template>
     </CardContainer>

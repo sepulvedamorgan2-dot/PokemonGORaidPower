@@ -35,12 +35,12 @@ export default {
   methods: {
     // handles adding pokemon to pokelist click
     async handleClick(pokemonInstance) {
-      console.log(pokemonInstance);
+
       await this.initPokemon(pokemonInstance)
           .then
           ((pokemonInstance) => {
                 this.pokemonToAdd = pokemonInstance;
-                console.log(pokemonInstance);
+
                 this.$refs.AddPokemonOffCanvas.pageNumber++
                 this.titleArray = [
                   "Add Pokemon",
@@ -53,7 +53,7 @@ export default {
       if (this.pokemon?.pokemon) {
         return this.pokemon;
       } else {
-        console.log(await GameDataApi.fetchSinglePokemon(pokemonInstance))
+
         return GameDataApi.fetchSinglePokemon(pokemonInstance);
       }}
     },

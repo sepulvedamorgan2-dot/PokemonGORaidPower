@@ -106,12 +106,12 @@ export default class GameDataApi {
             secondaryType: data.secondaryType?.names?.English?.toLowerCase() || null,
             uniquePokemonId: pokemon?.uniquePokemonId || null
         });
-        console.log(pokemonDetailsData);
+
         const pokemonToAdd = new PokemonInstance({
                 pokemon: pokemonDetailsData,
             }
         )
-        // console.log(pokemonToAdd)
+
         return pokemonToAdd;
     }
 
@@ -123,7 +123,7 @@ export default class GameDataApi {
      * @returns {Promise<PokemonInstance>}
      */
     static async fetchSinglePokemon(pokemonInstance) {
-        console.log(pokemonInstance);
+
         try {
             if (pokemonInstance?.pokemon?.pokemonId) {
                 return fetch(`https://pokemon-go-api.github.io/pokemon-go-api/api/pokedex/id/${pokemonInstance.pokemon.pokemonId}.json`)
@@ -188,7 +188,7 @@ export default class GameDataApi {
                 }
             }
 
-            console.log("First processed Pokémon:", pokemonListApi[0]);
+
             return pokemonListApi;
 
         } catch (error) {

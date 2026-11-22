@@ -66,7 +66,7 @@ export default {
                :array-to-display="getResults"
                :card-style="cardStyle"
                :list-to-highlight="listToHighlight"
-               @clicked-pokemon="$emit('clickedPokemon', $event); console.log($event)">
+               @clicked-pokemon="$emit('clickedPokemon', $event); ">
     </component>
 
 

@@ -45,7 +45,7 @@ export default {
       for (let i = 0; i < this.qty; i++) {
         this.pokemon.Id = this.getNextPokemonId()
 
-        console.log(this.pokemon.Id);
+
         this.pokemonList.unshift({...this.pokemon});
       }
       this.matches = this.pokemonList
@@ -58,7 +58,6 @@ export default {
   },
 
   mounted: async function () {
-    console.log(this.pokemonList)
     this.matches = {...this.pokemonList};
   }, deep: true,
 }

@@ -113,7 +113,7 @@ export default class PokemonFactory {
      */
 
     static hydrateRaidTeamList(teamAndPokeList = [[], PokemonList]) {
-        console.log('teamAndPokeList', teamAndPokeList);
+
         const moistList = [];
         if (!teamAndPokeList[0] || !teamAndPokeList[1] || teamAndPokeList[0].length === 0){
             for (const type of PokemonFactory.types) {
@@ -127,7 +127,7 @@ export default class PokemonFactory {
             }
            return moistList;
         }
-        console.log('teamAndPokeList[0]', teamAndPokeList[0]);
+
         for (const team of teamAndPokeList[0]) {
             moistList.push(PokemonFactory.hydrateRaidTeam([team, teamAndPokeList[1]]));
         }

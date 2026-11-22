@@ -60,7 +60,7 @@ export default {
                                :array-to-display="getResults"
                                :card-style="cardStyle"
                :list-to-highlight="listToHighlight"
-                               @clicked-pokemon="$emit('clickedPokemon', $event); console.log($event)">
+                               @clicked-pokemon="$emit('clickedPokemon', $event)">
     </component>
     <div class="d-flex flex-wrap py-3 border-top border-bottom my-1" v-if="query === ''">
       <div style="height: 100px" class="w-100 text-center align-content-center">
@@ -73,7 +73,7 @@ export default {
                :array-to-display="getResultsSecondary"
                :card-style="WantListCard"
                :list-to-highlight="listToHighlight"
-               @clicked-pokemon="$emit('clickedPokemon', $event); console.log($event)">
+               @clicked-pokemon="$emit('clickedPokemon', $event)">
     </component>
   </div>
 </template>

@@ -36,7 +36,6 @@
 
      methods: {
        addTradeCard(tradeCard) {
-         console.log('app')
          this.tradeCardList.push(tradeCard);
        }
      },
