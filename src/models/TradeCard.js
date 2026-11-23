@@ -188,7 +188,7 @@ export const defaultHaveOptions = [
         ],
     }
 ];
-export const defaultWantOptions = [
+export const    defaultWantOptions = [
     {
         title: 'Trinket Usage',
         key: 'trinketUsage',
