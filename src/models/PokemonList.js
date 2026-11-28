@@ -48,13 +48,13 @@ export function PokemonList(initialList = []) {
      * Removes a Pokémon from the list by its id.
      * @param Pokemon the Pokémon to remove.
      */
-    this.remove = function(pokemon) {
+    this.remove = function(pokemon, user) {
 
-        PokelistCollection.deleteFromPokelist(pokemon);
+        PokelistCollection.deleteFromPokelist(pokemon, user);
     }
 
-    this.update = function(pokemon) {
-        PokelistCollection.updatePokelistItem(pokemon);
+    this.update = function(pokemon, user) {
+        PokelistCollection.updatePokelistItem(pokemon, user);
     }
     /**
      * Removes a Pokémon from the list by its image. used when a list doesnt have

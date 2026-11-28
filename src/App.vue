@@ -11,6 +11,7 @@ import GameDataApi from "@/models/factories/GameDataApi.js";
 import {auth, db} from "@/firebase/index.js";
 import {User} from "@/models/User.js";
 import {PokelistCollection} from "@/firebase/PokelistCollection.js";
+import {UserCollection} from "@/firebase/UserCollection.js";
 
 export default {
   name: "App",
@@ -19,13 +20,13 @@ export default {
   },
   data: function () {
     return {
-      types: ['normal', 'fire', 'water',  'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'],
+      types: ['normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'],
       pokemonList: new PokemonList(),
       pokemonTeamList: null,
       pokemonListAPI: shallowRef([]),
       tradeCardList: new TradeCardList(),
       offers: [],
-      user: null,
+      user: new User(false),
       username: '',
       password: '',
     }
@@ -37,7 +38,7 @@ export default {
     // this.pokemonTeamList = DataFactory.fetchPokemonTeamList(this.pokemonList);
     // this.tradeCardList = DataFactory.fetchTradeCardList()
 
-    PokelistCollection.getSnapShot(this.pokemonList)
+
   },
 
   watch: {
@@ -64,69 +65,92 @@ export default {
       }, deep: true
     },
   },
-  // methods: {
-  //   login() {
-  //     signInWithEmailAndPassword(auth, this.username, this.password)
-  //         .then((userCredential) => {
-  //           this.user = userCredential.user;
-  //           console.log('Logged in:', this.user);
-  //         })
-  //         .catch((error) => {
-  //           const errorCode = error.code;
-  //           const errorMessage = error.message;
-  //           console.error('Error logging in:', errorCode, errorMessage);
-  //           console.log()
-  //         });
-  //     console.log(this.username, this.password)
-  //   },
-  //   async createAcc() {
-  //     console.log(auth.currentUser.uid)
-  //     console.log(doc(collection(db, 'users'), auth.currentUser.uid))
-  //     await setDoc(doc(collection(db, 'users'), auth.currentUser.uid), {hi: 'hi'}).then(() => {
-  //       console.log('Document created successfully');
-  //     }).catch((error) => {
-  //       console.error('Error creating document:', error);
-  //     });
-  //
-  //
-  //     // console.log(this.username, this.password)
-  //     // try {
-  //     //   createUserWithEmailAndPassword(auth, this.username, this.password)
-  //     //       .then((userCredential) => {
-  //     //         // Signed in
-  //     //         const user = userCredential.user;
-  //     //         console.log('Account created:', user);
-  //     //       })
-  //     // } catch (error) {
-  //     //   console.error('Error creating account:', error)
-  //     // }
-  //   },
-  //   async signOut() {
-  //     console.log(auth.currentUser.uid)
-  //     console.log(doc(collection(db, 'users'), auth.currentUser.uid))
-  //     const test = await getDoc(doc(collection(db, 'users'), auth.currentUser.uid))
-  //     console.log(test.data())
-  //     this.user = new User(test.data())
-  //     console.log(this.user.exists())
-  //
-  //   }
-  // },  created() {
-  //   onAuthStateChanged(auth, firebaseUser => {
-  //     if (firebaseUser) {
-  //       User.getUser(firebaseUser.uid).then(userData => {
-  //         this.user = new User(userData);
-  //         console.log('User data fetched:', this.user);
-  //       }).catch(error => {
-  //         console.error('Error fetching user data:', error);
-  //       });
-  //     }
-  //   })
-  // },
-  // provide() {
-  //   return {
-  //     authUser: computed(() => this.user),
-  //   }
-  // }
+  methods: {
+    async login() {
+      await signInWithEmailAndPassword(auth, this.username, this.password)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log('User signed in:', user);
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error('Error signing in:', errorCode, errorMessage);
+          });
+    },
+    async signOut() {
+      await auth.signOut()
+          .then(() => {
+            console.log('User signed out');
+            this.user = null;
+          })
+          .catch((error) => {
+            console.error('Error signing out:', error);
+          });
+    },
+    createAcc() {
+      createUserWithEmailAndPassword(auth, this.username, this.password)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log('User account created:', user);
+
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error('Error creating account:', errorCode, errorMessage);
+          });
+    }
+  }, async created() {
+    onAuthStateChanged(auth, firebaseUser => {
+      if (firebaseUser) {
+        console.log('User is signed in:', firebaseUser);
+        UserCollection.getUser(firebaseUser.uid)
+            .then(dbUser => {
+              if (dbUser ) {
+                this.user = dbUser;
+                this.user.uid = firebaseUser.uid
+              } else {
+                console.log('User does not exist in Firestore. Creating a new user document.');
+                const newUser = new User({
+                  displayName: 'insertName',
+                  friendshipCode: 'insertCode',
+                  socialMedia: {
+                    reddit: 'insertReddit',
+                    discord: 'insertDiscord',
+                  }
+                })
+                newUser.uid = firebaseUser.uid;
+                console.log('New user created:', newUser);
+                UserCollection.setUser(newUser)
+                    .then(() => {
+                      this.user = newUser;
+                      this.user.uid = firebaseUser.uid
+                      console.log('New user document created in Firestore:', newUser);
+                    })
+                    .catch(error => {
+                      console.error('Error creating user document in Firestore:', error);
+                    });
+              }
+            }).then(() => {
+              PokelistCollection.getSnapShot(this.pokemonList, this.user);
+            })
+
+      } else {
+        console.log('No user is signed in.');
+        this.user = new User();
+      }
+
+    })
+
+  },
+  provide() {
+    return {
+      authUser: computed(() => this.user),
+    }
+  }
 }
 
 </script>

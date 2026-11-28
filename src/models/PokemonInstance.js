@@ -80,8 +80,8 @@ export function PokemonInstance(id, data) {
      *
      * @returns {DocumentReference<DocumentData, DocumentData>}
      */
-    this.getDoc = function() {
-        return doc(PokelistCollection.getCollection(), this.id);
+    this.getDoc = function(user) {
+        return doc(PokelistCollection.getCollection(user), this.id);
     }
 
     this.toFirestore = function() {

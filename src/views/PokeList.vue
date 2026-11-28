@@ -41,11 +41,16 @@ export default {
     },
     addPokemon(pokemonInstance) {
       while (pokemonInstance[1] > 0) {
-        PokelistCollection.addToPokelist(pokemonInstance[0]);
+        PokelistCollection.addToPokelist(pokemonInstance[0], this.authUser);
         pokemonInstance[1]--;
       }
     }
     ,
+  },
+  inject: {
+    authUser: {
+      default: null
+    }
   },
 
   mounted: async function () {
