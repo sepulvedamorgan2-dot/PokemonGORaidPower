@@ -3,6 +3,12 @@
  * Represents a list of Pokémon.
  * @param initialList {Array<PokemonInstance>} An array of Pokémon(moisturized object) to initialize the list with.
  */
+import {deleteDoc, doc, setDoc} from "firebase/firestore";
+import pokeList from "@/views/PokeList.vue";
+
+import {Pokemon} from "@/models/Pokemon.js";
+import {PokemonInstance} from "@/models/PokemonInstance.js";
+import {PokelistCollection} from "@/firebase/PokelistCollection.js";
 export function PokemonList(initialList = []) {
     /**
      *
@@ -25,8 +31,9 @@ export function PokemonList(initialList = []) {
      * @param [pokemon, Number]
      */
 
-    this.addSinglePokemon = function(pokemon) {
-        this.items.push(pokemon);
+    this.addSinglePokemon = function(id, pokemon) {
+        console.log("Adding single pokemon with id:", id, "and pokemon:", pokemon);
+        this.items.push(new PokemonInstance(id, pokemon));
     }
     this.addAnyAmountOfPokemon = function([pokemon, amount = 1]) {
         for (let i = 0; i < amount; i++) {
@@ -39,10 +46,15 @@ export function PokemonList(initialList = []) {
     }
     /**
      * Removes a Pokémon from the list by its id.
-     * @param id The id of the Pokémon to remove.
+     * @param Pokemon the Pokémon to remove.
      */
-    this.remove = function(id) {
-        this.items = this.items.filter(pokemon => pokemon.id !== id);
+    this.remove = function(pokemon) {
+
+        PokelistCollection.deleteFromPokelist(pokemon);
+    }
+
+    this.update = function(pokemon) {
+        PokelistCollection.updatePokelistItem(pokemon);
     }
     /**
      * Removes a Pokémon from the list by its image. used when a list doesnt have

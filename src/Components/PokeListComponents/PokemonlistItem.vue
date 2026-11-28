@@ -95,7 +95,7 @@ export default {
 
     </div>
 
-    <pokemon-details-off-canvas :pokemon-instance="pokemonInstance"
+    <pokemon-details-off-canvas @update-item="$emit('updateItem')" :pokemon-instance="pokemonInstance"
                                 @delete-item="item => $emit('deleteItem', item)"></pokemon-details-off-canvas>
 
   </div>

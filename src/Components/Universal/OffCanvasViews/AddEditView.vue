@@ -135,7 +135,7 @@ export default {
         <div v-else class="row g-2 mt-auto">
           <div class="col-12">
             <button type="button"  v-on:click="$emit('clicked')"
-                    class="btn btn-primary mb-2 py-2 fs-4 w-100">Done
+                    class="btn btn-primary mb-2 py-2 fs-4 w-100">Save Changes
             </button>
           </div>
         </div>

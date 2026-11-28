@@ -4,6 +4,8 @@ import PokemonlistItem from "@/Components/PokeListComponents/PokemonlistItem.vue
 import SearchBar from "@/Components/Universal/SearchBar.vue";
 import {VueDraggable} from "vue-draggable-plus";
 import {PokemonList} from "@/models/PokemonList.js";
+import {onSnapshot} from "firebase/firestore";
+
 export default {
   name: "PokelistContainer",
   components: {
@@ -30,7 +32,10 @@ export default {
       this.matches = matches;
     },
   },
-  mounted(){
+  mounted: async function (){
+
+
+    this.matches = []
     this.updateMatches(this.fullPokemonList.items);
   },
 
@@ -38,6 +43,7 @@ export default {
     fullPokemonList: {
       handler: function () {
         if(this.deletedMon) {
+
           this.updateMatches(this.matches.filter(p => p !== this.deletedMon));
           this.deletedMon = null;
         } else{
@@ -120,8 +126,8 @@ export default {
       <vue-draggable :delay="100" :delay-on-touch-only="true"
                      :force-fallback="true" draggable=".draggable" v-model="fullPokemonList.items" class="alternateBg poke-list">
         <pokemonlist-item class="draggable" v-for="pokemonInstance in matches" :key="pokemonInstance.Id" :pokemon-instance="pokemonInstance "
-
-                          @delete-item="fullPokemonList.remove($event.id)"></pokemonlist-item>
+                          @update-item="fullPokemonList.update(pokemonInstance); console.log('eee')"
+                          @delete-item="fullPokemonList.remove($event)"></pokemonlist-item>
       </vue-draggable>
     </div>
   </div>

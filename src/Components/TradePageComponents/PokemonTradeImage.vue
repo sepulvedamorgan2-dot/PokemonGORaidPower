@@ -15,14 +15,29 @@ export default {
     highlight: {type: Boolean, default: false},
     },
   methods: {
-    TestToExludeTag
+    TestToExludeTag,
+    handleClick(event) {
+
+      if (this.editMode) {
+        console.log(event.target)
+
+        if (event.target.classList.contains("corner-tr-img")) {
+
+        } else {
+          this.$emit('clicked')
+        }
+      }
+      if (!this.editMode) {
+        this.$emit('clicked')
+      }
+    }
   }
 
 }
 </script>
 
 <template>
-  <div class="h-100 " >
+  <div @click="handleClick($event)" class="h-100 " >
     <div :class="
     {
       'text-center border rounded-4': true,
@@ -34,7 +49,7 @@ export default {
 
                             :no-quantity="true"
                             :noPresetSize="true" :pokemon-instance="pokemonInstance">
-          <pokemon-tags-off-canvas v-if="editMode" :pokemon-instance="pokemonInstance"></pokemon-tags-off-canvas>
+          <pokemon-tags-off-canvas ref="pokemonTagsOffCanvas" v-if="editMode" :pokemon-instance="pokemonInstance"></pokemon-tags-off-canvas>
         </image-with-details>
       </div>
       <div class="pb-1">

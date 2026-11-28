@@ -20,4 +20,20 @@ export function Pokemon(data = {}) {
     this.secondaryType = data.secondaryType ?? null;
     this.uniquePokemonId = data.uniquePokemonId ?? null;
 
+    this.toFirestore = function() {
+        return {
+            pokemonId: this.pokemonId,
+            name: this.name,
+            maxCp: this.maxCp,
+            fastMoves: this.fastMoves,
+            chargedMoves: this.chargedMoves,
+            specialFastMoves: this.specialFastMoves,
+            specialChargedMoves: this.specialChargedMoves,
+            megaCapable: this.megaCapable,
+            image: this.image,
+            type: this.type,
+            secondaryType: this.secondaryType,
+            uniquePokemonId: this.uniquePokemonId
+        };
+    }
 }

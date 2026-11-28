@@ -28,6 +28,7 @@ export default {
     pokemonList: {type: Array, required: true},
     pokemonListApi: {type: Array, required: true},
     tradeCardList: {type: Array, required: true},
+    offers: {type: Array}
   },
   methods: {
     handleSearch(searchParams) {
@@ -61,11 +62,19 @@ export default {
 
           <button class="btn btn-primary mb-2  mt-3 rounded-4" v-on:click="$refs.pageTab.tabNumber = 1">Search Again
           </button>
-          <div class="row g-2">
-            <simple-trade-card :haveFlightInfo="true" class="col-12 force-hover  col-sm-6 col-lg-4"
+          <div >
+            <div class="col-12">
+              <label class="form-label">Search Results</label>
+            </div>
+
+          </div>
+          <div class="row g-1">
+            <div v-for="tradeCard in tradeCardList.items" class="col-12 force-hover  col-sm-6 col-lg-4">
+            <simple-trade-card  :haveFlightInfo="true"
                                v-on:click="openTradeCard(tradeCard)"
-                               v-for="tradeCard in tradeCardList.items" :key="tradeCard.id" :trade-card="tradeCard">
+                                :key="tradeCard.id" :trade-card="tradeCard">
             </simple-trade-card>
+          </div>
           </div>
         </template>
         <template #pageThree>
@@ -73,7 +82,7 @@ export default {
           </button>
           <div class="row justify-content-center">
 
-            <offer-trade-card class="col-12 col-6-sm pt-2" :isNew="false" :pokemon-list-api="pokemonListApi" :pokemon-list="pokemonList"
+            <offer-trade-card @submit-offer="offers.push($event)" :user-pokemon-list="pokemonList" class="col-12 col-6-sm pt-2" :isNew="false" :pokemon-list-api="pokemonListApi" :pokemon-list="pokemonList"
                         :existing-trade-card="tradeCardToView">
 
             </offer-trade-card>

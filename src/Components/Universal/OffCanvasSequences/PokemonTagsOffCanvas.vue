@@ -56,5 +56,7 @@ export default {
   @extend %corner-base;
   top: 0;
   right: 0;
+  padding-bottom: 1rem;
+
 }
 </style>

@@ -16,6 +16,7 @@ export function TradeCard(data = {}) {
     this.allTags = data.allTags ?? [];
     this.allHaveImages = data.allHaveImages ?? [];
     this.allWantImages = data.allWantImages ?? [];
+    this.allowCustomOffers = data.allowCustomOffers ?? false;
     this.flyingOrRemote = data.flyingOrRemote ?? 'Cant Fly';
     this.haveList = data.haveList
         ? new PokemonList(data.haveList)
@@ -112,7 +113,7 @@ export function TradeCard(data = {}) {
         this.haveList = sourceCard.haveList ?? this.haveList;
         this.haveOptions = sourceCard.haveOptions ?? this.haveOptions;
         this.wantOptions = sourceCard.wantOptions ?? this.wantOptions;
-
+        this.allowCustomOffers = sourceCard.allowCustomOffers ?? this.allowCustomOffers;
         this.assignFeaturedPokemon();
     }
     this.addHaveList = async function (pokemon) {

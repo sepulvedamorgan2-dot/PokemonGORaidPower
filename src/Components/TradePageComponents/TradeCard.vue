@@ -222,7 +222,7 @@ export default {
         <div class="d-flex pt-1">
           <fly-toggle style="max-width: 70px" :is-enabled="mode === 1" @emit-value="tradeCard.flyingOrRemote = $event"
                       :image-array="FLY_TOGGLE_IMAGE_ARRAY()" :property="tradeCard.flyingOrRemote"></fly-toggle>
-          <h4 v-if="mode===0" class="fs-1 fw-bold pt-0 mb-0 text-capitalize text-start pb-0">
+          <h4 v-if="mode===0" class="fs-2 fw-bold pt-0 mb-0 text-capitalize text-start pb-0">
             {{ tradeCard.title }}</h4>
           <label v-if="mode===1" class="form-label">
             Trade Card Title
@@ -251,6 +251,8 @@ export default {
             {{ option.selected }}
           </h4>
         </div>
+
+
         <div class="row ps-0 pt-0 pb-0" v-if="mode === 1">
           <collapse-area teleport-id="want">
             <select-list :options="defaultWantOptions()" :selected-options=" tradeCard.wantOptions">
@@ -283,12 +285,22 @@ export default {
             </div>
 
           </div>
-          <pokemon-trade-image class="col col-md-2 draggable" :edit-mode="mode === 1" :pokemon-instance="pokemonInstance"
+          <pokemon-trade-image class="col col-md-2 draggable" :edit-mode="mode === 1"
+                               :pokemon-instance="pokemonInstance"
                                v-for="pokemonInstance in tradeCard.wantList.items" :key="pokemonInstance.pokemon.image"
                                @dblclick="mode === 1 ? tradeCard.removeFromWantedList(pokemonInstance) : null"></pokemon-trade-image>
 
 
         </vue-draggable>
+        <div v-if="mode === 1" class="ms-1 py-2">
+          <div class="form-check">
+            <input v-model="tradeCard.allowCustomOffers" class="form-check-input" type="checkbox" value=""
+                   id="allowCustomOffers">
+            <label class="form-check-label" for="allowCustomOffers">
+              Allow Custom Pokemon to be offered
+            </label>
+          </div>
+        </div>
 
 
         <div class="row  border-top ">
@@ -336,7 +348,8 @@ export default {
             </div>
 
           </div>
-          <pokemon-trade-image class="col col-md-2 draggable" :pokemon-instance="pokemonInstance" v-for="pokemonInstance in tradeCard.haveList.items"
+          <pokemon-trade-image class="col col-md-2 draggable" :pokemon-instance="pokemonInstance"
+                               v-for="pokemonInstance in tradeCard.haveList.items"
                                :key="pokemonInstance.pokemon.image"
                                :edit-mode="mode === 1"
                                @dblclick="mode === 1 ? manageHaveRemove(pokemonInstance) : null"></pokemon-trade-image>
@@ -346,7 +359,8 @@ export default {
           New
           Trade Card
         </button>
-        <button v-if="!isNew && mode === 1" type="button" class="btn btn-primary w-100 rounded-4" @click="saveTradeCard()">Save
+        <button v-if="!isNew && mode === 1" type="button" class="btn btn-primary w-100 rounded-4"
+                @click="saveTradeCard()">Save
           Changes
         </button>
       </template>

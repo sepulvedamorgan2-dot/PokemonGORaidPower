@@ -47,7 +47,7 @@ export default {
           <details-off-canvas @clicked="$refs.PokemonDetailsOffCanvas.pageNumber++" @delete-item="item => $emit('deleteItem', item)" :pokemon-instance="pokemonInstance"></details-off-canvas>
         </template>
         <template #pageTwo>
-          <add-edit-view @clicked="$refs.PokemonDetailsOffCanvas.pageNumber--" :pokemon-instance="pokemonInstance"></add-edit-view>
+          <add-edit-view @clicked="$emit('updateItem'); $refs.PokemonDetailsOffCanvas.pageNumber--" :pokemon-instance="pokemonInstance"></add-edit-view>
         </template>
       </OffCanvasContainer>
     </teleport>

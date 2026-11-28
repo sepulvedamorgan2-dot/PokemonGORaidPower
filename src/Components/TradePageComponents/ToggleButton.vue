@@ -18,15 +18,7 @@ export default {
     }
   },
   methods: {
-    // getImage(src) {
-    //   try {
-    //
-    //     return new URL(`${src}`);
-    //   } catch (error) {
-    //     console.error(`Error loading image: ${src}`, error);
-    //     return ''; // Return a fallback image or an empty string if the image fails to load
-    //   }
-    // }
+
   },
   mounted() {
     if (this.property) {
@@ -52,7 +44,7 @@ export default {
          class="img-fluid rounded-4  border-width-togglee border-dark "
          :src="image.src"
          alt="">
-    <p style="font-size: 10px" v-show="toggleIndex === imageArray.indexOf(image) && isEnabled">{{ image.value }}</p>
+    <p class="pb-0 mb-0" style="font-size: 11px" v-show="toggleIndex === imageArray.indexOf(image)">{{ image.value }}</p>
     </div>
 
   </div>
@@ -60,7 +52,6 @@ export default {
 
 <style lang="css" scoped>
   .border-width-togglee {
-
     border: solid black;
     border-width: .125rem;
   }

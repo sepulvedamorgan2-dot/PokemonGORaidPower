@@ -182,7 +182,7 @@ export default {
               </label>
             </div>
           </div>
-          <div class="row g-1">
+          <div class="row g-1 pt-2">
             <div @click="clearSearch()" class="col-6">
               <button class="btn w-100 btn-secondary">
                 Clear Search
@@ -190,9 +190,15 @@ export default {
             </div>
             <div class="col-6">
               <button @click="findTrade()" class="btn w-100 btn-primary">
-                Find your Trade
+                Find Your Trade
               </button>
             </div>
+            <div class="col-12">
+              <button @click="findTrade()" class="btn w-100 btn-outline-primary">
+                 Browse All Newest Trades
+              </button>
+            </div>
+
 
           </div>
         </div>

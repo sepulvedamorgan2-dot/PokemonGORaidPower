@@ -111,9 +111,9 @@ export default {
             <div v-if="onlySelected(option, offer.tradeCard.wantOptions)">
               <label class="form-label w-100">
                 {{ option.title }}
-                <select :disabled="!alterDetails" class="form-select">
+                <select v-model="offer.tradeCard.wantOptions[option.key]" :disabled="!alterDetails" class="form-select">
                   <option :selected="getVueSelected({option}, offer.tradeCard.wantOptions, selectOption)"
-                          v-for="selectOption in option.optionsArray" value="1">
+                          v-for="selectOption in option.optionsArray" :value="selectOption">
                     {{ selectOption.selected }}
                   </option>
 
@@ -125,7 +125,7 @@ export default {
             <div v-if="onlySelected(option, offer.tradeCard.haveOptions)">
               <label class="form-label w-100">
                 {{ option.title }}
-                <select :disabled="!alterDetails" class="form-select">
+                <select v-model="offer.tradeCard.haveOptions[option.key]" :disabled="!alterDetails" class="form-select">
                   <option :selected="getVueSelected({option}, offer.tradeCard.haveOptions, selectOption)"
                           v-for="selectOption in option.optionsArray" value="1">
                     {{ selectOption.selected }}
@@ -136,7 +136,7 @@ export default {
             </div>
           </div>
           <div class="sticky-bottom mt-3">
-            <button type="button" class="w-100 fs-4 mb-2 btn btn-primary">Send Offer</button>
+            <button type="button" @click="$emit('offerSubmitted', offer)" class="w-100 fs-4 mb-2 btn btn-primary">Send Offer</button>
           </div>
         </div>
 

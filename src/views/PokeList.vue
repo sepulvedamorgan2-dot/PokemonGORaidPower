@@ -3,9 +3,11 @@ import PokelistContainer from "@/Components/PokeListComponents/PokelistContainer
 import OffCanvasContainer from "@/Components/Universal/OffCanvasContainer.vue";
 import FilterOffCanvas from "@/Components/Universal/OffCanvasSequences/FilterOffCanvas.vue";
 import SearchBar from "@/Components/Universal/SearchBar.vue";
-
+import {addDoc} from "firebase/firestore";
 import NavbarMain from "@/Components/Universal/NavbarMain.vue";
 import AddPokemonOffCanavss from "@/Components/Universal/OffCanvasSearch/AddPokemonOffCanavss.vue";
+
+import {PokelistCollection} from "@/firebase/PokelistCollection.js";
 
 
 
@@ -37,24 +39,13 @@ export default {
     updateMatches(newList) {
       this.matches = newList;
     },
-
-    addPokemon(activeItem) {
-      this.pokemon = activeItem[0];
-      this.qty = activeItem[1];
-
-      for (let i = 0; i < this.qty; i++) {
-        this.pokemon.Id = this.getNextPokemonId()
-
-
-        this.pokemonList.unshift({...this.pokemon});
+    addPokemon(pokemonInstance) {
+      while (pokemonInstance[1] > 0) {
+        PokelistCollection.addToPokelist(pokemonInstance[0]);
+        pokemonInstance[1]--;
       }
-      this.matches = this.pokemonList
-
-
     }
     ,
-
-
   },
 
   mounted: async function () {
@@ -67,7 +58,9 @@ export default {
 <template>
   <div>
 
-    <add-pokemon-off-canavss :pokemon-list-to-search="pokemonListApi" @add-pokemon="pokemonList.addAnyAmountOfPokemon($event)"></add-pokemon-off-canavss>
+<!--    <add-pokemon-off-canavss :pokemon-list-to-search="pokemonListApi" @add-pokemon="pokemonList.addAnyAmountOfPokemon($event)"></add-pokemon-off-canavss>-->
+    <add-pokemon-off-canavss :pokemon-list-to-search="pokemonListApi" @add-pokemon="addPokemon($event)"></add-pokemon-off-canavss>
+
 
     <pokelist-container :searched-and-filtered-array="matches" :full-pokemon-list="pokemonList"
                         ref="pokelistContainer"></pokelist-container>

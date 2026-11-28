@@ -107,7 +107,7 @@ export default class GameDataApi {
             uniquePokemonId: pokemon?.uniquePokemonId || null
         });
 
-        const pokemonToAdd = new PokemonInstance({
+        const pokemonToAdd = new PokemonInstance(null, {
                 pokemon: pokemonDetailsData,
             }
         )

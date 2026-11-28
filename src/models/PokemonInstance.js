@@ -1,13 +1,18 @@
 import { Pokemon } from "./Pokemon.js";
+import {doc} from "firebase/firestore";
+import {PokelistCollection} from "@/firebase/PokelistCollection.js";
+
 
 
 /**
  * Represents a Pokémon with its basic information, details, and trade details.
+ * @param id The ID of the Pokémon.
  * @param data An object containing the Pokémon's properties.
  */
 
-export function PokemonInstance(data = {}) {
-    this.id = data.id ?? null;
+export function PokemonInstance(id, data) {
+    this._path = null;
+    this.id = id ?? null;
     this.fastMove = data.fastMove ?? null;
     this.chargedMoveOne = data.chargedMoveOne ?? null;
     this.chargedMoveTwo = data.chargedMoveTwo ?? null;
@@ -15,6 +20,7 @@ export function PokemonInstance(data = {}) {
     this.pokemon = data.pokemon
         ? new Pokemon(data.pokemon)
         : new Pokemon();
+    this.cp = data.cp ?? 0;
     // this.tradeDetails = data.tradeDetails
     //     ? new TradeDetails(data.tradeDetails)
     //     : new TradeDetails();
@@ -70,5 +76,35 @@ export function PokemonInstance(data = {}) {
         const move = moveIndex === 1 ? this.chargedMoveOne : this.chargedMoveTwo;
         return `${prefix}-type${move?.type || ''} ${otherClasses}`.trim();
     };
+    /**
+     *
+     * @returns {DocumentReference<DocumentData, DocumentData>}
+     */
+    this.getDoc = function() {
+        return doc(PokelistCollection.getCollection(), this.id);
+    }
+
+    this.toFirestore = function() {
+        if (this.cp === '' || this.cp === null || this.cp === undefined) {
+            this.cp = 50;
+        }
+
+        return {
+            cp: this.cp,
+            fastMove: this.fastMove,
+            chargedMoveOne: this.chargedMoveOne,
+            chargedMoveTwo: this.chargedMoveTwo,
+            isShadow: this.isShadow,
+            _path: this._path,
+            pokemon: this.pokemon.toFirestore(),
+            tradeDetails: this.tradeDetails
+        };
+    }
+}
+
+PokemonInstance.fromFirestore = function(snapshot, options) {
+    const data = snapshot.data(options);
+    const pokemonInstance = new PokemonInstance(snapshot.id, data);
+    pokemonInstance._path = snapshot.ref.path; // Store the document path for later use
 }
 
